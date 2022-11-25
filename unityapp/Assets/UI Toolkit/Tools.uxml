@@ -1,4 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/input.uss?fileID=7433441132597879392&amp;guid=0c4a6ec04cda5ac448a909aa86a35aea&amp;type=3#input" />
-    <ui:GroupBox name="Body" style="justify-content: center; align-items: stretch; width: 100%; height: 100%; padding-right: 5%; position: absolute; left: 0; top: 0; right: 0; bottom: -38px; padding-left: 5%; padding-top: 5%; padding-bottom: 5%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; background-color: rgba(56, 56, 56, 0);" />
-</ui:UXML>
