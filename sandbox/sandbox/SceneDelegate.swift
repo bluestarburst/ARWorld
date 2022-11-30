@@ -1,5 +1,7 @@
 import UIKit
 import SwiftUI
+import FirebaseCore
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -7,6 +9,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
+            
+            FirebaseApp.configure()
+            
             // Creates the bridge between UIKit and SwiftUI.
             // This is done automatically when not using an `App`.
             let vc = UIHostingController(rootView: ContentView())
