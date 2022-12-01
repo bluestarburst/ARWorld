@@ -58,6 +58,7 @@ public struct MessageWithData<T>
 public class API : MonoBehaviour
 {
     public GameObject cube;
+    public ARWorldMapController worldMapController;
 
     void Start()
     {
@@ -76,6 +77,12 @@ public class API : MonoBehaviour
             case "change-color":
                 _UpdateCubeColor(serializedMessage);
                 break;
+            case "save-map":
+                _SaveMap(serializedMessage);
+                break;
+            case "load-map":
+                _LoadMap(serializedMessage);
+                break;
             default:
                 Debug.LogError("Unrecognized message '" + header.type + "'");
                 break;
@@ -91,6 +98,26 @@ public class API : MonoBehaviour
             Debug.Log("Setting Color = " + color);
             var material = cube.GetComponent<MeshRenderer>()?.sharedMaterial;
             material?.SetColor("_Color", color);
+        }
+    }
+
+    private void _SaveMap(string serialized)
+    {
+        var msg = JsonConvert.DeserializeObject<MessageWithData<bool>>(serialized);
+        if (msg.data == true)
+        {
+            Debug.Log("Saving Map = " + msg.data);
+            worldMapController.OnSaveButton();
+        }
+    }
+
+    private void _LoadMap(string serialized)
+    {
+        var msg = JsonConvert.DeserializeObject<MessageWithData<bool>>(serialized);
+        if (msg.data == true)
+        {
+            Debug.Log("Loading Map = " + msg.data);
+            worldMapController.OnLoadButton();
         }
     }
 }
