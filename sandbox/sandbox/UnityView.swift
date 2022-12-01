@@ -19,7 +19,9 @@ struct UnityView: View {
             // PassthroughView()
             VStack {
                 Spacer()
-                Button(action: {}, label: {
+                Button(action: {
+                    UnityBridge.getInstance().api.loadMap()
+                }, label: {
                     Text("load")
                         .fontWeight(.bold)
                         .foregroundColor(.white)
@@ -28,7 +30,9 @@ struct UnityView: View {
                         .background(Color.pink)
                         .cornerRadius(8)
                 })
-                Button(action: {}, label: {
+                Button(action: {
+                    UnityBridge.getInstance().api.saveMap()
+                }, label: {
                     Text("save")
                         .fontWeight(.bold)
                         .foregroundColor(.white)
