@@ -46,6 +46,14 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-color", data: data)
     }
 
+    public func saveMap() {
+        sendMessage(type: "save-map", data: true)
+    }
+
+    public func loadMap() {
+        sendMessage(type: "load-map", data: true)
+    }
+
     public func test(_ value: String) {
         self.testCallback(value)
     }
