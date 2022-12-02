@@ -221,6 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cube: {fileID: 1415507575}
+  worldMapController: {fileID: 1751548350}
 --- !u!4 &168510959
 Transform:
   m_ObjectHideFlags: 0
@@ -1631,7 +1632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 650a45a045e92478a9d4ce3ff7858893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ARSession: {fileID: 0}
+  m_ARSession: {fileID: 1814830391}
   m_ErrorText: {fileID: 522617373}
   m_LogText: {fileID: 2066895003}
   m_MappingStatusText: {fileID: 1839110614}
