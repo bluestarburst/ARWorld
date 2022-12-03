@@ -12,6 +12,7 @@ import Firebase
 struct ContentView: View {
     @Environment(\.scenePhase) private var phase
     @State var page = (Auth.auth().currentUser?.uid != nil) ? 1 : 0
+    
     @State var isLoaded = true
     
     var body: some View {
@@ -20,6 +21,9 @@ struct ContentView: View {
                 AuthView(page: $page)
             } else if (page == 1) {
                 UnityView(isLoaded: $isLoaded)
+                    .onAppear {
+                        DataHandler.shared.getUID()
+                    }
             }
         }.onAppear {
             setupColorScheme()
