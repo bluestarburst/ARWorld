@@ -268,18 +268,19 @@ public class ARWorldMapController : MonoBehaviour
         var writer = new BinaryWriter(file);
         writer.Write(data.ToArray());
         writer.Close();
+        
+        
         data.Dispose();
         worldMap.Dispose();
         Log(string.Format("ARWorldMap written to {0}", path));
 
-        #if UNITY_IOS
+#if UNITY_IOS
         if (Application.platform == RuntimePlatform.IPhonePlayer) {
             HostNativeAPI.saveARWorldMap(data);
         }
-        #endif
+#endif
     }
 #endif
-
 
     string path
     {
