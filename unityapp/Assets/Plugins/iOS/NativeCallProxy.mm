@@ -31,4 +31,11 @@ extern "C" {
       [api onSetTestDelegate: delegate];
   }
 
+  void
+  saveARWorldMap(byte* data, int length)
+  {
+      NSData* nsData = [NSData dataWithBytes: data length: length];
+      [api onSaveARWorldMap: nsData];
+  }
+
 }

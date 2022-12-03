@@ -22,7 +22,7 @@ public class HostNativeAPI
     public static extern void setTestDelegate(TestDelegate cb);
 
     [DllImport("__Internal")]
-    public static extern void saveARWorldMap(NativeArray<byte> data);
+    public static extern void saveARWorldMap(byte[] data);
 }
 
 /// <summary>
