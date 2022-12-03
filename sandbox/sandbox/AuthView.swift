@@ -79,7 +79,7 @@ class LoginViewModel: ObservableObject {
         let credential = PhoneAuthProvider.provider().credential(withVerificationID: self.ID, verificationCode: self.verificationCode)
         
         Auth.auth().signIn(with: credential, completion: { result, err in
-            if let error = err {
+            if err != nil {
                 withAnimation {
                     self.loading = false
                     self.verificationError = true
@@ -90,6 +90,7 @@ class LoginViewModel: ObservableObject {
             print("success")
             
             //                DataHandler.shared.load()
+            DataHandler.shared.getUID()
             
             self.isLoggedIn = true
             
