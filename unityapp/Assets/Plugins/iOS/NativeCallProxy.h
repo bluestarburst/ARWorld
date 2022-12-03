@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-typedef void (*TestDelegate)(const char* name);
+typedef void (*TestDelegate)(const char *name);
 
 // NativeCallsProtocol defines protocol with methods you want to be called
 // from managed.
@@ -10,14 +10,15 @@ typedef void (*TestDelegate)(const char* name);
 // will be in charge of bridging Unity's call to the iOS delegate.
 @protocol NativeCallsProtocol
 @required
-- (void) onUnityStateChange:(const NSString*) state;
-- (void) onSetTestDelegate:(TestDelegate) delegate;
+- (void)onUnityStateChange:(const NSString *)state;
+- (void)onSetTestDelegate:(TestDelegate)delegate;
+- (void)onSaveARWorldMap:(const NSData *)data;
 // other methods
 @end
 
-__attribute__ ((visibility("default")))
+__attribute__((visibility("default")))
 @interface FrameworkLibAPI : NSObject
 // call it any time after UnityFrameworkLoad to set object implementing NativeCallsProtocol methods
-+(void) registerAPIforNativeCalls:(id<NativeCallsProtocol>) aApi;
++ (void)registerAPIforNativeCalls:(id<NativeCallsProtocol>)aApi;
 
 @end

@@ -28,7 +28,7 @@ void setTestDelegate(TestDelegate delegate) {
 
 // this method will take a byte array in C# and convert it to a NSData object
 void sendUnityDataUpdate(const char *data, int length) {
-  NSData *nsData = [NSData dataWithBytes:data length:length];
-  [api onUnityDataChange:nsData];
+  const NSData *nsData = [NSData dataWithBytes:data length:length];
+  [api onSaveARWorldMap:nsData];
 }
 }
