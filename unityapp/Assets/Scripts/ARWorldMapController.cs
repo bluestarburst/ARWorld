@@ -271,6 +271,12 @@ public class ARWorldMapController : MonoBehaviour
         data.Dispose();
         worldMap.Dispose();
         Log(string.Format("ARWorldMap written to {0}", path));
+
+        #if UNITY_IOS
+        if (Application.platform == RuntimePlatform.IPhonePlayer) {
+            HostNativeAPI.saveARWorldMap(data)
+        }
+        #endif
     }
 #endif
 
