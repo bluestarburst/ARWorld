@@ -12,7 +12,7 @@ typedef void (*TestDelegate)(const char *name);
 @required
 - (void)onUnityStateChange:(const NSString *)state;
 - (void)onSetTestDelegate:(TestDelegate)delegate;
-- (void)onSaveARWorldMap:(const NSData *)data;
+// - (void)onSaveARWorldMap:(const NSData *)data;
 // other methods
 @end
 

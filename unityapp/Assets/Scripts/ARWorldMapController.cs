@@ -278,7 +278,7 @@ public class ARWorldMapController : MonoBehaviour
         if (Application.platform == RuntimePlatform.IPhonePlayer) {
             // turn data into a byte array
             byte[] bytes = data.ToArray();
-            HostNativeAPI.saveARWorldMap(bytes, bytes.Length);
+            // HostNativeAPI.saveARWorldMap(bytes, bytes.Length);
         }
 #endif
     }
