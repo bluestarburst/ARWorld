@@ -292,8 +292,8 @@ public class ARWorldMapController : MonoBehaviour
             return m_ARSession.subsystem is ARKitSessionSubsystem &&
             ARKitSessionSubsystem.worldMapSupported;
 #else
-                return false;
-    #endif
+            return false;
+#endif
         }
     }
 
@@ -304,7 +304,7 @@ public class ARWorldMapController : MonoBehaviour
 
     void Log(string logMessage)
     {
-        m_LogMessages.Add (logMessage);
+        m_LogMessages.Add(logMessage);
     }
 
     static void SetActive(Button button, bool active)
@@ -343,8 +343,8 @@ public class ARWorldMapController : MonoBehaviour
 #if UNITY_IOS
         var sessionSubsystem = (ARKitSessionSubsystem) m_ARSession.subsystem;
 #else
-            XRSessionSubsystem sessionSubsystem = null;
-    #endif
+        XRSessionSubsystem sessionSubsystem = null;
+#endif
 
 
         if (sessionSubsystem == null) return;
@@ -360,7 +360,7 @@ public class ARWorldMapController : MonoBehaviour
             msg += m_LogMessages[i];
             msg += "\n";
         }
-        SetText (logText, msg);
+        SetText(logText, msg);
 
 
 #if UNITY_IOS
