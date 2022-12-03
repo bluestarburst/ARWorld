@@ -274,7 +274,7 @@ public class ARWorldMapController : MonoBehaviour
 
         #if UNITY_IOS
         if (Application.platform == RuntimePlatform.IPhonePlayer) {
-            HostNativeAPI.saveARWorldMap(data)
+            HostNativeAPI.saveARWorldMap(data);
         }
         #endif
     }
