@@ -13,12 +13,24 @@ struct UnityView: View {
         red: 0.98, green: 0.9, blue: 0.2)
     
     @Binding var isLoaded: Bool
+    @StateObject var manager = LocationManager()
 
     var body: some View {
         ZStack {
             // PassthroughView()
             VStack {
                 Spacer()
+                Button(action: {
+                    print(manager.altitude)
+                }, label: {
+                    Text("get region")
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.vertical)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.pink)
+                        .cornerRadius(8)
+                })
                 Button(action: {
                     UnityBridge.getInstance().api.loadMap()
                 }, label: {

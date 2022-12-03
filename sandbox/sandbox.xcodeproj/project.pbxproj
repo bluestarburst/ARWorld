@@ -12,6 +12,8 @@
 		5818DC6E2937FCC000C8B794 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818DC6D2937FCC000C8B794 /* AuthView.swift */; };
 		5818DC702938058C00C8B794 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5818DC6F2938058C00C8B794 /* FirebaseAnalytics */; };
 		5818DC7A293805A200C8B794 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5818DC79293805A200C8B794 /* FirebaseAuth */; };
+		5818DC8D293AED9E00C8B794 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818DC8C293AED9E00C8B794 /* LocationManager.swift */; };
+		5818DC8F293BEFF200C8B794 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818DC8E293BEFF200C8B794 /* FirebaseHandler.swift */; };
 		E61361FC25BA3CFA0005B57A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */; };
 		E61361FE25BA3D150005B57A /* UnityBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61361FD25BA3D150005B57A /* UnityBridge.swift */; };
 		E62A7ACA2773D326007CE3D6 /* UnityFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62A7AC92773D326007CE3D6 /* UnityFramework.framework */; };
@@ -47,6 +49,8 @@
 		5818DC7F2938065800C8B794 /* FirebaseCoreInternal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCoreInternal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5818DC802938065800C8B794 /* FirebaseDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5818DC812938065800C8B794 /* FirebaseInstallations.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseInstallations.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5818DC8C293AED9E00C8B794 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		5818DC8E293BEFF200C8B794 /* FirebaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
 		E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E61361FD25BA3D150005B57A /* UnityBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnityBridge.swift; sourceTree = "<group>"; };
 		E62A7AC92773D326007CE3D6 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,8 +116,10 @@
 			children = (
 				E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */,
 				E6DE818625BA36230019BED1 /* ContentView.swift */,
+				5818DC8C293AED9E00C8B794 /* LocationManager.swift */,
 				5818DC6D2937FCC000C8B794 /* AuthView.swift */,
 				5817EAC829372795004E90B5 /* UnityView.swift */,
+				5818DC8E293BEFF200C8B794 /* FirebaseHandler.swift */,
 				E61361FD25BA3D150005B57A /* UnityBridge.swift */,
 				E6DE818825BA36240019BED1 /* Assets.xcassets */,
 				E6DE818D25BA36240019BED1 /* Info.plist */,
@@ -216,8 +222,10 @@
 				E62A7AD02773E4DA007CE3D6 /* SceneDelegate.swift in Sources */,
 				E62A7AD42773F6AC007CE3D6 /* UIWindowCustom.swift in Sources */,
 				5817EAC929372795004E90B5 /* UnityView.swift in Sources */,
+				5818DC8D293AED9E00C8B794 /* LocationManager.swift in Sources */,
 				E62A7ACE2773E48A007CE3D6 /* AppDelegate.swift in Sources */,
 				E6DE818725BA36230019BED1 /* ContentView.swift in Sources */,
+				5818DC8F293BEFF200C8B794 /* FirebaseHandler.swift in Sources */,
 				E61361FE25BA3D150005B57A /* UnityBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

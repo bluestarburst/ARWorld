@@ -32,7 +32,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>plz let me see!</string>
+	<string>Please allow ARWorld to see the world around you and create an AR map!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please allow ARWorld to use your location to get AR objects around you!</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
