@@ -1,12 +1,11 @@
-#import <Foundation/Foundation.h>
 #import "NativeCallProxy.h"
+#import <Foundation/Foundation.h>
 
 @implementation FrameworkLibAPI
 
 id<NativeCallsProtocol> api = NULL;
-+(void) registerAPIforNativeCalls:(id<NativeCallsProtocol>) aApi
-{
-    api = aApi;
++ (void)registerAPIforNativeCalls:(id<NativeCallsProtocol>)aApi {
+  api = aApi;
 }
 
 @end
@@ -18,24 +17,18 @@ id<NativeCallsProtocol> api = NULL;
  */
 extern "C" {
 
-  void
-  sendUnityStateUpdate(const char* state)
-  {
-      const NSString* str = @(state);
-      [api onUnityStateChange: str];
-  }
+void sendUnityStateUpdate(const char *state) {
+  const NSString *str = @(state);
+  [api onUnityStateChange:str];
+}
 
-  void
-  setTestDelegate(TestDelegate delegate)
-  {
-      [api onSetTestDelegate: delegate];
-  }
+void setTestDelegate(TestDelegate delegate) {
+  [api onSetTestDelegate:delegate];
+}
 
-  void
-  saveARWorldMap(byte* data, int length)
-  {
-      NSData* nsData = [NSData dataWithBytes: data length: length];
-      [api onSaveARWorldMap: nsData];
-  }
-
+// this method will take a byte array in C# and convert it to a NSData object
+void sendUnityDataUpdate(const char *data, int length) {
+  NSData *nsData = [NSData dataWithBytes:data length:length];
+  [api onUnityDataChange:nsData];
+}
 }
