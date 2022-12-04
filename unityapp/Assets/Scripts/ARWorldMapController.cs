@@ -282,7 +282,7 @@ public class ARWorldMapController : MonoBehaviour
             byte[] bytes = data.ToArray();
             // turn byte array into JSON string
             string json = JsonUtility.ToJson(bytes);
-            api.sendMapIOS(bytes);
+            api.sendMapIOS(json);
             // HostNativeAPI.saveMap("this is a map");
         }
 #endif
