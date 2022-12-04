@@ -24,6 +24,9 @@ public class HostNativeAPI
     // // byte array marshalling: https://stackoverflow.com/questions/10010873/how-to-pass-byte-array-to-c-sharp-dll
     // [DllImport("__Internal")]
     // public static extern void saveARWorldMap(byte[] data, int length);
+
+    [DllImport("__Internal")]
+    public static extern void saveMap(string map);
 }
 
 /// <summary>

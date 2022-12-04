@@ -22,6 +22,11 @@ void sendUnityStateUpdate(const char *state) {
   [api onUnityStateChange:str];
 }
 
+void saveMap(const char *map) {
+  const NSString *str = @(map);
+  [api onSaveMap:str];
+}
+
 void setTestDelegate(TestDelegate delegate) {
   [api onSetTestDelegate:delegate];
 }

@@ -75,6 +75,11 @@ public class UnityAPI: NativeCallsProtocol {
         self.testCallback = delegate
     }
 
+    public func onSaveMap(_ map: String) {
+        // self.communicator.saveMap(map)
+        print("onSaveMap: \(map)")
+    }
+
     // public func saveARWorldMap(_ data: T) {
     //     // let message = MessageWithData(type: "save-ar-world-map", data: data)
     //     // let encoder = JSONEncoder()
