@@ -9,7 +9,6 @@ using UnityEngine.XR.ARSubsystems;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Firestore;
-using Firebase.Database;
 using Firebase.Storage;
 using System;
 #if UNITY_IOS
