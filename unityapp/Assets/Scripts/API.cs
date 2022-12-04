@@ -122,7 +122,7 @@ public class API : MonoBehaviour
         var FirebaseAuth = Firebase.Auth.FirebaseAuth.DefaultInstance;
 
         PhoneAuthProvider provider = PhoneAuthProvider.GetInstance(FirebaseAuth);
-        provider.VerifyPhoneNumber(phoneNumber, 300000, null,
+        provider.VerifyPhoneNumber("+" + countryCode + phoneNumber, 300000, null,
         verificationCompleted: (credential) =>
         {
             // Auto-sms-retrieval or instant validation has succeeded (Android only).

@@ -23,6 +23,7 @@ public class UnityAPI: NativeCallsProtocol {
 
     public weak var communicator: UnityCommunicationProtocol!
     public var ready: () -> () = {}
+    public var getPhoneResult: (String) -> Void = {_ in}
 
     /**
         Function pointers to static functions declared in Unity
@@ -86,6 +87,7 @@ public class UnityAPI: NativeCallsProtocol {
 
     public func onPhoneResponse(_ response: String) {
         print("onPhoneResponse: \(response)")
+        self.getPhoneResult(response)
     }
 
     // public func saveARWorldMap(_ data: T) {
