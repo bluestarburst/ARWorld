@@ -324,11 +324,11 @@ public class ARWorldMapController : MonoBehaviour
             else
             {
                 Debug.Log("Document added with ID: " + addedDocRef.Id);
+
                 FirebaseStorage storage = FirebaseStorage.DefaultInstance;
                 StorageReference storageRef = storage.RootReference;
                 StorageReference mapsRef = storageRef.Child("maps");
                 StorageReference mapRef = mapsRef.Child(addedDocRef.Id + ".map");
-
 
                 mapRef.PutBytesAsync(data.ToArray())
                 .ContinueWith((Task<StorageMetadata> task) =>
@@ -336,6 +336,7 @@ public class ARWorldMapController : MonoBehaviour
                         if (task.IsFaulted || task.IsCanceled)
                         {
                             Debug.Log(task.Exception.ToString());
+                            data.Dispose();
                             // Uh-oh, an error occurred!
                         }
                         else
@@ -347,6 +348,7 @@ public class ARWorldMapController : MonoBehaviour
                             Debug.Log("md5 hash = " + md5Hash);
                             addedDocRef.UpdateAsync("md5", md5Hash);
                             addedDocRef.UpdateAsync("url", mapRef.Path);
+                            data.Dispose();
                         }
                     });
             }
@@ -391,7 +393,7 @@ public class ARWorldMapController : MonoBehaviour
 
         // db.Collection("maps").Document().SetAsync(docData);
 
-        data.Dispose();
+        
         worldMap.Dispose();
         Log(string.Format("ARWorldMap written to {0}", path));
 
