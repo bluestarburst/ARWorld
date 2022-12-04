@@ -282,6 +282,7 @@ public class ARWorldMapController : MonoBehaviour
         // turn data into JSON and send to server
         var json = JsonUtility.ToJson(data);
 
+    Debug.Log("JSON: " + json);
 
         api.sendMapIOS(json);
         Debug.Log("Sent map to server");
