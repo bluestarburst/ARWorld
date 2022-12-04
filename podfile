@@ -1,0 +1,25 @@
+source 'https://cdn.cocoapods.org/'
+platform :ios, '12.0'
+
+workspace 'unitysandbox'
+project '../sandbox/sandbox.xcodeproj'
+project 'Unity-Iphone.xcodeproj'
+
+def sharedpod
+  use_frameworks! :linkage => :dynamic
+  pod 'Firebase/Analytics', '10.1.0'
+  pod 'Firebase/Auth', '10.1.0'
+  pod 'Firebase/Core', '10.1.0'
+  pod 'Firebase/Firestore', '10.1.0'
+end
+target 'UnityFramework' do
+  project 'Unity-Iphone.xcodeproj'
+  sharedpod
+end
+target 'Unity-iPhone' do
+end
+target 'sandbox' do
+  project '../sandbox/sandbox.xcodeproj'
+  sharedpod
+end
+use_frameworks! :linkage => :dynamic
