@@ -338,7 +338,7 @@ public class ARWorldMapController : MonoBehaviour
                         if (task.IsFaulted || task.IsCanceled)
                         {
                             Debug.Log(task.Exception.ToString());
-                            data.Dispose();
+                            // data.Dispose();
                             // Uh-oh, an error occurred!
                         }
                         else
@@ -350,7 +350,7 @@ public class ARWorldMapController : MonoBehaviour
                             Debug.Log("md5 hash = " + md5Hash);
                             addedDocRef.UpdateAsync("md5", md5Hash);
                             addedDocRef.UpdateAsync("url", mapRef.Path);
-                            data.Dispose();
+                            // data.Dispose();
                         }
                     });
             }
