@@ -184,7 +184,7 @@ public class ARWorldMapController : MonoBehaviour
 #if UNITY_IOS
     IEnumerator Save()
     {
-        var sessionSubsystem = (ARKitSessionSubsystem) m_ARSession.subsystem;
+        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
         if (sessionSubsystem == null)
         {
             Log("No session subsystem available. Could not save.");
@@ -206,12 +206,12 @@ public class ARWorldMapController : MonoBehaviour
         var worldMap = request.GetWorldMap();
         request.Dispose();
 
-        SaveAndDisposeWorldMap (worldMap);
+        SaveAndDisposeWorldMap(worldMap);
     }
 
     IEnumerator Load()
     {
-        var sessionSubsystem = (ARKitSessionSubsystem) m_ARSession.subsystem;
+        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
         if (sessionSubsystem == null)
         {
             Log("No session subsystem available. Could not load.");
@@ -234,7 +234,7 @@ public class ARWorldMapController : MonoBehaviour
         while (bytesRemaining > 0)
         {
             var bytes = binaryReader.ReadBytes(bytesPerFrame);
-            allBytes.AddRange (bytes);
+            allBytes.AddRange(bytes);
             bytesRemaining -= bytesPerFrame;
             yield return null;
         }
@@ -257,7 +257,7 @@ public class ARWorldMapController : MonoBehaviour
         }
 
         Log("Apply ARWorldMap to current session.");
-        sessionSubsystem.ApplyWorldMap (worldMap);
+        sessionSubsystem.ApplyWorldMap(worldMap);
     }
 
     void SaveAndDisposeWorldMap(ARWorldMap worldMap)
@@ -270,24 +270,26 @@ public class ARWorldMapController : MonoBehaviour
         var writer = new BinaryWriter(file);
         writer.Write(data.ToArray());
         writer.Close();
-        
-        
+
+
         data.Dispose();
         worldMap.Dispose();
         Log(string.Format("ARWorldMap written to {0}", path));
 
 #if UNITY_IOS
-        if (Application.platform == RuntimePlatform.IPhonePlayer) {
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            api.sendMapIOS("this is a map");
             // turn data into a byte array
             byte[] bytes = data.ToArray();
             // turn byte array into JSON string
             string json = JsonUtility.ToJson(bytes);
             // send JSON string to Unity
-
+            
             api.sendMapIOS(json);
             Debug.Log("Sent map to server");
             HostNativeAPI.saveMap("this is a map");
-            api.sendMapIOS("this is a map");
+
         }
 #endif
     }
@@ -359,7 +361,7 @@ public class ARWorldMapController : MonoBehaviour
 
 
 #if UNITY_IOS
-        var sessionSubsystem = (ARKitSessionSubsystem) m_ARSession.subsystem;
+        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
 #else
         XRSessionSubsystem sessionSubsystem = null;
 #endif

@@ -92,6 +92,7 @@ public class API : MonoBehaviour
                 break;
             case "save-map":
                 _SaveMap(serializedMessage);
+                // HostNativeAPI.saveMap("hehehe");
                 break;
             case "load-map":
                 _LoadMap(serializedMessage);
@@ -104,6 +105,7 @@ public class API : MonoBehaviour
 
     public void sendMapIOS(string map)
     {
+        HostNativeAPI.saveMap("hehehe");
         HostNativeAPI.saveMap(map);
     }
 
