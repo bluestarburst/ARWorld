@@ -305,13 +305,7 @@ public class ARWorldMapController : MonoBehaviour
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
-        Dictionary<string, object> docData = new Dictionary<string, object>
-        {
-            { "location", location },
-            { "altitude", 0 },
-            { "creator", "bryant" },
-            { "timestamp", DateTime.Now }
-        };
+
 
         DocumentReference addedDocRef = db.Collection("maps").Document();
 
@@ -337,7 +331,16 @@ public class ARWorldMapController : MonoBehaviour
         });
 
 
-        await addedDocRef.UpdateAsync(docData).ContinueWith(task =>
+        Dictionary<string, object> docData = new Dictionary<string, object>
+        {
+            { "location", location },
+            { "altitude", 0 },
+            { "creator", "bryant" },
+            { "timestamp", DateTime.Now },
+            { "url", mapRef.Path }
+        };
+
+        await addedDocRef.SetAsync(docData).ContinueWith(task =>
         {
             if (task.IsFaulted)
             {
@@ -346,6 +349,7 @@ public class ARWorldMapController : MonoBehaviour
             else
             {
                 Debug.Log("Document added with ID: " + addedDocRef.Id);
+
 
 
             }
