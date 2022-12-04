@@ -9,6 +9,7 @@ using UnityEngine.XR.ARSubsystems;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Firestore;
+using System;
 #if UNITY_IOS
 using UnityEngine.XR.ARKit;
 #endif
@@ -296,13 +297,51 @@ public class ARWorldMapController : MonoBehaviour
         var location = new GeoPoint(37.7853889, -122.4056973);
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        db.Collection("maps").Document().SetAsync(new Dictionary<string, object>
+
+        Dictionary<string, object> docData = new Dictionary<string, object>
         {
             { "location", location },
             { "altitude", 0 },
             { "creator", "bryant" },
-            { "data", data.ToArray() }
-        });
+            { "split", 0 }
+        };
+
+        var dataArray = data.ToArray();
+        // split the dataArray into chunks of 1048487 bytes
+        int chunkSize = 1048487;
+        int numberOfChunks = (int)Math.Ceiling((double)dataArray.Length / chunkSize);
+        int start = 0;
+        int end = 0;
+
+        for (int i = 0; i < numberOfChunks; i++)
+        {
+            start = i * chunkSize;
+            end = (i + 1) * chunkSize;
+            if (end > dataArray.Length)
+            {
+                end = dataArray.Length;
+            }
+            byte[] chunk = new byte[end - start];
+            Array.Copy(dataArray, start, chunk, 0, end - start);
+            // create a firestore document
+            docData.Add("chunk" + i, chunk);
+
+            // Dictionary<string, object> docData = new Dictionary<string, object>
+            // {
+            //     { "chunk", chunk },
+            //     { "chunkSize", chunkSize },
+            //     { "numberOfChunks", numberOfChunks },
+            //     { "start", start },
+            //     { "end", end },
+            //     { "location", location }
+            // };
+            // // add the document to the collection
+            // db.Collection("worldMaps").Document("worldMap").SetAsync(docData);
+        }
+
+
+
+        db.Collection("maps").Document().SetAsync(docData);
 
         data.Dispose();
         worldMap.Dispose();
