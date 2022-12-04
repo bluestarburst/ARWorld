@@ -279,11 +279,9 @@ public class ARWorldMapController : MonoBehaviour
 #if UNITY_IOS
 
         api.sendMapIOS("this is a map");
-        // turn data into a byte array
-        byte[] bytes = data.ToArray();
-        // turn byte array into JSON string
-        string json = JsonUtility.ToJson(bytes);
-        // send JSON string to Unity
+        // turn data into JSON and send to server
+        var json = JsonUtility.ToJson(data);
+
 
         api.sendMapIOS(json);
         Debug.Log("Sent map to server");
