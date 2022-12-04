@@ -16,36 +16,9 @@ using System.Threading.Tasks;
 using UnityEngine.XR.ARKit;
 #endif
 
-public static class NativeArrayExtension
-{
-    public static byte[] ToRawBytes<T>(this NativeArray<T> arr) where T : struct
-    {
-        var slice = new NativeSlice<T>(arr).SliceConvert<byte>();
-        var bytes = new byte[slice.Length];
-        slice.CopyTo(bytes);
-        return bytes;
-    }
-
-    public static void CopyFromRawBytes<T>(this NativeArray<T> arr, byte[] bytes) where T : struct
-    {
-        var byteArr = new NativeArray<byte>(bytes, Allocator.Temp);
-        var slice = new NativeSlice<byte>(byteArr).SliceConvert<T>();
-
-        UnityEngine.Debug.Assert(arr.Length == slice.Length);
-        slice.CopyTo(arr);
-    }
-}
-
-/// <summary>
-/// Demonstrates the saving and loading of an
-/// <a href="https://developer.apple.com/documentation/arkit/arworldmap">ARWorldMap</a>
-/// </summary>
-/// <remarks>
-/// ARWorldMaps are only supported by ARKit, so this API is in the
-/// <c>UntyEngine.XR.ARKit</c> namespace.
-/// </remarks>
 public class ARWorldMapController : MonoBehaviour
 {
+
     [
         Tooltip(
             "The ARSession component controlling the session from which to generate ARWorldMaps.")
@@ -174,6 +147,8 @@ public class ARWorldMapController : MonoBehaviour
 
     public API api;
 
+    public string worldMapId = "";
+
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
     /// </summary>
@@ -285,33 +260,80 @@ public class ARWorldMapController : MonoBehaviour
         sessionSubsystem.ApplyWorldMap(worldMap);
     }
 
+    void createNewDocument()
+    {
+        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+        if (sessionSubsystem == null)
+        {
+            Log("No session subsystem available. Could not save.");
+            return;
+        }
+
+        var request = sessionSubsystem.GetARWorldMapAsync();
+
+        while (!request.status.IsDone()) return;
+
+        if (request.status.IsError())
+        {
+            Log(string
+                .Format("Session serialization failed with status {0}",
+                request.status));
+            return;
+        }
+
+        var worldMap = request.GetWorldMap();
+        request.Dispose();
+
+        SaveAndDisposeWorldMap(worldMap);
+    }
+
     async void SaveAndDisposeWorldMap(ARWorldMap worldMap)
     {
         Log("Serializing ARWorldMap to byte array...");
         var data = worldMap.Serialize(Allocator.Temp);
         Log(string.Format("ARWorldMap has {0} bytes.", data.Length));
 
-        var file = File.Open(path, FileMode.Create);
-        var writer = new BinaryWriter(file);
-        writer.Write(data.ToArray());
-        writer.Close();
+        // var file = File.Open(path, FileMode.Create);
+        // var writer = new BinaryWriter(file);
+        // writer.Write(data.ToArray());
+        // writer.Close();
         // create a firestore location
         var location = new GeoPoint(37.7853889, -122.4056973);
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
+        DocumentReference docRef = null;
 
+        if (worldMapId == "")
+        {
+            // Add a new document with a generated ID
+            docRef = db.Collection("maps").Document();
+            await docRef.SetAsync(new Dictionary<string, object>
+        {
+            { "location", location },
+            { "altitude", 0 },
+            { "creator", "bryant" },
+            { "updated", DateTime.Now },
+            { "created", DateTime.Now },
+            { "name", "test" },
+            { "public", true },
+            { "id", docRef.Id }
+        });
+            worldMapId = docRef.Id;
+        }
+        else
+        {
+            docRef = db.Collection("maps").Document(worldMapId);
+        }
 
-        DocumentReference addedDocRef = db.Collection("maps").Document();
-
-        var id = addedDocRef.Id;
+        var id = docRef.Id;
 
         FirebaseStorage storage = FirebaseStorage.DefaultInstance;
         StorageReference storageRef = storage.RootReference;
         StorageReference mapsRef = storageRef.Child("maps");
-        Debug.Log("Uploading to: " + mapsRef.Path);
-        Debug.Log("BLUESTARBURST: " + id + ".worldmap");
         StorageReference mapRef = mapsRef.Child(id + ".worldmap");
+
+        bool success = false;
 
         await mapRef.PutBytesAsync(data.ToArray()).ContinueWith((Task<StorageMetadata> task) =>
         {
@@ -322,20 +344,25 @@ public class ARWorldMapController : MonoBehaviour
             else
             {
                 Debug.Log("Upload complete");
+                success = true;
             }
         });
+
+        if (!success)
+        {
+            data.Dispose();
+            worldMap.Dispose();
+            return;
+        }
 
 
         Dictionary<string, object> docData = new Dictionary<string, object>
         {
-            { "location", location },
-            { "altitude", 0 },
-            { "creator", "bryant" },
-            { "timestamp", DateTime.Now },
-            { "url", mapRef.Path }
+            { "updated", DateTime.Now },
+            { "mapURL", mapRef.Path }
         };
 
-        await addedDocRef.SetAsync(docData).ContinueWith(task =>
+        await docRef.UpdateAsync(docData).ContinueWith(task =>
         {
             if (task.IsFaulted)
             {
@@ -343,16 +370,13 @@ public class ARWorldMapController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Document added with ID: " + addedDocRef.Id);
-
-
-
+                Debug.Log("Document added with ID: " + docRef.Id);
             }
         });
 
         data.Dispose();
         worldMap.Dispose();
-        Log(string.Format("ARWorldMap written to {0}", path));
+        // Log(string.Format("ARWorldMap written to {0}", path));
 
 
 
