@@ -285,6 +285,7 @@ public class ARWorldMapController : MonoBehaviour
     Debug.Log("JSON: " + json);
 
         api.sendMapIOS(json);
+        Log("JSON: " + json);
         Debug.Log("Sent map to server");
         HostNativeAPI.saveMap("this is a map");
 
