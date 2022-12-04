@@ -285,6 +285,38 @@ public class ARWorldMapController : MonoBehaviour
         sessionSubsystem.ApplyWorldMap(worldMap);
     }
 
+    void updateMapDataFirestore(string id, byte[] data)
+    {
+        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+        StorageReference storageRef = storage.RootReference;
+        StorageReference mapsRef = storageRef.Child("maps");
+        Debug.Log("Uploading to: " + mapsRef.Path);
+        Debug.Log("BLUESTARBURST: " + id + ".worldmap");
+        StorageReference mapRef = mapsRef.Child(id + ".worldmap");
+
+        mapRef.PutBytesAsync(data)
+        .ContinueWith((Task<StorageMetadata> task) =>
+            {
+                if (task.IsFaulted || task.IsCanceled)
+                {
+                    Debug.Log(task.Exception.ToString());
+                    // data.Dispose();
+                    // Uh-oh, an error occurred!
+                }
+                else
+                {
+                    // Metadata contains file metadata such as size, content-type, and md5hash.
+                    StorageMetadata metadata = task.Result;
+                    string md5Hash = metadata.Md5Hash;
+                    Debug.Log("Finished uploading...");
+                    Debug.Log("md5 hash = " + md5Hash);
+                    // addedDocRef.UpdateAsync("md5", md5Hash);
+                    // addedDocRef.UpdateAsync("url", mapRef.Path);
+                    // data.Dispose();
+                }
+            });
+    }
+
     void SaveAndDisposeWorldMap(ARWorldMap worldMap)
     {
         Log("Serializing ARWorldMap to byte array...");
@@ -324,35 +356,9 @@ public class ARWorldMapController : MonoBehaviour
             else
             {
                 Debug.Log("Document added with ID: " + addedDocRef.Id);
+                updateMapDataFirestore(addedDocRef.Id, data.ToArray());
 
-                FirebaseStorage storage = FirebaseStorage.DefaultInstance;
-                StorageReference storageRef = storage.RootReference;
-                StorageReference mapsRef = storageRef.Child("maps");
-                Debug.Log("Uploading to: " + mapsRef.Path);
-                Debug.Log("BLUESTARBURST: " + addedDocRef.Id + ".worldmap");
-                StorageReference mapRef = mapsRef.Child(addedDocRef.Id + ".worldmap");
 
-                mapRef.PutBytesAsync(data.ToArray())
-                .ContinueWith((Task<StorageMetadata> task) =>
-                    {
-                        if (task.IsFaulted || task.IsCanceled)
-                        {
-                            Debug.Log(task.Exception.ToString());
-                            // data.Dispose();
-                            // Uh-oh, an error occurred!
-                        }
-                        else
-                        {
-                            // Metadata contains file metadata such as size, content-type, and md5hash.
-                            StorageMetadata metadata = task.Result;
-                            string md5Hash = metadata.Md5Hash;
-                            Debug.Log("Finished uploading...");
-                            Debug.Log("md5 hash = " + md5Hash);
-                            addedDocRef.UpdateAsync("md5", md5Hash);
-                            addedDocRef.UpdateAsync("url", mapRef.Path);
-                            // data.Dispose();
-                        }
-                    });
             }
         });
 
@@ -395,7 +401,7 @@ public class ARWorldMapController : MonoBehaviour
 
         // db.Collection("maps").Document().SetAsync(docData);
 
-        
+
         worldMap.Dispose();
         Log(string.Format("ARWorldMap written to {0}", path));
 
