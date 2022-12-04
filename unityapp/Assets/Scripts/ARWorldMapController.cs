@@ -299,41 +299,61 @@ public class ARWorldMapController : MonoBehaviour
         var location = new GeoPoint(37.7853889, -122.4056973);
 
 
-        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
-        StorageReference storageRef = storage.RootReference;
-        StorageReference mapsRef = storageRef.Child("maps");
-        StorageReference mapRef = mapsRef.Child("thing.map");
 
 
-        mapRef.PutBytesAsync(data.ToArray())
-        .ContinueWith((Task<StorageMetadata> task) =>
+
+
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+
+        Dictionary<string, object> docData = new Dictionary<string, object>
+        {
+            { "location", location },
+            { "altitude", 0 },
+            { "creator", "bryant" },
+            { "data", data }
+        };
+
+        DocumentReference addedDocRef = db.Collection("maps").Document()
+        
+        addedDocRef.SetAsync(docData).ContinueWith(task =>
+        {
+            if (task.IsFaulted)
             {
-                if (task.IsFaulted || task.IsCanceled)
-                {
-                    Debug.Log(task.Exception.ToString());
-                    // Uh-oh, an error occurred!
-                }
-                else
-                {
-                    // Metadata contains file metadata such as size, content-type, and md5hash.
-                    StorageMetadata metadata = task.Result;
-                    string md5Hash = metadata.Md5Hash;
-                    Debug.Log("Finished uploading...");
-                    Debug.Log("md5 hash = " + md5Hash);
-                }
-            });
+                Debug.LogError("Error adding document: " + task.Exception);
+            }
+            else
+            {
+                Debug.Log("Document added with ID: " + addedDocRef.Id);
+                FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+                StorageReference storageRef = storage.RootReference;
+                StorageReference mapsRef = storageRef.Child("maps");
+                StorageReference mapRef = mapsRef.Child(addedDocRef.Id + ".map");
 
 
+                mapRef.PutBytesAsync(data.ToArray())
+                .ContinueWith((Task<StorageMetadata> task) =>
+                    {
+                        if (task.IsFaulted || task.IsCanceled)
+                        {
+                            Debug.Log(task.Exception.ToString());
+                            // Uh-oh, an error occurred!
+                        }
+                        else
+                        {
+                            // Metadata contains file metadata such as size, content-type, and md5hash.
+                            StorageMetadata metadata = task.Result;
+                            string md5Hash = metadata.Md5Hash;
+                            Debug.Log("Finished uploading...");
+                            Debug.Log("md5 hash = " + md5Hash);
+                            addedDocRef.UpdateAsync("md5", md5Hash);
+                            addedDocRef.UpdateAsync("url", mapRef.Path);
+                        }
+                    });
+            }
+        });
+        Debug.Log("id = " + id);
 
-        // FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
-        // Dictionary<string, object> docData = new Dictionary<string, object>
-        // {
-        //     { "location", location },
-        //     { "altitude", 0 },
-        //     { "creator", "bryant" },
-        //     { "split", 0 }
-        // };
 
         // var dataArray = data.ToArray();
         // // split the dataArray into chunks of 1048487 bytes
