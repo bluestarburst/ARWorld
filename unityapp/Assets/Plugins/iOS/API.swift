@@ -13,29 +13,30 @@ struct MessageWithData<T: Encodable>: Encodable {
 ///   - Message passing is done via serialized JSON
 ///   - Message passing is done via function pointer exchanged between Unity <> Native
 public class UnityAPI: NativeCallsProtocol {
-
+    
     // Name of the gameobject that receives the
     // messages from the native side.
     private static let API_GAMEOBJECT = "APIEntryPoint"
     // Name of the method to call when sending
     // messages from the native side.
     private static let API_MESSAGE_FUNCTION = "ReceiveMessage"
-
+    
     public weak var communicator: UnityCommunicationProtocol!
     public var ready: () -> () = {}
-
+    public var getPhoneResult: (String) -> () = { _ in }
+    
     /**
-        Function pointers to static functions declared in Unity
+     Function pointers to static functions declared in Unity
      */
-
+    
     private var testCallback: TestDelegate!
-
+    
     public init() {}
-
+    
     /**
      * Public API for developers.
      */
-
+    
     /// Friendly wrapper arround the message passing system.
     ///
     /// - Note:
@@ -45,11 +46,11 @@ public class UnityAPI: NativeCallsProtocol {
         let data = [r, g, b]
         sendMessage(type: "change-color", data: data)
     }
-
+    
     public func saveMap() {
         sendMessage(type: "save-map", data: true)
     }
-
+    
     public func loadMap() {
         sendMessage(type: "load-map", data: true)
     }
@@ -57,15 +58,15 @@ public class UnityAPI: NativeCallsProtocol {
     public func phoneLogin(cc: String, ph: String) {
         sendMessage(type: "phone-login", data: [cc,ph])
     }
-
+    
     public func test(_ value: String) {
         self.testCallback(value)
     }
-
+    
     /**
      * Internal API.
      */
-
+    
     public func onUnityStateChange(_ state: String) {
         switch (state) {
         case "ready":
@@ -74,20 +75,21 @@ public class UnityAPI: NativeCallsProtocol {
             return
         }
     }
-
+    
     public func onSetTestDelegate(_ delegate: TestDelegate!) {
         self.testCallback = delegate
     }
-
+    
     public func onSaveMap(_ map: String) {
         // self.communicator.saveMap(map)
         print("onSaveMap: \(map)")
     }
-
+    
     public func onPhoneResponse(_ response: String) {
         print("onPhoneResponse: \(response)")
+        self.getPhoneResult(response)
     }
-
+    
     // public func saveARWorldMap(_ data: T) {
     //     // let message = MessageWithData(type: "save-ar-world-map", data: data)
     //     // let encoder = JSONEncoder()
@@ -95,11 +97,11 @@ public class UnityAPI: NativeCallsProtocol {
     //     // let jsonString = String(data: jsonData, encoding: .utf8)!
     //     // self.communicator.sendMessage(jsonString)
     // }
-
+    
     /**
      * Private  API.
      */
-
+    
     /// Internal function sending message to Unity.
     private func sendMessage<T: Encodable>(type: String, data: T) {
         let message = MessageWithData(type: type, data: data)
