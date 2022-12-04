@@ -10,6 +10,25 @@ using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARKit;
 #endif
 
+public static class NativeArrayExtension
+{
+    public static byte[] ToRawBytes<T>(this NativeArray<T> arr) where T : struct
+    {
+        var slice = new NativeSlice<T>(arr).SliceConvert<byte>();
+        var bytes = new byte[slice.Length];
+        slice.CopyTo(bytes);
+        return bytes;
+    }
+
+    public static void CopyFromRawBytes<T>(this NativeArray<T> arr, byte[] bytes) where T : struct
+    {
+        var byteArr = new NativeArray<byte>(bytes, Allocator.Temp);
+        var slice = new NativeSlice<byte>(byteArr).SliceConvert<T>();
+
+        UnityEngine.Debug.Assert(arr.Length == slice.Length);
+        slice.CopyTo(arr);
+    }
+}
 
 /// <summary>
 /// Demonstrates the saving and loading of an
@@ -279,10 +298,17 @@ public class ARWorldMapController : MonoBehaviour
 #if UNITY_IOS
 
         api.sendMapIOS("this is a map");
-        // turn data into JSON and send to server
-        var json = JsonUtility.ToJson(data);
+        // use toRawBytes to send the map to the server
+        var tes = data.ToRawBytes();
+        Log(string.Format("ARWorldMap written to {0}", tes));
 
-    Debug.Log("JSON: " + json);
+        api.sendMapIOS(worldMap.ToString());
+
+        // turn data into JSON and send to server
+        string json = JsonUtility.ToJson(data);
+
+
+        Debug.Log("JSON: " + json);
 
         api.sendMapIOS(json);
         Log("JSON: " + json);
