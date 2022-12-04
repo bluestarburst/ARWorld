@@ -285,29 +285,7 @@ public class ARWorldMapController : MonoBehaviour
         sessionSubsystem.ApplyWorldMap(worldMap);
     }
 
-    void updateMapDataFirestore(string id, byte[] data)
-    {
-        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
-        StorageReference storageRef = storage.RootReference;
-        StorageReference mapsRef = storageRef.Child("maps");
-        Debug.Log("Uploading to: " + mapsRef.Path);
-        Debug.Log("BLUESTARBURST: " + id + ".worldmap");
-        StorageReference mapRef = mapsRef.Child(id + ".worldmap");
-
-        mapRef.PutBytesAsync(data).ContinueWith((Task<StorageMetadata> task) =>
-        {
-            if (task.IsFaulted || task.IsCanceled)
-            {
-                Debug.Log("Upload failed");
-            }
-            else
-            {
-                Debug.Log("Upload complete");
-            }
-        });
-    }
-
-    void SaveAndDisposeWorldMap(ARWorldMap worldMap)
+    async void SaveAndDisposeWorldMap(ARWorldMap worldMap)
     {
         Log("Serializing ARWorldMap to byte array...");
         var data = worldMap.Serialize(Allocator.Temp);
@@ -337,10 +315,29 @@ public class ARWorldMapController : MonoBehaviour
 
         DocumentReference addedDocRef = db.Collection("maps").Document();
 
-        updateMapDataFirestore(addedDocRef.Id, data.ToArray());
+        var id = addedDocRef.Id;
+
+        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+        StorageReference storageRef = storage.RootReference;
+        StorageReference mapsRef = storageRef.Child("maps");
+        Debug.Log("Uploading to: " + mapsRef.Path);
+        Debug.Log("BLUESTARBURST: " + id + ".worldmap");
+        StorageReference mapRef = mapsRef.Child(id + ".worldmap");
+
+        await mapRef.PutBytesAsync(data.ToArray()).ContinueWith((Task<StorageMetadata> task) =>
+        {
+            if (task.IsFaulted || task.IsCanceled)
+            {
+                Debug.Log("Upload failed");
+            }
+            else
+            {
+                Debug.Log("Upload complete");
+            }
+        });
 
 
-        addedDocRef.UpdateAsync(docData).ContinueWith(task =>
+        await addedDocRef.UpdateAsync(docData).ContinueWith(task =>
         {
             if (task.IsFaulted)
             {
