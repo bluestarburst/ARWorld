@@ -147,6 +147,8 @@ public class ARWorldMapController : MonoBehaviour
         }
     }
 
+    public API api;
+
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
     /// </summary>
@@ -278,7 +280,8 @@ public class ARWorldMapController : MonoBehaviour
         if (Application.platform == RuntimePlatform.IPhonePlayer) {
             // turn data into a byte array
             byte[] bytes = data.ToArray();
-            HostNativeAPI.saveMap("this is a map");
+            api.sendMapIOS("io hehehes")
+            // HostNativeAPI.saveMap("this is a map");
         }
 #endif
     }

@@ -92,7 +92,6 @@ public class API : MonoBehaviour
                 break;
             case "save-map":
                 _SaveMap(serializedMessage);
-                HostNativeAPI.saveMap("hehehe");
                 break;
             case "load-map":
                 _LoadMap(serializedMessage);
@@ -101,6 +100,11 @@ public class API : MonoBehaviour
                 Debug.LogError("Unrecognized message '" + header.type + "'");
                 break;
         }
+    }
+
+    public void sendMapIOS(string map)
+    {
+        HostNativeAPI.saveMap(map);
     }
 
     private void _UpdateCubeColor(string serialized)
