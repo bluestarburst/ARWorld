@@ -9,6 +9,8 @@ using UnityEngine.XR.ARSubsystems;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Firestore;
+using Firebase.Database;
+using Firebase.Storage;
 using System;
 #if UNITY_IOS
 using UnityEngine.XR.ARKit;
@@ -296,52 +298,64 @@ public class ARWorldMapController : MonoBehaviour
         // create a firestore location
         var location = new GeoPoint(37.7853889, -122.4056973);
 
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
-        Dictionary<string, object> docData = new Dictionary<string, object>
-        {
-            { "location", location },
-            { "altitude", 0 },
-            { "creator", "bryant" },
-            { "split", 0 }
-        };
-
-        var dataArray = data.ToArray();
-        // split the dataArray into chunks of 1048487 bytes
-        int chunkSize = 1048487;
-        int numberOfChunks = (int)Math.Ceiling((double)dataArray.Length / chunkSize);
-        int start = 0;
-        int end = 0;
-
-        for (int i = 0; i < numberOfChunks; i++)
-        {
-            start = i * chunkSize;
-            end = (i + 1) * chunkSize;
-            if (end > dataArray.Length)
-            {
-                end = dataArray.Length;
-            }
-            byte[] chunk = new byte[end - start];
-            Array.Copy(dataArray, start, chunk, 0, end - start);
-            // create a firestore document
-            docData.Add("chunk" + i, chunk);
-
-            // Dictionary<string, object> docData = new Dictionary<string, object>
-            // {
-            //     { "chunk", chunk },
-            //     { "chunkSize", chunkSize },
-            //     { "numberOfChunks", numberOfChunks },
-            //     { "start", start },
-            //     { "end", end },
-            //     { "location", location }
-            // };
-            // // add the document to the collection
-            // db.Collection("worldMaps").Document("worldMap").SetAsync(docData);
-        }
+        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+        StorageReference storageRef = storage.GetReferenceFromUrl("gs://arworldmap-1e3f6.appspot.com");
+        StorageReference riversRef = storageRef.Child("worldmap");
 
 
 
-        db.Collection("maps").Document().SetAsync(docData);
+
+
+
+
+
+        // FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+
+        // Dictionary<string, object> docData = new Dictionary<string, object>
+        // {
+        //     { "location", location },
+        //     { "altitude", 0 },
+        //     { "creator", "bryant" },
+        //     { "split", 0 }
+        // };
+
+        // var dataArray = data.ToArray();
+        // // split the dataArray into chunks of 1048487 bytes
+        // int chunkSize = 1048487;
+        // int numberOfChunks = (int)Math.Ceiling((double)dataArray.Length / chunkSize);
+        // int start = 0;
+        // int end = 0;
+
+        // for (int i = 0; i < numberOfChunks; i++)
+        // {
+        //     start = i * chunkSize;
+        //     end = (i + 1) * chunkSize;
+        //     if (end > dataArray.Length)
+        //     {
+        //         end = dataArray.Length;
+        //     }
+        //     byte[] chunk = new byte[end - start];
+        //     Array.Copy(dataArray, start, chunk, 0, end - start);
+        //     // create a firestore document
+        //     docData.Add("chunk" + i, chunk);
+
+        //     // Dictionary<string, object> docData = new Dictionary<string, object>
+        //     // {
+        //     //     { "chunk", chunk },
+        //     //     { "chunkSize", chunkSize },
+        //     //     { "numberOfChunks", numberOfChunks },
+        //     //     { "start", start },
+        //     //     { "end", end },
+        //     //     { "location", location }
+        //     // };
+        //     // // add the document to the collection
+        //     // db.Collection("worldMaps").Document("worldMap").SetAsync(docData);
+        // }
+
+
+
+        // db.Collection("maps").Document().SetAsync(docData);
 
         data.Dispose();
         worldMap.Dispose();
