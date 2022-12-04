@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using Firebase;
+using Firebase.Auth;
+using Firebase.Firestore;
 #if UNITY_IOS
 using UnityEngine.XR.ARKit;
 #endif
@@ -295,28 +298,18 @@ public class ARWorldMapController : MonoBehaviour
         worldMap.Dispose();
         Log(string.Format("ARWorldMap written to {0}", path));
 
-#if UNITY_IOS
+        // create a firestore location
+        var location = new GeoPoint(37.7853889, -122.4056973);
 
-        api.sendMapIOS("this is a map");
-        // use toRawBytes to send the map to the server
-        var tes = data.ToRawBytes();
-        Log(string.Format("ARWorldMap written to {0}", tes));
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        db.Collection("maps").Document().SetAsync(new Dictionary<string, object>
+        {
+            { "location", location },
+            { "altitude", 0 },
+            { "creator", "bryant" },
+            { "data", data.ToArray() }
+        });
 
-        api.sendMapIOS(worldMap.ToString());
-
-        // turn data into JSON and send to server
-        string json = JsonUtility.ToJson(data);
-
-
-        Debug.Log("JSON: " + json);
-
-        api.sendMapIOS(json);
-        Log("JSON: " + json);
-        Debug.Log("Sent map to server");
-        HostNativeAPI.saveMap("this is a map");
-
-
-#endif
     }
 #endif
 
