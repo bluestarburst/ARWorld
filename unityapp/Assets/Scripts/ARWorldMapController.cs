@@ -11,6 +11,7 @@ using Firebase.Auth;
 using Firebase.Firestore;
 using Firebase.Storage;
 using System;
+using System.Threading.Tasks;
 #if UNITY_IOS
 using UnityEngine.XR.ARKit;
 #endif
@@ -299,13 +300,28 @@ public class ARWorldMapController : MonoBehaviour
 
 
         FirebaseStorage storage = FirebaseStorage.DefaultInstance;
-        StorageReference storageRef = storage.GetReferenceFromUrl("gs://arworldmap-1e3f6.appspot.com");
-        StorageReference riversRef = storageRef.Child("worldmap");
+        StorageReference storageRef = storage.RootReference;
+        StorageReference mapsRef = storageRef.Child("maps");
+        StorageReference mapRef = mapsRef.Child("thing.map");
 
 
-
-
-
+        mapRef.PutBytesAsync(data.ToArray())
+        .ContinueWith((Task<StorageMetadata> task) =>
+            {
+                if (task.IsFaulted || task.IsCanceled)
+                {
+                    Debug.Log(task.Exception.ToString());
+                    // Uh-oh, an error occurred!
+                }
+                else
+                {
+                    // Metadata contains file metadata such as size, content-type, and md5hash.
+                    StorageMetadata metadata = task.Result;
+                    string md5Hash = metadata.Md5Hash;
+                    Debug.Log("Finished uploading...");
+                    Debug.Log("md5 hash = " + md5Hash);
+                }
+            });
 
 
 
