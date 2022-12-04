@@ -53,6 +53,10 @@ public class UnityAPI: NativeCallsProtocol {
     public func loadMap() {
         sendMessage(type: "load-map", data: true)
     }
+    
+    public func phoneLogin(cc: String, ph: String) {
+        sendMessage(type: "phone-login", data: [cc,ph])
+    }
 
     public func test(_ value: String) {
         self.testCallback(value)

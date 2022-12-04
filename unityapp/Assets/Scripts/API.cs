@@ -111,6 +111,11 @@ public class API : MonoBehaviour
 
     private void _UpdateCubeColor(string serialized)
     {
+        if (cube == null)
+        {
+            Debug.LogError("Cube is null");
+            return;
+        }
         var msg = JsonConvert.DeserializeObject<MessageWithData<float[]>>(serialized);
         if (msg.data != null && msg.data.Length >= 3)
         {
@@ -123,6 +128,11 @@ public class API : MonoBehaviour
 
     private void _SaveMap(string serialized)
     {
+        if (worldMapController == null)
+        {
+            Debug.LogError("WorldMapController is null");
+            return;
+        }
         var msg = JsonConvert.DeserializeObject<MessageWithData<bool>>(serialized);
         if (msg.data == true)
         {
@@ -133,6 +143,11 @@ public class API : MonoBehaviour
 
     private void _LoadMap(string serialized)
     {
+        if (worldMapController == null)
+        {
+            Debug.LogError("WorldMapController is null");
+            return;
+        }
         var msg = JsonConvert.DeserializeObject<MessageWithData<bool>>(serialized);
         if (msg.data == true)
         {
