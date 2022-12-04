@@ -307,7 +307,7 @@ public class ARWorldMapController : MonoBehaviour
             { "location", location },
             { "altitude", 0 },
             { "creator", "bryant" },
-            // { "data", data.ToArray() }
+            { "data", data }
         });
 
     }
