@@ -12,10 +12,11 @@
 		5818DC6E2937FCC000C8B794 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818DC6D2937FCC000C8B794 /* AuthView.swift */; };
 		5818DC8D293AED9E00C8B794 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818DC8C293AED9E00C8B794 /* LocationManager.swift */; };
 		5818DC8F293BEFF200C8B794 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818DC8E293BEFF200C8B794 /* FirebaseHandler.swift */; };
+		58ABF175293C6445000E5463 /* UnityFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E64BDA9025BAD700005368B4 /* UnityFramework.framework */; };
+		58ABF176293C6445000E5463 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E64BDA9025BAD700005368B4 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA56640B735077C0917E6B3C /* Pods_sandbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7419394128845C61C8174EFA /* Pods_sandbox.framework */; };
 		E61361FC25BA3CFA0005B57A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */; };
 		E61361FE25BA3D150005B57A /* UnityBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61361FD25BA3D150005B57A /* UnityBridge.swift */; };
-		E62A7ACA2773D326007CE3D6 /* UnityFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62A7AC92773D326007CE3D6 /* UnityFramework.framework */; };
-		E62A7ACB2773D326007CE3D6 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E62A7AC92773D326007CE3D6 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E62A7ACE2773E48A007CE3D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62A7ACD2773E48A007CE3D6 /* AppDelegate.swift */; };
 		E62A7AD02773E4DA007CE3D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62A7ACF2773E4DA007CE3D6 /* SceneDelegate.swift */; };
 		E62A7AD42773F6AC007CE3D6 /* UIWindowCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62A7AD32773F6AC007CE3D6 /* UIWindowCustom.swift */; };
@@ -25,13 +26,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E62A7ACC2773D326007CE3D6 /* Embed Frameworks */ = {
+		58ABF177293C6446000E5463 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E62A7ACB2773D326007CE3D6 /* UnityFramework.framework in Embed Frameworks */,
+				58ABF176293C6445000E5463 /* UnityFramework.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -49,6 +50,18 @@
 		5818DC812938065800C8B794 /* FirebaseInstallations.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseInstallations.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5818DC8C293AED9E00C8B794 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		5818DC8E293BEFF200C8B794 /* FirebaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
+		58ABF160293C618B000E5463 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58ABF163293C6192000E5463 /* FirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58ABF166293C61F7000E5463 /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalytics.xcframework; path = ../UnityBuild/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
+		58ABF169293C6200000E5463 /* FirebaseCoreInternal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCoreInternal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58ABF16C293C6206000E5463 /* FirebaseInstallations.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseInstallations.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58ABF16F293C639A000E5463 /* Pods_Unity_iPhone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Unity_iPhone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58ABF172293C6420000E5463 /* Pods_UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58ABF178293C6458000E5463 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58ABF17B293C6463000E5463 /* FirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7419394128845C61C8174EFA /* Pods_sandbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sandbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		962FD79AF99FB5FF1C8953EF /* Pods-sandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sandbox.release.xcconfig"; path = "Target Support Files/Pods-sandbox/Pods-sandbox.release.xcconfig"; sourceTree = "<group>"; };
+		CFC6308EA35B4E3B9FF27321 /* Pods-sandbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sandbox.debug.xcconfig"; path = "Target Support Files/Pods-sandbox/Pods-sandbox.debug.xcconfig"; sourceTree = "<group>"; };
 		E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E61361FD25BA3D150005B57A /* UnityBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnityBridge.swift; sourceTree = "<group>"; };
 		E62A7AC92773D326007CE3D6 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,16 +81,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E62A7ACA2773D326007CE3D6 /* UnityFramework.framework in Frameworks */,
+				58ABF175293C6445000E5463 /* UnityFramework.framework in Frameworks */,
+				DA56640B735077C0917E6B3C /* Pods_sandbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D716CE44D73206F6BCAA01B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CFC6308EA35B4E3B9FF27321 /* Pods-sandbox.debug.xcconfig */,
+				962FD79AF99FB5FF1C8953EF /* Pods-sandbox.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../UnityBuild/Pods;
+			sourceTree = "<group>";
+		};
 		E61361F525BA3AB40005B57A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58ABF17B293C6463000E5463 /* FirebaseAuth.framework */,
+				58ABF178293C6458000E5463 /* FirebaseCore.framework */,
+				58ABF172293C6420000E5463 /* Pods_UnityFramework.framework */,
+				58ABF16F293C639A000E5463 /* Pods_Unity_iPhone.framework */,
+				58ABF16C293C6206000E5463 /* FirebaseInstallations.framework */,
+				58ABF169293C6200000E5463 /* FirebaseCoreInternal.framework */,
+				58ABF166293C61F7000E5463 /* FirebaseAnalytics.xcframework */,
+				58ABF163293C6192000E5463 /* FirebaseAuth.framework */,
+				58ABF160293C618B000E5463 /* FirebaseCore.framework */,
 				5818DC7D2938065800C8B794 /* FirebaseAuth.framework */,
 				5818DC7E2938065800C8B794 /* FirebaseCore.framework */,
 				5818DC7F2938065800C8B794 /* FirebaseCoreInternal.framework */,
@@ -85,6 +118,7 @@
 				5818DC812938065800C8B794 /* FirebaseInstallations.framework */,
 				E62A7AC92773D326007CE3D6 /* UnityFramework.framework */,
 				E64BDA9025BAD700005368B4 /* UnityFramework.framework */,
+				7419394128845C61C8174EFA /* Pods_sandbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -96,6 +130,7 @@
 				E6DE818325BA36230019BED1 /* sandbox */,
 				E6DE818225BA36230019BED1 /* Products */,
 				E61361F525BA3AB40005B57A /* Frameworks */,
+				3D716CE44D73206F6BCAA01B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,18 +177,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6DE819025BA36240019BED1 /* Build configuration list for PBXNativeTarget "sandbox" */;
 			buildPhases = (
+				7D66A9D8A25517679D6685A6 /* [CP] Check Pods Manifest.lock */,
 				E6DE817D25BA36230019BED1 /* Sources */,
 				E6DE817E25BA36230019BED1 /* Frameworks */,
 				E6DE817F25BA36230019BED1 /* Resources */,
-				E62A7ACC2773D326007CE3D6 /* Embed Frameworks */,
+				58ABF177293C6446000E5463 /* Embed Frameworks */,
+				FD44F708EDDD54AB8FA1482F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = sandbox;
-			packageProductDependencies = (
-			);
 			productName = sandbox;
 			productReference = E6DE818125BA36230019BED1 /* sandbox.app */;
 			productType = "com.apple.product-type.application";
@@ -206,6 +241,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7D66A9D8A25517679D6685A6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-sandbox-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD44F708EDDD54AB8FA1482F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sandbox/Pods-sandbox-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sandbox/Pods-sandbox-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sandbox/Pods-sandbox-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E6DE817D25BA36230019BED1 /* Sources */ = {
@@ -345,6 +422,7 @@
 		};
 		E6DE819125BA36240019BED1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CFC6308EA35B4E3B9FF27321 /* Pods-sandbox.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -368,6 +446,7 @@
 		};
 		E6DE819225BA36240019BED1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 962FD79AF99FB5FF1C8953EF /* Pods-sandbox.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-//import Firebase
+import Firebase
 
 class LoginViewModel: ObservableObject {
     @Published var countryCode = "1"
@@ -40,39 +40,60 @@ class LoginViewModel: ObservableObject {
         }
         
         
-//        Auth.auth().settings?.isAppVerificationDisabledForTesting = true // false
-//
+                Auth.auth().settings?.isAppVerificationDisabledForTesting = true // false
+        //
         var newCountryCode = countryCode.replacingOccurrences(of: "+", with: "")
         print(newCountryCode)
-
+        
         var newPhNumber = phNumber.replacingOccurrences(of: "(", with: "")
         newPhNumber = newPhNumber.replacingOccurrences(of: ")", with: "")
         newPhNumber = newPhNumber.replacingOccurrences(of: "-", with: "")
         print(newPhNumber)
         
-        UnityBridge.getInstance().api.phoneLogin(cc: newCountryCode, ph: newPhNumber)
-//
-//        PhoneAuthProvider.provider().verifyPhoneNumber("+\(newCountryCode + newPhNumber)",uiDelegate: nil) {
-//            ID, err in
-//            if let error = err{
+//        UnityBridge.getInstance().api.getPhoneResult = {result in
+//            switch (result) {
+//            case "verify":
+//                withAnimation {
+//                    self.loading = false
+//                    self.phoneError = false
+//                    self.verificationError = false
+//                    self.isViewing = false
+//                    self.verifyScreen = true
+//                }
+//                break
+//            case "error":
 //                withAnimation {
 //                    self.loading = false
 //                    self.phoneError = true
 //                }
-//                return
-//            }
-//
-//            print(ID)
-//
-//            self.ID = ID!
-//            withAnimation {
-//                self.loading = false
-//                self.phoneError = false
-//                self.verificationError = false
-//                self.isViewing = false
-//                self.verifyScreen = true
+//                break
+//            default:
+//                print("strange")
 //            }
 //        }
+//        UnityBridge.getInstance().api.phoneLogin(cc: newCountryCode, ph: newPhNumber)
+        //
+                PhoneAuthProvider.provider().verifyPhoneNumber("+\(newCountryCode + newPhNumber)",uiDelegate: nil) {
+                    ID, err in
+                    if let error = err{
+                        withAnimation {
+                            self.loading = false
+                            self.phoneError = true
+                        }
+                        return
+                    }
+        
+                    print(ID)
+        
+                    self.ID = ID!
+                    withAnimation {
+                        self.loading = false
+                        self.phoneError = false
+                        self.verificationError = false
+                        self.isViewing = false
+                        self.verifyScreen = true
+                    }
+                }
     }
     
     func LoginUser() {
@@ -80,33 +101,33 @@ class LoginViewModel: ObservableObject {
             self.loading = true
         }
         self.initializing = true
-//        let credential = PhoneAuthProvider.provider().credential(withVerificationID: self.ID, verificationCode: self.verificationCode)
-//
-//        Auth.auth().signIn(with: credential, completion: { result, err in
-//            if err != nil {
-//                withAnimation {
-//                    self.loading = false
-//                    self.verificationError = true
-//                }
-//                return
-//            }
-//
-//            print("success")
-//
-//            //                DataHandler.shared.load()
-//            DataHandler.shared.getUID()
-//
-//            self.isLoggedIn = true
-//            
-//            withAnimation{
-//                self.loading = false
-//                self.verifyScreen = false
-//                self.isViewing = true
-//                self.changePage()
-//            }
-//
-//
-//        })
+                let credential = PhoneAuthProvider.provider().credential(withVerificationID: self.ID, verificationCode: self.verificationCode)
+        
+                Auth.auth().signIn(with: credential, completion: { result, err in
+                    if err != nil {
+                        withAnimation {
+                            self.loading = false
+                            self.verificationError = true
+                        }
+                        return
+                    }
+        
+                    print("success")
+        
+                    //                DataHandler.shared.load()
+                    DataHandler.shared.getUID()
+        
+                    self.isLoggedIn = true
+        
+                    withAnimation{
+                        self.loading = false
+                        self.verifyScreen = false
+                        self.isViewing = true
+                        self.changePage()
+                    }
+        
+        
+                })
     }
 }
 

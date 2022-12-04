@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
-//import Firebase
+import Firebase
 
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var phase
-    //    @State var page = (Auth.auth().currentUser?.uid != nil) ? 1 : 0
-    @State var page = 0
+        @State var page = (Auth.auth().currentUser?.uid != nil) ? 1 : 0
+//    @State var page = 0
     
     @State var isLoaded = true
     
@@ -20,11 +20,12 @@ struct ContentView: View {
         ZStack {
             if (page == 0) {
                 AuthView(page: $page)
+            } else {
+                UnityView(isLoaded: $isLoaded)
+                    .onAppear {
+                        DataHandler.shared.getUID()
+                    }
             }
-            UnityView(isLoaded: $isLoaded)
-                .onAppear {
-                    DataHandler.shared.getUID()
-                }
             
         }.onAppear {
             setupColorScheme()
