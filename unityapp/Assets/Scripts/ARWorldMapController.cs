@@ -310,7 +310,7 @@ public class ARWorldMapController : MonoBehaviour
             { "location", location },
             { "altitude", 0 },
             { "creator", "bryant" },
-            { "data", data }
+            { "timestamp", DateTime.Now }
         };
 
         DocumentReference addedDocRef = db.Collection("maps").Document();
