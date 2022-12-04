@@ -13,6 +13,7 @@ typedef void (*TestDelegate)(const char *name);
 - (void)onUnityStateChange:(const NSString *)state;
 - (void)onSetTestDelegate:(TestDelegate)delegate;
 - (void)onSaveMap:(const NSString *)map;
+- (void)onPhoneResponse:(const NSString *)response;
 // - (void)onSaveARWorldMap:(const NSData *)data;
 // other methods
 @end
