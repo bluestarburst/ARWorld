@@ -313,8 +313,8 @@ public class ARWorldMapController : MonoBehaviour
             { "data", data }
         };
 
-        DocumentReference addedDocRef = db.Collection("maps").Document()
-        
+        DocumentReference addedDocRef = db.Collection("maps").Document();
+
         addedDocRef.SetAsync(docData).ContinueWith(task =>
         {
             if (task.IsFaulted)
@@ -351,7 +351,6 @@ public class ARWorldMapController : MonoBehaviour
                     });
             }
         });
-        Debug.Log("id = " + id);
 
 
 
