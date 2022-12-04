@@ -294,27 +294,17 @@ public class ARWorldMapController : MonoBehaviour
         Debug.Log("BLUESTARBURST: " + id + ".worldmap");
         StorageReference mapRef = mapsRef.Child(id + ".worldmap");
 
-        mapRef.PutBytesAsync(data)
-        .ContinueWith((Task<StorageMetadata> task) =>
+        mapRef.PutBytesAsync(data).ContinueWith((Task<StorageMetadata> task) =>
+        {
+            if (task.IsFaulted || task.IsCanceled)
             {
-                if (task.IsFaulted || task.IsCanceled)
-                {
-                    Debug.Log(task.Exception.ToString());
-                    // data.Dispose();
-                    // Uh-oh, an error occurred!
-                }
-                else
-                {
-                    // Metadata contains file metadata such as size, content-type, and md5hash.
-                    StorageMetadata metadata = task.Result;
-                    string md5Hash = metadata.Md5Hash;
-                    Debug.Log("Finished uploading...");
-                    Debug.Log("md5 hash = " + md5Hash);
-                    // addedDocRef.UpdateAsync("md5", md5Hash);
-                    // addedDocRef.UpdateAsync("url", mapRef.Path);
-                    // data.Dispose();
-                }
-            });
+                Debug.Log("Upload failed");
+            }
+            else
+            {
+                Debug.Log("Upload complete");
+            }
+        });
     }
 
     void SaveAndDisposeWorldMap(ARWorldMap worldMap)
@@ -347,7 +337,10 @@ public class ARWorldMapController : MonoBehaviour
 
         DocumentReference addedDocRef = db.Collection("maps").Document();
 
-        addedDocRef.SetAsync(docData).ContinueWith(task =>
+        updateMapDataFirestore(addedDocRef.Id, data.ToArray());
+
+
+        addedDocRef.UpdateAsync(docData).ContinueWith(task =>
         {
             if (task.IsFaulted)
             {
@@ -356,7 +349,6 @@ public class ARWorldMapController : MonoBehaviour
             else
             {
                 Debug.Log("Document added with ID: " + addedDocRef.Id);
-                updateMapDataFirestore(addedDocRef.Id, data.ToArray());
 
 
             }
