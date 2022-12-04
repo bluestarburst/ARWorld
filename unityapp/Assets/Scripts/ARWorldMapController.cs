@@ -328,7 +328,9 @@ public class ARWorldMapController : MonoBehaviour
                 FirebaseStorage storage = FirebaseStorage.DefaultInstance;
                 StorageReference storageRef = storage.RootReference;
                 StorageReference mapsRef = storageRef.Child("maps");
-                StorageReference mapRef = mapsRef.Child(addedDocRef.Id + ".map");
+                Debug.Log("Uploading to: " + mapsRef.Path);
+                Debug.Log("BLUESTARBURST: " + addedDocRef.Id + ".worldmap");
+                StorageReference mapRef = mapsRef.Child(addedDocRef.Id + ".worldmap");
 
                 mapRef.PutBytesAsync(data.ToArray())
                 .ContinueWith((Task<StorageMetadata> task) =>
