@@ -7,6 +7,9 @@ using UnityEngine;
 using AOT;
 using Newtonsoft.Json;
 using Unity.Collections;
+using Firebase;
+using Firebase.Auth;
+
 
 /// <summary>
 /// C-API exposed by the Host, i.e., Unity -> Host API.
@@ -27,6 +30,9 @@ public class HostNativeAPI
 
     [DllImport("__Internal")]
     public static extern void saveMap(string map);
+
+    [DllImport("__Internal")]
+    public static extern void setPhoneResponse(string response);
 }
 
 /// <summary>
@@ -90,6 +96,9 @@ public class API : MonoBehaviour
             case "change-color":
                 _UpdateCubeColor(serializedMessage);
                 break;
+            case "phone-login":
+                _PhoneLogin(serializedMessage);
+                break;
             case "save-map":
                 _SaveMap(serializedMessage);
                 // HostNativeAPI.saveMap("hehehe");
@@ -101,6 +110,40 @@ public class API : MonoBehaviour
                 Debug.LogError("Unrecognized message '" + header.type + "'");
                 break;
         }
+    }
+
+    public void _PhoneLogin(string serialized)
+    {
+        var msg = JsonConvert.DeserializeObject<MessageWithData<string[]>>(serialized);
+        // firebase 
+        var countryCode = msg.data[0];
+        var phoneNumber = msg.data[1];
+
+        var FirebaseAuth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+
+        PhoneAuthProvider provider = PhoneAuthProvider.GetInstance(FirebaseAuth);
+        provider.VerifyPhoneNumber(phoneNumber, 300000, null,
+        verificationCompleted: (credential) =>
+        {
+            // Auto-sms-retrieval or instant validation has succeeded (Android only).
+            // There is no need to input the verification code.
+            // `credential` can be used instead of calling GetCredential().
+        },
+        verificationFailed: (error) =>
+        {
+            // The verification code was not sent.
+            // `error` contains a human readable explanation of the problem.
+            HostNativeAPI.setPhoneResponse("error");
+        },
+        codeSent: (id, token) =>
+        {
+            HostNativeAPI.setPhoneResponse("verify");
+            // Verification code was successfully sent via SMS.
+            // `id` contains the verification id that will need to passed in with
+            // the code from the user when calling GetCredential().
+            // `token` can be used if the user requests the code be sent again, to
+            // tie the two requests together.
+        });
     }
 
     public void sendMapIOS(string map)

@@ -84,6 +84,10 @@ public class UnityAPI: NativeCallsProtocol {
         print("onSaveMap: \(map)")
     }
 
+    public func onPhoneResponse(_ response: String) {
+        print("onPhoneResponse: \(response)")
+    }
+
     // public func saveARWorldMap(_ data: T) {
     //     // let message = MessageWithData(type: "save-ar-world-map", data: data)
     //     // let encoder = JSONEncoder()

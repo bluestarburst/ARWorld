@@ -31,6 +31,11 @@ void setTestDelegate(TestDelegate delegate) {
   [api onSetTestDelegate:delegate];
 }
 
+void setPhoneResponse(const char *response) {
+  const NSString *str = @(response);
+  [api onPhoneResponse:str];
+}
+
 // this method will take a byte array in C# and convert it to a NSData object
 // void sendUnityDataUpdate(const char *data, int length) {
 //   const NSData *nsData = [NSData dataWithBytes:data length:length];
