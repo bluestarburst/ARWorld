@@ -292,12 +292,6 @@ public class ARWorldMapController : MonoBehaviour
         var writer = new BinaryWriter(file);
         writer.Write(data.ToArray());
         writer.Close();
-
-
-        data.Dispose();
-        worldMap.Dispose();
-        Log(string.Format("ARWorldMap written to {0}", path));
-
         // create a firestore location
         var location = new GeoPoint(37.7853889, -122.4056973);
 
@@ -307,8 +301,14 @@ public class ARWorldMapController : MonoBehaviour
             { "location", location },
             { "altitude", 0 },
             { "creator", "bryant" },
-            { "data", data.ToRawBytes() }
+            { "data", data.ToArray() }
         });
+
+        data.Dispose();
+        worldMap.Dispose();
+        Log(string.Format("ARWorldMap written to {0}", path));
+
+
 
     }
 #endif
