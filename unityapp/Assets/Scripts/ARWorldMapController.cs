@@ -277,20 +277,19 @@ public class ARWorldMapController : MonoBehaviour
         Log(string.Format("ARWorldMap written to {0}", path));
 
 #if UNITY_IOS
-        if (Application.platform == RuntimePlatform.IPhonePlayer)
-        {
-            api.sendMapIOS("this is a map");
-            // turn data into a byte array
-            byte[] bytes = data.ToArray();
-            // turn byte array into JSON string
-            string json = JsonUtility.ToJson(bytes);
-            // send JSON string to Unity
-            
-            api.sendMapIOS(json);
-            Debug.Log("Sent map to server");
-            HostNativeAPI.saveMap("this is a map");
 
-        }
+        api.sendMapIOS("this is a map");
+        // turn data into a byte array
+        byte[] bytes = data.ToArray();
+        // turn byte array into JSON string
+        string json = JsonUtility.ToJson(bytes);
+        // send JSON string to Unity
+
+        api.sendMapIOS(json);
+        Debug.Log("Sent map to server");
+        HostNativeAPI.saveMap("this is a map");
+
+
 #endif
     }
 #endif
