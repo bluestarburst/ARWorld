@@ -50,7 +50,7 @@ class LoginViewModel: ObservableObject {
         newPhNumber = newPhNumber.replacingOccurrences(of: "-", with: "")
         print(newPhNumber)
         
-        UnityBridge.getInstance().api.phoneLogin(newCountryCode, newPhNumber)
+        UnityBridge.getInstance().api.phoneLogin(cc: newCountryCode, ph: newPhNumber)
 //
 //        PhoneAuthProvider.provider().verifyPhoneNumber("+\(newCountryCode + newPhNumber)",uiDelegate: nil) {
 //            ID, err in
