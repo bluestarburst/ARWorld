@@ -38,15 +38,19 @@ class LoginViewModel: ObservableObject {
         withAnimation {
             self.loading = true
         }
+        
+        
 //        Auth.auth().settings?.isAppVerificationDisabledForTesting = true // false
 //
-//        var newCountryCode = countryCode.replacingOccurrences(of: "+", with: "")
-//        print(newCountryCode)
-//
-//        var newPhNumber = phNumber.replacingOccurrences(of: "(", with: "")
-//        newPhNumber = newPhNumber.replacingOccurrences(of: ")", with: "")
-//        newPhNumber = newPhNumber.replacingOccurrences(of: "-", with: "")
-//        print(newPhNumber)
+        var newCountryCode = countryCode.replacingOccurrences(of: "+", with: "")
+        print(newCountryCode)
+
+        var newPhNumber = phNumber.replacingOccurrences(of: "(", with: "")
+        newPhNumber = newPhNumber.replacingOccurrences(of: ")", with: "")
+        newPhNumber = newPhNumber.replacingOccurrences(of: "-", with: "")
+        print(newPhNumber)
+        
+        UnityBridge.getInstance().api.phoneLogin(newCountryCode, newPhNumber)
 //
 //        PhoneAuthProvider.provider().verifyPhoneNumber("+\(newCountryCode + newPhNumber)",uiDelegate: nil) {
 //            ID, err in

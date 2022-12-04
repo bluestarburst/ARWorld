@@ -2,9 +2,9 @@
 
 import SwiftUI
 import UIKit
-import Firebase
-import FirebaseCore
-import FirebaseFirestore
+//import Firebase
+//import FirebaseCore
+//import FirebaseFirestore
 
 class DataHandler: NSObject, ObservableObject {
     
@@ -18,7 +18,7 @@ class DataHandler: NSObject, ObservableObject {
     }
     
     func getUID() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        self.uid = uid
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        self.uid = uid
     }
 }
