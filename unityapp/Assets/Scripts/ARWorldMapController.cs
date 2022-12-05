@@ -147,7 +147,7 @@ public class ARWorldMapController : MonoBehaviour
 
     public API api;
 
-    public string worldMapId = "";
+    public string worldMapId = "null";
 
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -304,7 +304,7 @@ public class ARWorldMapController : MonoBehaviour
 
         DocumentReference docRef = db.Collection("maps").Document("null");
 
-        if (worldMapId == "")
+        if (worldMapId == "null")
         {
             // Add a new document with a generated ID
             docRef = db.Collection("maps").Document();
@@ -328,29 +328,29 @@ public class ARWorldMapController : MonoBehaviour
             docRef = db.Collection("maps").Document(worldMapId);
         }
 
-        Debug.Log("Uploading world map to storage");
-        Debug.Log(worldMapId + ".worldmap");
+        // Debug.Log("Uploading world map to storage");
+        // Debug.Log(worldMapId + ".worldmap");
 
-        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
-        StorageReference storageRef = storage.RootReference;
-        StorageReference mapsRef = storageRef.Child("maps");
-        StorageReference mapRef = mapsRef.Child(worldMapId + ".worldmap");
+        // FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+        // StorageReference storageRef = storage.RootReference;
+        // StorageReference mapsRef = storageRef.Child("maps");
+        // StorageReference mapRef = mapsRef.Child(worldMapId + ".worldmap");
 
-        Debug.Log("Reference created");
+        // Debug.Log("Reference created");
 
-        await mapRef.PutBytesAsync(data.ToArray()).ContinueWith((Task<StorageMetadata> task) =>
-        {
-            if (task.IsFaulted || task.IsCanceled)
-            {
-                Debug.Log("Upload failed");
-            }
-            else
-            {
-                Debug.Log("Upload complete");
-            }
-        });
+        // await mapRef.PutBytesAsync(data.ToArray()).ContinueWith((Task<StorageMetadata> task) =>
+        // {
+        //     if (task.IsFaulted || task.IsCanceled)
+        //     {
+        //         Debug.Log("Upload failed");
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("Upload complete");
+        //     }
+        // });
 
-        Debug.Log("wat");
+        // Debug.Log("wat");
 
 
         // Dictionary<string, object> docData = new Dictionary<string, object>
