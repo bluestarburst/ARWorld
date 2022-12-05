@@ -147,7 +147,7 @@ public class ARWorldMapController : MonoBehaviour
 
     public API api;
 
-    public string worldMapId = "null";
+    public string worldMapId = "";
 
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -304,7 +304,7 @@ public class ARWorldMapController : MonoBehaviour
 
         DocumentReference docRef = db.Collection("maps").Document("null");
 
-        if (worldMapId == "null")
+        if (worldMapId == "")
         {
             // Add a new document with a generated ID
             docRef = db.Collection("maps").Document();
@@ -338,17 +338,10 @@ public class ARWorldMapController : MonoBehaviour
 
         // Debug.Log("Reference created");
 
-        await mapRef.PutBytesAsync(data.ToArray()).ContinueWith((Task<StorageMetadata> task) =>
-        {
-            if (task.IsFaulted || task.IsCanceled)
-            {
-                Debug.Log("Upload failed");
-            }
-            else
-            {
-                Debug.Log("Upload complete");
-            }
-        });
+        // Upload the file to the path "maps/<worldMapId>.worldmap"
+        await mapRef.PutBytesAsync(data.ToArray());
+
+        Debug.Log("Upload complete");
 
         // Debug.Log("wat");
 
