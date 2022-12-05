@@ -326,6 +326,7 @@ public class ARWorldMapController : MonoBehaviour
         else
         {
             docRef = db.Collection("maps").Document(worldMapId);
+            docRef.UpdateAsync("updated", DateTime.Now);
         }
 
         // Debug.Log("Uploading world map to storage");
@@ -342,27 +343,6 @@ public class ARWorldMapController : MonoBehaviour
         await mapRef.PutBytesAsync(data.ToArray());
 
         Debug.Log("Upload complete");
-
-        // Debug.Log("wat");
-
-
-        // Dictionary<string, object> docData = new Dictionary<string, object>
-        // {
-        //     { "updated", DateTime.Now },
-        //     { "mapURL", mapRef.Path }
-        // };
-
-        // await docRef.UpdateAsync(docData).ContinueWith(task =>
-        // {
-        //     if (task.IsFaulted)
-        //     {
-        //         Debug.LogError("Error adding document: " + task.Exception);
-        //     }
-        //     else
-        //     {
-        //         Debug.Log("Edited document with ID: " + docRef.Id);
-        //     }
-        // });
 
         data.Dispose();
         worldMap.Dispose();
