@@ -308,6 +308,7 @@ public class ARWorldMapController : MonoBehaviour
         {
             // Add a new document with a generated ID
             docRef = db.Collection("maps").Document();
+            Debug.Log("New document created");
             await docRef.SetAsync(new Dictionary<string, object>
         {
             { "location", location },
@@ -320,6 +321,7 @@ public class ARWorldMapController : MonoBehaviour
             { "id", docRef.Id }
         });
             worldMapId = docRef.Id;
+            Debug.Log("Added document with ID: " + docRef.Id);
         }
         else
         {
@@ -370,7 +372,7 @@ public class ARWorldMapController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Document added with ID: " + docRef.Id);
+                Debug.Log("Edited document with ID: " + docRef.Id);
             }
         });
 
