@@ -293,10 +293,10 @@ public class ARWorldMapController : MonoBehaviour
         var data = worldMap.Serialize(Allocator.Temp);
         Log(string.Format("ARWorldMap has {0} bytes.", data.Length));
 
-        var file = File.Open(path, FileMode.Create);
-        var writer = new BinaryWriter(file);
-        writer.Write(data.ToArray());
-        writer.Close();
+        // var file = File.Open(path, FileMode.Create);
+        // var writer = new BinaryWriter(file);
+        // writer.Write(data.ToArray());
+        // writer.Close();
         // create a firestore location
         var location = new GeoPoint(37.7853889, -122.4056973);
 
@@ -331,24 +331,24 @@ public class ARWorldMapController : MonoBehaviour
         // Debug.Log("Uploading world map to storage");
         // Debug.Log(worldMapId + ".worldmap");
 
-        // FirebaseStorage storage = FirebaseStorage.DefaultInstance;
-        // StorageReference storageRef = storage.RootReference;
-        // StorageReference mapsRef = storageRef.Child("maps");
-        // StorageReference mapRef = mapsRef.Child(worldMapId + ".worldmap");
+        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+        StorageReference storageRef = storage.RootReference;
+        StorageReference mapsRef = storageRef.Child("maps");
+        StorageReference mapRef = mapsRef.Child(worldMapId + ".worldmap");
 
         // Debug.Log("Reference created");
 
-        // await mapRef.PutBytesAsync(data.ToArray()).ContinueWith((Task<StorageMetadata> task) =>
-        // {
-        //     if (task.IsFaulted || task.IsCanceled)
-        //     {
-        //         Debug.Log("Upload failed");
-        //     }
-        //     else
-        //     {
-        //         Debug.Log("Upload complete");
-        //     }
-        // });
+        await mapRef.PutBytesAsync(data.ToArray()).ContinueWith((Task<StorageMetadata> task) =>
+        {
+            if (task.IsFaulted || task.IsCanceled)
+            {
+                Debug.Log("Upload failed");
+            }
+            else
+            {
+                Debug.Log("Upload complete");
+            }
+        });
 
         // Debug.Log("wat");
 
