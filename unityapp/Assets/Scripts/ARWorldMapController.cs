@@ -328,12 +328,14 @@ public class ARWorldMapController : MonoBehaviour
             docRef = db.Collection("maps").Document(worldMapId);
         }
 
-        var id = docRef.Id;
+        Debug.Log("Uploading world map to storage");
 
         FirebaseStorage storage = FirebaseStorage.DefaultInstance;
         StorageReference storageRef = storage.RootReference;
         StorageReference mapsRef = storageRef.Child("maps");
-        StorageReference mapRef = mapsRef.Child(id + ".worldmap");
+        StorageReference mapRef = mapsRef.Child(worldMapId + ".worldmap");
+
+        Debug.Log("Reference created");
 
         bool success = false;
 
