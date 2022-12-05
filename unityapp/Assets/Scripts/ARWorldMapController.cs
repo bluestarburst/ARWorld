@@ -353,23 +353,23 @@ public class ARWorldMapController : MonoBehaviour
         Debug.Log("wat");
 
 
-        Dictionary<string, object> docData = new Dictionary<string, object>
-        {
-            { "updated", DateTime.Now },
-            { "mapURL", mapRef.Path }
-        };
+        // Dictionary<string, object> docData = new Dictionary<string, object>
+        // {
+        //     { "updated", DateTime.Now },
+        //     { "mapURL", mapRef.Path }
+        // };
 
-        await docRef.UpdateAsync(docData).ContinueWith(task =>
-        {
-            if (task.IsFaulted)
-            {
-                Debug.LogError("Error adding document: " + task.Exception);
-            }
-            else
-            {
-                Debug.Log("Edited document with ID: " + docRef.Id);
-            }
-        });
+        // await docRef.UpdateAsync(docData).ContinueWith(task =>
+        // {
+        //     if (task.IsFaulted)
+        //     {
+        //         Debug.LogError("Error adding document: " + task.Exception);
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("Edited document with ID: " + docRef.Id);
+        //     }
+        // });
 
         data.Dispose();
         worldMap.Dispose();
