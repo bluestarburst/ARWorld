@@ -329,6 +329,7 @@ public class ARWorldMapController : MonoBehaviour
         }
 
         Debug.Log("Uploading world map to storage");
+        Debug.Log(worldMapId + ".worldmap");
 
         FirebaseStorage storage = FirebaseStorage.DefaultInstance;
         StorageReference storageRef = storage.RootReference;
@@ -370,8 +371,8 @@ public class ARWorldMapController : MonoBehaviour
             }
         });
 
-        // data.Dispose();
-        // worldMap.Dispose();
+        data.Dispose();
+        worldMap.Dispose();
         // Log(string.Format("ARWorldMap written to {0}", path));
 
 
