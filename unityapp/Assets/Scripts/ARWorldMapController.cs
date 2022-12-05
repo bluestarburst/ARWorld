@@ -293,10 +293,10 @@ public class ARWorldMapController : MonoBehaviour
         var data = worldMap.Serialize(Allocator.Temp);
         Log(string.Format("ARWorldMap has {0} bytes.", data.Length));
 
-        // var file = File.Open(path, FileMode.Create);
-        // var writer = new BinaryWriter(file);
-        // writer.Write(data.ToArray());
-        // writer.Close();
+        var file = File.Open(path, FileMode.Create);
+        var writer = new BinaryWriter(file);
+        writer.Write(data.ToArray());
+        writer.Close();
         // create a firestore location
         var location = new GeoPoint(37.7853889, -122.4056973);
 
