@@ -302,7 +302,7 @@ public class ARWorldMapController : MonoBehaviour
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
-        DocumentReference docRef = null;
+        DocumentReference docRef = db.Collection("maps").Document("null");
 
         if (worldMapId == "")
         {
