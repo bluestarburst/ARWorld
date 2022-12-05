@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_SaveButton: {fileID: 630821881}
   m_LoadButton: {fileID: 1579077639}
   api: {fileID: 168510958}
-  worldMapId: null
+  worldMapId: 
 --- !u!4 &1751548351
 Transform:
   m_ObjectHideFlags: 0
