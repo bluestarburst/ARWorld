@@ -354,10 +354,13 @@ public class ARWorldMapController : MonoBehaviour
 
         if (!success)
         {
+            Debug.Log("nooooo");
             data.Dispose();
             worldMap.Dispose();
             return;
         }
+
+        Debug.Log("wat");
 
 
         Dictionary<string, object> docData = new Dictionary<string, object>
