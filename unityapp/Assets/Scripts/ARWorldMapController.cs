@@ -370,8 +370,8 @@ public class ARWorldMapController : MonoBehaviour
             }
         });
 
-        data.Dispose();
-        worldMap.Dispose();
+        // data.Dispose();
+        // worldMap.Dispose();
         // Log(string.Format("ARWorldMap written to {0}", path));
 
 
