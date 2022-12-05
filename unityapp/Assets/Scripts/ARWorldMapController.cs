@@ -337,8 +337,6 @@ public class ARWorldMapController : MonoBehaviour
 
         Debug.Log("Reference created");
 
-        bool success = false;
-
         await mapRef.PutBytesAsync(data.ToArray()).ContinueWith((Task<StorageMetadata> task) =>
         {
             if (task.IsFaulted || task.IsCanceled)
@@ -348,17 +346,8 @@ public class ARWorldMapController : MonoBehaviour
             else
             {
                 Debug.Log("Upload complete");
-                success = true;
             }
         });
-
-        if (!success)
-        {
-            Debug.Log("nooooo");
-            data.Dispose();
-            worldMap.Dispose();
-            return;
-        }
 
         Debug.Log("wat");
 
