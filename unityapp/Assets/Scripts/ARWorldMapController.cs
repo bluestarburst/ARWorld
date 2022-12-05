@@ -304,7 +304,7 @@ public class ARWorldMapController : MonoBehaviour
 
         DocumentReference docRef = db.Collection("maps").Document("null");
 
-        if (worldMapId == "")
+        if (worldMapId.Length == 0)
         {
             // Add a new document with a generated ID
             docRef = db.Collection("maps").Document();
