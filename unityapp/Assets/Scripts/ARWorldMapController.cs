@@ -182,7 +182,7 @@ public class ARWorldMapController : MonoBehaviour
         m_ARSession.Reset();
     }
 
-    public static byte[] Compress(byte[] data)
+    public byte[] Compress(byte[] data)
     {
         MemoryStream output = new MemoryStream();
         using (DeflateStream dstream = new DeflateStream(output, System.IO.Compression.CompressionLevel.Optimal))
@@ -193,7 +193,7 @@ public class ARWorldMapController : MonoBehaviour
         return output.ToArray();
     }
 
-    public static byte[] Decompress(byte[] data)
+    public byte[] Decompress(byte[] data)
     {
         MemoryStream input = new MemoryStream(data);
         MemoryStream output = new MemoryStream();
