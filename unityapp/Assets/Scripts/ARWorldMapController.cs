@@ -12,9 +12,11 @@ using Firebase.Firestore;
 using Firebase.Storage;
 using System;
 using System.Threading.Tasks;
+using System.IO.Compression;
 #if UNITY_IOS
 using UnityEngine.XR.ARKit;
 #endif
+
 
 public class ARWorldMapController : MonoBehaviour
 {
@@ -180,6 +182,28 @@ public class ARWorldMapController : MonoBehaviour
         m_ARSession.Reset();
     }
 
+    public static byte[] Compress(byte[] data)
+    {
+        MemoryStream output = new MemoryStream();
+        using (DeflateStream dstream = new DeflateStream(output, System.IO.Compression.CompressionLevel.Optimal))
+        {
+            dstream.Write(data, 0, data.Length);
+        }
+        Log(string.Format("ARWorldMap has {0} bytes.", output.ToArray().Length));
+        return output.ToArray();
+    }
+
+    public static byte[] Decompress(byte[] data)
+    {
+        MemoryStream input = new MemoryStream(data);
+        MemoryStream output = new MemoryStream();
+        using (DeflateStream dstream = new DeflateStream(input, CompressionMode.Decompress))
+        {
+            dstream.CopyTo(output);
+        }
+        return output.ToArray();
+    }
+
 
 #if UNITY_IOS
     IEnumerator Save()
@@ -291,7 +315,7 @@ public class ARWorldMapController : MonoBehaviour
     {
         Log("Serializing ARWorldMap to byte array...");
         var data = worldMap.Serialize(Allocator.Temp);
-        Log(string.Format("ARWorldMap has {0} bytes.", data.Length));
+        // Log(string.Format("ARWorldMap has {0} bytes.", data.Length));
 
         // var file = File.Open(path, FileMode.Create);
         // var writer = new BinaryWriter(file);
@@ -347,7 +371,10 @@ public class ARWorldMapController : MonoBehaviour
         // Debug.Log("Reference created");
 
         // Upload the file to the path "maps/<worldMapId>.worldmap"
-        await mapRef.PutBytesAsync(data.ToArray());
+
+        // use unity to compress byte array
+
+        await mapRef.PutBytesAsync(Compress(data.ToArray()));
 
         Debug.Log("Upload complete");
 
