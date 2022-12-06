@@ -298,7 +298,7 @@ public class ARWorldMapController : MonoBehaviour
         // writer.Write(data.ToArray());
         // writer.Close();
         // create a firestore location
-        var location = new GeoPoint(37.7853889, -122.4056973);
+        var location = new GeoPoint(API.lat, API.lon);
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
@@ -327,6 +327,7 @@ public class ARWorldMapController : MonoBehaviour
         {
             docRef = db.Collection("maps").Document(worldMapId);
             docRef.UpdateAsync("updated", DateTime.Now);
+            docRef.UpdateAsync("alt", API.alt);
         }
 
         // Debug.Log("Uploading world map to storage");
