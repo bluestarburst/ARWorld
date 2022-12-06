@@ -19,8 +19,6 @@ using UnityEngine.XR.ARKit;
 public class ARWorldMapController : MonoBehaviour
 {
 
-    public static ARWorldMapController worldMapController;
-
     [
         Tooltip(
             "The ARSession component controlling the session from which to generate ARWorldMaps.")
@@ -146,6 +144,8 @@ public class ARWorldMapController : MonoBehaviour
             m_LoadButton = value;
         }
     }
+
+    public API api;
 
     public string worldMapId = "";
 
@@ -298,7 +298,7 @@ public class ARWorldMapController : MonoBehaviour
         // writer.Write(data.ToArray());
         // writer.Close();
         // create a firestore location
-        var location = new GeoPoint(API.lat, API.lon);
+        var location = new GeoPoint(api.lat, api.lon);
 
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
@@ -329,7 +329,7 @@ public class ARWorldMapController : MonoBehaviour
             await docRef.UpdateAsync(new Dictionary<string, object>
         {
             { "updated", DateTime.Now },
-            { "altitude", API.alt },
+            { "altitude", api.alt },
             { "location", location }
         });
             Debug.Log("Updated document with ID: " + docRef.Id);

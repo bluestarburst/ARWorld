@@ -76,9 +76,9 @@ public class API : MonoBehaviour
 {
     public GameObject cube;
     public ARWorldMapController worldMapController;
-    public static float lat = 0;
-    public static float lon = 0;
-    public static float alt = 0;
+    public float lat = 0.0f;
+    public float lon = 0.0f;
+    public float alt = 0.0f;
 
     void Start()
     {
