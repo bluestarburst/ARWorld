@@ -77,6 +77,11 @@ public class API : MonoBehaviour
     public GameObject cube;
     public ARWorldMapController worldMapController;
 
+    public static API api;
+    public static float lat = 0;
+    public static float lon = 0;
+    public static float alt = 0;
+
     void Start()
     {
 #if UNITY_IOS
@@ -176,9 +181,12 @@ public class API : MonoBehaviour
             Debug.LogError("WorldMapController is null");
             return;
         }
-        var msg = JsonConvert.DeserializeObject<MessageWithData<bool>>(serialized);
-        if (msg.data == true)
+        var msg = JsonConvert.DeserializeObject<MessageWithData<float[]>>(serialized);
+        if (msg.data != null)
         {
+            lat = msg.data[0];
+            lon = msg.data[1];
+            alt = msg.data[2];
             Debug.Log("Saving Map = " + msg.data);
             worldMapController.OnSaveButton();
         }

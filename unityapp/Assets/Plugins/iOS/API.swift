@@ -47,8 +47,8 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-color", data: data)
     }
 
-    public func saveMap() {
-        sendMessage(type: "save-map", data: true)
+    public func saveMap(lat: CGFloat, lon: CGFloat, alt: CGFloat) {
+        sendMessage(type: "save-map", data: [lat, lon, alt]])
     }
 
     public func loadMap() {

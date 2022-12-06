@@ -19,6 +19,8 @@ using UnityEngine.XR.ARKit;
 public class ARWorldMapController : MonoBehaviour
 {
 
+    public static ARWorldMapController worldMapController;
+
     [
         Tooltip(
             "The ARSession component controlling the session from which to generate ARWorldMaps.")
@@ -144,8 +146,6 @@ public class ARWorldMapController : MonoBehaviour
             m_LoadButton = value;
         }
     }
-
-    public API api;
 
     public string worldMapId = "";
 
