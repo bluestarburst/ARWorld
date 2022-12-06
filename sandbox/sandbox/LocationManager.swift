@@ -4,6 +4,8 @@ import CoreLocation
 class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
     @Published var region = MKCoordinateRegion()
     @Published var altitude = 0.0
+    @Published var latitude = 0.0
+    @Published var longitude = 0.0
     private let manager = CLLocationManager()
     
     override init() {
@@ -21,6 +23,8 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
                     span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
                 )
                 altitude = $0.altitude
+                latitude = $0.coordinate.latitude
+                longitude = $0.coordinate.longitude
             }
         }
 }
