@@ -43,7 +43,7 @@ struct UnityView: View {
                         .cornerRadius(8)
                 })
                 Button(action: {
-                    UnityBridge.getInstance().api.saveMap()
+                    UnityBridge.getInstance().api.saveMap(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
                 }, label: {
                     Text("save")
                         .fontWeight(.bold)
