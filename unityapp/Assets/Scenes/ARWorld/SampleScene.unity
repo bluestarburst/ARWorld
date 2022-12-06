@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44673008, g: 0.4965883, b: 0.575022, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_SaveButton: {fileID: 630821881}
   m_LoadButton: {fileID: 1579077639}
   api: {fileID: 168510958}
-  worldMapId: 
+  worldMapId: ClxZfXX3T19BxN8OMzF8
 --- !u!4 &1751548351
 Transform:
   m_ObjectHideFlags: 0
