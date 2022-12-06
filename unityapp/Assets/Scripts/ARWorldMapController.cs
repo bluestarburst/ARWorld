@@ -326,8 +326,14 @@ public class ARWorldMapController : MonoBehaviour
         else
         {
             docRef = db.Collection("maps").Document(worldMapId);
-            docRef.UpdateAsync("updated", DateTime.Now);
-            docRef.UpdateAsync("alt", API.alt);
+            await docRef.UpdateAsync(new Dictionary<string, object>
+        {
+            { "updated", DateTime.Now },
+            { "altitude", API.alt },
+            { "location", location }
+        });
+            Debug.Log("Updated document with ID: " + docRef.Id);
+
         }
 
         // Debug.Log("Uploading world map to storage");
