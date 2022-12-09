@@ -298,10 +298,48 @@ public class ARWorldMapController : MonoBehaviour
         CollectionReference mapsRef = db.Collection("maps");
         Query query = mapsRef.OrderBy("location").Limit(5);
         QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
+        var error = Double.MaxValue;
+        var newId = "";
         foreach (DocumentSnapshot documentSnapshot in querySnapshot.Documents)
         {
             Console.WriteLine("Document {0} returned by query maps", documentSnapshot.Id);
+            var tempAlt = documentSnapshot.GetValue<double>("altitude");
+            var tempErr = Math.Abs(tempAlt - api.alt);
+            if (tempErr < error)
+            {
+                error = tempErr;
+                newId = documentSnapshot.Id;
+            }
         }
+
+        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+        StorageReference storageRef = storage.RootReference;
+        StorageReference mapsdbRef = storageRef.Child("maps");
+        StorageReference mapRef = mapsdbRef.Child(newId + ".worldmap");
+        var data = await mapRef.GetBytesAsync(1024 * 1024 * 10);
+
+        data = Decompress(data);
+
+        // byte[] to native array
+        var nativeData = new NativeArray<byte>(data.Length, Allocator.Temp);
+        nativeData.CopyFrom(data);
+
+        ARWorldMap worldMap;
+        if (ARWorldMap.TryDeserialize(nativeData, out worldMap)) nativeData.Dispose();
+
+        if (worldMap.valid)
+        {
+            Log("Deserialized successfully.");
+        }
+        else
+        {
+            Debug.LogError("Data is not a valid ARWorldMap.");
+            // yield break;
+        }
+
+        Log("Apply ARWorldMap to current session.");
+        sessionSubsystem.ApplyWorldMap(worldMap);
+
     }
 
     void createNewDocument()
@@ -356,7 +394,7 @@ public class ARWorldMapController : MonoBehaviour
             await docRef.SetAsync(new Dictionary<string, object>
         {
             { "location", location },
-            { "altitude", 0 },
+            { "altitude", api.alt },
             { "creator", "bryant" },
             { "updated", DateTime.Now },
             { "created", DateTime.Now },
