@@ -268,7 +268,7 @@ public class ARWorldMapController : MonoBehaviour
 
         // get nearby world maps from firestore and load the one with the closest altitude
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        Query query = db.Collection("maps").OrderBy("location").Limit(5).OrderBy("altitude").Limit(1);
+        Query query = db.Collection("maps").OrderBy("location").Limit(5);
 
         QuerySnapshot querySnapshot = query.GetSnapshotAsync().Result;
         DocumentSnapshot documentSnapshot = querySnapshot[0];
