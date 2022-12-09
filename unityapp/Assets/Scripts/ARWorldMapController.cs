@@ -242,46 +242,61 @@ public class ARWorldMapController : MonoBehaviour
             yield break;
         }
 
-        var file = File.Open(path, FileMode.Open);
-        if (file == null)
-        {
-            Log(string.Format("File {0} does not exist.", path));
-            yield break;
-        }
+        // var file = File.Open(path, FileMode.Open);
+        // if (file == null)
+        // {
+        //     Log(string.Format("File {0} does not exist.", path));
+        //     yield break;
+        // }
 
-        Log(string.Format("Reading {0}...", path));
+        // Log(string.Format("Reading {0}...", path));
 
-        int bytesPerFrame = 1024 * 10;
-        var bytesRemaining = file.Length;
-        var binaryReader = new BinaryReader(file);
-        var allBytes = new List<byte>();
-        while (bytesRemaining > 0)
-        {
-            var bytes = binaryReader.ReadBytes(bytesPerFrame);
-            allBytes.AddRange(bytes);
-            bytesRemaining -= bytesPerFrame;
-            yield return null;
-        }
+        // int bytesPerFrame = 1024 * 10;
+        // var bytesRemaining = file.Length;
+        // var binaryReader = new BinaryReader(file);
+        // var allBytes = new List<byte>();
+        // while (bytesRemaining > 0)
+        // {
+        //     var bytes = binaryReader.ReadBytes(bytesPerFrame);
+        //     allBytes.AddRange(bytes);
+        //     bytesRemaining -= bytesPerFrame;
+        //     yield return null;
+        // }
 
-        var data = new NativeArray<byte>(allBytes.Count, Allocator.Temp);
-        data.CopyFrom(allBytes.ToArray());
+        // var data = new NativeArray<byte>(allBytes.Count, Allocator.Temp);
+        // data.CopyFrom(allBytes.ToArray());
 
-        Log(string.Format("Deserializing to ARWorldMap...", path));
-        ARWorldMap worldMap;
-        if (ARWorldMap.TryDeserialize(data, out worldMap)) data.Dispose();
+        // get nearby world maps from firestore and load the one with the closest altitude
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        Query query = db.Collection("worldmaps").OrderBy("location").Limit(5).OrderBy("altitude").Limit(1);
 
-        if (worldMap.valid)
-        {
-            Log("Deserialized successfully.");
-        }
-        else
-        {
-            Debug.LogError("Data is not a valid ARWorldMap.");
-            yield break;
-        }
+        QuerySnapshot querySnapshot = query.GetSnapshotAsync().Result;
+        DocumentSnapshot documentSnapshot = querySnapshot[0];
+        Dictionary<string, object> worldMapData = documentSnapshot.ToDictionary();
+        worldMapId = documentSnapshot.Id;
+        Log("Loading world map with id: " + worldMapId);
 
-        Log("Apply ARWorldMap to current session.");
-        sessionSubsystem.ApplyWorldMap(worldMap);
+
+
+
+
+
+        // Log(string.Format("Deserializing to ARWorldMap...", path));
+        // ARWorldMap worldMap;
+        // if (ARWorldMap.TryDeserialize(data, out worldMap)) data.Dispose();
+
+        // if (worldMap.valid)
+        // {
+        //     Log("Deserialized successfully.");
+        // }
+        // else
+        // {
+        //     Debug.LogError("Data is not a valid ARWorldMap.");
+        //     yield break;
+        // }
+
+        // Log("Apply ARWorldMap to current session.");
+        // sessionSubsystem.ApplyWorldMap(worldMap);
     }
 
     void createNewDocument()
