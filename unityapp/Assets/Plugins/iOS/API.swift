@@ -52,7 +52,7 @@ public class UnityAPI: NativeCallsProtocol {
     }
 
     public func loadMap() {
-        sendMessage(type: "load-map", data: true)
+        sendMessage(type: "load-map", data: [lat, lon, alt])
     }
     
     public func phoneLogin(cc: String, ph: String) {
