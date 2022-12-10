@@ -268,7 +268,7 @@ public class ARWorldMapController : MonoBehaviour
 
         // get nearby world maps from firestore and load the one with the closest altitude
 
-        loadMap(sessionSubsystem);
+        retrieveFirestoreMap(sessionSubsystem);
 
 
 
@@ -292,7 +292,7 @@ public class ARWorldMapController : MonoBehaviour
         // sessionSubsystem.ApplyWorldMap(worldMap);
     }
 
-    async void loadMap(ARKitSessionSubsystem sessionSubsystem)
+    async void retrieveFirestoreMap(ARKitSessionSubsystem sessionSubsystem)
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         CollectionReference mapsRef = db.Collection("maps");
@@ -311,6 +311,8 @@ public class ARWorldMapController : MonoBehaviour
                 newId = documentSnapshot.Id;
             }
         }
+        Console.WriteLine("Closest map is " + newId + " with error " + error);
+        Log("Loading map " + newId);
 
         FirebaseStorage storage = FirebaseStorage.DefaultInstance;
         StorageReference storageRef = storage.RootReference;
