@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44673008, g: 0.4965883, b: 0.575022, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1097,6 +1097,7 @@ GameObject:
   - component: {fileID: 1393218332}
   - component: {fileID: 1393218331}
   - component: {fileID: 1393218330}
+  - component: {fileID: 1393218334}
   - component: {fileID: 1393218329}
   m_Layer: 0
   m_Name: Main Camera
@@ -1293,6 +1294,23 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1393218334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393218327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15f82cc229284894964d2d30806969d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HumanSegmentationStencilMode: 0
+  m_HumanSegmentationDepthMode: 0
+  m_EnvironmentDepthMode: 2
+  m_EnvironmentDepthTemporalSmoothing: 1
+  m_OcclusionPreferenceMode: 0
 --- !u!1 &1415507575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1606,6 +1624,7 @@ MonoBehaviour:
   m_LoadButton: {fileID: 1579077639}
   api: {fileID: 168510958}
   worldMapId: ClxZfXX3T19BxN8OMzF8
+  isWorldMapLoaded: 0
 --- !u!4 &1751548351
 Transform:
   m_ObjectHideFlags: 0
