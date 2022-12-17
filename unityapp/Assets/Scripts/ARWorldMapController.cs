@@ -149,7 +149,10 @@ public class ARWorldMapController : MonoBehaviour
 
     public API api;
 
+
     public string worldMapId = "";
+
+    public bool isWorldMapLoaded = false;
 
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -305,12 +308,28 @@ public class ARWorldMapController : MonoBehaviour
             Console.WriteLine("Document {0} returned by query maps", documentSnapshot.Id);
             var tempAlt = documentSnapshot.GetValue<double>("altitude");
             var tempErr = Math.Abs(tempAlt - api.alt);
-            if (tempErr < error)
+
+            var location = documentSnapshot.GetValue<GeoPoint>("location");
+
+            var locError = Math.Abs(location.Latitude - api.lat) + Math.Abs(location.Longitude - api.lon);
+            var locErrorInMeters = locError * 111000;
+            // var locErrorInFeet = locErrorInMeters * 3.28084;
+            Log("Location error is " + locErrorInMeters);
+            if (tempErr < error && locErrorInMeters < 10)
             {
                 error = tempErr;
                 newId = documentSnapshot.Id;
             }
         }
+
+        if (newId == "")
+        {
+            Log("No nearby maps found");
+            Log("Saving current map");
+            OnSaveButton();
+            return;
+        }
+
         Console.WriteLine("Closest map is " + newId + " with error " + error);
         Log("Loading map " + newId);
 
@@ -332,10 +351,12 @@ public class ARWorldMapController : MonoBehaviour
         if (worldMap.valid)
         {
             Log("Deserialized successfully.");
+            isWorldMapLoaded = true;
         }
         else
         {
             Debug.LogError("Data is not a valid ARWorldMap.");
+            return;
             // yield break;
         }
 
@@ -437,6 +458,8 @@ public class ARWorldMapController : MonoBehaviour
         await mapRef.PutBytesAsync(Compress(data.ToArray()));
 
         Debug.Log("Upload complete");
+
+        isWorldMapLoaded = true;
 
         data.Dispose();
         worldMap.Dispose();
