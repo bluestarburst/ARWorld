@@ -32,7 +32,7 @@ struct UnityView: View {
                         .cornerRadius(8)
                 })
                 Button(action: {
-                    UnityBridge.getInstance().api.loadMap()
+                    UnityBridge.getInstance().api.loadMap(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
                 }, label: {
                     Text("load")
                         .fontWeight(.bold)
