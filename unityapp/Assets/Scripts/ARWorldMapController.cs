@@ -563,6 +563,11 @@ public class ARWorldMapController : MonoBehaviour
         string
             .Format("Mapping Status: {0}",
             sessionSubsystem.worldMappingStatus));
+
+        if (isWorldMapLoaded == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
+        {
+            OnLoadButton();
+        }
 #endif
     }
 
