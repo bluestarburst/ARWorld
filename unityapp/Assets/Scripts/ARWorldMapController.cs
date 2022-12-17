@@ -517,6 +517,8 @@ public class ARWorldMapController : MonoBehaviour
         if (text != null) text.text = value;
     }
 
+    private bool preventReload = false;
+
     void Update()
     {
         if (supported)
@@ -564,8 +566,9 @@ public class ARWorldMapController : MonoBehaviour
             .Format("Mapping Status: {0}",
             sessionSubsystem.worldMappingStatus));
 
-        if (isWorldMapLoaded == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
+        if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
         {
+            preventReload = true;
             OnLoadButton();
         }
 #endif
