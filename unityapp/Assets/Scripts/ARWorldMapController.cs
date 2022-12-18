@@ -495,6 +495,8 @@ public class ARWorldMapController : MonoBehaviour
     void Awake()
     {
         m_LogMessages = new List<string>();
+        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+        sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
     }
 
     void Log(string logMessage)
@@ -569,6 +571,7 @@ public class ARWorldMapController : MonoBehaviour
         if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
         {
             preventReload = true;
+            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             OnLoadButton();
         }
 #endif
