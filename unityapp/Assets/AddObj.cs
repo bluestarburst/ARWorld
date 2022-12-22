@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.ARSubsystems;
@@ -6,7 +6,7 @@ using UnityEngine.XR.ARSubsystems;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     [RequireComponent(typeof(ARRaycastManager))]
-    public class PlaceMultipleObjectsOnPlane : PressInputBase
+    public class AddObj : PressInputBase
     {
         [SerializeField]
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
@@ -35,6 +35,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
+        public bool isAdding = false;
+
         protected override void Awake()
         {
             base.Awake();
@@ -45,9 +47,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         protected override void OnPress(Vector3 position)
         {
+            if (!isAdding)
+            {
+                Add();
+                return;
+            }
+
+
+
+        }
+
+        void Add()
+        {
+            isAdding = true;
 
             // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
-            if (m_RaycastManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), s_Hits, TrackableType.PlaneWithinPolygon)) {
+            if (m_RaycastManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), s_Hits, TrackableType.PlaneWithinPolygon))
+            {
                 Pose hitPose = s_Hits[0].pose;
 
                 // the rotation of the object is relative to the world, not the plane normal
@@ -58,7 +74,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     onPlacedObject();
                 }
-            } else {
+            }
+            else
+            {
                 spawnedObject = Instantiate(m_PlacedPrefab, Camera.main.transform.position + Camera.main.transform.forward * 2f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
 
                 if (onPlacedObject != null)
@@ -66,32 +84,64 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     onPlacedObject();
                 }
             }
+        }
+
+        private void Update()
+        {
+
+            Debug.Log("touch count: " + Input.touchCount);
+            Debug.Log("touch position: " + Input.GetMouseButton(0));
+            if (Input.touchCount < 1 && !Input.GetMouseButton(0))
+            {
+                return;
+            }
+
+            // get position of touch
+
+            Vector3 position = Vector3.zero;
+            if (Input.GetMouseButton(0))
+            {
+                position = Input.mousePosition;
+            }
+            else if (Input.touchCount > 0)
+            {
+                position = Input.GetTouch(0).position;
+            }
 
 
 
-            // if (m_RaycastManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), s_Hits, TrackableType.PlaneWithinPolygon)) {
-            //     Pose hitPose = s_Hits[0].pose;
 
-            //     spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.5f, hitPose.rotation);
+            // if touch is on screen
+            if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
+            {
+                if (spawnedObject == null)
+                {
+                    return;
+                }
+                if (m_RaycastManager.Raycast(position, s_Hits, TrackableType.PlaneWithinPolygon))
+                {
+                    Pose hitPose = s_Hits[0].pose;
 
-            //     if (onPlacedObject != null)
-            //     {
-            //         onPlacedObject();
-            //     }
-            // }
+                    // spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+
+                    // get axis of the plane and print it out
+                    Vector3 planeNormal = hitPose.rotation * Vector3.up;
+                    Debug.Log("plane normal: " + planeNormal);
+
+                    // get distance between object and plane only in the direction of the plane normal
+                    float distance = Vector3.Dot(spawnedObject.transform.position - hitPose.position, planeNormal);
+
+                    // move object to the plane
+                    spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * distance;
 
 
-            // if (m_RaycastManager.Raycast(position, s_Hits, TrackableType.PlaneWithinPolygon))
-            // {
-            //     Pose hitPose = s_Hits[0].pose;
+                }
+            }
 
-            //     spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
 
-            //     if (onPlacedObject != null)
-            //     {
-            //         onPlacedObject();
-            //     }
-            // }
+
+
+
         }
     }
 }
