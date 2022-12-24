@@ -329,6 +329,13 @@ public class ARWorldMapController : MonoBehaviour
         {
             Log("No nearby maps found");
             Log("Saving current map");
+
+            if (!repeating)
+            {
+                InvokeRepeating("OnSaveButton", 15, 15);
+                repeating = true;
+            }
+
             OnSaveButton();
             return;
         }
@@ -365,8 +372,16 @@ public class ARWorldMapController : MonoBehaviour
             // yield break;
         }
 
+
+
         Log("Apply ARWorldMap to current session.");
         sessionSubsystem.ApplyWorldMap(worldMap);
+
+        if (!repeating)
+        {
+            InvokeRepeating("OnSaveButton", 15, 15);
+            repeating = true;
+        }
 
     }
 
@@ -460,11 +475,7 @@ public class ARWorldMapController : MonoBehaviour
 
         // // use unity to compress byte array
 
-        if (!repeating)
-        {
-            InvokeRepeating("OnSaveButton", 15, 15);
-            repeating = true;
-        }
+
 
         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
 
@@ -485,7 +496,7 @@ public class ARWorldMapController : MonoBehaviour
             throw;
         }
 
-        
+
 
         isWorldMapLoaded = true;
 
