@@ -460,6 +460,12 @@ public class ARWorldMapController : MonoBehaviour
 
         // // use unity to compress byte array
 
+        if (!repeating)
+        {
+            InvokeRepeating("OnSaveButton", 15, 15);
+            repeating = true;
+        }
+
         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
 
         if (sessionSubsystem == null || sessionSubsystem.worldMappingStatus != ARWorldMappingStatus.Mapped)
@@ -479,11 +485,7 @@ public class ARWorldMapController : MonoBehaviour
             throw;
         }
 
-        if (!repeating)
-        {
-            InvokeRepeating("OnSaveButton", 30, 30);
-            repeating = true;
-        }
+        
 
         isWorldMapLoaded = true;
 
