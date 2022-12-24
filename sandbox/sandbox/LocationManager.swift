@@ -6,6 +6,9 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
     @Published var altitude = 0.0
     @Published var latitude = 0.0
     @Published var longitude = 0.0
+    
+    @Published var sendDat: () -> Void = {}
+    
     private let manager = CLLocationManager()
     
     override init() {
@@ -25,6 +28,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
                 altitude = $0.altitude
                 latitude = $0.coordinate.latitude
                 longitude = $0.coordinate.longitude
+                sendDat()
             }
         }
 }
