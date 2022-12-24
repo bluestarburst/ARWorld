@@ -340,7 +340,7 @@ public class ARWorldMapController : MonoBehaviour
         StorageReference mapRef = mapsdbRef.Child(newId + ".worldmap");
         var data = await mapRef.GetBytesAsync(1024 * 1024 * 10);
 
-        data = Decompress(data);
+        // data = Decompress(data);
 
         // byte[] to native array
         var nativeData = new NativeArray<byte>(data.Length, Allocator.Temp);
@@ -458,7 +458,7 @@ public class ARWorldMapController : MonoBehaviour
 
         // // use unity to compress byte array
 
-        mapRef.PutBytesAsync(Compress(data.ToArray()));
+        mapRef.PutBytesAsync(data.ToArray());
 
         Debug.Log("Upload complete");
 
