@@ -96,6 +96,9 @@ public class API : MonoBehaviour
         var header = JsonConvert.DeserializeObject<Message>(serializedMessage);
         switch (header.type)
         {
+            case "update-vars":
+                _UpdateVars(serializedMessage);
+                break;
             case "change-color":
                 _UpdateCubeColor(serializedMessage);
                 break;
@@ -112,6 +115,17 @@ public class API : MonoBehaviour
             default:
                 Debug.LogError("Unrecognized message '" + header.type + "'");
                 break;
+        }
+    }
+
+    public void _UpdateVars(string serialized)
+    {
+        var msg = JsonConvert.DeserializeObject<MessageWithData<float[]>>(serialized);
+        if (msg.data != null && msg.data.Length >= 3)
+        {
+            lat = msg.data[0];
+            lon = msg.data[1];
+            alt = msg.data[2];
         }
     }
 
