@@ -313,7 +313,8 @@ public class ARWorldMapController : MonoBehaviour
 
             var locError = Math.Abs(location.Latitude - api.lat) + Math.Abs(location.Longitude - api.lon);
             var locErrorInMeters = locError * 111000;
-            // var locErrorInFeet = locErrorInMeters * 3.28084;
+            var locErrorInFeet = locErrorInMeters * 3.28084;
+            
             Log("Location error is " + locErrorInMeters);
             if (tempErr < error && locErrorInMeters < 10)
             {
@@ -568,7 +569,7 @@ public class ARWorldMapController : MonoBehaviour
             .Format("Mapping Status: {0}",
             sessionSubsystem.worldMappingStatus));
 
-        if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
+        if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Limited)
         {
             preventReload = true;
             sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
