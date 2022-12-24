@@ -123,10 +123,14 @@ public class API : MonoBehaviour
         var msg = JsonConvert.DeserializeObject<MessageWithData<float[]>>(serialized);
         if (msg.data != null && msg.data.Length >= 3)
         {
+            print("lat: " + msg.data[0]);
+            print("lon: " + msg.data[1]);
+            print("alt: " + msg.data[2]);
             lat = msg.data[0];
             lon = msg.data[1];
             alt = msg.data[2];
         }
+        print("updateVars");
     }
 
     public void _PhoneLogin(string serialized)
