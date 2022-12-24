@@ -128,12 +128,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     Vector3 planeNormal = hitPose.rotation * Vector3.up;
                     Debug.Log("plane normal: " + planeNormal);
 
+                    // // get if object is behind plane
+                    // bool isBehindPlane = Vector3.Dot(spawnedObject.transform.position - hitPose.position, planeNormal) < 0;
+
                     // get distance between object and plane only in the direction of the plane normal
                     float distance = Vector3.Dot(spawnedObject.transform.position - hitPose.position, planeNormal);
 
                     // move object to the plane
-                    spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * distance;
-
+                    spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
+                } else {
+                    // if no plane is hit, move object to 0.5 units in front of camera at position of touch
+                    Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
+                    spawnedObject.transform.position = touchPosition;
 
                 }
             }
