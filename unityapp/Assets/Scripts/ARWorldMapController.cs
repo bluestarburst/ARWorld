@@ -358,6 +358,7 @@ public class ARWorldMapController : MonoBehaviour
         else
         {
             Debug.LogError("Data is not a valid ARWorldMap.");
+            Log("not valid world map");
             return;
             // yield break;
         }
