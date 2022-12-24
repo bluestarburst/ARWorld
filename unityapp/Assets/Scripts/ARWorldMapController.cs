@@ -442,29 +442,29 @@ public class ARWorldMapController : MonoBehaviour
 
         }
 
-        // Debug.Log("Uploading world map to storage");
-        Debug.Log(worldMapId + ".worldmap");
+        // // Debug.Log("Uploading world map to storage");
+        // Debug.Log(worldMapId + ".worldmap");
 
-        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
-        StorageReference storageRef = storage.RootReference;
-        StorageReference mapsRef = storageRef.Child("maps");
-        StorageReference mapRef = mapsRef.Child(worldMapId + ".worldmap");
+        // FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+        // StorageReference storageRef = storage.RootReference;
+        // StorageReference mapsRef = storageRef.Child("maps");
+        // StorageReference mapRef = mapsRef.Child(worldMapId + ".worldmap");
 
-        // Debug.Log("Reference created");
+        // // Debug.Log("Reference created");
 
-        // Upload the file to the path "maps/<worldMapId>.worldmap"
+        // // Upload the file to the path "maps/<worldMapId>.worldmap"
 
-        // use unity to compress byte array
+        // // use unity to compress byte array
 
-        await mapRef.PutBytesAsync(Compress(data.ToArray()));
+        // await mapRef.PutBytesAsync(Compress(data.ToArray()));
 
-        Debug.Log("Upload complete");
+        // Debug.Log("Upload complete");
 
-        isWorldMapLoaded = true;
+        // isWorldMapLoaded = true;
 
-        data.Dispose();
-        worldMap.Dispose();
-        // Log(string.Format("ARWorldMap written to {0}", path));
+        // data.Dispose();
+        // worldMap.Dispose();
+        // // Log(string.Format("ARWorldMap written to {0}", path));
 
 
 
