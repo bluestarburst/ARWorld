@@ -456,7 +456,7 @@ public class ARWorldMapController : MonoBehaviour
 
         // // use unity to compress byte array
 
-        await mapRef.PutBytesAsync(Compress(data.ToArray()));
+        mapRef.PutBytesAsync(Compress(data.ToArray()));
 
         Debug.Log("Upload complete");
 
