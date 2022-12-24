@@ -353,6 +353,7 @@ public class ARWorldMapController : MonoBehaviour
         {
             Log("Deserialized successfully.");
             isWorldMapLoaded = true;
+            worldMapId = newId;
         }
         else
         {
