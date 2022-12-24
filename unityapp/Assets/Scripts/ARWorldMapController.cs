@@ -479,12 +479,6 @@ public class ARWorldMapController : MonoBehaviour
             throw;
         }
 
-        // create co routine that will repeat every 10 seconds to keep uploading the map
-        // if (uploadCoroutine == null)
-        // {
-        //     uploadCoroutine = StartCoroutine(UploadMap());
-        // }
-
         if (!repeating)
         {
             InvokeRepeating("OnSaveButton", 30, 30);
