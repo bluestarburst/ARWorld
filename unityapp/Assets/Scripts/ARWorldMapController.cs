@@ -571,7 +571,7 @@ public class ARWorldMapController : MonoBehaviour
             .Format("Mapping Status: {0}",
             sessionSubsystem.worldMappingStatus));
 
-        if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Limited)
+        if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
         {
             preventReload = true;
             sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
