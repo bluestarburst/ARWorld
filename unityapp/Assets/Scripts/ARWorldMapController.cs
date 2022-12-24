@@ -458,9 +458,20 @@ public class ARWorldMapController : MonoBehaviour
 
         // // use unity to compress byte array
 
-        mapRef.PutBytesAsync(data.ToArray());
+        try
+        {
+            mapRef.PutBytesAsync(data.ToArray());
+            Log("Upload complete?");
+        }
+        catch (System.Exception)
+        {
+            Log("Upload failed");
+            throw;
+        }
 
-        Debug.Log("Upload complete");
+        
+
+        
 
         isWorldMapLoaded = true;
 
