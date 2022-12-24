@@ -154,6 +154,8 @@ public class ARWorldMapController : MonoBehaviour
 
     public bool isWorldMapLoaded = false;
 
+    public bool repeating = false;
+
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
     /// </summary>
@@ -314,7 +316,7 @@ public class ARWorldMapController : MonoBehaviour
             var locError = Math.Abs(location.Latitude - api.lat) + Math.Abs(location.Longitude - api.lon);
             var locErrorInMeters = locError * 111000;
             var locErrorInFeet = locErrorInMeters * 3.28084;
-            
+
             Log("Location error is " + locErrorInMeters);
             if (tempErr < error && locErrorInMeters < 10)
             {
@@ -458,9 +460,17 @@ public class ARWorldMapController : MonoBehaviour
 
         // // use unity to compress byte array
 
+        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+
+        if (sessionSubsystem == null || sessionSubsystem.worldMappingStatus != ARWorldMappingStatus.Mapped)
+        {
+            Log("No session subsystem available. Could not save.");
+            return;
+        }
+
         try
         {
-            mapRef.PutBytesAsync(data.ToArray());
+            await mapRef.PutBytesAsync(data.ToArray());
             Log("Upload complete?");
         }
         catch (System.Exception)
@@ -469,9 +479,17 @@ public class ARWorldMapController : MonoBehaviour
             throw;
         }
 
-        
+        // create co routine that will repeat every 10 seconds to keep uploading the map
+        // if (uploadCoroutine == null)
+        // {
+        //     uploadCoroutine = StartCoroutine(UploadMap());
+        // }
 
-        
+        if (!repeating)
+        {
+            InvokeRepeating("OnSaveButton", 30, 30);
+            repeating = true;
+        }
 
         isWorldMapLoaded = true;
 
