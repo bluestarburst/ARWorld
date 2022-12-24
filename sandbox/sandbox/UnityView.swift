@@ -72,6 +72,7 @@ struct UnityView: View {
         .onAppear {
             let api = UnityBridge.getInstance()
             api.show()
+            api.updateVars(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
         }
         .onChange(of: isLoaded) {
             let api = UnityBridge.getInstance()
