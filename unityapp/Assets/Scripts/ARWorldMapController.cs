@@ -157,6 +157,7 @@ public class ARWorldMapController : MonoBehaviour
     public bool repeating = false;
 
     // create public unity object variables
+    public GameObject ARCamera;
     public GameObject WorldCenter;
     public GameObject ChunkPrefab;
 
@@ -613,7 +614,8 @@ public class ARWorldMapController : MonoBehaviour
 
         if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
         {
-            Instantiate(WorldCenter);
+            // at camera location
+            Instantiate(WorldCenter, ARCamera.transform.position, Quaternion.identity);
             createChunks(1, 0.5f);
 
             preventReload = true;
@@ -626,7 +628,8 @@ public class ARWorldMapController : MonoBehaviour
     void createChunks(float size, float distance) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                Instantiate(ChunkPrefab, new Vector3(i * distance, 0, j * distance), Quaternion.identity);
+                // instantiate chunkprefab at arcamera position
+                Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(i * distance, 0, j * distance), Quaternion.identity);
             }
         }
     }
