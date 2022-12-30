@@ -621,9 +621,9 @@ public class ARWorldMapController : MonoBehaviour
     void createChunks(float size, int num)
     {
         // create chunks around arcamera
-        for (int x = -num; x < num; x++)
+        for (int x = -num; x <= num; x++)
         {
-            for (int z = -num; z < num; z++)
+            for (int z = -num; z <= num; z++)
             {
                 var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, 0, z * size), Quaternion.identity);
                 chunk.AddComponent<ARAnchor>();

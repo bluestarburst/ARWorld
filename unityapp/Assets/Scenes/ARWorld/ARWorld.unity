@@ -994,8 +994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 728ad7fae8e460a4ba41265c7308d757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AnchorPrefab: {fileID: 1090931130879528053, guid: 86080b6c99c530c4ebe2528c28fcacd0,
-    type: 3}
+  m_AnchorPrefab: {fileID: 0}
 --- !u!1 &1360589905
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,12 +1560,11 @@ MonoBehaviour:
   worldMapId: 
   isWorldMapLoaded: 0
   repeating: 0
+  AROrigin: {fileID: 1352058499}
   ARCamera: {fileID: 1393218327}
-  WorldCenterPrefab: {fileID: 8653522150420298514, guid: 943ee2427e30a664d8b392bc7c5032bc,
-    type: 3}
   ChunkPrefab: {fileID: 1090931130879528053, guid: 86080b6c99c530c4ebe2528c28fcacd0,
     type: 3}
-  WorldCenter: {fileID: 0}
+  chunks: []
 --- !u!4 &1751548351
 Transform:
   m_ObjectHideFlags: 0
