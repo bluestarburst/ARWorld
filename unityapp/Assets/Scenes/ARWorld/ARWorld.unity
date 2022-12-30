@@ -1554,8 +1554,6 @@ MonoBehaviour:
   m_ErrorText: {fileID: 522617373}
   m_LogText: {fileID: 2066895003}
   m_MappingStatusText: {fileID: 1839110614}
-  m_SaveButton: {fileID: 630821881}
-  m_LoadButton: {fileID: 1579077639}
   api: {fileID: 168510958}
   worldMapId: 
   isWorldMapLoaded: 0
