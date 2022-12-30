@@ -20,39 +20,39 @@ struct UnityView: View {
             // PassthroughView()
             VStack {
                 Spacer()
-                Button(action: {
-                    print(manager.altitude)
-                }, label: {
-                    Text("get region")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.vertical)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.pink)
-                        .cornerRadius(8)
-                })
-                Button(action: {
-                    UnityBridge.getInstance().api.loadMap(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
-                }, label: {
-                    Text("load")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.vertical)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.pink)
-                        .cornerRadius(8)
-                })
-                Button(action: {
-                    UnityBridge.getInstance().api.saveMap(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
-                }, label: {
-                    Text("save")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.vertical)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.pink)
-                        .cornerRadius(8)
-                })
+//                Button(action: {
+//                    print(manager.altitude)
+//                }, label: {
+//                    Text("get region")
+//                        .fontWeight(.bold)
+//                        .foregroundColor(.white)
+//                        .padding(.vertical)
+//                        .frame(maxWidth: .infinity)
+//                        .background(Color.pink)
+//                        .cornerRadius(8)
+//                })
+//                Button(action: {
+//                    UnityBridge.getInstance().api.loadMap(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
+//                }, label: {
+//                    Text("load")
+//                        .fontWeight(.bold)
+//                        .foregroundColor(.white)
+//                        .padding(.vertical)
+//                        .frame(maxWidth: .infinity)
+//                        .background(Color.pink)
+//                        .cornerRadius(8)
+//                })
+//                Button(action: {
+//                    UnityBridge.getInstance().api.saveMap(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
+//                }, label: {
+//                    Text("save")
+//                        .fontWeight(.bold)
+//                        .foregroundColor(.white)
+//                        .padding(.vertical)
+//                        .frame(maxWidth: .infinity)
+//                        .background(Color.pink)
+//                        .cornerRadius(8)
+//                })
             }
         
 //            ColorPicker("", selection: $color)
