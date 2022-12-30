@@ -228,6 +228,11 @@ public class ARWorldMapController : MonoBehaviour
 #if UNITY_IOS
     IEnumerator Save()
     {
+        if (WorldCenter == null)
+        {
+            createChunks(1, 0.5f);
+        }
+
         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
         if (sessionSubsystem == null)
         {
@@ -406,10 +411,10 @@ public class ARWorldMapController : MonoBehaviour
 
     }
 
-    
+
     async void SaveAndDisposeWorldMap(byte[] data)
     {
-        
+
         // var data = worldMap.Serialize(Allocator.Temp);
         // Log(string.Format("ARWorldMap has {0} bytes.", data.Length));
 
@@ -426,10 +431,7 @@ public class ARWorldMapController : MonoBehaviour
 
         if (worldMapId.Length == 0)
         {
-            if (WorldCenter == null)
-            {
-                createChunks(1, 0.5f);
-            }
+
 
             // Add a new document with a generated ID
             docRef = db.Collection("maps").Document();
