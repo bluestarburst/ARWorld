@@ -158,8 +158,10 @@ public class ARWorldMapController : MonoBehaviour
 
     // create public unity object variables
     public GameObject ARCamera;
-    public GameObject WorldCenter;
+    public GameObject WorldCenterPrefab;
     public GameObject ChunkPrefab;
+
+    public GameObject WorldCenter;
 
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -436,6 +438,11 @@ public class ARWorldMapController : MonoBehaviour
 
         if (worldMapId.Length == 0)
         {
+            if (WorldCenter == null)
+            {
+                createChunks(1, 0.5f);
+            }
+
             // Add a new document with a generated ID
             docRef = db.Collection("maps").Document();
             Debug.Log("New document created");
@@ -614,10 +621,6 @@ public class ARWorldMapController : MonoBehaviour
 
         if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
         {
-            // at camera location
-            Instantiate(WorldCenter, ARCamera.transform.position, Quaternion.identity);
-            createChunks(1, 0.5f);
-
             preventReload = true;
             sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             OnLoadButton();
@@ -625,9 +628,13 @@ public class ARWorldMapController : MonoBehaviour
 #endif
     }
 
-    void createChunks(float size, float distance) {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+    void createChunks(float size, float distance)
+    {
+        WorldCenter = Instantiate(WorldCenterPrefab, ARCamera.transform.position, Quaternion.identity);
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
                 // instantiate chunkprefab at arcamera position
                 Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(i * distance, 0, j * distance), Quaternion.identity);
             }
