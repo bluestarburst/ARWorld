@@ -158,10 +158,9 @@ public class ARWorldMapController : MonoBehaviour
 
     // create public unity object variables
     public GameObject ARCamera;
-    public GameObject WorldCenterPrefab;
     public GameObject ChunkPrefab;
 
-    public GameObject WorldCenter;
+    public List<GameObject> chunks;
 
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -228,7 +227,7 @@ public class ARWorldMapController : MonoBehaviour
 #if UNITY_IOS
     IEnumerator Save()
     {
-        if (WorldCenter == null)
+        if (chunks == null)
         {
             createChunks(0.25f, 1);
         }
@@ -620,14 +619,16 @@ public class ARWorldMapController : MonoBehaviour
 
     void createChunks(float size, int num)
     {
-        WorldCenter = Instantiate(WorldCenterPrefab, ARCamera.transform.position, Quaternion.identity);
-        // create chunks around center
+        chunks = new List<GameObject>();
+        // create chunks around arcamera
         for (int x = -num; x < num; x++)
         {
             for (int z = -num; z < num; z++)
             {
                 var chunk = Instantiate(ChunkPrefab, new Vector3(x * size, 0, z * size), Quaternion.identity);
-                chunk.transform.parent = WorldCenter.transform;
+                chunk.transform.parent = ARCamera.transform;
+
+                chunks.Add(chunk);
             }
         }
     }
