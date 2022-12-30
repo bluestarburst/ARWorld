@@ -160,7 +160,7 @@ public class ARWorldMapController : MonoBehaviour
     public GameObject ARCamera;
     public GameObject ChunkPrefab;
 
-    public List<GameObject> chunks;
+    public List<GameObject> chunks = new List<GameObject>();
 
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -619,7 +619,6 @@ public class ARWorldMapController : MonoBehaviour
 
     void createChunks(float size, int num)
     {
-        chunks = new List<GameObject>();
         // create chunks around arcamera
         for (int x = -num; x < num; x++)
         {
