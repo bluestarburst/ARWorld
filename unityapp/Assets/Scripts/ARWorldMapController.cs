@@ -230,7 +230,7 @@ public class ARWorldMapController : MonoBehaviour
     {
         if (WorldCenter == null)
         {
-            createChunks(1, 0.5f);
+            createChunks(0.25f, 1);
         }
 
         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
@@ -618,15 +618,16 @@ public class ARWorldMapController : MonoBehaviour
 #endif
     }
 
-    void createChunks(float size, float distance)
+    void createChunks(float size, int num)
     {
         WorldCenter = Instantiate(WorldCenterPrefab, ARCamera.transform.position, Quaternion.identity);
-        for (int i = 0; i < size; i++)
+        // create chunks around center
+        for (int x = -num; x < num; x++)
         {
-            for (int j = 0; j < size; j++)
+            for (int z = -num; z < num; z++)
             {
-                // instantiate chunkprefab at arcamera position
-                Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(i * distance, 0, j * distance), Quaternion.identity);
+                var chunk = Instantiate(ChunkPrefab, new Vector3(x * size, 0, z * size), Quaternion.identity);
+                chunk.transform.parent = WorldCenter.transform;
             }
         }
     }
