@@ -228,7 +228,7 @@ public class ARWorldMapController : MonoBehaviour
 #if UNITY_IOS
     IEnumerator Save()
     {
-        if (chunks == null)
+        if (chunks.Count == 0)
         {
             createChunks(0.25f, 1);
         }
