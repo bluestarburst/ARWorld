@@ -156,6 +156,10 @@ public class ARWorldMapController : MonoBehaviour
 
     public bool repeating = false;
 
+    // create public unity object variables
+    public GameObject WorldCenter;
+    public GameObject ChunkPrefab;
+
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
     /// </summary>
@@ -609,11 +613,22 @@ public class ARWorldMapController : MonoBehaviour
 
         if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
         {
+            Instantiate(WorldCenter);
+            createChunks(1, 0.5f);
+
             preventReload = true;
             sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             OnLoadButton();
         }
 #endif
+    }
+
+    void createChunks(float size, float distance) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                Instantiate(ChunkPrefab, new Vector3(i * distance, 0, j * distance), Quaternion.identity);
+            }
+        }
     }
 
     List<string> m_LogMessages;

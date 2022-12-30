@@ -1560,6 +1560,11 @@ MonoBehaviour:
   api: {fileID: 168510958}
   worldMapId: 
   isWorldMapLoaded: 0
+  repeating: 0
+  WorldCenter: {fileID: 8653522150420298514, guid: 943ee2427e30a664d8b392bc7c5032bc,
+    type: 3}
+  ChunkPrefab: {fileID: 1090931130879528053, guid: 86080b6c99c530c4ebe2528c28fcacd0,
+    type: 3}
 --- !u!4 &1751548351
 Transform:
   m_ObjectHideFlags: 0
