@@ -1561,6 +1561,7 @@ MonoBehaviour:
   isWorldMapLoaded: 0
   repeating: 0
   AROrigin: {fileID: 1352058499}
+  anchorManager: {fileID: 1352058507}
   ARCamera: {fileID: 1393218327}
   ChunkPrefab: {fileID: 1090931130879528053, guid: 86080b6c99c530c4ebe2528c28fcacd0,
     type: 3}
