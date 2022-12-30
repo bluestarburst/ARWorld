@@ -230,10 +230,6 @@ public class ARWorldMapController : MonoBehaviour
 #if UNITY_IOS
     IEnumerator Save()
     {
-        if (chunks.Count == 0 && worldMapId == "")
-        {
-            createChunks(0.25f, 1);
-        }
 
         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
         if (sessionSubsystem == null)
@@ -311,6 +307,8 @@ public class ARWorldMapController : MonoBehaviour
         {
             Log("No nearby maps found");
             Log("Saving current map");
+
+            await createChunks(0.25f, 1);
 
             if (!repeating)
             {
@@ -589,11 +587,11 @@ public class ARWorldMapController : MonoBehaviour
             OnLoadButton();
         }
 
-        
+
 #endif
     }
 
-    async void createChunks(float size, int num)
+    async Task createChunks(float size, int num)
     {
         // create chunks around arcamera
         for (int x = -num; x <= num; x++)
@@ -615,7 +613,6 @@ public class ARWorldMapController : MonoBehaviour
                 await Task.Delay(100);
             }
         }
-
 
     }
 
