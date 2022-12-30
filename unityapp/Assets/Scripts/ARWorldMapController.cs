@@ -157,6 +157,7 @@ public class ARWorldMapController : MonoBehaviour
     public bool repeating = false;
 
     // create public unity object variables
+    public GameObject AROrigin;
     public GameObject ARCamera;
     public GameObject ChunkPrefab;
 
@@ -624,10 +625,12 @@ public class ARWorldMapController : MonoBehaviour
         {
             for (int z = -num; z < num; z++)
             {
-                var chunk = Instantiate(ChunkPrefab, new Vector3(x * size, 0, z * size), Quaternion.identity);
-                chunk.transform.parent = ARCamera.transform;
+                var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, 0, z * size), Quaternion.identity);
+                chunk.AddComponent<ARAnchor>();
+                
+                chunks.Add(chunk);      
 
-                chunks.Add(chunk);
+
             }
         }
     }
