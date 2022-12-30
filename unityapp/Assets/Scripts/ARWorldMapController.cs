@@ -264,7 +264,7 @@ public class ARWorldMapController : MonoBehaviour
             Log("No nearby maps found");
             Log("Saving current map");
 
-            await createChunks(0.25f, 1);
+            await createChunks(1, 1);
 
             if (!repeating)
             {
