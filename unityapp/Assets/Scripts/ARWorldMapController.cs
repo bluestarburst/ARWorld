@@ -463,7 +463,7 @@ public class ARWorldMapController : MonoBehaviour
         else
         {
             docRef = db.Collection("maps").Document(worldMapId);
-            docRef.UpdateAsync(new Dictionary<string, object>
+            await docRef.UpdateAsync(new Dictionary<string, object>
         {
             { "updated", DateTime.Now },
             { "altitude", api.alt },
