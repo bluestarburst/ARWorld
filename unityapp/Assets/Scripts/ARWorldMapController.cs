@@ -103,50 +103,6 @@ public class ARWorldMapController : MonoBehaviour
         }
     }
 
-    [
-        Tooltip(
-            "A UI button component which will generate an ARWorldMap and save it to disk.")
-    ]
-    [SerializeField]
-    Button m_SaveButton;
-
-    /// <summary>
-    /// A UI button component which will generate an ARWorldMap and save it to disk.
-    /// </summary>
-    public Button saveButton
-    {
-        get
-        {
-            return m_SaveButton;
-        }
-        set
-        {
-            m_SaveButton = value;
-        }
-    }
-
-    [
-        Tooltip(
-            "A UI button component which will load a previously saved ARWorldMap from disk and apply it to the current session.")
-    ]
-    [SerializeField]
-    Button m_LoadButton;
-
-    /// <summary>
-    /// A UI button component which will load a previously saved ARWorldMap from disk and apply it to the current session.
-    /// </summary>
-    public Button loadButton
-    {
-        get
-        {
-            return m_LoadButton;
-        }
-        set
-        {
-            m_LoadButton = value;
-        }
-    }
-
     public API api;
 
 
@@ -538,15 +494,11 @@ public class ARWorldMapController : MonoBehaviour
         if (supported)
         {
             SetActive(errorText, false);
-            SetActive(saveButton, true);
-            SetActive(loadButton, true);
             SetActive(mappingStatusText, true);
         }
         else
         {
             SetActive(errorText, true);
-            SetActive(saveButton, false);
-            SetActive(loadButton, false);
             SetActive(mappingStatusText, false);
         }
 
