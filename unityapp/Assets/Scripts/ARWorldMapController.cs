@@ -158,6 +158,7 @@ public class ARWorldMapController : MonoBehaviour
 
     // create public unity object variables
     public GameObject AROrigin;
+    public ARAnchorManager anchorManager;
     public GameObject ARCamera;
     public GameObject ChunkPrefab;
 
@@ -273,54 +274,8 @@ public class ARWorldMapController : MonoBehaviour
             yield break;
         }
 
-        // var file = File.Open(path, FileMode.Open);
-        // if (file == null)
-        // {
-        //     Log(string.Format("File {0} does not exist.", path));
-        //     yield break;
-        // }
-
-        // Log(string.Format("Reading {0}...", path));
-
-        // int bytesPerFrame = 1024 * 10;
-        // var bytesRemaining = file.Length;
-        // var binaryReader = new BinaryReader(file);
-        // var allBytes = new List<byte>();
-        // while (bytesRemaining > 0)
-        // {
-        //     var bytes = binaryReader.ReadBytes(bytesPerFrame);
-        //     allBytes.AddRange(bytes);
-        //     bytesRemaining -= bytesPerFrame;
-        //     yield return null;
-        // }
-
-        // var data = new NativeArray<byte>(allBytes.Count, Allocator.Temp);
-        // data.CopyFrom(allBytes.ToArray());
-
-        // get nearby world maps from firestore and load the one with the closest altitude
-
         retrieveFirestoreMap(sessionSubsystem);
 
-
-
-
-
-        // Log(string.Format("Deserializing to ARWorldMap...", path));
-        // ARWorldMap worldMap;
-        // if (ARWorldMap.TryDeserialize(data, out worldMap)) data.Dispose();
-
-        // if (worldMap.valid)
-        // {
-        //     Log("Deserialized successfully.");
-        // }
-        // else
-        // {
-        //     Debug.LogError("Data is not a valid ARWorldMap.");
-        //     yield break;
-        // }
-
-        // Log("Apply ARWorldMap to current session.");
-        // sessionSubsystem.ApplyWorldMap(worldMap);
     }
 
     async void retrieveFirestoreMap(ARKitSessionSubsystem sessionSubsystem)
@@ -389,6 +344,7 @@ public class ARWorldMapController : MonoBehaviour
             Log("Deserialized successfully.");
             isWorldMapLoaded = true;
             worldMapId = newId;
+
         }
         else
         {
@@ -538,6 +494,41 @@ public class ARWorldMapController : MonoBehaviour
         m_LogMessages = new List<string>();
         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
         sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
+
+        // create a method on anchor change anchor manager
+        anchorManager.anchorsChanged += AnchorManager_anchorsChanged;
+    }
+
+    private void AnchorManager_anchorsChanged(ARAnchorsChangedEventArgs obj)
+    {
+        // throw new NotImplementedException();
+        Debug.Log("anchors changed");
+        if (obj.added.Count > 0)
+        {
+            Debug.Log("added");
+            foreach (var anchor in obj.added)
+            {
+                Debug.Log(anchor.name);
+                var chunk = Instantiate(ChunkPrefab, anchor.transform.position, anchor.transform.rotation);
+            }
+        }
+        if (obj.updated.Count > 0)
+        {
+            Debug.Log("updated");
+            foreach (var anchor in obj.updated)
+            {
+                Debug.Log(anchor.name);
+
+            }
+        }
+        if (obj.removed.Count > 0)
+        {
+            Debug.Log("removed");
+            foreach (var anchor in obj.removed)
+            {
+                Debug.Log(anchor.name);
+            }
+        }
     }
 
     void Log(string logMessage)
@@ -615,6 +606,8 @@ public class ARWorldMapController : MonoBehaviour
             sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             OnLoadButton();
         }
+
+        
 #endif
     }
 
@@ -627,8 +620,8 @@ public class ARWorldMapController : MonoBehaviour
             {
                 var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, 0, z * size), Quaternion.identity);
                 chunk.AddComponent<ARAnchor>();
-                
-                chunks.Add(chunk);      
+
+                chunks.Add(chunk);
 
 
             }
