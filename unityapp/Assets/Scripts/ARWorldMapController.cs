@@ -169,7 +169,15 @@ public class ARWorldMapController : MonoBehaviour
     public void OnSaveButton()
     {
 #if UNITY_IOS
-        StartCoroutine(Save());
+        try
+        {
+            StartCoroutine(Save());
+        }
+        catch (Exception e)
+        {
+            Log(e.Message);
+        }
+
 #endif
     }
 
