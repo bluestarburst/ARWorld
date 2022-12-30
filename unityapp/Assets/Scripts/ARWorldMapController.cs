@@ -487,7 +487,7 @@ public class ARWorldMapController : MonoBehaviour
 
         try
         {
-            await mapRef.PutBytesAsync(data.ToArray());
+            await mapRef.PutBytesAsync(data);
             Log("Upload complete?");
         }
         catch (System.Exception)
