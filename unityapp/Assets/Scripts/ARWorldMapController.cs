@@ -250,7 +250,13 @@ public class ARWorldMapController : MonoBehaviour
         var worldMap = request.GetWorldMap();
         request.Dispose();
 
-        SaveAndDisposeWorldMap(worldMap);
+        Log(worldMap.valid ? "World map is valid." : "World map is invalid.");
+
+        Log("Serializing ARWorldMap to byte array...");
+
+        var worldMapData = worldMap.Serialize(Allocator.Temp);
+
+        SaveAndDisposeWorldMap(worldMapData.ToArray());
     }
 
     IEnumerator Load()
@@ -400,37 +406,11 @@ public class ARWorldMapController : MonoBehaviour
 
     }
 
-    void createNewDocument()
+    
+    async void SaveAndDisposeWorldMap(byte[] data)
     {
-        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
-        if (sessionSubsystem == null)
-        {
-            Log("No session subsystem available. Could not save.");
-            return;
-        }
-
-        var request = sessionSubsystem.GetARWorldMapAsync();
-
-        while (!request.status.IsDone()) return;
-
-        if (request.status.IsError())
-        {
-            Log(string
-                .Format("Session serialization failed with status {0}",
-                request.status));
-            return;
-        }
-
-        var worldMap = request.GetWorldMap();
-        request.Dispose();
-
-        SaveAndDisposeWorldMap(worldMap);
-    }
-
-    async void SaveAndDisposeWorldMap(ARWorldMap worldMap)
-    {
-        Log("Serializing ARWorldMap to byte array...");
-        var data = worldMap.Serialize(Allocator.Temp);
+        
+        // var data = worldMap.Serialize(Allocator.Temp);
         // Log(string.Format("ARWorldMap has {0} bytes.", data.Length));
 
         // var file = File.Open(path, FileMode.Create);
