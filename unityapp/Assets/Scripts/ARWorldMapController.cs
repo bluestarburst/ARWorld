@@ -460,6 +460,8 @@ public class ARWorldMapController : MonoBehaviour
             {
                 Log(anchor.name);
                 var chunk = Instantiate(ChunkPrefab, anchor.transform.position, anchor.transform.rotation);
+                chunk.GetComponent<Chunk>().ARCamera = ARCamera;
+                chunk.GetComponent<Chunk>().m_LogText = m_LogText;
             }
         }
         if (obj.updated.Count > 0)
