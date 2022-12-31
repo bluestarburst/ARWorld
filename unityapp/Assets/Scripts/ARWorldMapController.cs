@@ -458,7 +458,7 @@ public class ARWorldMapController : MonoBehaviour
             Debug.Log("added");
             foreach (var anchor in obj.added)
             {
-                Log(anchor.name);
+                Log("ANCHOR NAME: " + anchor.name);
                 var chunk = Instantiate(ChunkPrefab, anchor.transform.position, anchor.transform.rotation);
                 chunk.GetComponent<Chunk>().ARCamera = ARCamera;
                 chunk.GetComponent<Chunk>().m_LogText = m_LogText;
@@ -595,6 +595,12 @@ public class ARWorldMapController : MonoBehaviour
                 });
 
                 anchor.name = docRef.Id;
+                Log("ANCHOR NAME: " + anchor.name)
+                chunk.name = docRef.Id;
+
+                // save the id to the anchor so we can find it after reloading the world map
+                
+                
 
                 chunks.Add(docRef.Id, chunk);
                 anchors.Add(docRef.Id, anchor);
