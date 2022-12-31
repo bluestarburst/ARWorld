@@ -598,5 +598,6 @@ public class ARWorldMapController : MonoBehaviour
 
     }
 
+
     List<string> m_LogMessages;
 }
