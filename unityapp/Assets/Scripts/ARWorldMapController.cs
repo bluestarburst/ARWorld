@@ -121,6 +121,8 @@ public class ARWorldMapController : MonoBehaviour
     public List<GameObject> chunks = new List<GameObject>();
     public List<ARAnchor> anchors = new List<ARAnchor>();
 
+    public ARPlaneManager planeManager;
+
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
     /// </summary>
@@ -545,13 +547,31 @@ public class ARWorldMapController : MonoBehaviour
 
     async Task createChunks(float size, int num)
     {
+
+        // get db
+        var db = FirebaseFirestore.DefaultInstance;
+
+
         // create chunks around arcamera
+
         for (int x = -num; x <= num; x++)
         {
             for (int z = -num; z <= num; z++)
             {
-                var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, 0, z * size), Quaternion.identity);
+                var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, planeManager.floorY, z * size), Quaternion.identity);
                 var anchor = chunk.AddComponent<ARAnchor>();
+
+                // create firebase document
+                DocumentReference docRef = db.Collection("chunks").Document();
+                await docRef.SetAsync(new Dictionary<string, object>
+                {
+                    { "x", x },
+                    { "z", z },
+                    { "size", 0 },
+                    { "worldMapId", worldMapId }
+                });
+
+                anchor.name = docRef.Id;
 
                 chunks.Add(chunk);
                 anchors.Add(anchor);
