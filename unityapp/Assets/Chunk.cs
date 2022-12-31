@@ -10,24 +10,6 @@ using UnityEngine.UI;
 public class Chunk : MonoBehaviour
 {
 
-    [Tooltip("The UI Text element used to display log messages.")]
-    [SerializeField]
-    public Text m_LogText;
-
-    /// <summary>
-    /// The UI Text element used to display log messages.
-    /// </summary>
-    public Text logText
-    {
-        get
-        {
-            return m_LogText;
-        }
-        set
-        {
-            m_LogText = value;
-        }
-    }
     public GameObject ARCamera;
     public bool isLoaded = false;
 
@@ -47,22 +29,9 @@ public class Chunk : MonoBehaviour
         if (!isLoaded && distance < 10)
         {
             LoadChunk();
-            Log("Loading chunk " + gameObject.name);
             isLoaded = true;
         }
 
-        var numLogsToShow = 20;
-        string msg = "";
-        for (
-            int i = Mathf.Max(0, m_LogMessages.Count - numLogsToShow);
-            i < m_LogMessages.Count;
-            ++i
-        )
-        {
-            msg += m_LogMessages[i];
-            msg += "\n";
-        }
-        SetText(logText, msg);
     }
 
     async void LoadChunk()
@@ -72,15 +41,4 @@ public class Chunk : MonoBehaviour
         DocumentReference docRef = db.Collection("chunks").Document(gameObject.name);
     }
 
-    void Log(string logMessage)
-    {
-        m_LogMessages.Add(logMessage);
-    }
-
-    static void SetText(Text text, string value)
-    {
-        if (text != null) text.text = value;
-    }
-
-    List<string> m_LogMessages;
 }

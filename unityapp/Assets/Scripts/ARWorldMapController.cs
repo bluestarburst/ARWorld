@@ -459,10 +459,9 @@ public class ARWorldMapController : MonoBehaviour
             foreach (var anchor in obj.added)
             {
                 Log("ANCHOR NAME: " + anchor.name);
+                Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
                 var chunk = Instantiate(ChunkPrefab, anchor.transform.position, anchor.transform.rotation);
                 chunk.GetComponent<Chunk>().ARCamera = ARCamera;
-                chunk.GetComponent<Chunk>().m_LogText = m_LogText;
-                chunk.GetComponent<Chunk>().logText = logText;
             }
         }
         if (obj.updated.Count > 0)
@@ -595,8 +594,8 @@ public class ARWorldMapController : MonoBehaviour
                     { "worldMapId", worldMapId }
                 });
 
-                anchor.name = docRef.Id;
                 Log("ANCHOR NAME: " + anchor.name);
+                Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
                 chunk.name = docRef.Id;
 
                 // save the id to the anchor so we can find it after reloading the world map
