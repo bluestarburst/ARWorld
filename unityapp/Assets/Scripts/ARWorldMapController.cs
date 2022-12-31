@@ -118,10 +118,12 @@ public class ARWorldMapController : MonoBehaviour
     public GameObject ARCamera;
     public GameObject ChunkPrefab;
 
-    public List<GameObject> chunks = new List<GameObject>();
-    public List<ARAnchor> anchors = new List<ARAnchor>();
+    public Dictionary<string, GameObject> chunks = new Dictionary<string, GameObject>();
+    public Dictionary<string, ARAnchor> anchors = new Dictionary<string, ARAnchor>();
 
     public ARPlaneManager planeManager;
+
+    public string centerChunkId = "";
 
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -268,7 +270,7 @@ public class ARWorldMapController : MonoBehaviour
 
             await createChunks(1, 0);
             //hi
-            
+
 
             if (!repeating)
             {
@@ -368,6 +370,15 @@ public class ARWorldMapController : MonoBehaviour
         });
             Debug.Log("Updated document with ID: " + docRef.Id);
 
+        }
+
+        if (centerChunkId.Length > 0)
+        {
+            DocumentReference chunkRef = db.Collection("chunks").Document(centerChunkId);
+            await chunkRef.UpdateAsync(new Dictionary<string, object>{
+            { "worldMapId", worldMapId },
+            { "updated", DateTime.Now },
+            });
         }
 
         // Debug.Log("Uploading world map to storage");
@@ -581,18 +592,24 @@ public class ARWorldMapController : MonoBehaviour
                     { "y", chunk.transform.position.y },
                     { "z", chunk.transform.position.z },
                     { "size", size },
+                    { "updated", DateTime.Now },
                     { "worldMapId", worldMapId }
                 });
 
                 anchor.name = docRef.Id;
 
-                chunks.Add(chunk);
-                anchors.Add(anchor);
-                
+                chunks.Add(docRef.Id, chunk);
+                anchors.Add(docRef.Id, anchor);
+
+                if (x == 0 && z == 0)
+                {
+                    centerChunkId = docRef.Id;
+                }
+
             }
         }
 
-        foreach (ARAnchor anchor in anchors)
+        foreach (ARAnchor anchor in anchors.Values)
         {
             while (anchor.pending)
             {
