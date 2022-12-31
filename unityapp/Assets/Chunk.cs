@@ -54,6 +54,27 @@ public class Chunk : MonoBehaviour
             
             // get chunk data
             arWorldMapController.Log("Loading chunk " + chunkData["updated"]);
+
+            // get posters from chunk
+            CollectionReference postersRef = db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(id).Collection("posters");
+            QuerySnapshot postersSnapshot = await postersRef.GetSnapshotAsync();
+            // go through posters and add them to the chunk
+            foreach (DocumentSnapshot posterSnapshot in postersSnapshot.Documents)
+            {
+                Dictionary<string, object> posterData = posterSnapshot.ToDictionary();
+                arWorldMapController.Log("Loading poster " + posterData["updated"]);
+                // create poster
+                GameObject poster = Instantiate(arWorldMapController.posterPrefab, transform);
+                // set poster position
+                poster.transform.localPosition = new Vector3((float)posterData["x"], (float)posterData["y"], (float)posterData["z"]);
+                // set poster rotation
+                poster.transform.localRotation = new Quaternion((float)posterData["qx"], (float)posterData["qy"], (float)posterData["qz"], (float)posterData["qw"]);
+                // set poster scale
+                poster.transform.localScale = new Vector3((float)posterData["sx"], (float)posterData["sy"], (float)posterData["sz"]);
+                // set poster text
+                poster.GetComponentInChildren<Text>().text = (string)posterData["text"];
+                // set poster world map controller
+            }
             
         }
     }

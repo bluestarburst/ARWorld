@@ -127,6 +127,8 @@ public class ARWorldMapController : MonoBehaviour
 
     public FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
+    public GameObject posterPrefab;
+
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
     /// </summary>

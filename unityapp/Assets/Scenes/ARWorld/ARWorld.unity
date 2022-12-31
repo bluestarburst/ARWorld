@@ -954,7 +954,6 @@ MonoBehaviour:
   m_PlanePrefab: {fileID: 4111876437758604471, guid: b04c45397743447faaeced575f11ace3,
     type: 3}
   m_DetectionMode: -1
-  floorY: 0
 --- !u!114 &1352058504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1564,9 +1563,10 @@ MonoBehaviour:
   ARCamera: {fileID: 1393218327}
   ChunkPrefab: {fileID: 1090931130879528053, guid: 86080b6c99c530c4ebe2528c28fcacd0,
     type: 3}
-  chunks: []
-  anchors: []
   planeManager: {fileID: 1352058503}
+  centerChunkId: 
+  posterPrefab: {fileID: 2491148595152579251, guid: 05a316b586693c9419cf47feeecf86f9,
+    type: 3}
 --- !u!4 &1751548351
 Transform:
   m_ObjectHideFlags: 0
