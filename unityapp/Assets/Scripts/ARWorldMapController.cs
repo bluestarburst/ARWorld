@@ -570,7 +570,7 @@ public class ARWorldMapController : MonoBehaviour
         {
             for (int z = -num; z <= num; z++)
             {
-                var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, minY, z * size), Quaternion.identity);
+                var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, minY + 0.1f, z * size), Quaternion.identity);
                 var anchor = chunk.AddComponent<ARAnchor>();
 
                 // create firebase document
