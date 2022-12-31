@@ -595,7 +595,7 @@ public class ARWorldMapController : MonoBehaviour
                 });
 
                 anchor.name = docRef.Id;
-                Log("ANCHOR NAME: " + anchor.name)
+                Log("ANCHOR NAME: " + anchor.name);
                 chunk.name = docRef.Id;
 
                 // save the id to the anchor so we can find it after reloading the world map
