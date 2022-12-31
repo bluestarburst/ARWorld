@@ -25,7 +25,7 @@ public class Chunk : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ARCamera == null)
+        if (ARCamera == null || arWorldMapController == null || id == null)
         {
             return;
         }
@@ -44,7 +44,18 @@ public class Chunk : MonoBehaviour
     {
         // get chunk from firestore
         //id is anchor name
-        DocumentReference docRef = db.Collection("maps").Document("");
+        DocumentReference docRef = db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(id);
+        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+
+        if (snapshot.Exists)
+        {
+            // get chunk data
+            Dictionary<string, object> chunkData = snapshot.ToDictionary();
+            
+            // get chunk data
+            
+            
+        }
     }
 
 }
