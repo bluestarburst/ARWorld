@@ -267,6 +267,7 @@ public class ARWorldMapController : MonoBehaviour
             Log("Saving current map");
 
             await createChunks(1, 0);
+            //hi
 
             if (!repeating)
             {
