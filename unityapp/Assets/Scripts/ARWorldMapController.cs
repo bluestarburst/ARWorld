@@ -125,6 +125,8 @@ public class ARWorldMapController : MonoBehaviour
 
     public string centerChunkId = "";
 
+    public FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
     /// </summary>
@@ -237,7 +239,6 @@ public class ARWorldMapController : MonoBehaviour
 
     async void retrieveFirestoreMap(ARKitSessionSubsystem sessionSubsystem)
     {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         CollectionReference mapsRef = db.Collection("maps");
         Query query = mapsRef.OrderBy("location").Limit(5);
         QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
@@ -333,8 +334,6 @@ public class ARWorldMapController : MonoBehaviour
     {
 
         var location = new GeoPoint(api.lat, api.lon);
-
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
         DocumentReference docRef = db.Collection("maps").Document("null");
 
@@ -459,7 +458,7 @@ public class ARWorldMapController : MonoBehaviour
             Debug.Log("added");
             foreach (var anchor in obj.added)
             {
-                Debug.Log(anchor.name);
+                Log(anchor.name);
                 var chunk = Instantiate(ChunkPrefab, anchor.transform.position, anchor.transform.rotation);
             }
         }
@@ -571,9 +570,6 @@ public class ARWorldMapController : MonoBehaviour
                 minY = p.transform.position.y;
             }
         }
-
-        // get db
-        var db = FirebaseFirestore.DefaultInstance;
 
         // create chunks around arcamera
 
