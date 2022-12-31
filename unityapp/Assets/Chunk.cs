@@ -62,18 +62,32 @@ public class Chunk : MonoBehaviour
             foreach (DocumentSnapshot posterSnapshot in postersSnapshot.Documents)
             {
                 Dictionary<string, object> posterData = posterSnapshot.ToDictionary();
-                arWorldMapController.Log("Loading poster " + posterData["updated"]);
                 // create poster
                 GameObject poster = Instantiate(arWorldMapController.posterPrefab, transform);
                 // set poster position
-                poster.transform.localPosition = new Vector3((float)posterData["x"], (float)posterData["y"], (float)posterData["z"]);
+                float[] position = (float[])posterData["position"];
+                poster.transform.localPosition = new Vector3(position[0], position[1], position[2]);
                 // set poster rotation
-                poster.transform.localRotation = new Quaternion((float)posterData["qx"], (float)posterData["qy"], (float)posterData["qz"], (float)posterData["qw"]);
+                float[] rotation = (float[])posterData["rotation"];
+                poster.transform.localRotation = new Quaternion(rotation[0], rotation[1], rotation[2], rotation[3]);
                 // set poster scale
-                poster.transform.localScale = new Vector3((float)posterData["sx"], (float)posterData["sy"], (float)posterData["sz"]);
-                // set poster text
-                poster.GetComponentInChildren<Text>().text = (string)posterData["text"];
-                // set poster world map controller
+                float[] scale = (float[])posterData["scale"]; 
+                poster.transform.localScale = new Vector3(scale[0], scale[1], scale[2]);
+                
+                string url = (string)posterData["url"];
+                // get poster image
+                StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl(url);
+                // get image data
+                byte[] data = await storageRef.GetBytesAsync(1024 * 1024);
+                // create texture
+                Texture2D texture = new Texture2D(2, 2);
+                // load texture
+                texture.LoadImage(data);
+                // set texture to poster
+                poster.GetComponent<Renderer>().material.mainTexture = texture;
+
+                
+                
             }
             
         }
