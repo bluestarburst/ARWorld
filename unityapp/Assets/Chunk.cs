@@ -84,9 +84,9 @@ public class Chunk : MonoBehaviour
                 // load texture
                 texture.LoadImage(data);
                 // set texture to poster
-                poster.GetComponent<Renderer>().material.mainTexture = texture;
+                poster.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texture);
 
-                
+
                 
             }
             
