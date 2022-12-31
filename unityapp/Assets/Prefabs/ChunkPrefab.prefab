@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8748544924353840444}
   - component: {fileID: 6069219457911014118}
   - component: {fileID: 8052464801936400126}
+  - component: {fileID: 7588595138716871166}
   m_Layer: 0
   m_Name: ChunkPrefab
   m_TagString: Chunk
@@ -58,6 +59,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7588595138716871166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090931130879528053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31764112bb27c214293ea38f7d0f274b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1249517940590269611
 GameObject:
   m_ObjectHideFlags: 0
