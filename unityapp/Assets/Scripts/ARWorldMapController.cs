@@ -575,6 +575,7 @@ public class ARWorldMapController : MonoBehaviour
 
                 chunks.Add(chunk);
                 anchors.Add(anchor);
+                
             }
         }
 
