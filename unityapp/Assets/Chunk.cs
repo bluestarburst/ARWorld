@@ -11,6 +11,8 @@ public class Chunk : MonoBehaviour
 {
 
     public GameObject ARCamera;
+    public string id;
+    public ARWorldMapController arWorldMapController;
     public bool isLoaded = false;
 
     public FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
@@ -42,7 +44,7 @@ public class Chunk : MonoBehaviour
     {
         // get chunk from firestore
         //id is anchor name
-        DocumentReference docRef = db.Collection("chunks").Document(gameObject.name);
+        DocumentReference docRef = db.Collection("maps").Document("");
     }
 
 }

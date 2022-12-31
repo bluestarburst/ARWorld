@@ -373,11 +373,17 @@ public class ARWorldMapController : MonoBehaviour
 
         if (centerChunkId.Length > 0)
         {
-            DocumentReference chunkRef = db.Collection("chunks").Document(centerChunkId);
-            await chunkRef.UpdateAsync(new Dictionary<string, object>{
-            { "worldMapId", worldMapId },
-            { "updated", DateTime.Now },
-            });
+            var chunk = chunks[centerChunkId];
+            DocumentReference chunkRef = db.Collection("maps").Document(worldMapId).Collection("chunks").Document(centerChunkId);
+            await chunkRef.SetAsync(new Dictionary<string, object>{
+                    { "x", chunk.transform.position.x },
+                    { "y", chunk.transform.position.y },
+                    { "z", chunk.transform.position.z },
+                    { "size", 0 },
+                    { "updated", DateTime.Now },
+                    { "worldMapId", worldMapId }
+                });
+            centerChunkId = "";
         }
 
         // Debug.Log("Uploading world map to storage");
@@ -461,7 +467,10 @@ public class ARWorldMapController : MonoBehaviour
                 Log("ANCHOR NAME: " + anchor.name);
                 Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
                 var chunk = Instantiate(ChunkPrefab, anchor.transform.position, anchor.transform.rotation);
-                chunk.GetComponent<Chunk>().ARCamera = ARCamera;
+                Chunk chunkScript = chunk.GetComponent<Chunk>();
+                chunkScript.ARCamera = ARCamera;
+                chunkScript.arWorldMapController = this;
+                chunkScript.id = anchor.trackableId.ToString();
             }
         }
         if (obj.updated.Count > 0)
@@ -483,7 +492,7 @@ public class ARWorldMapController : MonoBehaviour
         }
     }
 
-    void Log(string logMessage)
+    public void Log(string logMessage)
     {
         m_LogMessages.Add(logMessage);
     }
@@ -579,37 +588,37 @@ public class ARWorldMapController : MonoBehaviour
         {
             for (int z = -num; z <= num; z++)
             {
-                DocumentReference docRef = db.Collection("chunks").Document();
+                // DocumentReference docRef = db.Collection("chunks").Document();
                 var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, minY + 0.5f, z * size), Quaternion.identity);
-                chunk.name = docRef.Id;
+                // chunk.name = docRef.Id;
                 var anchor = chunk.AddComponent<ARAnchor>();
 
                 // create firebase document
-                
-                await docRef.SetAsync(new Dictionary<string, object>
-                {
-                    { "x", chunk.transform.position.x },
-                    { "y", chunk.transform.position.y },
-                    { "z", chunk.transform.position.z },
-                    { "size", size },
-                    { "updated", DateTime.Now },
-                    { "worldMapId", worldMapId }
-                });
+
+                // await docRef.SetAsync(new Dictionary<string, object>
+                // {
+                //     { "x", chunk.transform.position.x },
+                //     { "y", chunk.transform.position.y },
+                //     { "z", chunk.transform.position.z },
+                //     { "size", size },
+                //     { "updated", DateTime.Now },
+                //     { "worldMapId", worldMapId }
+                // });
 
                 Log("ANCHOR NAME: " + anchor.name);
                 Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
-                
+
 
                 // save the id to the anchor so we can find it after reloading the world map
-                
-                
 
-                chunks.Add(docRef.Id, chunk);
-                anchors.Add(docRef.Id, anchor);
+
+
+                chunks.Add(anchor.trackableId.ToString(), chunk);
+                anchors.Add(anchor.trackableId.ToString(), anchor);
 
                 if (x == 0 && z == 0)
                 {
-                    centerChunkId = docRef.Id;
+                    centerChunkId = anchor.trackableId.ToString();
                 }
 
             }
