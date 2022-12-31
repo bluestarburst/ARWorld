@@ -577,9 +577,10 @@ public class ARWorldMapController : MonoBehaviour
                 DocumentReference docRef = db.Collection("chunks").Document();
                 await docRef.SetAsync(new Dictionary<string, object>
                 {
-                    { "x", x },
-                    { "z", z },
-                    { "size", 0 },
+                    { "x", chunk.transform.position.x },
+                    { "y", chunk.transform.position.y },
+                    { "z", chunk.transform.position.z },
+                    { "size", size },
                     { "worldMapId", worldMapId }
                 });
 
