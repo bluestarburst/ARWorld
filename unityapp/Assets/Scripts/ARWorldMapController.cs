@@ -547,10 +547,20 @@ public class ARWorldMapController : MonoBehaviour
 
     async Task createChunks(float size, int num)
     {
+        // get plane with lowest y value from plane manager with an upward facing normal
+        var plane = planeManager.trackables;
+        float minY = float.MaxValue;
+
+        foreach (var p in planeManager.trackables)
+        {
+            if (p.transform.position.y < minY && p.transform.up.y > 0.5f)
+            {
+                minY = p.transform.position.y;
+            }
+        }
 
         // get db
         var db = FirebaseFirestore.DefaultInstance;
-
 
         // create chunks around arcamera
 
@@ -558,7 +568,7 @@ public class ARWorldMapController : MonoBehaviour
         {
             for (int z = -num; z <= num; z++)
             {
-                var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, planeManager.floorY, z * size), Quaternion.identity);
+                var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, minY, z * size), Quaternion.identity);
                 var anchor = chunk.AddComponent<ARAnchor>();
 
                 // create firebase document
