@@ -23,6 +23,10 @@ public class Chunk : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ARCamera == null)
+        {
+            return;
+        }
         // get distance between camera and chunk
         float distance = Vector3.Distance(ARCamera.transform.position, transform.position);
         // if distance is greater than 100, destroy chunk

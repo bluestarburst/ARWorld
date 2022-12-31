@@ -579,11 +579,13 @@ public class ARWorldMapController : MonoBehaviour
         {
             for (int z = -num; z <= num; z++)
             {
+                DocumentReference docRef = db.Collection("chunks").Document();
                 var chunk = Instantiate(ChunkPrefab, ARCamera.transform.position + new Vector3(x * size, minY + 0.5f, z * size), Quaternion.identity);
+                chunk.name = docRef.Id;
                 var anchor = chunk.AddComponent<ARAnchor>();
 
                 // create firebase document
-                DocumentReference docRef = db.Collection("chunks").Document();
+                
                 await docRef.SetAsync(new Dictionary<string, object>
                 {
                     { "x", chunk.transform.position.x },
@@ -596,7 +598,7 @@ public class ARWorldMapController : MonoBehaviour
 
                 Log("ANCHOR NAME: " + anchor.name);
                 Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
-                chunk.name = docRef.Id;
+                
 
                 // save the id to the anchor so we can find it after reloading the world map
                 
