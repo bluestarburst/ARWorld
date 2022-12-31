@@ -53,7 +53,7 @@ public class Chunk : MonoBehaviour
             Dictionary<string, object> chunkData = snapshot.ToDictionary();
             
             // get chunk data
-            
+            arWorldMapController.Log("Loading chunk " + chunkData["updated"]);
             
         }
     }
