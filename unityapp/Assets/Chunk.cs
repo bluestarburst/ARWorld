@@ -66,10 +66,10 @@ public class Chunk : MonoBehaviour
             foreach (DocumentSnapshot posterSnapshot in postersSnapshot.Documents)
             {
                 arWorldMapController.Log("3");
-                // Dictionary<string, object> posterData = posterSnapshot.ToDictionary();
-                // arWorldMapController.Log("Loading poster " + posterData["id"] + " from chunk " + id);
+                Dictionary<string, object> posterData = posterSnapshot.ToDictionary();
+                arWorldMapController.Log("Loading poster " + posterData["id"] + " from chunk " + id);
                 // create poster
-                // GameObject poster = Instantiate(arWorldMapController.posterPrefab, transform);
+                GameObject poster = Instantiate(arWorldMapController.posterPrefab, transform);
                 // // set poster position
                 // float[] position = (float[])posterData["position"];
                 // poster.transform.localPosition = new Vector3(position[0], position[1], position[2]);
