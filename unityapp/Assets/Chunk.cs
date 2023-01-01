@@ -74,17 +74,16 @@ public class Chunk : MonoBehaviour
                 float[] scale = (float[])posterData["scale"]; 
                 poster.transform.localScale = new Vector3(scale[0], scale[1], scale[2]);
                 
-                string url = (string)posterData["url"];
                 // get poster image
-                StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl(url);
+                StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                 // get image data
-                byte[] data = await storageRef.GetBytesAsync(1024 * 1024);
+                byte[] data = await storageRef.Child("users/" + (string)posterData["user"] + "/posters/" + (string)posterData["id"] + ".png").GetBytesAsync(1024 * 1024);
                 // create texture
-                Texture2D texture = new Texture2D(2, 2);
+                Texture2D texture = new Texture2D(1, 1);
                 // load texture
                 texture.LoadImage(data);
                 // set diffuse texture
-                poster.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texture);
+                poster.GetComponent<MeshRenderer>().material.mainTexture = texture;
 
 
                 
