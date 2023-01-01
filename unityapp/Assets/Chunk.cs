@@ -80,7 +80,7 @@ public class Chunk : MonoBehaviour
                 // float[] scale = (float[])posterData["scale"]; 
                 // poster.transform.localScale = new Vector3(scale[0], scale[1], scale[2]);
 
-                // arWorldMapController.Log("Loading poster users/" + posterData["user"]);
+                arWorldMapController.Log("Loading poster users/" + posterData["user"]);
                 
                 // // get poster image
                 // StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
