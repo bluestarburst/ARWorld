@@ -48,8 +48,11 @@ public class Chunk : MonoBehaviour
         DocumentReference docRef = db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(id);
         DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
+        arWorldMapController.Log("1");
+
         if (snapshot.Exists)
         {
+            arWorldMapController.Log("2");
             // get chunk data
             Dictionary<string, object> chunkData = snapshot.ToDictionary();
             
@@ -62,6 +65,7 @@ public class Chunk : MonoBehaviour
             // go through posters and add them to the chunk
             foreach (DocumentSnapshot posterSnapshot in postersSnapshot.Documents)
             {
+                arWorldMapController.Log("3");
                 Dictionary<string, object> posterData = posterSnapshot.ToDictionary();
                 // create poster
                 GameObject poster = Instantiate(arWorldMapController.posterPrefab, transform);
