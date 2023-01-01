@@ -67,6 +67,7 @@ public class Chunk : MonoBehaviour
             {
                 arWorldMapController.Log("3");
                 Dictionary<string, object> posterData = posterSnapshot.ToDictionary();
+                arWorldMapController.Log("Loading poster " + posterData["id"] + " from chunk " + id);
                 // create poster
                 GameObject poster = Instantiate(arWorldMapController.posterPrefab, transform);
                 // set poster position
