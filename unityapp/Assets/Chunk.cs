@@ -83,7 +83,7 @@ public class Chunk : MonoBehaviour
                 Texture2D texture = new Texture2D(2, 2);
                 // load texture
                 texture.LoadImage(data);
-                // set texture to poster
+                // set diffuse texture
                 poster.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texture);
 
 
