@@ -78,6 +78,7 @@ public class Chunk : MonoBehaviour
                 StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                 // get image data
                 byte[] data = await storageRef.Child("users/" + (string)posterData["user"] + "/posters/" + (string)posterData["id"] + ".png").GetBytesAsync(1024 * 1024);
+                arWorldMapController.Log("Loading poster users/" + (string)posterData["user"] + "/posters/" + (string)posterData["id"] + ".png");
                 // create texture
                 Texture2D texture = new Texture2D(1, 1);
                 // load texture
