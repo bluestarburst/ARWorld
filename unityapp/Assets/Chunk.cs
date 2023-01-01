@@ -34,7 +34,8 @@ public class Chunk : MonoBehaviour
         // if distance is greater than 100, destroy chunk
         if (!isLoaded && distance < 10)
         {
-            LoadChunk();
+            arWorldMapController.Log("Loading chunk " + id);
+            // LoadChunk();
             isLoaded = true;
         }
 
@@ -73,12 +74,14 @@ public class Chunk : MonoBehaviour
                 // set poster scale
                 float[] scale = (float[])posterData["scale"]; 
                 poster.transform.localScale = new Vector3(scale[0], scale[1], scale[2]);
+
+                arWorldMapController.Log("Loading poster users/" + (string)posterData["user"] + "/posters/" + (string)posterData["id"] + ".png");
                 
                 // get poster image
                 StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                 // get image data
                 byte[] data = await storageRef.Child("users/" + (string)posterData["user"] + "/posters/" + (string)posterData["id"] + ".png").GetBytesAsync(1024 * 1024);
-                arWorldMapController.Log("Loading poster users/" + (string)posterData["user"] + "/posters/" + (string)posterData["id"] + ".png");
+                
                 // create texture
                 Texture2D texture = new Texture2D(1, 1);
                 // load texture
