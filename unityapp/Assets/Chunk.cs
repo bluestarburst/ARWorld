@@ -78,17 +78,23 @@ public class Chunk : MonoBehaviour
 
                 // NOT WORKING :(
 
-                // poster.transform.localPosition = new Vector3((float)posterData["x"], (float)posterData["y"], (float)posterData["z"]);
+                float x = Convert.ToSingle(posterSnapshot.GetValue<double>("x"));
+                float y = Convert.ToSingle(posterSnapshot.GetValue<double>("y"));
+                float z = Convert.ToSingle(posterSnapshot.GetValue<double>("z"));
+
+                poster.transform.localPosition = new Vector3(x, y, z);
 
                 float rx = Convert.ToSingle(posterSnapshot.GetValue<double>("rx"));
                 float ry = Convert.ToSingle(posterSnapshot.GetValue<double>("ry"));
                 float rz = Convert.ToSingle(posterSnapshot.GetValue<double>("rz"));
 
-                arWorldMapController.Log(rx + "");
-                // poster.transform.localRotation = new Quaternion((float)posterData["qx"], (float)posterData["qy"], (float)posterData["qz"], (float)posterData["qw"]);
                 poster.transform.localRotation = Quaternion.Euler(rx, ry, rz);
 
-                // poster.transform.localScale = new Vector3((float)posterData["sx"], (float)posterData["sy"], (float)posterData["sz"]);
+                float sx = Convert.ToSingle(posterSnapshot.GetValue<double>("sx"));
+                float sy = Convert.ToSingle(posterSnapshot.GetValue<double>("sy"));
+                float sz = Convert.ToSingle(posterSnapshot.GetValue<double>("sz"));
+
+                poster.transform.localScale = new Vector3(sx, sy, sz);
 
                 arWorldMapController.Log("Loading poster users/" + posterData["user"] + "/posters/" + posterData["id"] + ".png");
                 
