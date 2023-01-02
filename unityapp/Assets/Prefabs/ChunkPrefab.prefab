@@ -71,6 +71,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31764112bb27c214293ea38f7d0f274b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ARCamera: {fileID: 0}
+  id: 
+  arWorldMapController: {fileID: 0}
+  isLoaded: 0
 --- !u!1 &1249517940590269611
 GameObject:
   m_ObjectHideFlags: 0
