@@ -6,6 +6,7 @@ using Firebase.Auth;
 using Firebase.Firestore;
 using Firebase.Storage;
 using UnityEngine.UI;
+using System;
 
 public class Chunk : MonoBehaviour
 {
@@ -79,7 +80,7 @@ public class Chunk : MonoBehaviour
 
                 // poster.transform.localPosition = new Vector3((float)posterData["x"], (float)posterData["y"], (float)posterData["z"]);
 
-                float rx = (float)posterData["rx"];
+                float rx = Convert.ToSingle(posterSnapshot.GetValue<double>("rx"));
 
                 arWorldMapController.Log(rx + "");
                 // poster.transform.localRotation = new Quaternion((float)posterData["qx"], (float)posterData["qy"], (float)posterData["qz"], (float)posterData["qw"]);
