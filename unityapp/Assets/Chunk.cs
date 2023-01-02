@@ -81,7 +81,7 @@ public class Chunk : MonoBehaviour
 
                 float rx = (float)posterData["rx"];
 
-                arWorldMapController.Log(rx);
+                arWorldMapController.Log(rx + "");
                 // poster.transform.localRotation = new Quaternion((float)posterData["qx"], (float)posterData["qy"], (float)posterData["qz"], (float)posterData["qw"]);
                 // poster.transform.localRotation = Quaternion.Euler((float)posterData["rx"], (float)posterData["ry"], (float)posterData["rz"]);
 
