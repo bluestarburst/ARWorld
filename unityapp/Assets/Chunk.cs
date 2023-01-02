@@ -79,7 +79,7 @@ public class Chunk : MonoBehaviour
 
                 // poster.transform.localPosition = new Vector3((float)posterData["x"], (float)posterData["y"], (float)posterData["z"]);
 
-                float rx = (float)posterData["x"];
+                float rx = (float)posterData["rx"];
 
                 arWorldMapController.Log(rx);
                 // poster.transform.localRotation = new Quaternion((float)posterData["qx"], (float)posterData["qy"], (float)posterData["qz"], (float)posterData["qw"]);
