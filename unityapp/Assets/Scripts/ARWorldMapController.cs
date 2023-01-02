@@ -197,7 +197,7 @@ public class ARWorldMapController : MonoBehaviour
     IEnumerator Save()
     {
 
-        if (chunks.Values.Count < chunksToLoad)
+        if (chunks.Count < chunksToLoad)
         {
             Log("Not enough chunks loaded to save.");
             yield break;
@@ -584,6 +584,7 @@ public class ARWorldMapController : MonoBehaviour
 
     async Task createChunks(float size, int num)
     {
+        
         // get plane with lowest y value from plane manager with an upward facing normal
         var plane = planeManager.trackables;
         float minY = float.MaxValue;
@@ -645,6 +646,8 @@ public class ARWorldMapController : MonoBehaviour
                 await Task.Delay(100);
             }
         }
+
+        chunksToLoad = chunks.Count;
 
     }
 
