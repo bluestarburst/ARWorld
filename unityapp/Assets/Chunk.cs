@@ -76,7 +76,9 @@ public class Chunk : MonoBehaviour
                 GameObject poster = Instantiate(arWorldMapController.posterPrefab, transform);
 
                 // set poster position
+
                 object[] position = (object[])posterData["position"];
+                arWorldMapController.Log("position: " + position[0] + ", " + position[1] + ", " + position[2]);
                 poster.transform.localPosition = new Vector3((float)position[0], (float)position[1], (float)position[2]);
                 // set poster rotation
                 object[] rotation = (object[])posterData["rotation"];
