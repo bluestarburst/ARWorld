@@ -82,17 +82,17 @@ public class Chunk : MonoBehaviour
 
                 arWorldMapController.Log("Loading poster users/" + posterData["user"] + "/posters/" + posterData["id"] + ".png");
                 
-                // // get poster image
-                // StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
-                // // get image data
-                // byte[] data = await storageRef.Child("users/" + posterData["user"] + "/posters/" + posterData["id"] + ".png").GetBytesAsync(1024 * 1024);
+                // get poster image
+                StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
+                // get image data
+                byte[] data = await storageRef.Child("users/" + posterData["user"] + "/posters/" + posterData["id"] + ".png").GetBytesAsync(1024 * 1024);
                 
-                // // create texture
-                // Texture2D texture = new Texture2D(1, 1);
-                // // load texture
-                // texture.LoadImage(data);
-                // // set diffuse texture
-                // poster.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                // create texture
+                Texture2D texture = new Texture2D(1, 1);
+                // load texture
+                texture.LoadImage(data);
+                // set diffuse texture
+                poster.GetComponent<MeshRenderer>().material.mainTexture = texture;
 
 
                 
