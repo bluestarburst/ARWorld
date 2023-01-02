@@ -74,15 +74,16 @@ public class Chunk : MonoBehaviour
                 arWorldMapController.Log("Loading poster " + posterData["id"] + " from chunk " + id);
                 // create poster
                 GameObject poster = Instantiate(arWorldMapController.posterPrefab, transform);
-                // // set poster position
-                // float[] position = (float[])posterData["position"];
-                // poster.transform.localPosition = new Vector3(position[0], position[1], position[2]);
-                // // set poster rotation
-                // float[] rotation = (float[])posterData["rotation"];
-                // poster.transform.localRotation = new Quaternion(rotation[0], rotation[1], rotation[2], rotation[3]);
-                // // set poster scale
-                // float[] scale = (float[])posterData["scale"]; 
-                // poster.transform.localScale = new Vector3(scale[0], scale[1], scale[2]);
+
+                // set poster position
+                float[] position = (float[])posterData["position"];
+                poster.transform.localPosition = new Vector3(position[0], position[1], position[2]);
+                // set poster rotation
+                float[] rotation = (float[])posterData["rotation"];
+                poster.transform.localRotation = new Quaternion(rotation[0], rotation[1], rotation[2], rotation[3]);
+                // set poster scale
+                float[] scale = (float[])posterData["scale"]; 
+                poster.transform.localScale = new Vector3(scale[0], scale[1], scale[2]);
 
                 arWorldMapController.Log("Loading poster users/" + posterData["user"] + "/posters/" + posterData["id"] + ".png");
                 
