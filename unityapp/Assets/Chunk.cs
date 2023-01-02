@@ -81,10 +81,12 @@ public class Chunk : MonoBehaviour
                 // poster.transform.localPosition = new Vector3((float)posterData["x"], (float)posterData["y"], (float)posterData["z"]);
 
                 float rx = Convert.ToSingle(posterSnapshot.GetValue<double>("rx"));
+                float ry = Convert.ToSingle(posterSnapshot.GetValue<double>("ry"));
+                float rz = Convert.ToSingle(posterSnapshot.GetValue<double>("rz"));
 
                 arWorldMapController.Log(rx + "");
                 // poster.transform.localRotation = new Quaternion((float)posterData["qx"], (float)posterData["qy"], (float)posterData["qz"], (float)posterData["qw"]);
-                // poster.transform.localRotation = Quaternion.Euler((float)posterData["rx"], (float)posterData["ry"], (float)posterData["rz"]);
+                poster.transform.localRotation = Quaternion.Euler(rx, ry, rz);
 
                 // poster.transform.localScale = new Vector3((float)posterData["sx"], (float)posterData["sy"], (float)posterData["sz"]);
 
