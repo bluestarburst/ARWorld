@@ -129,6 +129,8 @@ public class ARWorldMapController : MonoBehaviour
 
     public GameObject posterPrefab;
 
+    public int chunksToLoad = 0;
+
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
     /// </summary>
@@ -194,6 +196,12 @@ public class ARWorldMapController : MonoBehaviour
 #if UNITY_IOS
     IEnumerator Save()
     {
+
+        if (chunks.Values.Count < chunksToLoad)
+        {
+            Log("Not enough chunks loaded to save.");
+            yield break;
+        }
 
         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
         if (sessionSubsystem == null)
@@ -263,6 +271,7 @@ public class ARWorldMapController : MonoBehaviour
             {
                 error = tempErr;
                 newId = documentSnapshot.Id;
+                chunksToLoad = documentSnapshot.GetValue<int>("chunks");
             }
         }
 
@@ -341,8 +350,6 @@ public class ARWorldMapController : MonoBehaviour
 
         if (worldMapId.Length == 0)
         {
-
-
             // Add a new document with a generated ID
             docRef = db.Collection("maps").Document();
             Debug.Log("New document created");
@@ -355,6 +362,7 @@ public class ARWorldMapController : MonoBehaviour
             { "created", DateTime.Now },
             { "name", "test" },
             { "public", true },
+            { "chunks", 1 },
             { "id", docRef.Id }
         });
             worldMapId = docRef.Id;
@@ -473,6 +481,10 @@ public class ARWorldMapController : MonoBehaviour
                 chunkScript.ARCamera = ARCamera;
                 chunkScript.arWorldMapController = this;
                 chunkScript.id = anchor.trackableId.ToString();
+
+                chunks.Add(anchor.trackableId.ToString(), chunk);
+                Log("added chunk to chunks");
+                anchors.Add(anchor.trackableId.ToString(), anchor);
             }
         }
         if (obj.updated.Count > 0)
