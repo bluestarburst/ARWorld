@@ -35,7 +35,11 @@ public class Chunk : MonoBehaviour
         if (!isLoaded && distance < 10)
         {
             arWorldMapController.Log("Loading chunk " + id);
-            LoadChunk();
+            try {
+                LoadChunk();
+            } catch (System.Exception e) {
+                arWorldMapController.Log("Error loading chunk " + id + ": " + e.Message);
+            }
             isLoaded = true;
         }
 
