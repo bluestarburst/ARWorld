@@ -80,7 +80,7 @@ public class API : MonoBehaviour
     public float lon = 0.0f;
     public float alt = 0.0f;
 
-    public FirebaseApp app = Firebase.FirebaseApp.Create(Firebase.FirebaseApp.DefaultInstance.Options, "unity");
+    public FirebaseApp app = FirebaseApp.Create();
 
     void Start()
     {
@@ -89,8 +89,7 @@ public class API : MonoBehaviour
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
-                // create a firebase app with default app config options
-                app = Firebase.FirebaseApp.Create(Firebase.FirebaseApp.DefaultInstance.Options, "unity");
+                app = FirebaseApp.Create();
             }
         });
 #if UNITY_IOS

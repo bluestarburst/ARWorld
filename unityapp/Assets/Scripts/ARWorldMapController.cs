@@ -125,7 +125,7 @@ public class ARWorldMapController : MonoBehaviour
 
     public string centerChunkId = "";
 
-    public FirebaseFirestore db = FirebaseFirestore.GetInstance(Firebase.FirebaseApp.Create(Firebase.FirebaseApp.DefaultInstance.Options, "unity"));
+    public FirebaseFirestore db = FirebaseFirestore.GetInstance(FirebaseApp.Create());
 
     public GameObject posterPrefab;
 
@@ -464,7 +464,7 @@ public class ARWorldMapController : MonoBehaviour
         // create a method on anchor change anchor manager
         anchorManager.anchorsChanged += AnchorManager_anchorsChanged;
 
-        db = FirebaseFirestore.GetInstance(Firebase.FirebaseApp.Create(Firebase.FirebaseApp.DefaultInstance.Options, "unity"));
+        db = FirebaseFirestore.GetInstance(api.app);
     }
 
     private void AnchorManager_anchorsChanged(ARAnchorsChangedEventArgs obj)
