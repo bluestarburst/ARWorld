@@ -89,8 +89,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private void Update()
         {
 
-            Debug.Log("touch count: " + Input.touchCount);
-            Debug.Log("touch position: " + Input.GetMouseButton(0));
             if (Input.touchCount < 1 && !Input.GetMouseButton(0))
             {
                 return;
@@ -126,7 +124,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // get axis of the plane and print it out
                     Vector3 planeNormal = hitPose.rotation * Vector3.up;
-                    Debug.Log("plane normal: " + planeNormal);
 
                     // // get if object is behind plane
                     // bool isBehindPlane = Vector3.Dot(spawnedObject.transform.position - hitPose.position, planeNormal) < 0;
