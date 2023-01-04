@@ -31,7 +31,7 @@ struct UnityView: View {
                     Spacer()
                     VStack {
                         Spacer()
-                        Button( action: {print("add")}, label: {
+                        Button( action: {DataHandler.shared.tryStore()}, label: {
                             Image(systemName: "photo")
                                 .imageScale(.medium)
                                 .font(.title2)

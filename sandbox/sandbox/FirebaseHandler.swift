@@ -17,18 +17,28 @@ class DataHandler: NSObject, ObservableObject {
     override init() {
         super.init()
         self.getUID()
+        var apps = FirebaseApp.allApps
+        print("swifty")
+        print(apps?.description)
+        
     }
     
     func getUID() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         self.uid = uid
         
-        let docRef = db.collection("users").document(uid)
 
+        
+        
+    }
+    
+    func tryStore() {
+        let docRef = db.collection("users").document(self.uid ?? "")
+        
         print("SWIFT THING")
-
+        
         docRef.getDocument{ (document, error) in
-
+            
             if let document = document, document.exists {
                 let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
                 print("Document Data: \(dataDescription)")
@@ -40,8 +50,6 @@ class DataHandler: NSObject, ObservableObject {
                 ], merge: true)
             }
         }
-        
-        
     }
     
     
