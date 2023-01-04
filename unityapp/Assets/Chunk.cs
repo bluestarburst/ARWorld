@@ -16,7 +16,7 @@ public class Chunk : MonoBehaviour
     public ARWorldMapController arWorldMapController;
     public bool isLoaded = false;
 
-    public FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+    public FirebaseFirestore db = FirebaseFirestore.GetInstance(FirebaseApp.DefaultInstance);
     // Start is called before the first frame update
     void Start()
     {
