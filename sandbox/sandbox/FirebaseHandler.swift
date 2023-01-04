@@ -10,21 +10,15 @@ import FirebaseFirestore
 class DataHandler: NSObject, ObservableObject {
     
     var uid: String?
-    let db = Firestore.firestore(app: FirebaseApp.app(name: "unity")!)
+    let db = Firestore.firestore(app: FirebaseApp.app(name: "swift")!)
     
     @ObservedObject static var shared = DataHandler()
     
     override init() {
         super.init()
-        print("swiftinit")
-        
-        
-        
+
         self.getUID()
         
-        var apps = FirebaseApp.allApps
-        print("swifty")
-        print(apps?.description)
         
     }
     
@@ -32,7 +26,7 @@ class DataHandler: NSObject, ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         self.uid = uid
-        
+        tryStore()
     }
     
     func tryStore() {
