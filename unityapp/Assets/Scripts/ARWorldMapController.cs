@@ -125,7 +125,7 @@ public class ARWorldMapController : MonoBehaviour
 
     public string centerChunkId = "";
 
-    public FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+    public FirebaseFirestore db = FirebaseFirestore.GetInstance(FirebaseApp.DefaultInstance);
 
     public GameObject posterPrefab;
 
@@ -297,7 +297,7 @@ public class ARWorldMapController : MonoBehaviour
         Console.WriteLine("Closest map is " + newId + " with error " + error);
         Log("Loading map " + newId);
 
-        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+        FirebaseStorage storage = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance);
         StorageReference storageRef = storage.RootReference;
         StorageReference mapsdbRef = storageRef.Child("maps");
         StorageReference mapRef = mapsdbRef.Child(newId + ".worldmap");
@@ -399,7 +399,7 @@ public class ARWorldMapController : MonoBehaviour
         // Debug.Log("Uploading world map to storage");
         Debug.Log(worldMapId + ".worldmap");
 
-        FirebaseStorage storage = FirebaseStorage.DefaultInstance;
+        FirebaseStorage storage = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance);
         StorageReference storageRef = storage.RootReference;
         StorageReference mapsRef = storageRef.Child("maps");
         StorageReference mapRef = mapsRef.Child(worldMapId + ".worldmap");

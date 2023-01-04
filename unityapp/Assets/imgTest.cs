@@ -28,7 +28,7 @@ public class imgTest : MonoBehaviour
         Debug.Log(material.mainTexture);
         // get the main texture of the material
 
-        StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
+        StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
         // get image data with get file async
         byte[] data = await storageRef.Child("posters/dog.png").GetBytesAsync(1024 * 1024);
         Debug.Log(data);
