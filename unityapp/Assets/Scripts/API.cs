@@ -84,6 +84,14 @@ public class API : MonoBehaviour
 
     void Start()
     {
+        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        {
+            var dependencyStatus = task.Result;
+            if (dependencyStatus == Firebase.DependencyStatus.Available)
+            {
+                app = FirebaseApp.Create();
+            }
+        });
 #if UNITY_IOS
         if (Application.platform == RuntimePlatform.IPhonePlayer)
         {
