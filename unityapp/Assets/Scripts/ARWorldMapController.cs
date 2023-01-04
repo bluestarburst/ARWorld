@@ -125,7 +125,7 @@ public class ARWorldMapController : MonoBehaviour
 
     public string centerChunkId = "";
 
-    public FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+    public FirebaseFirestore db;
 
     public GameObject posterPrefab;
 
