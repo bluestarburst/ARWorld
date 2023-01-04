@@ -52,6 +52,7 @@
 		5818DC812938065800C8B794 /* FirebaseInstallations.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseInstallations.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5818DC8C293AED9E00C8B794 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		5818DC8E293BEFF200C8B794 /* FirebaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
+		587B96CF296614CC0066EC22 /* sandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sandbox.entitlements; sourceTree = "<group>"; };
 		58ABF160293C618B000E5463 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58ABF163293C6192000E5463 /* FirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58ABF166293C61F7000E5463 /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalytics.xcframework; path = ../UnityBuild/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
@@ -147,6 +148,7 @@
 		E6DE818325BA36230019BED1 /* sandbox */ = {
 			isa = PBXGroup;
 			children = (
+				587B96CF296614CC0066EC22 /* sandbox.entitlements */,
 				E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */,
 				58E14E452964A18900ACA091 /* ElementSelection.swift */,
 				E6DE818625BA36230019BED1 /* ContentView.swift */,
@@ -430,6 +432,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = sandbox/sandbox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"sandbox/Preview Content\"";
 				DEVELOPMENT_TEAM = 6254VA6855;
@@ -463,6 +466,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = sandbox/sandbox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"sandbox/Preview Content\"";
 				DEVELOPMENT_TEAM = 6254VA6855;

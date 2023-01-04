@@ -41,7 +41,7 @@ struct UnityView: View {
                                 .clipShape(Circle())
                                 .padding(.vertical,5)
                         })
-                        Button( action: {print("add")}, label: {
+                        Button( action: {DataHandler.shared.signOut()}, label: {
                             Image(systemName: "camera")
                                 .imageScale(.medium)
                                 .font(.title2)

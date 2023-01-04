@@ -10,13 +10,18 @@ import FirebaseFirestore
 class DataHandler: NSObject, ObservableObject {
     
     var uid: String?
-    let db = Firestore.firestore()
+    let db = Firestore.firestore(app: FirebaseApp.app(name: "unity")!)
     
     @ObservedObject static var shared = DataHandler()
     
     override init() {
         super.init()
+        print("swiftinit")
+        
+        
+        
         self.getUID()
+        
         var apps = FirebaseApp.allApps
         print("swifty")
         print(apps?.description)
@@ -25,10 +30,8 @@ class DataHandler: NSObject, ObservableObject {
     
     func getUID() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
+        
         self.uid = uid
-        
-
-        
         
     }
     
@@ -49,6 +52,14 @@ class DataHandler: NSObject, ObservableObject {
                     "created": Timestamp()
                 ], merge: true)
             }
+        }
+    }
+    
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch let error as NSError {
+            print("SIGNED OUT")
         }
     }
     
