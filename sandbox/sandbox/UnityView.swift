@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+extension AnyTransition {
+    static var bottomAndFade: AnyTransition {
+        AnyTransition.move(edge: .bottom).combined(with: .opacity)
+    }
+}
+
 struct UnityView: View {
     @State private var color = Color(
         .sRGB,
@@ -14,61 +20,144 @@ struct UnityView: View {
     
     @Binding var isLoaded: Bool
     @StateObject var manager = LocationManager()
-
+    
+    @State private var showElementSelection = false
+    
     var body: some View {
         ZStack {
-            // PassthroughView()
             VStack {
                 Spacer()
-//                Button(action: {
-//                    print(manager.altitude)
-//                }, label: {
-//                    Text("get region")
-//                        .fontWeight(.bold)
-//                        .foregroundColor(.white)
-//                        .padding(.vertical)
-//                        .frame(maxWidth: .infinity)
-//                        .background(Color.pink)
-//                        .cornerRadius(8)
-//                })
-//                Button(action: {
-//                    UnityBridge.getInstance().api.loadMap(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
-//                }, label: {
-//                    Text("load")
-//                        .fontWeight(.bold)
-//                        .foregroundColor(.white)
-//                        .padding(.vertical)
-//                        .frame(maxWidth: .infinity)
-//                        .background(Color.pink)
-//                        .cornerRadius(8)
-//                })
-//                Button(action: {
-//                    UnityBridge.getInstance().api.saveMap(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
-//                }, label: {
-//                    Text("save")
-//                        .fontWeight(.bold)
-//                        .foregroundColor(.white)
-//                        .padding(.vertical)
-//                        .frame(maxWidth: .infinity)
-//                        .background(Color.pink)
-//                        .cornerRadius(8)
-//                })
+                HStack {
+                    Spacer()
+                    VStack {
+                        Spacer()
+                        Button( action: {print("add")}, label: {
+                            Image(systemName: "photo")
+                                .imageScale(.medium)
+                                .font(.title2)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color(.white).opacity(0.1))
+                                .clipShape(Circle())
+                                .padding(.vertical,5)
+                        })
+                        Button( action: {print("add")}, label: {
+                            Image(systemName: "camera")
+                                .imageScale(.medium)
+                                .font(.title2)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color(.white).opacity(0.1))
+                                .clipShape(Circle())
+                                .padding(.vertical,5)
+                        })
+                        Button( action: {withAnimation {showElementSelection = true}}, label: {
+                            Image(systemName: "plus")
+                                .imageScale(.large)
+                                .font(.title2)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color(.white).opacity(0.1))
+                                .clipShape(Circle())
+                                .padding(.vertical,5)
+                        })
+                    }
+                    .transition(.bottomAndFade)
+                }
             }
-        
-//            ColorPicker("", selection: $color)
-//                .frame(width: 50, height: 50, alignment: .center)
-//                .onChange(of: color) { newValue in
-//                    let colorString = "\(newValue)"
-//                    let arr = colorString.components(separatedBy: " ")
-//                    if arr.count > 1 {
-//                        let r = CGFloat(Float(arr[1]) ?? 1)
-//                        let g = CGFloat(Float(arr[2]) ?? 1)
-//                        let b = CGFloat(Float(arr[3]) ?? 1)
-//                        UnityBridge.getInstance().api.setColor(r: r, g: g, b: b)
-//                    }
+            .padding()
+            
+            if (showElementSelection) {
+                VStack {
+
+                        Spacer()
+                        Text("Choose an Element to Create")
+                            .font(.title)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 20)
+                        HStack {
+                            Spacer()
+                            VStack {
+                                Button( action: {print("add")}, label: {
+                                    Image(systemName: "photo")
+                                        .imageScale(.medium)
+                                        .font(.title)
+                                        .foregroundColor(.white)
+                                        .padding(10)
+                                        .background(Color(.white).opacity(0.1))
+                                        .clipShape(Circle())
+                                        .padding(.horizontal,5)
+                                })
+                                Text("Photo")
+                                    .font(.title2)
+                            }
+                            VStack {
+                                Button( action: {print("add")}, label: {
+                                    Image(systemName: "cube")
+                                        .imageScale(.medium)
+                                        .font(.title)
+                                        .foregroundColor(.white)
+                                        .padding(10)
+                                        .background(Color(.white).opacity(0.1))
+                                        .clipShape(Circle())
+                                        .padding(.horizontal,5)
+                                })
+                                Text("3D Object")
+                                    .font(.title2)
+                            }
+                            VStack {
+                                Button( action: {print("add")}, label: {
+                                    Image(systemName: "sparkle")
+                                        .imageScale(.medium)
+                                        .font(.title)
+                                        .foregroundColor(.white)
+                                        .padding(10)
+                                        .background(Color(.white).opacity(0.1))
+                                        .clipShape(Circle())
+                                        .padding(.horizontal,5)
+                                })
+                                Text("Effect")
+                                    .font(.title2)
+                            }
+                            Spacer()
+                        }
+                        Spacer()
+
+                }
+                .frame(width: .infinity, height: .infinity)
+                .background(
+                    Color(.black)
+                        .opacity(0.5)
+                        .onTapGesture {
+                            withAnimation {
+                                showElementSelection = false
+                            }
+                        }
+                        .transition(.opacity)
+                )
+                
+            }
+            
+            ElementSelection()
+            
             
         }
-        .padding()
+        
+        
+        //            ColorPicker("", selection: $color)
+        //                .frame(width: 50, height: 50, alignment: .center)
+        //                .onChange(of: color) { newValue in
+        //                    let colorString = "\(newValue)"
+        //                    let arr = colorString.components(separatedBy: " ")
+        //                    if arr.count > 1 {
+        //                        let r = CGFloat(Float(arr[1]) ?? 1)
+        //                        let g = CGFloat(Float(arr[2]) ?? 1)
+        //                        let b = CGFloat(Float(arr[3]) ?? 1)
+        //                        UnityBridge.getInstance().api.setColor(r: r, g: g, b: b)
+        //                    }
+        
+        
+        
         .onAppear {
             let api = UnityBridge.getInstance()
             api.show()
@@ -84,9 +173,12 @@ struct UnityView: View {
                 api.show()
             }
         }
+        .ignoresSafeArea()
+        
     }
-    
 }
+
+
 
 //struct UnityView_Previews: PreviewProvider {
 //    static var previews: some View {

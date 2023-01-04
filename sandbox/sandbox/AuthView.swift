@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import FirebaseAuth
 
 class LoginViewModel: ObservableObject {
     @Published var countryCode = "1"

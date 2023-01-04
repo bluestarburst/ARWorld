@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Firebase
-
+import FirebaseAuth
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var phase
