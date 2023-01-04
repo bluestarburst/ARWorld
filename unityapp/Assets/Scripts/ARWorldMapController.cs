@@ -125,7 +125,7 @@ public class ARWorldMapController : MonoBehaviour
 
     public string centerChunkId = "";
 
-    public FirebaseFirestore db = FirebaseFirestore.GetInstance(FirebaseApp.DefaultInstance);
+    public FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
     public GameObject posterPrefab;
 
@@ -297,7 +297,7 @@ public class ARWorldMapController : MonoBehaviour
         Console.WriteLine("Closest map is " + newId + " with error " + error);
         Log("Loading map " + newId);
 
-        FirebaseStorage storage = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance);
+        FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
         StorageReference storageRef = storage.RootReference;
         StorageReference mapsdbRef = storageRef.Child("maps");
         StorageReference mapRef = mapsdbRef.Child(newId + ".worldmap");
@@ -463,6 +463,8 @@ public class ARWorldMapController : MonoBehaviour
 
         // create a method on anchor change anchor manager
         anchorManager.anchorsChanged += AnchorManager_anchorsChanged;
+
+        db = FirebaseFirestore.GetInstance(api.app);
     }
 
     private void AnchorManager_anchorsChanged(ARAnchorsChangedEventArgs obj)
@@ -478,6 +480,7 @@ public class ARWorldMapController : MonoBehaviour
                 Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
                 var chunk = Instantiate(ChunkPrefab, anchor.transform.position, anchor.transform.rotation);
                 Chunk chunkScript = chunk.GetComponent<Chunk>();
+                chunkScript.db = db;
                 chunkScript.ARCamera = ARCamera;
                 chunkScript.arWorldMapController = this;
                 chunkScript.id = anchor.trackableId.ToString();
@@ -625,6 +628,12 @@ public class ARWorldMapController : MonoBehaviour
 
 
                 // save the id to the anchor so we can find it after reloading the world map
+
+                Chunk chunkScript = chunk.GetComponent<Chunk>();
+                chunkScript.db = db;
+                chunkScript.ARCamera = ARCamera;
+                chunkScript.arWorldMapController = this;
+                chunkScript.id = anchor.trackableId.ToString();
 
 
 

@@ -80,6 +80,8 @@ public class API : MonoBehaviour
     public float lon = 0.0f;
     public float alt = 0.0f;
 
+    public FirebaseApp app = FirebaseApp.Create();
+
     void Start()
     {
 #if UNITY_IOS
