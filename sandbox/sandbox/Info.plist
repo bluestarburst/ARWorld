@@ -29,14 +29,14 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>Keycha</key>
-	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow ARWorld to see the world around you and create an AR map!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Please allow ARWorld to use your location to get AR objects around you!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Would you like to share your photos to the world?</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -21,6 +21,7 @@ struct UnityView: View {
     @Binding var isLoaded: Bool
     @StateObject var manager = LocationManager()
     
+    @State private var showElementOptions = false
     @State private var showElementSelection = false
     
     var body: some View {
@@ -51,7 +52,7 @@ struct UnityView: View {
                                 .clipShape(Circle())
                                 .padding(.vertical,5)
                         })
-                        Button( action: {withAnimation {showElementSelection = true}}, label: {
+                        Button( action: {withAnimation {showElementOptions = true}}, label: {
                             Image(systemName: "plus")
                                 .imageScale(.large)
                                 .font(.title2)
@@ -68,62 +69,62 @@ struct UnityView: View {
             }
             .padding()
             
-            if (showElementSelection) {
+            if (showElementOptions) {
                 VStack {
-
+                    
+                    Spacer()
+                    Text("Choose an Element to Create")
+                        .font(.title)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
+                    HStack {
                         Spacer()
-                        Text("Choose an Element to Create")
-                            .font(.title)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 20)
-                        HStack {
-                            Spacer()
-                            VStack {
-                                Button( action: {print("add")}, label: {
-                                    Image(systemName: "photo")
-                                        .imageScale(.medium)
-                                        .font(.title)
-                                        .foregroundColor(.white)
-                                        .padding(10)
-                                        .background(Color(.white).opacity(0.1))
-                                        .clipShape(Circle())
-                                        .padding(.horizontal,5)
-                                })
-                                Text("Photo")
-                                    .font(.title2)
-                            }
-                            VStack {
-                                Button( action: {print("add")}, label: {
-                                    Image(systemName: "cube")
-                                        .imageScale(.medium)
-                                        .font(.title)
-                                        .foregroundColor(.white)
-                                        .padding(10)
-                                        .background(Color(.white).opacity(0.1))
-                                        .clipShape(Circle())
-                                        .padding(.horizontal,5)
-                                })
-                                Text("3D Object")
-                                    .font(.title2)
-                            }
-                            VStack {
-                                Button( action: {print("add")}, label: {
-                                    Image(systemName: "sparkle")
-                                        .imageScale(.medium)
-                                        .font(.title)
-                                        .foregroundColor(.white)
-                                        .padding(10)
-                                        .background(Color(.white).opacity(0.1))
-                                        .clipShape(Circle())
-                                        .padding(.horizontal,5)
-                                })
-                                Text("Effect")
-                                    .font(.title2)
-                            }
-                            Spacer()
+                        VStack {
+                            Button( action: {withAnimation {showElementSelection = true;showElementOptions = false}}, label: {
+                                Image(systemName: "photo")
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.horizontal,5)
+                            })
+                            Text("Photo")
+                                .font(.title2)
+                        }
+                        VStack {
+                            Button( action: {print("add")}, label: {
+                                Image(systemName: "cube")
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.horizontal,5)
+                            })
+                            Text("3D Object")
+                                .font(.title2)
+                        }
+                        VStack {
+                            Button( action: {print("add")}, label: {
+                                Image(systemName: "sparkle")
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.horizontal,5)
+                            })
+                            Text("Effect")
+                                .font(.title2)
                         }
                         Spacer()
-
+                    }
+                    Spacer()
+                    
                 }
                 .frame(width: .infinity, height: .infinity)
                 .background(
@@ -131,7 +132,7 @@ struct UnityView: View {
                         .opacity(0.5)
                         .onTapGesture {
                             withAnimation {
-                                showElementSelection = false
+                                showElementOptions = false
                             }
                         }
                         .transition(.opacity)
@@ -139,8 +140,28 @@ struct UnityView: View {
                 
             }
             
-            ElementSelection()
             
+            
+            if (showElementSelection) {
+                VStack{
+                    Spacer()
+                    HStack {
+                        Spacer()
+                    }
+                }
+                .background(.black.opacity(0.5))
+                .transition(.opacity)
+                .onTapGesture {
+                    withAnimation {
+                        showElementSelection = false
+                    }
+                }
+                
+                ZStack {
+                    ElementSelection(disabled: $showElementSelection)
+                }
+                .transition(.bottomAndFade)
+            }
             
         }
         
