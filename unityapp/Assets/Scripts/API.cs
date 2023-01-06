@@ -119,6 +119,9 @@ public class API : MonoBehaviour
             case "load-map":
                 _LoadMap(serializedMessage);
                 break;
+            case "add-object":
+                _AddObject(serializedMessage);
+                break;
             default:
                 Debug.LogError("Unrecognized message '" + header.type + "'");
                 break;
@@ -138,6 +141,15 @@ public class API : MonoBehaviour
             alt = msg.data[2];
         }
         // print("updateVars");
+    }
+
+    public void _AddObject(string serialized)
+    {
+        var msg = JsonConvert.DeserializeObject<MessageWithData<string[]>>(serialized);
+        if (msg.data != null)
+        {
+            
+        }
     }
 
     public void sendMapIOS(string map)
