@@ -63,6 +63,10 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "phone-login", data: [cc,ph])
     }
 
+    public func addObject(type: String, user: String, id: String) {
+        sendMessage(type: "add-object", data: [type, user, id])
+    }
+
     public func test(_ value: String) {
         self.testCallback(value)
     }
