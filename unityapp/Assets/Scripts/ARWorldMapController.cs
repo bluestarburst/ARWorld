@@ -125,7 +125,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public ARPlaneManager planeManager;
 
+        public string centerChunkIdToSave = "";
         public string centerChunkId = "";
+        public GameObject centerChunk;
 
         public FirebaseFirestore db = FirebaseFirestore.GetInstance(FirebaseApp.Create());
 
@@ -256,6 +258,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
             var error = Double.MaxValue;
             var newId = "";
+            var tempCenterChunkId = "";
             foreach (DocumentSnapshot documentSnapshot in querySnapshot.Documents)
             {
                 Console.WriteLine("Document {0} returned by query maps", documentSnapshot.Id);
@@ -274,6 +277,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     error = tempErr;
                     newId = documentSnapshot.Id;
                     chunksToLoad = documentSnapshot.GetValue<int>("chunks");
+                    tempCenterChunkId = documentSnapshot.GetValue<string>("centerChunkId");
                 }
             }
 
@@ -282,6 +286,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Log("Already loaded map " + newId);
                 return;
             }
+
+            centerChunk = null;
+            centerChunkId = tempCenterChunkId;
             CancelInvoke("OnSaveButton");
 
             if (newId == "")
@@ -362,17 +369,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 docRef = db.Collection("maps").Document();
                 Debug.Log("New document created");
                 await docRef.SetAsync(new Dictionary<string, object>
-        {
-            { "location", location },
-            { "altitude", api.alt },
-            { "creator", "bryant" },
-            { "updated", DateTime.Now },
-            { "created", DateTime.Now },
-            { "name", "test" },
-            { "public", true },
-            { "chunks", 1 },
-            { "id", docRef.Id }
-        });
+                {
+                    { "location", location },
+                    { "altitude", api.alt },
+                    { "creator", "bryant" },
+                    { "updated", DateTime.Now },
+                    { "created", DateTime.Now },
+                    { "name", "test" },
+                    { "public", true },
+                    { "chunks", 1 },
+                    { "id", docRef.Id },
+                    { "centerChunkId", centerChunkId },
+                });
                 worldMapId = docRef.Id;
                 Debug.Log("Added document with ID: " + docRef.Id);
             }
@@ -380,19 +388,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 docRef = db.Collection("maps").Document(worldMapId);
                 await docRef.UpdateAsync(new Dictionary<string, object>
-        {
-            { "updated", DateTime.Now },
-            { "altitude", api.alt },
-            { "location", location }
-        });
+                {
+                    { "updated", DateTime.Now },
+                    { "altitude", api.alt },
+                    { "location", location },
+                });
+
                 Debug.Log("Updated document with ID: " + docRef.Id);
 
             }
 
-            if (centerChunkId.Length > 0)
+            if (centerChunkIdToSave.Length > 0)
             {
-                var chunk = chunks[centerChunkId];
-                DocumentReference chunkRef = db.Collection("maps").Document(worldMapId).Collection("chunks").Document(centerChunkId);
+                var chunk = chunks[centerChunkIdToSave];
+                DocumentReference chunkRef = db.Collection("maps").Document(worldMapId).Collection("chunks").Document(centerChunkIdToSave);
                 await chunkRef.SetAsync(new Dictionary<string, object>{
                     { "x", chunk.transform.position.x },
                     { "y", chunk.transform.position.y },
@@ -401,7 +410,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     { "updated", DateTime.Now },
                     { "worldMapId", worldMapId }
                 });
-                centerChunkId = "";
+                centerChunkIdToSave = "";
             }
 
             // Debug.Log("Uploading world map to storage");
@@ -484,6 +493,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Debug.Log("added");
                 foreach (var anchor in obj.added)
                 {
+
                     Log("ANCHOR NAME: " + anchor.name);
                     Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
                     var chunk = Instantiate(ChunkPrefab, anchor.transform.position, anchor.transform.rotation);
@@ -496,6 +506,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     chunks.Add(anchor.trackableId.ToString(), chunk);
                     Log("added chunk to chunks");
                     anchors.Add(anchor.trackableId.ToString(), anchor);
+
+                    if (centerChunk == null && centerChunkId == anchor.trackableId.ToString())
+                    {
+                        centerChunk = chunk;
+                        centerChunkId = "";
+                    }
+
                 }
             }
             if (obj.updated.Count > 0)
@@ -639,7 +656,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (x == 0 && z == 0)
                     {
+                        centerChunkIdToSave = anchor.trackableId.ToString();
                         centerChunkId = anchor.trackableId.ToString();
+                        centerChunk = chunk;
                     }
 
                 }
