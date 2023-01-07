@@ -12,7 +12,8 @@ class DataHandler: NSObject, ObservableObject {
     
     var uid: String?
     let db = Firestore.firestore(app: FirebaseApp.app(name: "swift")!)
-    let storage = Storage.storage(app: FirebaseApp.app(name: "swift")!)
+//    let storage = Storage.storage(app: FirebaseApp.app(name: "swift")!)
+    let storage = Storage.storage()
     
     @ObservedObject static var shared = DataHandler()
     
