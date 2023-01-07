@@ -217,21 +217,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
                 }
-                else if (roundedDistanceToCenterChunkForward == 0 && roundedDistanceToCenterChunkRight == 0)
-                {
-                    DestroyImmediate(currentChunk);
-                    currentChunk = centerChunk;
-                    return;
-                }
-                else if (roundedDistanceToCenterChunkForward != 0 || roundedDistanceToCenterChunkRight != 0)
+                else
                 {
                     currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
-                    centerChunk.transform.rotation = currentChunk.transform.rotation;
-                }
-
-                if (currentChunk == null)
-                {
-                    currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
+                    currentChunk.transform.rotation = centerChunk.transform.rotation;
                 }
         }
 
@@ -336,22 +325,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
                 }
-                else if (roundedDistanceToCenterChunkForward == 0 && roundedDistanceToCenterChunkRight == 0)
-                {
-                    DestroyImmediate(currentChunk);
-                    currentChunk = centerChunk;
-                    return;
-                }
-                else if (roundedDistanceToCenterChunkForward != 0 || roundedDistanceToCenterChunkRight != 0)
-                {
+                else {
                     currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
-                    centerChunk.transform.rotation = currentChunk.transform.rotation;
+                    currentChunk.transform.rotation = centerChunk.transform.rotation;
                 }
 
-                if (currentChunk == null)
-                {
-                    currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
-                }
             }
 
 
