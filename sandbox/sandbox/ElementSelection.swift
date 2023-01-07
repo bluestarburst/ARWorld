@@ -49,22 +49,7 @@ struct ElementSelection: View {
     
     @State var selectedImage: UIImage = UIImage()
     
-    @State var posters: [String:URL] = [:]
-    @State var postersL: [URL] = []
-    @State var postersI: [String] = []
-    @State var postersU: [String] = []
     
-    func updatePosters() {
-        var tempPost = DataHandler.shared.posters
-        for id in tempPost.keys {
-            if (posters[id] == nil) {
-                posters[id] = tempPost[id]
-                postersL.append(tempPost[id]!)
-                postersI.append(id)
-                postersU.append(DataHandler.shared.posterData[id])
-            }
-        }
-    }
     
     var body: some View {
         VStack {
@@ -95,19 +80,7 @@ struct ElementSelection: View {
                         .cornerRadius(16)
                         .padding(.vertical, 5)
                         .padding(.horizontal, 25)
-                        ForEach(0..<10) { index10 in
-                            HStack {
-                                Spacer()
-                                ForEach(0..<4) {index in
-                                    if (postersL.count > (index10 * 4) + index ) {
-                                        Box(url: postersL[(index10 * 4) + index], id: postersL[(index10 * 4) + index], user: postersU[(index10 * 4) + index])
-                                    } else {
-                                        Box()
-                                    }
-                                }
-                                Spacer()
-                            }
-                        }
+                        ImageLoop()
                     }
                 }.gesture(
                     DragGesture()
@@ -143,11 +116,50 @@ struct ElementSelection: View {
             
         }.sheet(isPresented: $showImagePicker) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $selectedImage)
+        }
+        
+    }
+}
+
+struct ImageLoop: View {
+    
+    @State var posters: [String:URL] = [:]
+    @State var postersL: [URL] = []
+    @State var postersI: [String] = []
+    @State var postersU: [String] = []
+    
+    func updatePosters() {
+        var tempPost = DataHandler.shared.posters
+        for id in tempPost.keys {
+            if (posters[id] == nil) {
+                posters[id] = tempPost[id]
+                postersL.append(tempPost[id]!)
+                postersI.append(id)
+                postersU.append(DataHandler.shared.posterData[id]!)
+            }
+        }
+    }
+    
+    var body: some View {
+        VStack {
+            ForEach(0..<5) { index10 in
+                HStack {
+                    Spacer()
+                    ForEach(0..<4) {index in
+                        let temp = (index10 * 4) + index
+                        if (postersL.count > temp) {
+                            Box(url: postersL[temp], user: postersU[temp], id: postersI[temp] )
+                        } else {
+                            Box()
+                        }
+                    }
+                    Spacer()
+                }
+            }
         }.onAppear {
             DataHandler.shared.updatePosters = updatePosters
             DataHandler.shared.getUserPosters()
         }
-        
     }
 }
 

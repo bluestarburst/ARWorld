@@ -14,6 +14,8 @@ extension AnyTransition {
 }
 
 struct UnityView: View {
+    
+    
     @State private var color = Color(
         .sRGB,
         red: 0.98, green: 0.9, blue: 0.2)
@@ -195,6 +197,7 @@ struct UnityView: View {
                 api.show()
             }
         }
+        
         .ignoresSafeArea()
         
     }

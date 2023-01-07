@@ -11,8 +11,7 @@ import FirebaseAuth
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var phase
-        @State var page = (Auth.auth().currentUser?.uid != nil) ? 1 : 0
-//    @State var page = 0
+    @State var page = (Auth.auth().currentUser?.uid != nil) ? 1 : 0
     
     @State var isLoaded = true
     
@@ -30,14 +29,6 @@ struct ContentView: View {
         }.onAppear {
             setupColorScheme()
         }
-    }
-    
-    private func signOut() {
-        //        do {
-        //            try Auth.auth().signOut()
-        //        } catch let signOutError as NSError {
-        //            print("Error signing out: %@", signOutError)
-        //        }
     }
     
     private func setupColorScheme() {
