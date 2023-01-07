@@ -81,6 +81,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             isAdding = true;
             Debug.Log("Adding: users/" + user + "/posters/" + id + ".jpg");
+            Debug.Log("type: " + type);
 
 
             // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
@@ -90,22 +91,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 // the rotation of the object is relative to the world, not the plane normal
                 
-                if (type == "poster")
+                if (type.Equals("poster"))
                 {
-                    GameObject tempObj = Instantiate(m_PosterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
+                    spawnedObject = Instantiate(m_PosterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
                     // get poster image
-                    StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
-                    // get image data
-                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
+                    StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
+                    // get image data with get file async
+                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+
+                    if (data == null)
+                    {
+                        Debug.Log("data is null");
+                        data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
+                    }
+
                     // create texture
                     Texture2D texture = new Texture2D(1, 1);
                     // load texture
                     texture.LoadImage(data);
                     // set diffuse texture
-                    tempObj.GetComponent<MeshRenderer>().material.mainTexture = texture;
-                    spawnedObject = tempObj;
-
-                    Debug.Log("Finished adding: users/" + user + "/posters/" + id + ".jpg");
+                    spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                 }
                 else
                 {
@@ -119,13 +124,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else
             {
-                if (type == "poster")
+                if (type.Equals("poster"))
                 {
                     spawnedObject = Instantiate(m_PosterPrefab, Camera.main.transform.position + Camera.main.transform.forward * 2f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                     // get image data
                     byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+
+                    if (data == null)
+                    {
+                        Debug.Log("data is null");
+                        data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
+                    }
 
                     // create texture
                     Texture2D texture = new Texture2D(1, 1);
