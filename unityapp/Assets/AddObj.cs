@@ -6,6 +6,10 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Firestore;
 using Firebase.Storage;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Threading.Tasks;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -102,7 +106,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     Console.WriteLine("REF");
                     // get image data with get file async
                     // byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
-                    byte[] data = await storageRef.Child("users/bryant/posters/dog.png").GetBytesAsync(1024 * 1024);
+                    // byte[] data = await storageRef.Child("users/bryant/posters/dog.png").GetBytesAsync(1024 * 1024);
                     // users/oeKjWlEi0sWpg0fVslyuZGcCwLo2/posters/xUyMTebVpJWEeYQOzzM1.jpg
                     Console.WriteLine("DATA");
 
@@ -116,7 +120,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     Texture2D texture = new Texture2D(1, 1);
                     Console.WriteLine("Texture");
                     // load texture
-                    texture.LoadImage(data);
+                    // texture.LoadImage(data);
                     // set diffuse texture
                     spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                     Console.WriteLine("Component");
