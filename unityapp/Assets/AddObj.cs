@@ -54,6 +54,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public bool isAdding = false;
 
+        public string type = "";
+        public string user = "";
+        public string id = "";
+
         protected override void Awake()
         {
             base.Awake();
@@ -76,6 +80,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (!isAdding)
             {
+                this.type = type;
+                this.user = user;
+                this.id = id;
                 Add(type, user, id);
                 return;
             }
@@ -218,6 +225,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // move object to the plane
                     spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
+
+                    // if poster, rotate to be parallel to plane
+                    if (type.Equals("poster"))
+                    {
+                        spawnedObject.transform.rotation = Quaternion.LookRotation(planeNormal, hitPose.rotation * Vector3.forward);
+                    }
+
                 } else {
                     // if no plane is hit, move object to 0.5 units in front of camera at position of touch
                     Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
