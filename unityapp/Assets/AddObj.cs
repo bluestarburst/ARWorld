@@ -92,9 +92,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 
                 if (type == "poster")
                 {
-                    spawnedObject = Instantiate(m_PosterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
+                    GameObject tempObj = Instantiate(m_PosterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
                     // get poster image
-                    StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
+                    StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");https://console.firebase.google.com/project/ourworld-737cd/storage/ourworld-737cd.appspot.com/files
                     // get image data
                     byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
 
@@ -104,7 +104,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // load texture
                     texture.LoadImage(data);
                     // set diffuse texture
-                    spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                    tempObj.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                    spawnedObject = tempObj;
                 }
                 else
                 {
