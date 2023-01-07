@@ -226,17 +226,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // move object to the plane
                     spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
 
-                    // if poster, rotate to be parallel to plane
+                    // if poster, make the rotation same as the plane normal
                     if (type.Equals("poster"))
                     {
-                        spawnedObject.transform.rotation = Quaternion.LookRotation(planeNormal, hitPose.rotation * Vector3.forward);
+                        spawnedObject.transform.rotation = Quaternion.LookRotation(planeNormal, Vector3.up);
                     }
 
                 } else {
                     // if no plane is hit, move object to 0.5 units in front of camera at position of touch
                     Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
                     spawnedObject.transform.position = touchPosition;
-
                 }
             }
 
