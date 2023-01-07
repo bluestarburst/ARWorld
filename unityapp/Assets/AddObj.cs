@@ -101,14 +101,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                     Console.WriteLine("REF");
                     // get image data with get file async
-                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+                    // byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+                    byte[] data = await storageRef.Child("users/bryant/posters/dog.png").GetBytesAsync(1024 * 1024);
+                    //users/oeKjWlEi0sWpg0fVslyuZGcCwLo2/posters/xUyMTebVpJWEeYQOzzM1.jpg
                     Console.WriteLine("DATA");
 
-                    if (data == null)
-                    {
-                        Debug.Log("data is null");
-                        data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
-                    }
+                    // if (data == null)
+                    // {
+                    //     Debug.Log("data is null");
+                    //     data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
+                    // }
 
                     // create texture
                     Texture2D texture = new Texture2D(1, 1);
