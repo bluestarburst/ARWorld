@@ -96,7 +96,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.DefaultInstance.GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                     // get image data
-                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
                     // create texture
                     Texture2D texture = new Texture2D(1, 1);
                     // load texture
