@@ -96,7 +96,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // the rotation of the object is relative to the world, not the plane normal
 
                 Console.WriteLine("PLANE HIT");
-                
+
                 if (type.Equals("poster"))
                 {
                     Console.WriteLine("POSTER");
@@ -113,8 +113,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // if (data == null)
                     // {
                     //     Debug.Log("data is null");
-                    //     data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
+                    //     
                     // }
+
+                    byte[] data;
+
+                    try
+                    {
+                        Console.WriteLine("TRY");
+                        data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+                        Console.WriteLine("SUCCESS");
+                    }
+                    catch (System.Exception e)
+                    {
+                        Console.WriteLine("ERROR");
+                        Console.WriteLine("Error loading chunk " + id + ": " + e.Message);
+                    }
 
                     // create texture
                     Texture2D texture = new Texture2D(1, 1);
@@ -218,7 +232,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // move object to the plane
                     spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
-                } else {
+                }
+                else
+                {
                     // if no plane is hit, move object to 0.5 units in front of camera at position of touch
                     Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
                     spawnedObject.transform.position = touchPosition;
