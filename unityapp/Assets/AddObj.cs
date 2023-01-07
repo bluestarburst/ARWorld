@@ -109,7 +109,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     Console.WriteLine("POSTER");
 
                     // create poster prefab parallel to plane hit normal and 0.5 units above plane hit
-                    spawnedObject = Instantiate(m_PosterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, Quaternion.LookRotation(hitPose.rotation * Vector3.up, hitPose.rotation * Vector3.up));
+                    spawnedObject = Instantiate(m_PosterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, hitPose.rotation);
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");    
 
@@ -228,13 +228,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     float distance = Vector3.Dot(spawnedObject.transform.position - hitPose.position, planeNormal);
 
                     // move object to the plane
-                    spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
+                    
 
                     // if poster, make the rotation same as the plane normal
                     if (type.Equals("poster"))
                     {
                         Console.WriteLine("POSTER");
                         spawnedObject.transform.rotation = hitPose.rotation;
+                        spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * 0.1f;
+                    } else {
+                        spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
                     }
 
                 } else {
