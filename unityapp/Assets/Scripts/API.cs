@@ -78,7 +78,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
     {
         public GameObject cube;
         public ARWorldMapController worldMapController;
-
         public AddObj addObj;
         public float lat = 0.0f;
         public float lon = 0.0f;
@@ -152,7 +151,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var msg = JsonConvert.DeserializeObject<MessageWithData<string[]>>(serialized);
             if (msg.data != null)
             {
-
+                addObj.CreateObjectInFrontOfCamera();
             }
         }
 
