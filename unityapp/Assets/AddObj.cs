@@ -98,12 +98,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 this.type = type;
                 this.user = user;
                 this.id = id;
-                Add(type, user, id);
+
+                if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
+                {
+                    AddPoster(type, user, id);
+                }
                 return;
             }
         }
 
-        async void Add(string type, string user, string id)
+        async void AddPoster(string type, string user, string id)
         {
             isAdding = true;
             Debug.Log("Adding: users/" + user + "/posters/" + id + ".jpg");
@@ -119,7 +123,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 Console.WriteLine("PLANE HIT");
 
-                if (type.Equals("poster"))
+                if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
                 {
                     Console.WriteLine("POSTER");
 
@@ -128,14 +132,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
 
-                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+                    byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetBytesAsync(1024 * 1024);
 
                     Console.WriteLine("DATA");
 
                     if (data == null)
                     {
                         Debug.Log("data is null");
-                        data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
+                        data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
                     }
 
                     // create texture
@@ -160,20 +164,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
             else
             {
                 Console.WriteLine("NOT HIT");
-                if (type.Equals("poster"))
+                if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
                 {
                     spawnedObject = Instantiate(m_PosterPrefab, Camera.main.transform.position + Camera.main.transform.forward * 2f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
 
-                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+                    byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetBytesAsync(1024 * 1024);
 
                     Console.WriteLine("DATA");
 
                     if (data == null)
                     {
                         Debug.Log("data is null");
-                        data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
+                        data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
                     }
 
                     // create texture
@@ -197,31 +201,31 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             // get distance between spawned object and center chunk
-                float distanceToCenterChunk = Vector3.Distance(spawnedObject.transform.position, centerChunk.transform.position);
+            float distanceToCenterChunk = Vector3.Distance(spawnedObject.transform.position, centerChunk.transform.position);
 
-                // get components of distance to center chunk in the direction of center chunk forward
-                float distanceToCenterChunkForward = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.forward);
+            // get components of distance to center chunk in the direction of center chunk forward
+            float distanceToCenterChunkForward = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.forward);
 
-                // get components of distance to center chunk in the direction of center chunk right
-                float distanceToCenterChunkRight = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.right);
+            // get components of distance to center chunk in the direction of center chunk right
+            float distanceToCenterChunkRight = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.right);
 
-                // round down to nearest 1 unit
-                int roundedDistanceToCenterChunkForward = (int)Math.Round(distanceToCenterChunkForward);
-                int roundedDistanceToCenterChunkRight = (int)Math.Round(distanceToCenterChunkRight);
+            // round down to nearest 1 unit
+            int roundedDistanceToCenterChunkForward = (int)Math.Round(distanceToCenterChunkForward);
+            int roundedDistanceToCenterChunkRight = (int)Math.Round(distanceToCenterChunkRight);
 
-                // convert to coordinates relative to the world map
+            // convert to coordinates relative to the world map
 
-                Vector3 centerChunkCoordinates = centerChunk.transform.position;
+            Vector3 centerChunkCoordinates = centerChunk.transform.position;
 
-                if (currentChunk == null)
-                {
-                    currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
-                }
-                else
-                {
-                    currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
-                    currentChunk.transform.rotation = centerChunk.transform.rotation;
-                }
+            if (currentChunk == null)
+            {
+                currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
+            }
+            else
+            {
+                currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
+                currentChunk.transform.rotation = centerChunk.transform.rotation;
+            }
         }
 
         private void Update()
@@ -284,7 +288,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
                     // if poster, make the rotation same as the plane normal
-                    if (type.Equals("poster"))
+                    if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
                     {
                         Console.WriteLine("POSTER");
                         spawnedObject.transform.rotation = hitPose.rotation;
@@ -325,7 +329,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
                 }
-                else {
+                else
+                {
                     currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
                     currentChunk.transform.rotation = centerChunk.transform.rotation;
                 }
