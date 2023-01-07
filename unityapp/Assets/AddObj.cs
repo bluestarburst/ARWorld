@@ -98,6 +98,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get image data
                     byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
 
+                    Debug.Log("data: " + data);
                     // create texture
                     Texture2D texture = new Texture2D(1, 1);
                     // load texture
