@@ -277,6 +277,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
 
+            if (newId == worldMapId)
+            {
+                Log("Already loaded map " + newId);
+                return;
+            }
+            CancelInvoke("OnSaveButton");
+
             if (newId == "")
             {
                 Log("No nearby maps found");
@@ -284,7 +291,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 await createChunks(1, 0);
                 //hi
-
 
                 if (!repeating)
                 {
@@ -580,7 +586,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 preventReload = true;
                 sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
-                OnLoadButton();
+                InvokeRepeating("OnLoadButton", 1, 1);
             }
 
 
@@ -602,7 +608,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
 
-            // create chunks around arcamera
+            // create chunks around ar session origin
 
             for (int x = -num; x <= num; x++)
             {
@@ -615,19 +621,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // create firebase document
 
-                    // await docRef.SetAsync(new Dictionary<string, object>
-                    // {
-                    //     { "x", chunk.transform.position.x },
-                    //     { "y", chunk.transform.position.y },
-                    //     { "z", chunk.transform.position.z },
-                    //     { "size", size },
-                    //     { "updated", DateTime.Now },
-                    //     { "worldMapId", worldMapId }
-                    // });
-
                     Log("ANCHOR NAME: " + anchor.name);
                     Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
-
 
                     // save the id to the anchor so we can find it after reloading the world map
 
