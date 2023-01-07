@@ -81,7 +81,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        async void Add(string type, string user, string id)
+        void Add(string type, string user, string id)
         {
             isAdding = true;
             Debug.Log("Adding: users/" + user + "/posters/" + id + ".jpg");
@@ -115,7 +115,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     try
                     {
                         Console.WriteLine("TRY");
-                        await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024).ContinueWith(task =>
+                        storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024).ContinueWith(task =>
                         {
                             if (!task.IsFaulted && !task.IsCanceled)
                             {
@@ -165,18 +165,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                     // get image data
-                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
-
-                    if (data == null)
-                    {
-                        Debug.Log("data is null");
-                        data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
-                    }
 
                     // create texture
                     Texture2D texture = new Texture2D(1, 1);
                     // load texture
-                    texture.LoadImage(data);
+                    // texture.LoadImage(data);
                     // set diffuse texture
                     spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                 }
