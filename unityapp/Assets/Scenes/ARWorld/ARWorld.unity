@@ -981,6 +981,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlacedPrefab: {fileID: 5700754598816626126, guid: 88d0c5f06204f7e4791a50a01a061adf,
     type: 3}
+  m_PosterPrefab: {fileID: 2491148595152579251, guid: 05a316b586693c9419cf47feeecf86f9,
+    type: 3}
   isAdding: 0
 --- !u!114 &1352058507
 MonoBehaviour:
