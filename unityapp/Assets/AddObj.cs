@@ -233,7 +233,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // if poster, make the rotation same as the plane normal
                     if (type.Equals("poster"))
                     {
-                        spawnedObject.transform.rotation = Quaternion.LookRotation(planeNormal, Vector3.up);
+                        Console.WriteLine("POSTER");
+                        spawnedObject.transform.rotation = hitPose.rotation;
                     }
 
                 } else {
