@@ -85,15 +85,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (!isAdding)
             {
 
-                if (arWorldMapController.centerChunk == null)
-                {
-                    return;
-                }
-
-                if (centerChunk == null || centerChunk != arWorldMapController.centerChunk)
-                {
-                    centerChunk = arWorldMapController.centerChunk;
-                }
+                centerChunk = arWorldMapController.centerChunk;
 
                 this.type = type;
                 this.user = user;
@@ -224,15 +216,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
             {
 
-                if (arWorldMapController.centerChunk == null)
-                {
-                    return;
-                }
 
-                if (centerChunk == null || centerChunk != arWorldMapController.centerChunk)
-                {
-                    centerChunk = arWorldMapController.centerChunk;
-                }
+                centerChunk = arWorldMapController.centerChunk;
+
 
                 if (spawnedObject == null)
                 {
