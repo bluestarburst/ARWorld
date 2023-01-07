@@ -60,23 +60,23 @@ class DataHandler: NSObject, ObservableObject {
         }
     }
     
-    func storeImg(img: UIImage) {
-        var doc = db.collection("posters").document()
+    func storeImg(img: UIImage, type: String = "posters") {
+        var doc = db.collection(type).document()
         let id = doc.documentID
         
         doc.setData([
             "user": (self.uid ?? ""),
-            "type": "poster"
+            "type": type
         ])
         
-        var userDoc = db.collection("users").document(self.uid ?? "").collection("posters").document(id)
+        var userDoc = db.collection("users").document(self.uid ?? "").collection(type).document(id)
         
         userDoc.setData([
             "user": (self.uid ?? ""),
-            "type": "poster"
+            "type": type
         ])
         
-        let storageRef = storage.reference().child("users/" + (self.uid ?? "") + "/posters/" + id + ".jpg")
+        let storageRef = storage.reference().child("users/" + (self.uid ?? "") + "/" + type + "/" + id + ".jpg")
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -84,7 +84,6 @@ class DataHandler: NSObject, ObservableObject {
         var temp = img.resized(toWidth: 200)
         
         let data = temp!.jpegData(compressionQuality: 0.1)
-//        self.saveReusableImg(data: data, id: id)
         
         if let data = data {
             storageRef.putData(data, metadata: metadata) { (metadata, error) in
@@ -101,11 +100,6 @@ class DataHandler: NSObject, ObservableObject {
         
     }
     
-    func saveReusableImg(data: Data?, id: String) {
-        let path = documentDirectoryPath()?.appendingPathComponent(id + ".jpg")
-        try? data!.write(to: path!)
-    }
-    
     func documentDirectoryPath() -> URL? {
         let path = FileManager.default.urls(for: .documentDirectory,
                                             in: .userDomainMask)
@@ -116,6 +110,12 @@ class DataHandler: NSObject, ObservableObject {
     var posters: [String: URL] = [:]
     var posterData: [String: String] = [:]
     
+    var stickers: [String: URL] = [:]
+    var stickerData: [String: String] = [:]
+    
+    var images: [String: URL] = [:]
+    var imageData: [String: String] = [:]
+    
     func getUserPosters() {
         db.collection("users").document(self.uid ?? "").collection("posters").getDocuments { (querySnapshot, err) in
             if let err = err {
@@ -125,11 +125,6 @@ class DataHandler: NSObject, ObservableObject {
                 self.posterData = [:]
                 for document in querySnapshot!.documents {
                     print("\(document.documentID) => \(document.data())")
-                    
-//                    if (self.readImage(id: document.documentID) == true) {
-//
-//                        continue
-//                    }
                     
                     self.posterData[document.documentID] = self.uid ?? ""
                     
@@ -147,6 +142,70 @@ class DataHandler: NSObject, ObservableObject {
                             return
                         }
                         self.posters[document.documentID] = url
+                        self.updatePosters()
+                    })
+                    
+                }
+            }
+        }
+        
+        db.collection("users").document(self.uid ?? "").collection("stickers").getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("error getting documents: \(err)")
+            } else {
+                self.stickers = [:]
+                self.stickerData = [:]
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    
+                    self.stickerData[document.documentID] = self.uid ?? ""
+                    
+                    let storageRef = self.storage.reference().child("users/" + (self.uid ?? "") + "/stickers/" + document.documentID + ".jpg")
+                    storageRef.downloadURL(completion: { url, error in
+                        guard let url = url, error == nil else {
+                            let storageRef2 = self.storage.reference().child("users/" + (self.uid ?? "") + "/stickers/" + document.documentID + ".png")
+                            storageRef2.downloadURL(completion: { url2, error2 in
+                                guard let url2 = url2, error2 == nil else {
+                                    return
+                                }
+                                self.stickers[document.documentID] = url2
+                                self.updatePosters()
+                            })
+                            return
+                        }
+                        self.stickers[document.documentID] = url
+                        self.updatePosters()
+                    })
+                    
+                }
+            }
+        }
+        
+        db.collection("users").document(self.uid ?? "").collection("images").getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("error getting documents: \(err)")
+            } else {
+                self.images = [:]
+                self.imageData = [:]
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    
+                    self.imageData[document.documentID] = self.uid ?? ""
+                    
+                    let storageRef = self.storage.reference().child("users/" + (self.uid ?? "") + "/images/" + document.documentID + ".jpg")
+                    storageRef.downloadURL(completion: { url, error in
+                        guard let url = url, error == nil else {
+                            let storageRef2 = self.storage.reference().child("users/" + (self.uid ?? "") + "/images/" + document.documentID + ".png")
+                            storageRef2.downloadURL(completion: { url2, error2 in
+                                guard let url2 = url2, error2 == nil else {
+                                    return
+                                }
+                                self.images[document.documentID] = url2
+                                self.updatePosters()
+                            })
+                            return
+                        }
+                        self.images[document.documentID] = url
                         self.updatePosters()
                     })
                     

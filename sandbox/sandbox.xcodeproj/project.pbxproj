@@ -18,7 +18,7 @@
 		58B77D7B296891FD00FAD17F /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B77D76296891FC00FAD17F /* ImageLoader.swift */; };
 		58B77D7D296891FD00FAD17F /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B77D78296891FC00FAD17F /* AsyncImage.swift */; };
 		58B77D7E296891FD00FAD17F /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B77D79296891FD00FAD17F /* ImageCache.swift */; };
-		58E14E462964A18B00ACA091 /* ElementSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E14E452964A18900ACA091 /* ElementSelection.swift */; };
+		58E14E462964A18B00ACA091 /* ImageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E14E452964A18900ACA091 /* ImageSelection.swift */; };
 		58E14E4F2965538900ACA091 /* Pods_sandbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9605333315C1471BBACB1839 /* Pods_sandbox.framework */; };
 		E61361FC25BA3CFA0005B57A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */; };
 		E61361FE25BA3D150005B57A /* UnityBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61361FD25BA3D150005B57A /* UnityBridge.swift */; };
@@ -70,7 +70,7 @@
 		58B77D76296891FC00FAD17F /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		58B77D78296891FC00FAD17F /* AsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		58B77D79296891FD00FAD17F /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
-		58E14E452964A18900ACA091 /* ElementSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementSelection.swift; sourceTree = "<group>"; };
+		58E14E452964A18900ACA091 /* ImageSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelection.swift; sourceTree = "<group>"; };
 		809F3DDC5E7359A455FC9324 /* Pods-sandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sandbox.release.xcconfig"; path = "Target Support Files/Pods-sandbox/Pods-sandbox.release.xcconfig"; sourceTree = "<group>"; };
 		9605333315C1471BBACB1839 /* Pods_sandbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sandbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 				58B77D74296891D600FAD17F /* images */,
 				587B96CF296614CC0066EC22 /* sandbox.entitlements */,
 				E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */,
-				58E14E452964A18900ACA091 /* ElementSelection.swift */,
+				58E14E452964A18900ACA091 /* ImageSelection.swift */,
 				E6DE818625BA36230019BED1 /* ContentView.swift */,
 				5818DC8C293AED9E00C8B794 /* LocationManager.swift */,
 				5818DC6D2937FCC000C8B794 /* AuthView.swift */,
@@ -320,7 +320,7 @@
 				E62A7AD02773E4DA007CE3D6 /* SceneDelegate.swift in Sources */,
 				58B77D7B296891FD00FAD17F /* ImageLoader.swift in Sources */,
 				E62A7AD42773F6AC007CE3D6 /* UIWindowCustom.swift in Sources */,
-				58E14E462964A18B00ACA091 /* ElementSelection.swift in Sources */,
+				58E14E462964A18B00ACA091 /* ImageSelection.swift in Sources */,
 				5817EAC929372795004E90B5 /* UnityView.swift in Sources */,
 				5818DC8D293AED9E00C8B794 /* LocationManager.swift in Sources */,
 				E62A7ACE2773E48A007CE3D6 /* AppDelegate.swift in Sources */,

@@ -128,7 +128,6 @@ struct UnityView: View {
                     Spacer()
                     
                 }
-                .frame(width: .infinity, height: .infinity)
                 .background(
                     Color(.black)
                         .opacity(0.5)
@@ -160,7 +159,7 @@ struct UnityView: View {
                 }
                 
                 ZStack {
-                    ElementSelection(disabled: $showElementSelection)
+                    ImageSelection(disabled: $showElementSelection)
                 }
                 .transition(.bottomAndFade)
             }
