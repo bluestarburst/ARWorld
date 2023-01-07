@@ -984,6 +984,12 @@ MonoBehaviour:
   m_PosterPrefab: {fileID: 2491148595152579251, guid: 05a316b586693c9419cf47feeecf86f9,
     type: 3}
   isAdding: 0
+  type: 
+  user: 
+  id: 
+  arWorldMapController: {fileID: 1751548350}
+  centerChunk: {fileID: 0}
+  currentChunk: {fileID: 0}
 --- !u!114 &1352058507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1566,7 +1572,9 @@ MonoBehaviour:
   ChunkPrefab: {fileID: 1090931130879528053, guid: 86080b6c99c530c4ebe2528c28fcacd0,
     type: 3}
   planeManager: {fileID: 1352058503}
+  centerChunkIdToSave: 
   centerChunkId: 
+  centerChunk: {fileID: 0}
   posterPrefab: {fileID: 2491148595152579251, guid: 05a316b586693c9419cf47feeecf86f9,
     type: 3}
   chunksToLoad: 0
