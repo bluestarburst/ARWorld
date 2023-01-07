@@ -80,6 +80,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         async void Add(string type, string user, string id)
         {
             isAdding = true;
+            Debug.Log("Adding: users/" + user + "/posters/" + id + ".jpg");
+
 
             // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
             if (m_RaycastManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), s_Hits, TrackableType.PlaneWithinPolygon))
