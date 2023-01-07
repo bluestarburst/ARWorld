@@ -103,7 +103,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get image data with get file async
                     // byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
                     byte[] data = await storageRef.Child("users/bryant/posters/dog.png").GetBytesAsync(1024 * 1024);
-                    //users/oeKjWlEi0sWpg0fVslyuZGcCwLo2/posters/xUyMTebVpJWEeYQOzzM1.jpg
+                    // users/oeKjWlEi0sWpg0fVslyuZGcCwLo2/posters/xUyMTebVpJWEeYQOzzM1.jpg
                     Console.WriteLine("DATA");
 
                     // if (data == null)
