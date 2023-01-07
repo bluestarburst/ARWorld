@@ -1567,6 +1567,7 @@ MonoBehaviour:
   centerChunkId: 
   posterPrefab: {fileID: 2491148595152579251, guid: 05a316b586693c9419cf47feeecf86f9,
     type: 3}
+  chunksToLoad: 0
 --- !u!4 &1751548351
 Transform:
   m_ObjectHideFlags: 0
@@ -2034,6 +2035,11 @@ PrefabInstance:
       propertyPath: cube
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5933530076690600731, guid: 802f7a60df8a22844baa3b364b690720,
+        type: 3}
+      propertyPath: addObj
+      value: 
+      objectReference: {fileID: 1352058506}
     - target: {fileID: 5933530076690600731, guid: 802f7a60df8a22844baa3b364b690720,
         type: 3}
       propertyPath: worldMapController

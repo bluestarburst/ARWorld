@@ -47,14 +47,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         protected override void OnPress(Vector3 position)
         {
+            // if (!isAdding)
+            // {
+            //     Add();
+            //     return;
+            // }
+
+        }
+
+        public void CreateObjectInFrontOfCamera()
+        {
             if (!isAdding)
             {
                 Add();
                 return;
             }
-
-
-
         }
 
         void Add()
