@@ -281,7 +281,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
 
-            if (newId == worldMapId)
+            if (newId == worldMapId && newId != "")
             {
                 Log("Already loaded map " + newId);
                 return;
