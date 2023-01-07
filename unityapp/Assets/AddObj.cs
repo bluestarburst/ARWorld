@@ -10,7 +10,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
-using Firebase.Extensions;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -82,7 +81,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        void Add(string type, string user, string id)
+        async void Add(string type, string user, string id)
         {
             isAdding = true;
             Debug.Log("Adding: users/" + user + "/posters/" + id + ".jpg");
@@ -97,7 +96,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // the rotation of the object is relative to the world, not the plane normal
 
                 Console.WriteLine("PLANE HIT");
-
+                
                 if (type.Equals("poster"))
                 {
                     Console.WriteLine("POSTER");
@@ -105,47 +104,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                     Console.WriteLine("REF");
-                    // get image data with get file async
-                    // byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
-                    // byte[] data = await storageRef.Child("users/bryant/posters/dog.png").GetBytesAsync(1024 * 1024);
-                    // users/oeKjWlEi0sWpg0fVslyuZGcCwLo2/posters/xUyMTebVpJWEeYQOzzM1.jpg
+                    // get image data with get file async            
+
+                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+
                     Console.WriteLine("DATA");
 
-                    try
+                    if (data == null)
                     {
-                        Console.WriteLine("TRY");
-                        storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024).ContinueWithOnMainThread(task =>
-                        {
-                            if (!task.IsFaulted && !task.IsCanceled)
-                            {
-                                byte[] data = task.Result;
-                                Console.WriteLine("SUCCESS");
-                                Texture2D texture = new Texture2D(1, 1);
-                                Console.WriteLine("Texture");
-                                // load texture
-                                texture.LoadImage(data);
-                                // set diffuse texture
-                                spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
-                                Console.WriteLine("Component");
-
-                            }
-                            else
-                            {
-                                Console.WriteLine("ERROR");
-                                Console.WriteLine("Error loading chunk " + id + ": " + task.Exception);
-                            }
-                        });
-
-                        Console.WriteLine("SUCCESS");
-                    }
-                    catch (System.Exception e)
-                    {
-                        Console.WriteLine("ERROR");
-                        Console.WriteLine("Error loading chunk " + id + ": " + e.Message);
+                        Debug.Log("data is null");
+                        data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
                     }
 
                     // create texture
-
+                    Texture2D texture = new Texture2D(1, 1);
+                    Console.WriteLine("Texture");
+                    // load texture
+                    texture.LoadImage(data);
+                    // set diffuse texture
+                    spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                    Console.WriteLine("Component");
                 }
                 else
                 {
@@ -166,11 +144,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                     // get image data
+                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+
+                    if (data == null)
+                    {
+                        Debug.Log("data is null");
+                        data = await storageRef.Child("users/" + user + "/posters/" + id + ".png").GetBytesAsync(1024 * 1024);
+                    }
 
                     // create texture
                     Texture2D texture = new Texture2D(1, 1);
                     // load texture
-                    // texture.LoadImage(data);
+                    texture.LoadImage(data);
                     // set diffuse texture
                     spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                 }
@@ -233,9 +218,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // move object to the plane
                     spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
-                }
-                else
-                {
+                } else {
                     // if no plane is hit, move object to 0.5 units in front of camera at position of touch
                     Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
                     spawnedObject.transform.position = touchPosition;
