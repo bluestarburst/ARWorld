@@ -80,9 +80,9 @@ class DataHandler: NSObject, ObservableObject {
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         
-        var temp = img.resized(toWidth: 100)
+        var temp = img.resized(toWidth: 200)
         
-        let data = img.jpegData(compressionQuality: 0.1)
+        let data = temp!.jpegData(compressionQuality: 0.1)
 //        self.saveReusableImg(data: data, id: id)
         
         if let data = data {
@@ -182,4 +182,16 @@ extension UIImage {
             _ in draw(in: CGRect(origin: .zero, size: canvas))
         }
     }
+    
+    func aspectFittedToHeight(_ newHeight: CGFloat) -> UIImage {
+        let scale = newHeight / self.size.height
+        let newWidth = self.size.width * scale
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        let renderer = UIGraphicsImageRenderer(size: newSize)
+
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: newSize))
+        }
+    }
 }
+
