@@ -10,6 +10,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using Firebase.Extensions;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -113,7 +114,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     try
                     {
                         Console.WriteLine("TRY");
-                        storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024).ContinueWith(task =>
+                        storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024).ContinueWithOnMainThread(task =>
                         {
                             if (!task.IsFaulted && !task.IsCanceled)
                             {
