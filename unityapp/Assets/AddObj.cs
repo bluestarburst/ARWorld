@@ -60,6 +60,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public ARWorldMapController arWorldMapController;
         public GameObject centerChunk;
+        public GameObject currentChunk;
 
         protected override void Awake()
         {
@@ -261,6 +262,38 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // if no plane is hit, move object to 0.5 units in front of camera at position of touch
                     Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
                     spawnedObject.transform.position = touchPosition;
+                }
+
+
+                // get distance between spawned object and center chunk
+                float distanceToCenterChunk = Vector3.Distance(spawnedObject.transform.position, centerChunk.transform.position);
+
+                // get components of distance to center chunk in the direction of center chunk forward
+                float distanceToCenterChunkForward = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.forward);
+
+                // get components of distance to center chunk in the direction of center chunk right
+                float distanceToCenterChunkRight = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.right);
+
+                // round down to nearest 1 unit
+                int roundedDistanceToCenterChunkForward = (int) Math.Floor(distanceToCenterChunkForward);
+                int roundedDistanceToCenterChunkRight = (int) Math.Floor(distanceToCenterChunkRight);
+
+                // convert to coordinates relative to the world map
+
+                Vector3 centerChunkCoordinates = centerChunk.transform.position;
+
+                if (currentChunk == null) {
+                    currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
+                } else if (roundedDistanceToCenterChunkForward == 0 && roundedDistanceToCenterChunkRight == 0) {
+                    Destroy(currentChunk);
+                    currentChunk = centerChunk;
+                } else if (roundedDistanceToCenterChunkForward != 0 || roundedDistanceToCenterChunkRight != 0) {
+                    currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
+                    centerChunk.transform.rotation = currentChunk.transform.rotation;
+                }
+
+                if (currentChunk == null) {
+                    currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
                 }
             }
 
