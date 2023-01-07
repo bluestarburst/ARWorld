@@ -603,7 +603,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 preventReload = true;
                 sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
-                InvokeRepeating("OnLoadButton", 1, 1);
+                InvokeRepeating("OnLoadButton", 0, 60);
             }
 
 
