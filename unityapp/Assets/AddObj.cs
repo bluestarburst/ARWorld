@@ -300,8 +300,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else if (roundedDistanceToCenterChunkForward == 0 && roundedDistanceToCenterChunkRight == 0)
                 {
-                    Destroy(currentChunk);
+                    DestroyImmediate(currentChunk);
                     currentChunk = centerChunk;
+                    return;
                 }
                 else if (roundedDistanceToCenterChunkForward != 0 || roundedDistanceToCenterChunkRight != 0)
                 {
