@@ -15,6 +15,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         GameObject m_PlacedPrefab;
+        [SerializeField]
+        [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         GameObject m_PosterPrefab;
 
         /// <summary>
