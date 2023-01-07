@@ -151,7 +151,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var msg = JsonConvert.DeserializeObject<MessageWithData<string[]>>(serialized);
             if (msg.data != null)
             {
-                addObj.CreateObjectInFrontOfCamera();
+                addObj.CreateObjectInFrontOfCamera(msg.data[0], msg.data[1], msg.data[2]);
             }
         }
 

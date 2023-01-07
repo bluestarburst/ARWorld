@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.ARSubsystems;
+using Firebase;
+using Firebase.Auth;
+using Firebase.Firestore;
+using Firebase.Storage;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -11,6 +15,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         GameObject m_PlacedPrefab;
+        GameObject m_PosterPrefab;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -19,6 +24,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             get { return m_PlacedPrefab; }
             set { m_PlacedPrefab = value; }
+        }
+
+        public GameObject posterPrefab
+        {
+            get { return m_PosterPrefab; }
+            set { m_PosterPrefab = value; }
         }
 
         /// <summary>
@@ -55,16 +66,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         }
 
-        public void CreateObjectInFrontOfCamera()
+        public void CreateObjectInFrontOfCamera(string type, string user, string id)
         {
             if (!isAdding)
             {
-                Add();
+                Add(type, user, id);
                 return;
             }
         }
 
-        void Add()
+        async void Add(string type, string user, string id)
         {
             isAdding = true;
 
@@ -74,8 +85,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Pose hitPose = s_Hits[0].pose;
 
                 // the rotation of the object is relative to the world, not the plane normal
+                
+                if (type == "poster")
+                {
+                    spawnedObject = Instantiate(m_PosterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
+                    // get poster image
+                    StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
+                    // get image data
+                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
 
-                spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
+                    // create texture
+                    Texture2D texture = new Texture2D(1, 1);
+                    // load texture
+                    texture.LoadImage(data);
+                    // set diffuse texture
+                    spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                }
+                else
+                {
+                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
+                }
 
                 if (onPlacedObject != null)
                 {
@@ -84,7 +113,25 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else
             {
-                spawnedObject = Instantiate(m_PlacedPrefab, Camera.main.transform.position + Camera.main.transform.forward * 2f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
+                if (type == "poster")
+                {
+                    spawnedObject = Instantiate(m_PosterPrefab, Camera.main.transform.position + Camera.main.transform.forward * 2f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
+                    // get poster image
+                    StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
+                    // get image data
+                    byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+
+                    // create texture
+                    Texture2D texture = new Texture2D(1, 1);
+                    // load texture
+                    texture.LoadImage(data);
+                    // set diffuse texture
+                    spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                }
+                else
+                {
+                    spawnedObject = Instantiate(m_PlacedPrefab, Camera.main.transform.position + Camera.main.transform.forward * 2f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
+                }
 
                 if (onPlacedObject != null)
                 {
