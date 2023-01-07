@@ -135,6 +135,14 @@ class DataHandler: NSObject, ObservableObject {
                     let storageRef = self.storage.reference().child("users/" + (self.uid ?? "") + "/posters/" + document.documentID + ".jpg")
                     storageRef.downloadURL(completion: { url, error in
                         guard let url = url, error == nil else {
+                            let storageRef2 = self.storage.reference().child("users/" + (self.uid ?? "") + "/posters/" + document.documentID + ".png")
+                            storageRef2.downloadURL(completion: { url2, error2 in
+                                guard let url2 = url2, error2 == nil else {
+                                    return
+                                }
+                                self.posters[document.documentID] = url2
+                                self.updatePosters()
+                            })
                             return
                         }
                         self.posters[document.documentID] = url
