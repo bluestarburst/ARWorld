@@ -110,18 +110,25 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // users/oeKjWlEi0sWpg0fVslyuZGcCwLo2/posters/xUyMTebVpJWEeYQOzzM1.jpg
                     Console.WriteLine("DATA");
 
-                    // if (data == null)
-                    // {
-                    //     Debug.Log("data is null");
-                    //     
-                    // }
-
                     byte[] data;
 
                     try
                     {
                         Console.WriteLine("TRY");
-                        data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+                        await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024).ContinueWith(task =>
+                        {
+                            if (!task.IsFaulted && !task.IsCanceled)
+                            {
+                                data = task.Result;
+                                Console.WriteLine("SUCCESS");
+                            }
+                            else
+                            {
+                                Console.WriteLine("ERROR");
+                                Console.WriteLine("Error loading chunk " + id + ": " + task.Exception);
+                            }
+                        });
+
                         Console.WriteLine("SUCCESS");
                     }
                     catch (System.Exception e)
