@@ -509,6 +509,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (centerChunk == null && centerChunkId == anchor.trackableId.ToString())
                     {
+                        Console.WriteLine("SETTING CENTER CHUNK");
                         centerChunk = chunk;
                         centerChunkId = "";
                     }
