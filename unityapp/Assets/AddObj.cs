@@ -59,8 +59,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public string id = "";
 
         public ARWorldMapController arWorldMapController;
-        public GameObject centerChunk;
-        public GameObject currentChunk;
+        public GameObject centerChunk = null;
+        public GameObject currentChunk = null;
 
         protected override void Awake()
         {
@@ -85,10 +85,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (!isAdding)
             {
 
-                if (centerChunk != arWorldMapController.centerChunk) {
-                    centerChunk = arWorldMapController.centerChunk;
-                } else if (centerChunk == null) {
+                if (arWorldMapController.centerChunk == null)
+                {
                     return;
+                }
+
+                if (centerChunk == null || centerChunk != arWorldMapController.centerChunk)
+                {
+                    centerChunk = arWorldMapController.centerChunk;
                 }
 
                 this.type = type;
@@ -114,7 +118,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // the rotation of the object is relative to the plane normal
 
                 Console.WriteLine("PLANE HIT");
-                
+
                 if (type.Equals("poster"))
                 {
                     Console.WriteLine("POSTER");
@@ -122,7 +126,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // create poster prefab parallel to plane hit normal and 0.5 units above plane hit
                     spawnedObject = Instantiate(m_PosterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, hitPose.rotation);
                     // get poster image
-                    StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");    
+                    StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
 
                     byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
 
@@ -160,7 +164,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     spawnedObject = Instantiate(m_PosterPrefab, Camera.main.transform.position + Camera.main.transform.forward * 2f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
                     // get poster image
-                    StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");    
+                    StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
 
                     byte[] data = await storageRef.Child("users/" + user + "/posters/" + id + ".jpg").GetBytesAsync(1024 * 1024);
 
@@ -220,10 +224,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
             {
 
-                if (centerChunk != arWorldMapController.centerChunk) {
-                    centerChunk = arWorldMapController.centerChunk;
-                } else if (centerChunk == null) {
+                if (arWorldMapController.centerChunk == null)
+                {
                     return;
+                }
+
+                if (centerChunk == null || centerChunk != arWorldMapController.centerChunk)
+                {
+                    centerChunk = arWorldMapController.centerChunk;
                 }
 
                 if (spawnedObject == null)
@@ -246,7 +254,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     float distance = Vector3.Dot(spawnedObject.transform.position - hitPose.position, planeNormal);
 
                     // move object to the plane
-                    
+
 
                     // if poster, make the rotation same as the plane normal
                     if (type.Equals("poster"))
@@ -254,11 +262,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         Console.WriteLine("POSTER");
                         spawnedObject.transform.rotation = hitPose.rotation;
                         spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * 0.1f;
-                    } else {
+                    }
+                    else
+                    {
                         spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
                     }
 
-                } else {
+                }
+                else
+                {
                     // if no plane is hit, move object to 0.5 units in front of camera at position of touch
                     Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
                     spawnedObject.transform.position = touchPosition;
@@ -275,24 +287,30 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 float distanceToCenterChunkRight = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.right);
 
                 // round down to nearest 1 unit
-                int roundedDistanceToCenterChunkForward = (int) Math.Floor(distanceToCenterChunkForward);
-                int roundedDistanceToCenterChunkRight = (int) Math.Floor(distanceToCenterChunkRight);
+                int roundedDistanceToCenterChunkForward = (int)Math.Floor(distanceToCenterChunkForward);
+                int roundedDistanceToCenterChunkRight = (int)Math.Floor(distanceToCenterChunkRight);
 
                 // convert to coordinates relative to the world map
 
                 Vector3 centerChunkCoordinates = centerChunk.transform.position;
 
-                if (currentChunk == null) {
+                if (currentChunk == null)
+                {
                     currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
-                } else if (roundedDistanceToCenterChunkForward == 0 && roundedDistanceToCenterChunkRight == 0) {
+                }
+                else if (roundedDistanceToCenterChunkForward == 0 && roundedDistanceToCenterChunkRight == 0)
+                {
                     Destroy(currentChunk);
                     currentChunk = centerChunk;
-                } else if (roundedDistanceToCenterChunkForward != 0 || roundedDistanceToCenterChunkRight != 0) {
+                }
+                else if (roundedDistanceToCenterChunkForward != 0 || roundedDistanceToCenterChunkRight != 0)
+                {
                     currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
                     centerChunk.transform.rotation = currentChunk.transform.rotation;
                 }
 
-                if (currentChunk == null) {
+                if (currentChunk == null)
+                {
                     currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
                 }
             }
