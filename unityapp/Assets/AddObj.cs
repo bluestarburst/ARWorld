@@ -110,8 +110,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // users/oeKjWlEi0sWpg0fVslyuZGcCwLo2/posters/xUyMTebVpJWEeYQOzzM1.jpg
                     Console.WriteLine("DATA");
 
-                    byte[] data;
-
                     try
                     {
                         Console.WriteLine("TRY");
@@ -119,8 +117,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         {
                             if (!task.IsFaulted && !task.IsCanceled)
                             {
-                                data = task.Result;
+                                byte[] data = task.Result;
                                 Console.WriteLine("SUCCESS");
+                                Texture2D texture = new Texture2D(1, 1);
+                                Console.WriteLine("Texture");
+                                // load texture
+                                texture.LoadImage(data);
+                                // set diffuse texture
+                                spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                                Console.WriteLine("Component");
+
                             }
                             else
                             {
@@ -138,13 +144,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
 
                     // create texture
-                    Texture2D texture = new Texture2D(1, 1);
-                    Console.WriteLine("Texture");
-                    // load texture
-                    // texture.LoadImage(data);
-                    // set diffuse texture
-                    spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
-                    Console.WriteLine("Component");
+
                 }
                 else
                 {
