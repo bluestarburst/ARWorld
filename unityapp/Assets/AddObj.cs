@@ -287,8 +287,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 float distanceToCenterChunkRight = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.right);
 
                 // round down to nearest 1 unit
-                int roundedDistanceToCenterChunkForward = (int)Math.Floor(distanceToCenterChunkForward);
-                int roundedDistanceToCenterChunkRight = (int)Math.Floor(distanceToCenterChunkRight);
+                int roundedDistanceToCenterChunkForward = (int)Math.Round(distanceToCenterChunkForward);
+                int roundedDistanceToCenterChunkRight = (int)Math.Round(distanceToCenterChunkRight);
 
                 // convert to coordinates relative to the world map
 
