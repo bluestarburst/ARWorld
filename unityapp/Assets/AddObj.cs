@@ -58,6 +58,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public string user = "";
         public string id = "";
 
+        public ARWorldMapController arWorldMapController;
+        public GameObject centerChunk;
+
         protected override void Awake()
         {
             base.Awake();
@@ -80,6 +83,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (!isAdding)
             {
+
+                if (centerChunk != arWorldMapController.centerChunk) {
+                    centerChunk = arWorldMapController.centerChunk;
+                } else if (centerChunk == null) {
+                    return;
+                }
+
                 this.type = type;
                 this.user = user;
                 this.id = id;
@@ -208,6 +218,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // if touch is on screen
             if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
             {
+
+                if (centerChunk != arWorldMapController.centerChunk) {
+                    centerChunk = arWorldMapController.centerChunk;
+                } else if (centerChunk == null) {
+                    return;
+                }
+
                 if (spawnedObject == null)
                 {
                     return;
