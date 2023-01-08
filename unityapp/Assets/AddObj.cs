@@ -460,6 +460,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                 clockwise = -1;
                             }
 
+                            arWorldMapController.Log("CLOCKWISE: " + clockwise);
+
 
                             // get spawned object rotation around its up axis                           
 
