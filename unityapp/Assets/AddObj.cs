@@ -460,7 +460,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             }
 
 
-                            // get only y axis rotation of spawned object
+                            // get spawned object rotation around its up axis                           
+
                             Vector3 roundedRotW = new Vector3(0, trueRot.eulerAngles.y, 0);
 
                             // get world forward vector rotated by roundedRot
