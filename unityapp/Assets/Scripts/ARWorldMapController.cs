@@ -251,6 +251,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         }
 
+        async void WaitUntilMappedSave()
+        {
+            var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+            while (sessionSubsystem.worldMappingStatus != ARWorldMappingStatus.Mapped)
+            {
+                await Task.Delay(1000);
+            }
+            await createChunks(1, 0);
+            if (!repeating)
+            {
+                InvokeRepeating("OnSaveButton", 15, 15);
+                repeating = true;
+            }
+        }
+
         async void retrieveFirestoreMap(ARKitSessionSubsystem sessionSubsystem)
         {
             CollectionReference mapsRef = db.Collection("maps");
@@ -296,16 +311,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Log("No nearby maps found");
                 Log("Saving current map");
 
-                await createChunks(1, 0);
+
                 //hi
 
-                if (!repeating)
-                {
-                    InvokeRepeating("OnSaveButton", 15, 15);
-                    repeating = true;
-                }
+                // if (!repeating)
+                // {
+                //     InvokeRepeating("OnSaveButton", 15, 15);
+                //     repeating = true;
+                // }
 
-                OnSaveButton();
+                // OnSaveButton();
+                WaitUntilMappedSave();
                 return;
             }
 
@@ -615,7 +631,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             //     InvokeRepeating("OnLoadButton", 0, 60);
             // }
 
-            if (preventReload == false && api.lat != 0 && api.lon != 0) {
+            if (preventReload == false && api.lat != 0 && api.lon != 0)
+            {
                 preventReload = true;
                 InvokeRepeating("OnLoadButton", 0, 60);
             }
