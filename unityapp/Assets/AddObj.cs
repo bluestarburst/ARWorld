@@ -263,6 +263,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
+        private Vector3 previousPosition = Vector3.zero;
+
         private void Update()
         {
 
@@ -376,6 +378,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else if (change.Equals("rotate"))
             {
+
+                if (previousPosition == Vector3.zero)
+                {
+                    previousPosition = position;
+                }
+
                 // if there is a touch on the screen
 
                 // if there is a spawned object
@@ -384,17 +392,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // if there is a touch on the screen
                     if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
                     {
-                        // get the position of the touch
-                        Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
-
-                        // get the direction of the touch
-                        Vector3 direction = touchPosition - spawnedObject.transform.position;
-
-                        // get the angle of the direction
-                        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-                        // rotate the object to the angle
-                        spawnedObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                        // rotate the spawnedObject around its center by the angle between the current touch and the previous touch
+                        spawnedObject.transform.RotateAround(spawnedObject.transform.position, Vector3.up, (position.x - previousPosition.x) * 0.5f);
                     }
                 }
 
