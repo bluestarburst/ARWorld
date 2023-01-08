@@ -429,25 +429,40 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get angle between camera and object
                     float angle = Vector3.Angle(spawnedObject.transform.forward, Camera.main.transform.forward);
 
-                    // if camera is closer to x axis of object, rotate about x axis
-                    if ((angle > 135 && angle < 225) || (angle > 315 && angle < 45))
+                    // if camera is closer to positive or negative x axis of object, rotate about x axis
+                    if (Mathf.Abs(Vector3.Dot(right, Camera.main.transform.forward)) > Mathf.Abs(Vector3.Dot(up, Camera.main.transform.forward)))
                     {
-                        // spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
-                        trueRot = trueRot * Quaternion.AngleAxis(delta.y * 0.1f, Vector3.right);
-                    }
-                    // if camera is closer to z axis of object, rotate about z axis
-                    else
+                        // if camera is closer to positive x axis of object, rotate about x axis
+                        if (Vector3.Dot(right, Camera.main.transform.forward) > 0)
+                        {
+                            spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
+                        }
+                        // if camera is closer to negative x axis of object, rotate about negative x axis
+                        else
+                        {
+                            spawnedObject.transform.Rotate(Vector3.right, -delta.y * 0.1f, Space.World);
+                        }
+                    } else
                     {
-                        // spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
-                        trueRot = trueRot * Quaternion.AngleAxis(delta.y * 0.1f, Vector3.forward);
+                        // if camera is closer to positive z axis of object, rotate about z axis
+                        if (Vector3.Dot(up, Camera.main.transform.forward) > 0)
+                        {
+                            spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
+                        }
+                        // if camera is closer to negative z axis of object, rotate about negative z axis
+                        else
+                        {
+                            spawnedObject.transform.Rotate(Vector3.forward, -delta.y * 0.1f, Space.World);
+                        }
                     }
+                    
 
-                    // snap to closest 15 degrees when rotating object with trueRot
-                    Vector3 eulerRot = trueRot.eulerAngles;
-                    Vector3 roundedRot = new Vector3(Mathf.Round(eulerRot.x / 15) * 15, Mathf.Round(eulerRot.y / 15) * 15, Mathf.Round(eulerRot.z / 15) * 15);
+                    // // snap to closest 15 degrees when rotating object with trueRot
+                    // Vector3 eulerRot = trueRot.eulerAngles;
+                    // Vector3 roundedRot = new Vector3(Mathf.Round(eulerRot.x / 15) * 15, Mathf.Round(eulerRot.y / 15) * 15, Mathf.Round(eulerRot.z / 15) * 15);
 
-                    // rotate object
-                    spawnedObject.transform.rotation = Quaternion.Euler(roundedRot);
+                    // // rotate object
+                    // spawnedObject.transform.rotation = Quaternion.Euler(roundedRot);
 
 
                 }
