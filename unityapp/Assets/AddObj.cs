@@ -407,9 +407,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // spawnedObject.transform.Rotate(Vector3.up, -delta.x * 0.1f, Space.World);
                     trueRot = Quaternion.AngleAxis(-delta.x * 0.3f, Vector3.up) * trueRot;
 
-                    // get if camera is facing parallel or perpendicular to world forward vector
-                    //MAKE IT SO THE POSTER ROTATES ALONG ITS EDGES???
-                    bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, Vector3.forward) > 0.5f;
+                    // get only y axis rotation of spawned object
+                    Vector3 eulerRot = trueRot.eulerAngles;
+                    Vector3 roundedRot = new Vector3(0, trueRot.eulerAngles.y, 0);
+
+                    // get world forward vector rotated by roundedRot
+                    Vector3 worldForward = Quaternion.Euler(roundedRot) * Vector3.forward;
+                    Vector3 worldRight = Quaternion.Euler(roundedRot) * Vector3.right;
+
+                    // get if camera is facing parallel to world forward
+                    bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, worldForward) > 0.9f;
 
                     if (isCameraFacingParallel)
                     {
