@@ -414,6 +414,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     rotating = true;
                     lastTouch = position;
                     trueRot = spawnedObject.transform.rotation;
+                    locked = false;
                 }
 
                 if (locked == false)
