@@ -19,6 +19,7 @@ class DataHandler: NSObject, ObservableObject {
     
     var mapStatus = ""
     var addingObj = ""
+    var setAddingObj: () -> Void = {}
     
     override init() {
         super.init()
@@ -30,7 +31,8 @@ class DataHandler: NSObject, ObservableObject {
             self.mapStatus = status
         }
         api.setAddingObj = { status in
-            self.mapStatus = status
+            self.addingObj = status
+            self.setAddingObj()
         }
     }
     

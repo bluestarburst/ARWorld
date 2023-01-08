@@ -25,51 +25,57 @@ struct UnityView: View {
     
     @State private var showElementOptions = false
     @State private var showElementSelection = false
+    @State private var showButtons = true
+    
+    @State private var addingObj = ""
+    @State private var change = "move"
     
     var body: some View {
         ZStack {
-            VStack {
-                Spacer()
-                HStack {
+            if (showButtons) {
+                VStack {
                     Spacer()
-                    VStack {
+                    HStack {
                         Spacer()
-                        Button( action: {DataHandler.shared.tryStore()}, label: {
-                            Image(systemName: "photo")
-                                .imageScale(.medium)
-                                .font(.title2)
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color(.white).opacity(0.1))
-                                .clipShape(Circle())
-                                .padding(.vertical,5)
-                        })
-                        Button( action: {DataHandler.shared.signOut()}, label: {
-                            Image(systemName: "camera")
-                                .imageScale(.medium)
-                                .font(.title2)
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color(.white).opacity(0.1))
-                                .clipShape(Circle())
-                                .padding(.vertical,5)
-                        })
-                        Button( action: {withAnimation {showElementOptions = true}}, label: {
-                            Image(systemName: "plus")
-                                .imageScale(.large)
-                                .font(.title2)
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color(.white).opacity(0.1))
-                                .clipShape(Circle())
-                                .padding(.vertical,5)
-                        })
+                        VStack {
+                            Spacer()
+                            Button( action: {DataHandler.shared.tryStore()}, label: {
+                                Image(systemName: "photo")
+                                    .imageScale(.medium)
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.vertical,5)
+                            })
+                            Button( action: {DataHandler.shared.signOut()}, label: {
+                                Image(systemName: "camera")
+                                    .imageScale(.medium)
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.vertical,5)
+                            })
+                            Button( action: {withAnimation {showElementOptions = true}}, label: {
+                                Image(systemName: "plus")
+                                    .imageScale(.large)
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.vertical,5)
+                            })
+                        }
+                        .padding(.bottom, 10)
+                        .transition(.bottomAndFade)
                     }
-                    .padding(.bottom, 10)
-                    .transition(.bottomAndFade)
                 }
+                .padding()
             }
-            .padding()
             
             if (showElementOptions) {
                 VStack {
@@ -164,31 +170,42 @@ struct UnityView: View {
                 .transition(.bottomAndFade)
             }
             
-            if (DataHandler.shared.addingObj == "adding") {
+            if (addingObj == "adding") {
                 VStack {
                     Spacer()
                     HStack {
-                        Button (action: {}, label: {
-                            Image(systemName: "sparkle")
+                        Button (action: {UnityBridge.getInstance().api.changeTransform(change: "move");change = "move"}, label: {
+                            Image(systemName: "move.3d")
                                 .imageScale(.medium)
                                 .font(.title)
-                                .foregroundColor(.white)
+                                .foregroundColor(change == "move" ? .pink : .white)
                                 .padding(10)
                                 .background(Color(.white).opacity(0.1))
                                 .clipShape(Circle())
                                 .padding(.horizontal,5)
                         })
-                        Button (action: {}, label: {
-                            Image(systemName: "sparkle")
+                        Button (action: {UnityBridge.getInstance().api.changeTransform(change: "rotate"); change = "rotate"}, label: {
+                            Image(systemName: "rotate.3d")
                                 .imageScale(.medium)
                                 .font(.title)
-                                .foregroundColor(.white)
+                                .foregroundColor(change == "rotate" ? .pink : .white)
+                                .padding(10)
+                                .background(Color(.white).opacity(0.1))
+                                .clipShape(Circle())
+                                .padding(.horizontal,5)
+                        })
+                        Button (action: {UnityBridge.getInstance().api.changeTransform(change: "scale"); change = "scale"}, label: {
+                            Image(systemName: "scale.3d")
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(change == "scale" ? .pink : .white)
                                 .padding(10)
                                 .background(Color(.white).opacity(0.1))
                                 .clipShape(Circle())
                                 .padding(.horizontal,5)
                         })
                     }
+                    .padding(.bottom, 30)
                 }
             }
             
@@ -214,6 +231,15 @@ struct UnityView: View {
             api.show()
             manager.sendDat = {
                 api.api.updateVars(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
+            }
+            DataHandler.shared.setAddingObj = {
+                addingObj = DataHandler.shared.addingObj
+                if (addingObj == "adding") {
+                    showElementSelection = false
+                    showButtons = false
+                } else {
+                    showButtons = true
+                }
             }
         }
         .onChange(of: isLoaded) {
