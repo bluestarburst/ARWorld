@@ -268,6 +268,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private bool rotating = false;
         private Vector3 previousRotation = Vector3.zero;
         private Quaternion newRotation = Quaternion.identity;
+        private int roundTo = 45;
         private void Update()
         {
 
@@ -419,23 +420,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // swipe delta x rotates about y axis of object
                     // spawnedObject.transform.Rotate(Vector3.up, -delta.x * 0.1f, Space.World);
-                    trueRot = Quaternion.AngleAxis(-delta.x * 0.1f, Vector3.up) * trueRot;
+                    trueRot = Quaternion.AngleAxis(-delta.x * 0.15f, Vector3.up) * trueRot;
 
                     // get if camera is facing parallel or perpendicular to world forward vector
                     bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, Vector3.forward) > 0.5f;
 
                     if (isCameraFacingParallel)
                     {
-                        trueRot = Quaternion.AngleAxis(delta.y * 0.1f, Vector3.right) * trueRot;
+                        trueRot = Quaternion.AngleAxis(delta.y * 0.15f, Vector3.right) * trueRot;
                     }
                     else
                     {
-                        trueRot = Quaternion.AngleAxis(delta.y * 0.1f, Vector3.forward) * trueRot;
+                        trueRot = Quaternion.AngleAxis(delta.y * 0.15f, Vector3.forward) * trueRot;
                     }
 
                     // snap to closest 15 degrees when rotating object with trueRot
                     Vector3 eulerRot = trueRot.eulerAngles;
-                    Vector3 roundedRot = new Vector3(Mathf.Round(eulerRot.x / 30) * 30, Mathf.Round(eulerRot.y / 30) * 30, Mathf.Round(eulerRot.z / 30) * 30);
+                    Vector3 roundedRot = new Vector3(Mathf.Round(eulerRot.x / roundTo) * roundTo, Mathf.Round(eulerRot.y / roundTo) * roundTo, Mathf.Round(eulerRot.z / roundTo) * roundTo);
 
                     if (previousRotation != roundedRot)
                     {
