@@ -59,6 +59,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public string user = "";
         public string id = "";
 
+        public string change = "rotate";
+
         public ARWorldMapController arWorldMapController;
         public GameObject centerChunk = null;
         public GameObject currentChunk = null;
@@ -279,94 +281,121 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
 
-
-
-            // if touch is on screen
-            if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
+            if (change.Equals("move"))
             {
 
-                if (arWorldMapController.centerChunk == null)
+                // if touch is on screen
+                if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
                 {
-                    return;
-                }
 
-                if (centerChunk == null || centerChunk != arWorldMapController.centerChunk)
-                {
-                    centerChunk = arWorldMapController.centerChunk;
-                }
-
-                if (spawnedObject == null)
-                {
-                    return;
-                }
-                if (m_RaycastManager.Raycast(position, s_Hits, TrackableType.PlaneWithinPolygon))
-                {
-                    Pose hitPose = s_Hits[0].pose;
-
-                    // spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-
-                    // get axis of the plane and print it out
-                    Vector3 planeNormal = hitPose.rotation * Vector3.up;
-
-                    // // get if object is behind plane
-                    // bool isBehindPlane = Vector3.Dot(spawnedObject.transform.position - hitPose.position, planeNormal) < 0;
-
-                    // get distance between object and plane only in the direction of the plane normal
-                    float distance = Vector3.Dot(spawnedObject.transform.position - hitPose.position, planeNormal);
-
-                    // move object to the plane
-
-
-                    // if poster, make the rotation same as the plane normal
-                    if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
+                    if (arWorldMapController.centerChunk == null)
                     {
-                        Console.WriteLine("POSTER");
-                        spawnedObject.transform.rotation = hitPose.rotation;
-                        spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * 0.1f;
+                        return;
+                    }
+
+                    if (centerChunk == null || centerChunk != arWorldMapController.centerChunk)
+                    {
+                        centerChunk = arWorldMapController.centerChunk;
+                    }
+
+                    if (spawnedObject == null)
+                    {
+                        return;
+                    }
+                    if (m_RaycastManager.Raycast(position, s_Hits, TrackableType.PlaneWithinPolygon))
+                    {
+                        Pose hitPose = s_Hits[0].pose;
+
+                        // spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+
+                        // get axis of the plane and print it out
+                        Vector3 planeNormal = hitPose.rotation * Vector3.up;
+
+                        // // get if object is behind plane
+                        // bool isBehindPlane = Vector3.Dot(spawnedObject.transform.position - hitPose.position, planeNormal) < 0;
+
+                        // get distance between object and plane only in the direction of the plane normal
+                        float distance = Vector3.Dot(spawnedObject.transform.position - hitPose.position, planeNormal);
+
+                        // move object to the plane
+
+
+                        // if poster, make the rotation same as the plane normal
+                        if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
+                        {
+                            Console.WriteLine("POSTER");
+                            spawnedObject.transform.rotation = hitPose.rotation;
+                            spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * 0.1f;
+                        }
+                        else
+                        {
+                            spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
+                        }
+
                     }
                     else
                     {
-                        spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
+                        // if no plane is hit, move object to 0.5 units in front of camera at position of touch
+                        Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
+                        spawnedObject.transform.position = touchPosition;
+                    }
+
+
+                    // get distance between spawned object and center chunk
+                    float distanceToCenterChunk = Vector3.Distance(spawnedObject.transform.position, centerChunk.transform.position);
+
+                    // get components of distance to center chunk in the direction of center chunk forward
+                    float distanceToCenterChunkForward = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.forward);
+
+                    // get components of distance to center chunk in the direction of center chunk right
+                    float distanceToCenterChunkRight = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.right);
+
+                    // round down to nearest 1 unit
+                    int roundedDistanceToCenterChunkForward = (int)Math.Round(distanceToCenterChunkForward);
+                    int roundedDistanceToCenterChunkRight = (int)Math.Round(distanceToCenterChunkRight);
+
+                    // convert to coordinates relative to the world map
+
+                    Vector3 centerChunkCoordinates = centerChunk.transform.position;
+
+                    if (currentChunk == null)
+                    {
+                        currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
+                    }
+                    else
+                    {
+                        currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
+                        currentChunk.transform.rotation = centerChunk.transform.rotation;
                     }
 
                 }
-                else
+
+            }
+            else if (change.Equals("rotate"))
+            {
+                // if there is a touch on the screen
+
+                // if there is a spawned object
+                if (spawnedObject != null)
                 {
-                    // if no plane is hit, move object to 0.5 units in front of camera at position of touch
-                    Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
-                    spawnedObject.transform.position = touchPosition;
-                }
+                    // if there is a touch on the screen
+                    if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
+                    {
+                        // get the position of the touch
+                        Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
 
+                        // get the direction of the touch
+                        Vector3 direction = touchPosition - spawnedObject.transform.position;
 
-                // get distance between spawned object and center chunk
-                float distanceToCenterChunk = Vector3.Distance(spawnedObject.transform.position, centerChunk.transform.position);
+                        // get the angle of the direction
+                        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-                // get components of distance to center chunk in the direction of center chunk forward
-                float distanceToCenterChunkForward = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.forward);
-
-                // get components of distance to center chunk in the direction of center chunk right
-                float distanceToCenterChunkRight = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.right);
-
-                // round down to nearest 1 unit
-                int roundedDistanceToCenterChunkForward = (int)Math.Round(distanceToCenterChunkForward);
-                int roundedDistanceToCenterChunkRight = (int)Math.Round(distanceToCenterChunkRight);
-
-                // convert to coordinates relative to the world map
-
-                Vector3 centerChunkCoordinates = centerChunk.transform.position;
-
-                if (currentChunk == null)
-                {
-                    currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
-                }
-                else
-                {
-                    currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
-                    currentChunk.transform.rotation = centerChunk.transform.rotation;
+                        // rotate the object to the angle
+                        spawnedObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                    }
                 }
 
             }
-
 
 
 
