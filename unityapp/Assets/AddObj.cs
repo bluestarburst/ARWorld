@@ -384,7 +384,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else if (change.Equals("rotate"))
             {
-                if ( rotating == false ) {
+                if (rotating == false)
+                {
                     rotating = true;
                     trueRot = spawnedObject.transform.rotation;
                 }
@@ -420,7 +421,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     spawnedObject.transform.Rotate(Vector3.up, -delta.x * 0.1f, Space.World);
 
                     // swipe delta y rotates about x or z axis of object depending on camera rotation
-                    
+
                     // get if camera is closer to x or z axis of object
                     Vector3 right = Vector3.Cross(Camera.main.transform.up, spawnedObject.transform.position - Camera.main.transform.position);
                     Vector3 up = Vector3.Cross(spawnedObject.transform.position - Camera.main.transform.position, right);
@@ -429,17 +430,24 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     float angle = Vector3.Angle(spawnedObject.transform.forward, Camera.main.transform.forward);
 
                     // if camera is closer to x axis of object, rotate about x axis
-                    if (angle < 90)
+                    if ((angle > 135 && angle < 225) || (angle > 315 && angle < 45))
                     {
-                        spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
+                        // spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
+                        trueRot = trueRot * Quaternion.AngleAxis(delta.y * 0.1f, Vector3.right);
                     }
                     // if camera is closer to z axis of object, rotate about z axis
                     else
                     {
-                        spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
+                        // spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
+                        trueRot = trueRot * Quaternion.AngleAxis(delta.y * 0.1f, Vector3.forward);
                     }
-                    
 
+                    // snap to closest 15 degrees when rotating object with trueRot
+                    Vector3 eulerRot = trueRot.eulerAngles;
+                    Vector3 roundedRot = new Vector3(Mathf.Round(eulerRot.x / 15) * 15, Mathf.Round(eulerRot.y / 15) * 15, Mathf.Round(eulerRot.z / 15) * 15);
+
+                    // rotate object
+                    spawnedObject.transform.rotation = Quaternion.Euler(roundedRot);
 
 
                 }
