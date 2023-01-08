@@ -415,7 +415,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     Vector3 worldRight = Quaternion.Euler(roundedRotW) * Vector3.right;
 
                     // get if camera is facing parallel to world forward
-                    bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, worldForward) > 0.9f;
+                    bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, worldForward) > 0.5f;
 
                     if (isCameraFacingParallel)
                     {
