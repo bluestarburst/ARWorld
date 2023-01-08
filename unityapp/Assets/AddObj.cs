@@ -411,17 +411,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 if (rotating == false)
                 {
-                    trueRot = spawnedObject.transform.rotation;
-                    Vector3 eulerRot = trueRot.eulerAngles;
-                    Vector3 roundedRot = new Vector3(Mathf.Round(eulerRot.x / roundTo) * roundTo, Mathf.Round(eulerRot.y / roundTo) * roundTo, Mathf.Round(eulerRot.z / roundTo) * roundTo);
-
-                    if (previousRotation != roundedRot)
-                    {
-                        previousRotation = roundedRot;
-                        spawnedObject.transform.rotation = Quaternion.Euler(roundedRot);
-                        trueRot = Quaternion.Euler(roundedRot);
-                    }
-
                     rotating = true;
                     lastTouch = position;
                     trueRot = spawnedObject.transform.rotation;
