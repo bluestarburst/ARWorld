@@ -392,18 +392,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     Vector3 up = Vector3.Cross(spawnedObject.transform.position - Camera.main.transform.position, right);
 
-                    spawnedObject.transform.rotation = Quaternion.AngleAxis(-delta.x, up) * spawnedObject.transform.rotation;
+                    spawnedObject.transform.rotation = Quaternion.AngleAxis(-delta.x * 0.25f, up) * spawnedObject.transform.rotation;
 
-                    spawnedObject.transform.rotation = Quaternion.AngleAxis(delta.y, right) * spawnedObject.transform.rotation;
+                    spawnedObject.transform.rotation = Quaternion.AngleAxis(delta.y * 0.25f, right) * spawnedObject.transform.rotation;
                 }
 
             }
-
-
-
-
-
-
 
 
         }

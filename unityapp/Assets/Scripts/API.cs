@@ -122,6 +122,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 case "add-object":
                     _AddObject(serializedMessage);
                     break;
+                case "change-transform":
+                    _ChangeTransform(serializedMessage);
+                    break;
                 default:
                     Debug.LogError("Unrecognized message '" + header.type + "'");
                     break;
@@ -141,6 +144,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 alt = msg.data[2];
             }
             // print("updateVars");
+        }
+
+        public void _ChangeTransform(string serialized)
+        {
+            var msg = JsonConvert.DeserializeObject<MessageWithData<string>>(serialized);
+            if (msg.data != null)
+            {
+                addObj.change = msg.data;
+            }
         }
 
         public void _AddObject(string serialized)
