@@ -420,8 +420,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // swipe delta x rotates about y axis of object
                     // spawnedObject.transform.Rotate(Vector3.up, -delta.x * 0.1f, Space.World);
 
-                    // swipe delta y rotates about x axis relative to world
-                    trueRot = Quaternion.AngleAxis(delta.y * 0.1f, Vector3.right) * trueRot;
+                    // get if camera is facing parallel or perpendicular to world forward vector
+                    bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, Vector3.forward) > 0.5f;
+
+                    if (isCameraFacingParallel)
+                    {
+                        trueRot = Quaternion.AngleAxis(delta.y * 0.1f, Vector3.right) * trueRot;
+                    }
+                    else
+                    {
+                        trueRot = Quaternion.AngleAxis(delta.y * 0.1f, Vector3.forward) * trueRot;
+                    }
+
+
+                    
 
                     // snap to closest 15 degrees when rotating object with trueRot
                     Vector3 eulerRot = trueRot.eulerAngles;
