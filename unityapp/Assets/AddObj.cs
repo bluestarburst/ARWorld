@@ -136,6 +136,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         if (task2.IsFaulted || task2.IsCanceled)
                         {
+                            Console.WriteLine("FAULTED PNG");
+
                             byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
                             // create texture
                             Texture2D texture = new Texture2D(2, 2);
@@ -148,6 +150,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         }
                         else
                         {
+                            Console.WriteLine("WORKING JPG");
+
                             byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetBytesAsync(1024 * 1024);
                             // create texture
                             Texture2D texture = new Texture2D(2, 2);
@@ -185,6 +189,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         if (task2.IsFaulted || task2.IsCanceled)
                         {
+                            Console.WriteLine("FAULTED PNG");
+
                             byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
                             // create texture
                             Texture2D texture = new Texture2D(2, 2);
@@ -197,6 +203,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         }
                         else
                         {
+                            Console.WriteLine("WORKING JPG");
+
                             byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetBytesAsync(1024 * 1024);
                             // create texture
                             Texture2D texture = new Texture2D(2, 2);
