@@ -32,12 +32,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [DllImport("__Internal")]
         public static extern void addingObj(string status);
-
-        [DllImport("__Internal")]
-        public static extern void saveMap(string map);
-
-        [DllImport("__Internal")]
-        public static extern void setPhoneResponse(string response);
     }
 
     /// <summary>

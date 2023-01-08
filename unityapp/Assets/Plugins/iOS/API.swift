@@ -102,16 +102,6 @@ public class UnityAPI: NativeCallsProtocol {
         setAddingObj(status)
     }
 
-    public func onSaveMap(_ map: String) {
-        // self.communicator.saveMap(map)
-        print("onSaveMap: \(map)")
-    }
-
-    public func onPhoneResponse(_ response: String) {
-        print("onPhoneResponse: \(response)")
-        self.getPhoneResult(response)
-    }
-
     /**
      * Private  API.
      */
