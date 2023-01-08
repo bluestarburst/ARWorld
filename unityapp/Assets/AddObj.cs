@@ -435,7 +435,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // snap to closest 15 degrees when rotating object with trueRot
                     Vector3 eulerRot = trueRot.eulerAngles;
-                    Vector3 roundedRot = new Vector3(Mathf.Round(eulerRot.x / 15) * 15, Mathf.Round(eulerRot.y / 15) * 15, Mathf.Round(eulerRot.z / 15) * 15);
+                    Vector3 roundedRot = new Vector3(Mathf.Round(eulerRot.x / 30) * 30, Mathf.Round(eulerRot.y / 30) * 30, Mathf.Round(eulerRot.z / 30) * 30);
 
                     if (previousRotation != roundedRot)
                     {
