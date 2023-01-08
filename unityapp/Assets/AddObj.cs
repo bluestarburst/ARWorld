@@ -421,23 +421,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // swipe delta y rotates about x or z axis of object depending on camera rotation
                     
-                    // // get if camera is closer to x or z axis of object
-                    // Vector3 right = Vector3.Cross(Camera.main.transform.up, spawnedObject.transform.position - Camera.main.transform.position);
-                    // Vector3 up = Vector3.Cross(spawnedObject.transform.position - Camera.main.transform.position, right);
+                    // get if camera is closer to x or z axis of object
+                    Vector3 right = Vector3.Cross(Camera.main.transform.up, spawnedObject.transform.position - Camera.main.transform.position);
+                    Vector3 up = Vector3.Cross(spawnedObject.transform.position - Camera.main.transform.position, right);
 
-                    // // get angle between camera and object
-                    // float angle = Vector3.Angle(spawnedObject.transform.forward, Camera.main.transform.forward);
+                    // get angle between camera and object
+                    float angle = Vector3.Angle(spawnedObject.transform.forward, Camera.main.transform.forward);
 
-                    // // if camera is closer to x axis of object, rotate about x axis
-                    // if (angle < 90 || angle > 270)
-                    // {
-                    //     spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
-                    // }
-                    // // if camera is closer to z axis of object, rotate about z axis
-                    // else
-                    // {
-                    //     spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
-                    // }
+                    // if camera is closer to x axis of object, rotate about x axis
+                    if (angle < 90)
+                    {
+                        spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
+                    }
+                    // if camera is closer to z axis of object, rotate about z axis
+                    else
+                    {
+                        spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
+                    }
                     
 
 
