@@ -67,6 +67,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public API api;
 
+        private float ratioY = 0.0f;
+        private float ratioX = 0.0f;    
+
         protected override void Awake()
         {
             base.Awake();
@@ -154,6 +157,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
                             spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
+                            ratioX = texture.width / 2048f;
+                            ratioY = texture.height / 2048f;
                         }
                         else
                         {
@@ -168,6 +173,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
                             spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
+                            ratioX = texture.width / 2048f;
+                            ratioY = texture.height / 2048f;
                         }
                     });
 
@@ -207,6 +214,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
                             spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
+                            ratioX = texture.width / 2048f;
+                            ratioY = texture.height / 2048f;
                         }
                         else
                         {
@@ -221,6 +230,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
                             spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
+                            ratioX = texture.width / 2048f;
+                            ratioY = texture.height / 2048f;
                         }
                     });
                 }
@@ -484,7 +495,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
                         // scale object
-                        spawnedObject.transform.localScale += new Vector3(deltaMagnitudeDiff * 0.0001f, deltaMagnitudeDiff * 0.0001f, deltaMagnitudeDiff * 0.0001f);
+                        spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.0001f * ratioX, 1, deltaMagnitudeDiff * 0.0001f * ratioY);
                     }
                 }
             }
