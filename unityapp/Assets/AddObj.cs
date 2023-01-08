@@ -386,15 +386,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // rotate object relative to camera position using delta position of touch
                 if (spawnedObject != null)
                 {
-                    Vector2 delta = Input.GetTouch(0).deltaPosition;           
-                    spawnedObject.transform.RotateAround(Camera.main.transform.position, Vector3.up, delta.x * 0.5f);
-                    spawnedObject.transform.RotateAround(Camera.main.transform.position, Camera.main.transform.right, delta.y * 0.5f);
+                    Vector2 delta = Input.GetTouch(0).deltaPosition;
 
-                    
+                    Vector3 right = Vector3.Cross(Camera.main.transform.up, spawnedObject.transform.position - Camera.main.transform.position);
+
+                    Vector3 up = Vector3.Cross(spawnedObject.transform.position - Camera.main.transform.position, right);
+
+                    spawnedObject.transform.rotation = Quaternion.AngleAxis(-delta.x, up) * spawnedObject.transform.rotation;
+
+                    spawnedObject.transform.rotation = Quaternion.AngleAxis(delta.y, right) * spawnedObject.transform.rotation;
                 }
 
             }
-            
+
 
 
 
