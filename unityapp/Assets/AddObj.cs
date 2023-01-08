@@ -147,6 +147,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         {
                             Console.WriteLine("FAULTED PNG");
 
+                            //get plane normal up vector
+                            wallNormalUp = s_Hits[0].pose.up;
+
                             byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
                             Console.WriteLine("Data");
                             // create texture
@@ -276,6 +279,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private Quaternion trueRot = Quaternion.identity;
         private bool rotating = false;
         private Vector3 previousRotation = Vector3.zero;
+
+        private Vector3 wallNormalUp = Vector3.up;
         private int roundTo = 15;
         private void Update()
         {
@@ -325,6 +330,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (m_RaycastManager.Raycast(position, s_Hits, TrackableType.PlaneWithinPolygon))
                     {
                         Pose hitPose = s_Hits[0].pose;
+                        wallNormalUp = s_Hits[0].pose.up;
 
                         // spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
 
@@ -551,7 +557,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                         // swipe delta x rotates about y axis of object
                         // spawnedObject.transform.Rotate(Vector3.up, -delta.x * 0.1f, Space.World);
-                        trueRot = Quaternion.AngleAxis(-delta.x * 0.15f, Vector3.up) * trueRot;
+                        trueRot = Quaternion.AngleAxis(-delta.x * 0.15f, wallNormalUp) * trueRot;
 
                         // get only y axis rotation of spawned object
                         Vector3 roundedRotW = new Vector3(0, trueRot.eulerAngles.y, 0);
