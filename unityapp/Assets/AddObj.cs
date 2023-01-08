@@ -440,7 +440,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
                             // trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldRight) * trueRot;
                             arWorldMapController.Log("FRONT");
-                            trueRot = Quaternion.AngleAxis(deltaMagnitudeDiff * 0.01f, worldForward) * trueRot;
+                            trueRot = Quaternion.AngleAxis(deltaMagnitudeDiff * 0.1f, worldForward) * trueRot;
                         }
                         else if (isCameraFacingParallelBack)
                         {
@@ -448,7 +448,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // spawnedObject.transform.Rotate(Vector3.right, -delta.y * 0.1f, Space.World);
                             // trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldRight) * trueRot;
                             arWorldMapController.Log("BACK");
-                            trueRot = Quaternion.AngleAxis(deltaMagnitudeDiff * 0.01f, worldForward) * trueRot;
+                            trueRot = Quaternion.AngleAxis(deltaMagnitudeDiff * 0.1f, worldForward) * trueRot;
                         }
                         else if (isCameraFacingParallelLeft)
                         {
@@ -456,7 +456,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // spawnedObject.transform.Rotate(Vector3.forward, -delta.y * 0.1f, Space.World);
                             // trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldForward) * trueRot;
                             arWorldMapController.Log("LEFT");
-                            trueRot = Quaternion.AngleAxis(deltaMagnitudeDiff * 0.01f, worldRight) * trueRot;
+                            trueRot = Quaternion.AngleAxis(deltaMagnitudeDiff * 0.1f, worldRight) * trueRot;
                         }
                         else if (isCameraFacingParallelRight)
                         {
@@ -464,7 +464,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
                             // trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldForward) * trueRot;
                             arWorldMapController.Log("RIGHT");
-                            trueRot = Quaternion.AngleAxis(deltaMagnitudeDiff * 0.01f, worldRight) * trueRot;
+                            trueRot = Quaternion.AngleAxis(deltaMagnitudeDiff * 0.1f, worldRight) * trueRot;
                         }
 
                         // spawnedObject.transform.Rotate(Vector3.up, deltaMagnitudeDiff * 0.01f, Space.World);
