@@ -416,16 +416,32 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // get if camera is facing parallel to world forward
                     bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, worldForward) > 0.5f;
+                    bool isCameraFacingParallelBack = Vector3.Dot(Camera.main.transform.forward, worldForward) < -0.5f;
 
                     // get if camera is facing parallel to world right
                     bool isCameraFacingParallelRight = Vector3.Dot(Camera.main.transform.forward, worldRight) > 0.5f;
+                    bool isCameraFacingParallelLeft = Vector3.Dot(Camera.main.transform.forward, worldRight) < -0.5f;
 
-                    if (isCameraFacingParallel) {
+                    if (isCameraFacingParallel)
+                    {
                         // swipe delta y rotates about x axis of object
                         // spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
                         trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldRight) * trueRot;
                     }
-                    else if (isCameraFacingParallelRight) {
+                    else if (isCameraFacingParallelBack)
+                    {
+                        // swipe delta y rotates about x axis of object
+                        // spawnedObject.transform.Rotate(Vector3.right, -delta.y * 0.1f, Space.World);
+                        trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldRight) * trueRot;
+                    }
+                    else if (isCameraFacingParallelLeft)
+                    {
+                        // swipe delta y rotates about z axis of object
+                        // spawnedObject.transform.Rotate(Vector3.forward, -delta.y * 0.1f, Space.World);
+                        trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldForward) * trueRot;
+                    }
+                    else if (isCameraFacingParallelRight)
+                    {
                         // swipe delta y rotates about z axis of object
                         // spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
                         trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldForward) * trueRot;
