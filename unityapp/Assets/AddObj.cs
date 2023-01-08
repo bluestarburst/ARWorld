@@ -445,6 +445,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         if (locked == false)
                         {
                             lastRotation = "z";
+                            locked = true;
                         }
 
                         if (lastRotation == "z")
@@ -460,83 +461,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             float avgDeltaMag = (deltaZero.magnitude + deltaOne.magnitude) / 2;
                             int clockwise = 1;
 
-                            // if zero finger is above one finger
-                            if (touchZero.position.y > touchOne.position.y)
+                            // get if clockwise or counterclockwise
+                            if (deltaZero.x * deltaOne.y - deltaZero.y * deltaOne.x < 0)
                             {
-                                // if zero finger is moving right and down
-                                if (deltaZero.x > 0 && deltaZero.y < 0)
-                                {
-                                    // if one finger is moving left and up
-                                    if (deltaOne.x < 0 && deltaOne.y > 0)
-                                    {
-                                        // rotate clockwise
-                                        clockwise = 1;
-                                    }
-                                    else
-                                    {
-                                        return;
-                                    }
-                                }
-                                else
-                                {
-                                    // if zero finger is moving left and down
-                                    if (deltaZero.x < 0 && deltaZero.y < 0)
-                                    {
-                                        // if one finger is moving right and up
-                                        if (deltaOne.x > 0 && deltaOne.y > 0)
-                                        {
-                                            // rotate counterclockwise
-                                            clockwise = -1;
-                                        }
-                                        else
-                                        {
-                                            return;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        return;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                // if zero finger is below one finger
-                                // if zero finger is moving right and up
-                                if (deltaZero.x > 0 && deltaZero.y > 0)
-                                {
-                                    // if one finger is moving left and down
-                                    if (deltaOne.x < 0 && deltaOne.y < 0)
-                                    {
-                                        // rotate clockwise
-                                        clockwise = 1;
-                                    }
-                                    else
-                                    {
-                                        return;
-                                    }
-                                }
-                                else
-                                {
-                                    // if zero finger is moving left and up
-                                    if (deltaZero.x < 0 && deltaZero.y > 0)
-                                    {
-                                        // if one finger is moving right and down
-                                        if (deltaOne.x > 0 && deltaOne.y < 0)
-                                        {
-                                            // rotate counterclockwise
-                                            clockwise = -1;
-                                        }
-                                        else
-                                        {
-                                            return;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        return;
-                                    }
-                                }
+                                clockwise = -1;
                             }
 
 
