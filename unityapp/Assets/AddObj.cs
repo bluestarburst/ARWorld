@@ -132,24 +132,35 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
 
-                    byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetBytesAsync(1024 * 1024);
-
-                    Console.WriteLine("DATA");
-
-                    if (data == null)
+                    await storageRef.Root.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetDownloadUrlAsync().ContinueWith(async task2 =>
                     {
-                        Debug.Log("data is null");
-                        data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
-                    }
+                        if (task2.IsFaulted || task2.IsCanceled)
+                        {
+                            byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
+                            // create texture
+                            Texture2D texture = new Texture2D(2, 2);
+                            // load texture
+                            texture.LoadImage(data);
+                            // set diffuse texture
+                            spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                            // get width and height of image and set scale of poster
+                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                        }
+                        else
+                        {
+                            byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+                            // create texture
+                            Texture2D texture = new Texture2D(2, 2);
+                            // load texture
+                            texture.LoadImage(data);
+                            // set diffuse texture
+                            spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                            // get width and height of image and set scale of poster
+                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                        }
+                    });
 
-                    // create texture
-                    Texture2D texture = new Texture2D(1, 1);
-                    Console.WriteLine("Texture");
-                    // load texture
-                    texture.LoadImage(data);
-                    // set diffuse texture
-                    spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
-                    Console.WriteLine("Component");
+
                 }
                 else
                 {
@@ -170,24 +181,33 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
 
-                    byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetBytesAsync(1024 * 1024);
-
-                    Console.WriteLine("DATA");
-
-                    if (data == null)
+                    await storageRef.Root.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetDownloadUrlAsync().ContinueWith(async task2 =>
                     {
-                        Debug.Log("data is null");
-                        data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
-                    }
-
-                    // create texture
-                    Texture2D texture = new Texture2D(1, 1);
-                    Console.WriteLine("Texture");
-                    // load texture
-                    texture.LoadImage(data);
-                    // set diffuse texture
-                    spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
-                    Console.WriteLine("Component");
+                        if (task2.IsFaulted || task2.IsCanceled)
+                        {
+                            byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
+                            // create texture
+                            Texture2D texture = new Texture2D(2, 2);
+                            // load texture
+                            texture.LoadImage(data);
+                            // set diffuse texture
+                            spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                            // get width and height of image and set scale of poster
+                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                        }
+                        else
+                        {
+                            byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetBytesAsync(1024 * 1024);
+                            // create texture
+                            Texture2D texture = new Texture2D(2, 2);
+                            // load texture
+                            texture.LoadImage(data);
+                            // set diffuse texture
+                            spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                            // get width and height of image and set scale of poster
+                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                        }
+                    });
                 }
                 else
                 {
