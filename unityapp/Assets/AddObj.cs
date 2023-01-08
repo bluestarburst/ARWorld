@@ -10,6 +10,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using Firebase.Extensions;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -132,7 +133,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
 
-                    await storageRef.Root.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetDownloadUrlAsync().ContinueWith(async task2 =>
+                    await storageRef.Root.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetDownloadUrlAsync().ContinueWithOnMainThread(async task2 =>
                     {
                         if (task2.IsFaulted || task2.IsCanceled)
                         {
@@ -185,7 +186,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
 
-                    await storageRef.Root.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetDownloadUrlAsync().ContinueWith(async task2 =>
+                    await storageRef.Root.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetDownloadUrlAsync().ContinueWithOnMainThread(async task2 =>
                     {
                         if (task2.IsFaulted || task2.IsCanceled)
                         {
