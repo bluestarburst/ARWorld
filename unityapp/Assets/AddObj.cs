@@ -140,14 +140,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             Console.WriteLine("FAULTED PNG");
 
                             byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
+                            Console.WriteLine("Data");
                             // create texture
-                            Texture2D texture = new Texture2D(2, 2);
+                            Texture2D texture = new Texture2D(1, 1);
                             // load texture
                             texture.LoadImage(data);
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                            // spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
                         }
                         else
                         {
@@ -155,13 +156,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                             byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetBytesAsync(1024 * 1024);
                             // create texture
-                            Texture2D texture = new Texture2D(2, 2);
+                            Texture2D texture = new Texture2D(1, 1);
                             // load texture
                             texture.LoadImage(data);
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                            // spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
                         }
                     });
 
@@ -194,13 +195,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                             byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".png").GetBytesAsync(1024 * 1024);
                             // create texture
-                            Texture2D texture = new Texture2D(2, 2);
+                            Texture2D texture = new Texture2D(1, 1);
                             // load texture
                             texture.LoadImage(data);
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                            // spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
                         }
                         else
                         {
@@ -208,13 +209,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                             byte[] data = await storageRef.Child("users/" + user + "/" + type + "/" + id + ".jpg").GetBytesAsync(1024 * 1024);
                             // create texture
-                            Texture2D texture = new Texture2D(2, 2);
+                            Texture2D texture = new Texture2D(1, 1);
                             // load texture
                             texture.LoadImage(data);
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                            // spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
                         }
                     });
                 }
