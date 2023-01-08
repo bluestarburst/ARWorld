@@ -278,6 +278,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
         private Quaternion trueRot = Quaternion.identity;
         private bool rotating = false;
+        private string lastRotation = "none";
         private Vector3 previousRotation = Vector3.zero;
 
         private Vector3 wallNormalUp = Vector3.up;
