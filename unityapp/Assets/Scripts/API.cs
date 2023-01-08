@@ -152,12 +152,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        public void sendMapIOS(string map)
-        {
-            HostNativeAPI.saveMap("hehehe");
-            HostNativeAPI.saveMap(map);
-        }
-
         private void _UpdateCubeColor(string serialized)
         {
             if (cube == null)
