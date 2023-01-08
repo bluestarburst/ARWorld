@@ -265,6 +265,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private Vector3 previousPosition = Vector3.zero;
 
+        private bool rotating = false;
+        private Quaternion previousRotation = Quaternion.identity;
         private void Update()
         {
 
@@ -284,6 +286,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 position = Input.GetTouch(0).position;
             }
+
+            position = Input.GetTouch(0).position;
 
 
             if (change.Equals("move"))
@@ -379,15 +383,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
             else if (change.Equals("rotate"))
             {
 
-                // rotate object relative to camera position
+                // rotate object relative to camera position using delta position of touch
                 if (spawnedObject != null)
                 {
-                    Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
-                    Vector3 direction = touchPosition - spawnedObject.transform.position;
-                    spawnedObject.transform.rotation = Quaternion.LookRotation(direction);
+                    Vector2 delta = Input.GetTouch(0).deltaPosition;           
+                    spawnedObject.transform.RotateAround(Camera.main.transform.position, Vector3.up, delta.x * 0.5f);
+                    spawnedObject.transform.RotateAround(Camera.main.transform.position, Camera.main.transform.right, delta.y * 0.5f);
+
+                    
                 }
 
             }
+            
+
+
+
 
 
 
