@@ -174,7 +174,7 @@ struct UnityView: View {
                 VStack {
                     HStack {
                         Button (action: {withAnimation{change="move";showButtons = true; addingObj = ""}}, label: {
-                            Image(systemName: "x")
+                            Image(systemName: "xmark")
                                 .imageScale(.medium)
                                 .font(.title)
                                 .foregroundColor(.white)
@@ -185,6 +185,8 @@ struct UnityView: View {
                         })
                         Spacer()
                     }
+                    .padding(30)
+                    .padding(.top,45)
                     Spacer()
                     HStack {
                         Button (action: {withAnimation {UnityBridge.getInstance().api.changeTransform(change: "move");change = "move"}}, label: {
