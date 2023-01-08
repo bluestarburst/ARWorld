@@ -285,6 +285,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private Vector3 previousRotation = Vector3.zero;
 
         private Vector3 wallNormalUp = Vector3.up;
+        private Vector3 wallNormalForward = Vector3.forward;
+        private Vector3 wallNormalRight = Vector3.right;
         private int roundTo = 15;
         private void Update()
         {
@@ -598,8 +600,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             Vector3 roundedRotW = new Vector3(0, trueRot.eulerAngles.y, 0);
 
                             // get world forward vector rotated by roundedRot
-                            Vector3 worldForward = Quaternion.Euler(roundedRotW) * Vector3.forward;
-                            Vector3 worldRight = Quaternion.Euler(roundedRotW) * Vector3.right;
+                            Vector3 worldForward = Quaternion.Euler(roundedRotW) * wallNormalForward;
+                            Vector3 worldRight = Quaternion.Euler(roundedRotW) * wallNormalRight;
 
                             // get if camera is facing parallel to world forward
                             bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, worldForward) > 0.5f;
