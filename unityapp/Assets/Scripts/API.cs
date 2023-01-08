@@ -27,8 +27,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public static extern void setTestDelegate(TestDelegate cb);
 
         // // byte array marshalling: https://stackoverflow.com/questions/10010873/how-to-pass-byte-array-to-c-sharp-dll
-        // [DllImport("__Internal")]
-        // public static extern void saveARWorldMap(byte[] data, int length);
+        [DllImport("__Internal")]
+        public static extern void mapStatus(string status);
 
         [DllImport("__Internal")]
         public static extern void saveMap(string map);

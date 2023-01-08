@@ -88,6 +88,11 @@ public class UnityAPI: NativeCallsProtocol {
         self.testCallback = delegate
     }
 
+    public func onMapStatus(_ status: String) {
+        print("onMapStatus: \(status)")
+        DataHandler.shared.mapStatus = status
+    }
+
     public func onSaveMap(_ map: String) {
         // self.communicator.saveMap(map)
         print("onSaveMap: \(map)")
@@ -97,14 +102,6 @@ public class UnityAPI: NativeCallsProtocol {
         print("onPhoneResponse: \(response)")
         self.getPhoneResult(response)
     }
-
-    // public func saveARWorldMap(_ data: T) {
-    //     // let message = MessageWithData(type: "save-ar-world-map", data: data)
-    //     // let encoder = JSONEncoder()
-    //     // let jsonData = try! encoder.encode(message)
-    //     // let jsonString = String(data: jsonData, encoding: .utf8)!
-    //     // self.communicator.sendMessage(jsonString)
-    // }
 
     /**
      * Private  API.

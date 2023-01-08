@@ -22,18 +22,13 @@ void sendUnityStateUpdate(const char *state) {
   [api onUnityStateChange:str];
 }
 
-void saveMap(const char *map) {
-  const NSString *str = @(map);
-  [api onSaveMap:str];
-}
-
 void setTestDelegate(TestDelegate delegate) {
   [api onSetTestDelegate:delegate];
 }
 
-void setPhoneResponse(const char *response) {
-  const NSString *str = @(response);
-  [api onPhoneResponse:str];
+void mapStatus(const char *status) {
+  const NSString *str = @(status);
+  [api onMapStatus:str];
 }
 
 // this method will take a byte array in C# and convert it to a NSData object
