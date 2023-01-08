@@ -164,6 +164,34 @@ struct UnityView: View {
                 .transition(.bottomAndFade)
             }
             
+            if (DataHandler.shared.addingObj == "adding") {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Button (action: {}, label: {
+                            Image(systemName: "sparkle")
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color(.white).opacity(0.1))
+                                .clipShape(Circle())
+                                .padding(.horizontal,5)
+                        })
+                        Button (action: {}, label: {
+                            Image(systemName: "sparkle")
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color(.white).opacity(0.1))
+                                .clipShape(Circle())
+                                .padding(.horizontal,5)
+                        })
+                    }
+                }
+            }
+            
         }
         
         
