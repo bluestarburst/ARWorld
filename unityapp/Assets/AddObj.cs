@@ -153,7 +153,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                            spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
                         }
                         else
                         {
@@ -167,7 +167,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                            spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
                         }
                     });
 
@@ -206,7 +206,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                            spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
                         }
                         else
                         {
@@ -220,7 +220,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 1024f, 1, texture.height / 1024f);
+                            spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
                         }
                     });
                 }
