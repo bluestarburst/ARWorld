@@ -276,7 +276,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private Quaternion trueRot = Quaternion.identity;
         private bool rotating = false;
         private Vector3 previousRotation = Vector3.zero;
-        private int roundTo = 45;
+        private int roundTo = 15;
         private void Update()
         {
 
@@ -440,14 +440,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         // swipe delta y rotates about z axis of object
                         // spawnedObject.transform.Rotate(Vector3.forward, -delta.y * 0.1f, Space.World);
-                        trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldForward) * trueRot;
+                        trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldForward) * trueRot;
                         arWorldMapController.Log("LEFT");
                     }
                     else if (isCameraFacingParallelRight)
                     {
                         // swipe delta y rotates about z axis of object
                         // spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
-                        trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldForward) * trueRot;
+                        trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldForward) * trueRot;
                         arWorldMapController.Log("RIGHT");
                     }
 
