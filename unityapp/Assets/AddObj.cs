@@ -408,23 +408,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     trueRot = Quaternion.AngleAxis(-delta.x * 0.3f, Vector3.up) * trueRot;
 
                     // get only y axis rotation of spawned object
-                    Vector3 eulerRot = trueRot.eulerAngles;
-                    Vector3 roundedRot = new Vector3(0, trueRot.eulerAngles.y, 0);
+                    Vector3 roundedRotW = new Vector3(0, trueRot.eulerAngles.y, 0);
 
                     // get world forward vector rotated by roundedRot
-                    Vector3 worldForward = Quaternion.Euler(roundedRot) * Vector3.forward;
-                    Vector3 worldRight = Quaternion.Euler(roundedRot) * Vector3.right;
+                    Vector3 worldForward = Quaternion.Euler(roundedRotW) * Vector3.forward;
+                    Vector3 worldRight = Quaternion.Euler(roundedRotW) * Vector3.right;
 
                     // get if camera is facing parallel to world forward
                     bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, worldForward) > 0.9f;
 
                     if (isCameraFacingParallel)
                     {
-                        trueRot = Quaternion.AngleAxis(delta.y * 0.15f, Vector3.right) * trueRot;
+                        trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldRight) * trueRot;
                     }
                     else
                     {
-                        trueRot = Quaternion.AngleAxis(delta.y * 0.15f, Vector3.forward) * trueRot;
+                        trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldForward) * trueRot;
                     }
 
                     // snap to closest 15 degrees when rotating object with trueRot
