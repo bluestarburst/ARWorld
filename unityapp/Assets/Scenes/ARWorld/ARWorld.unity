@@ -987,7 +987,7 @@ MonoBehaviour:
   type: 
   user: 
   id: 
-  change: rotate
+  change: move
   arWorldMapController: {fileID: 1751548350}
   centerChunk: {fileID: 0}
   currentChunk: {fileID: 0}
