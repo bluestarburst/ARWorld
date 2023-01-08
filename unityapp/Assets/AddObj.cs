@@ -405,7 +405,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // swipe delta x rotates about y axis of object
                     // spawnedObject.transform.Rotate(Vector3.up, -delta.x * 0.1f, Space.World);
-                    trueRot = Quaternion.AngleAxis(-delta.x * 0.3f, Vector3.up) * trueRot;
+                    trueRot = Quaternion.AngleAxis(-delta.x * 0.15f, Vector3.up) * trueRot;
 
                     // get only y axis rotation of spawned object
                     Vector3 roundedRotW = new Vector3(0, trueRot.eulerAngles.y, 0);
