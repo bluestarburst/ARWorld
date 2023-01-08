@@ -416,6 +416,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                         float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
+                        bool isClockwise = deltaMagnitudeDiff > 0;
+                        arWorldMapController.Log("isClockwise: " + isClockwise);
+
                         // get only y axis rotation of spawned object
                         Vector3 roundedRotW = new Vector3(0, trueRot.eulerAngles.y, 0);
 
