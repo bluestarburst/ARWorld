@@ -68,7 +68,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public API api;
 
         private float ratioY = 0.0f;
-        private float ratioX = 0.0f;    
+        private float ratioX = 0.0f;
 
         protected override void Awake()
         {
@@ -273,12 +273,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 currentChunk.transform.rotation = centerChunk.transform.rotation;
             }
         }
-
-        private Vector3 previousPosition = Vector3.zero;
         private Quaternion trueRot = Quaternion.identity;
         private bool rotating = false;
         private Vector3 previousRotation = Vector3.zero;
-        private Quaternion newRotation = Quaternion.identity;
         private int roundTo = 45;
         private void Update()
         {
@@ -402,29 +399,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     trueRot = spawnedObject.transform.rotation;
                 }
 
-                // // rotate object relative to camera position using delta position of touch
-                // if (spawnedObject != null)
-                // {
-                //     Vector2 delta = Input.GetTouch(0).deltaPosition;
-
-                //     Vector3 right = Vector3.Cross(Camera.main.transform.up, spawnedObject.transform.position - Camera.main.transform.position);
-
-                //     Vector3 up = Vector3.Cross(spawnedObject.transform.position - Camera.main.transform.position, right);
-
-                //     trueRot = Quaternion.AngleAxis(-delta.x * 0.1f, up) * trueRot;
-
-                //     trueRot = Quaternion.AngleAxis(delta.y * 0.1f, right) * trueRot;
-
-                //     // snap to closest 15 degrees when rotating object with trueRot
-                //     Vector3 eulerRot = trueRot.eulerAngles;
-                //     Vector3 roundedRot = new Vector3(Mathf.Round(eulerRot.x / 15) * 15, Mathf.Round(eulerRot.y / 15) * 15, Mathf.Round(eulerRot.z / 15) * 15);
-
-                //     // rotate object
-                //     spawnedObject.transform.rotation = Quaternion.Euler(roundedRot);
-
-                // }
-
-
                 if (spawnedObject != null)
                 {
                     Vector2 delta = Input.GetTouch(0).deltaPosition;
@@ -434,6 +408,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     trueRot = Quaternion.AngleAxis(-delta.x * 0.3f, Vector3.up) * trueRot;
 
                     // get if camera is facing parallel or perpendicular to world forward vector
+                    //MAKE IT SO THE POSTER ROTATES ALONG ITS EDGES???
                     bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, Vector3.forward) > 0.5f;
 
                     if (isCameraFacingParallel)
@@ -458,23 +433,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                 }
 
-                // // rotate object relative to camera position using delta position of touch
-                // if (spawnedObject != null) {
-                //     Vector2 delta = Input.GetTouch(0).deltaPosition;
-                //     Vector3 right = Vector3.Cross(Camera.main.transform.up, spawnedObject.transform.position - Camera.main.transform.position);
-                //     Vector3 up = Vector3.Cross(spawnedObject.transform.position - Camera.main.transform.position, right);
-
-                //     // snap to closest 15 degrees when rotating object
-                //     float angle = Vector3.Angle(spawnedObject.transform.forward, Camera.main.transform.forward);
-                //     float angleToSnap = Mathf.Round(angle / 15) * 15;
-                //     float angleDifference = angleToSnap - angle;
-
-                //     // rotate object
-                //     spawnedObject.transform.rotation = Quaternion.AngleAxis(-delta.x * 0.25f, up) * spawnedObject.transform.rotation;
-                //     spawnedObject.transform.rotation = Quaternion.AngleAxis(delta.y * 0.25f, right) * spawnedObject.transform.rotation;
-
-                // }
-
             }
             else if (change.Equals("scale"))
             {
@@ -497,6 +455,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         // scale object
                         spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f * ratioX, 1, deltaMagnitudeDiff * 0.001f * ratioY);
                     }
+                }
+            }
+            else if (change.Equals("delete"))
+            {
+                if (spawnedObject != null)
+                {
+                    Destroy(spawnedObject);
+                    spawnedObject = null;
+
+                    centerChunk = null;
+                    Destroy(currentChunk);
+                    currentChunk = null;
                 }
             }
 
