@@ -475,40 +475,40 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             bool isCameraFacingParallelRight = Vector3.Dot(Camera.main.transform.forward, worldRight) > 0.5f;
                             bool isCameraFacingParallelLeft = Vector3.Dot(Camera.main.transform.forward, worldRight) < -0.5f;
 
-                            trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldForward) * trueRot;
+                            // trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldForward) * trueRot;
 
-                            // if (isCameraFacingParallel)
-                            // {
-                            //     // swipe delta y rotates about x axis of object
-                            //     // spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
-                            //     // trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldRight) * trueRot;
-                            //     arWorldMapController.Log("FRONT");
-                            //     trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldForward) * trueRot;
-                            // }
-                            // else if (isCameraFacingParallelBack)
-                            // {
-                            //     // swipe delta y rotates about x axis of object
-                            //     // spawnedObject.transform.Rotate(Vector3.right, -delta.y * 0.1f, Space.World);
-                            //     // trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldRight) * trueRot;
-                            //     arWorldMapController.Log("BACK");
-                            //     trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldForward) * trueRot;
-                            // }
-                            // else if (isCameraFacingParallelLeft)
-                            // {
-                            //     // swipe delta y rotates about z axis of object
-                            //     // spawnedObject.transform.Rotate(Vector3.forward, -delta.y * 0.1f, Space.World);
-                            //     // trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldForward) * trueRot;
-                            //     arWorldMapController.Log("LEFT");
-                            //     trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldRight) * trueRot;
-                            // }
-                            // else if (isCameraFacingParallelRight)
-                            // {
-                            //     // swipe delta y rotates about z axis of object
-                            //     // spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
-                            //     // trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldForward) * trueRot;
-                            //     arWorldMapController.Log("RIGHT");
-                            //     trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldRight) * trueRot;
-                            // }
+                            if (isCameraFacingParallel)
+                            {
+                                // swipe delta y rotates about x axis of object
+                                // spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
+                                // trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldRight) * trueRot;
+                                arWorldMapController.Log("FRONT");
+                                trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldForward) * trueRot;
+                            }
+                            else if (isCameraFacingParallelBack)
+                            {
+                                // swipe delta y rotates about x axis of object
+                                // spawnedObject.transform.Rotate(Vector3.right, -delta.y * 0.1f, Space.World);
+                                // trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldRight) * trueRot;
+                                arWorldMapController.Log("BACK");
+                                trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldForward) * trueRot;
+                            }
+                            else if (isCameraFacingParallelLeft)
+                            {
+                                // swipe delta y rotates about z axis of object
+                                // spawnedObject.transform.Rotate(Vector3.forward, -delta.y * 0.1f, Space.World);
+                                // trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldForward) * trueRot;
+                                arWorldMapController.Log("LEFT");
+                                trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldRight) * trueRot;
+                            }
+                            else if (isCameraFacingParallelRight)
+                            {
+                                // swipe delta y rotates about z axis of object
+                                // spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
+                                // trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldForward) * trueRot;
+                                arWorldMapController.Log("RIGHT");
+                                trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldRight) * trueRot;
+                            }
 
                             // spawnedObject.transform.Rotate(Vector3.up, deltaMagnitudeDiff * 0.01f, Space.World);
                         }
@@ -521,7 +521,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         // spawnedObject.transform.Rotate(Vector3.up, -delta.x * 0.1f, Space.World);
                         if (lastRotation == "x")
                         {
-                            trueRot = Quaternion.AngleAxis(-delta.x * 0.15f, wallNormalUp) * trueRot;
+                            trueRot = Quaternion.AngleAxis(-delta.x * 0.15f, Vector3.up) * trueRot;
                         }
 
 
@@ -531,8 +531,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             Vector3 roundedRotW = new Vector3(0, trueRot.eulerAngles.y, 0);
 
                             // get world forward vector rotated by roundedRot
-                            Vector3 worldForward = Quaternion.Euler(roundedRotW) * wallNormalForward;
-                            Vector3 worldRight = Quaternion.Euler(roundedRotW) * wallNormalRight;
+                            Vector3 worldForward = Quaternion.Euler(roundedRotW) * Vector3.forward;
+                            Vector3 worldRight = Quaternion.Euler(roundedRotW) * Vector3.right;
 
                             // get if camera is facing parallel to world forward
                             bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, worldForward) > 0.5f;
