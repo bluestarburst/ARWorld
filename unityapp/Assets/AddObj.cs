@@ -401,6 +401,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         currentChunk.transform.rotation = centerChunk.transform.rotation;
                     }
 
+                    Vector3 eulerRot = spawnedObject.transform.rotation.eulerAngles;
+                    spawnedObject.transform.rotation = Quaternion.Euler(new Vector3(Mathf.Round(eulerRot.x / roundTo) * roundTo, Mathf.Round(eulerRot.y / roundTo) * roundTo, Mathf.Round(eulerRot.z / roundTo) * roundTo));
+
                 }
 
             }
