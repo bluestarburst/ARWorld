@@ -88,14 +88,18 @@ public class UnityAPI: NativeCallsProtocol {
         self.testCallback = delegate
     }
 
+    public var setMapStatus: (String) -> Void = {_ in}
+    
     public func onMapStatus(_ status: String) {
         print("onMapStatus: \(status)")
-        DataHandler.shared.mapStatus = status
+        setMapStatus(status)
     }
+    
+    public var setAddingObj: (String) -> Void = {_ in}
 
     public func onAddingObj(_ status: String) {
         print("onAddingObj: \(status)")
-        DataHandler.shared.addingObj = status
+        setAddingObj(status)
     }
 
     public func onSaveMap(_ map: String) {

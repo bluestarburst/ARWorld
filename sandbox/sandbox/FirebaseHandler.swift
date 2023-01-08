@@ -17,12 +17,21 @@ class DataHandler: NSObject, ObservableObject {
     
     @ObservedObject static var shared = DataHandler()
     
+    var mapStatus = ""
+    var addingObj = ""
+    
     override init() {
         super.init()
 
         self.getUID()
+        let api = UnityBridge.getInstance().api
         
-        
+        api.setMapStatus = { status in
+            self.mapStatus = status
+        }
+        api.setAddingObj = { status in
+            self.mapStatus = status
+        }
     }
     
     func getUID() {
