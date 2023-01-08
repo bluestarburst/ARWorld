@@ -59,7 +59,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public string user = "";
         public string id = "";
 
-        public string change = "rotate";
+        public string change = "move";
 
         public ARWorldMapController arWorldMapController;
         public GameObject centerChunk = null;
