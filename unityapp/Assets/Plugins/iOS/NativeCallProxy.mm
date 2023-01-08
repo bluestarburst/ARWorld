@@ -31,6 +31,10 @@ void mapStatus(const char *status) {
   [api onMapStatus:str];
 }
 
+void addingObj(const bool *status) {
+  [api onAddingObj:status];
+}
+
 // this method will take a byte array in C# and convert it to a NSData object
 // void sendUnityDataUpdate(const char *data, int length) {
 //   const NSData *nsData = [NSData dataWithBytes:data length:length];
