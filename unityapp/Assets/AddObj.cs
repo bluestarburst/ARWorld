@@ -464,7 +464,29 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // }
 
             }
+            else if (change.Equals("scale"))
+            {
+                // scale object using two finger pinch
+                if (spawnedObject != null)
+                {
+                    if (Input.touchCount == 2)
+                    {
+                        Touch touchZero = Input.GetTouch(0);
+                        Touch touchOne = Input.GetTouch(1);
 
+                        Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+                        Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+                        float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+                        float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+
+                        float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+
+                        // scale object
+                        spawnedObject.transform.localScale += new Vector3(deltaMagnitudeDiff * 0.0001f, deltaMagnitudeDiff * 0.0001f, deltaMagnitudeDiff * 0.0001f);
+                    }
+                }
+            }
 
         }
     }
