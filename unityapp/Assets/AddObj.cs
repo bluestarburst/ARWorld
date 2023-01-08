@@ -357,7 +357,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
                         {
                             Console.WriteLine("POSTER");
-                            spawnedObject.transform.rotation = hitPose.rotation;
+                            // spawnedObject.transform.rotation = hitPose.rotation;
                             spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * 0.1f;
                         }
                         else
