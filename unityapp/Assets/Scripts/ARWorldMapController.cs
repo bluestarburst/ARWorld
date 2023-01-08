@@ -509,9 +509,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (centerChunk == null && centerChunkId == anchor.trackableId.ToString())
                     {
+
+#if UNITY_IOS
+                        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+#else
+                        XRSessionSubsystem sessionSubsystem = null;
+#endif
                         Console.WriteLine("SETTING CENTER CHUNK");
                         centerChunk = chunk;
+                        sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
                         centerChunkId = "";
+                        HostNativeAPI.mapStatus("mapped");
                     }
 
                 }
@@ -603,7 +611,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
             {
                 preventReload = true;
-                sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+                // sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
                 InvokeRepeating("OnLoadButton", 0, 60);
             }
 
@@ -657,9 +665,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (x == 0 && z == 0)
                     {
+
+#if UNITY_IOS
+                        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+#else
+        XRSessionSubsystem sessionSubsystem = null;
+#endif
+
                         centerChunkIdToSave = anchor.trackableId.ToString();
                         centerChunkId = anchor.trackableId.ToString();
                         centerChunk = chunk;
+                        sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+                        HostNativeAPI.mapStatus("mapped");
                     }
 
                 }

@@ -93,7 +93,7 @@ public class UnityAPI: NativeCallsProtocol {
         DataHandler.shared.mapStatus = status
     }
 
-    public func onAddingObj(_ status: Bool) {
+    public func onAddingObj(_ status: String) {
         print("onAddingObj: \(status)")
         DataHandler.shared.addingObj = status
     }

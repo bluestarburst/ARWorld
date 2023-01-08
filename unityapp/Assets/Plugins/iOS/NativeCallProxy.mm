@@ -31,8 +31,9 @@ void mapStatus(const char *status) {
   [api onMapStatus:str];
 }
 
-void addingObj(const bool *status) {
-  [api onAddingObj:status];
+void addingObj(const char *status) {
+  const NSString *str = @(status);
+  [api onAddingObj:str];
 }
 
 // this method will take a byte array in C# and convert it to a NSData object

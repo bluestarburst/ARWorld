@@ -65,6 +65,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public GameObject centerChunk = null;
         public GameObject currentChunk = null;
 
+        public API api;
+
         protected override void Awake()
         {
             base.Awake();
@@ -104,6 +106,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
                 {
+                    HostNativeAPI.addingObj("adding"); // not adding
                     AddPoster(type, user, id);
                 }
                 return;

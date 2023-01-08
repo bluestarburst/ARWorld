@@ -31,7 +31,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public static extern void mapStatus(string status);
 
         [DllImport("__Internal")]
-        public static extern void addingObj(bool status);
+        public static extern void addingObj(string status);
 
         [DllImport("__Internal")]
         public static extern void saveMap(string map);
