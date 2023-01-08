@@ -379,22 +379,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             else if (change.Equals("rotate"))
             {
 
-                if (previousPosition == Vector3.zero)
-                {
-                    previousPosition = position;
-                }
-
-                // if there is a touch on the screen
-
-                // if there is a spawned object
+                // rotate object relative to camera position
                 if (spawnedObject != null)
                 {
-                    // if there is a touch on the screen
-                    if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
-                    {
-                        // rotate the spawnedObject around its center by the angle between the current touch and the previous touch
-                        spawnedObject.transform.RotateAround(spawnedObject.transform.position, Vector3.up, (position.x - previousPosition.x) * 0.5f);
-                    }
+                    Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
+                    Vector3 direction = touchPosition - spawnedObject.transform.position;
+                    spawnedObject.transform.rotation = Quaternion.LookRotation(direction);
                 }
 
             }
