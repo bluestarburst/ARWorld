@@ -431,7 +431,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // swipe delta x rotates about y axis of object
                     // spawnedObject.transform.Rotate(Vector3.up, -delta.x * 0.1f, Space.World);
-                    trueRot = Quaternion.AngleAxis(-delta.x * 0.15f, Vector3.up) * trueRot;
+                    trueRot = Quaternion.AngleAxis(-delta.x * 0.3f, Vector3.up) * trueRot;
 
                     // get if camera is facing parallel or perpendicular to world forward vector
                     bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, Vector3.forward) > 0.5f;
@@ -495,7 +495,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
                         // scale object
-                        spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.0001f * ratioX, 1, deltaMagnitudeDiff * 0.0001f * ratioY);
+                        spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.05f * ratioX, 1, deltaMagnitudeDiff * 0.05f * ratioY);
                     }
                 }
             }
