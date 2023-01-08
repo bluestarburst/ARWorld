@@ -495,7 +495,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
                         // scale object
-                        spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.05f * ratioX, 1, deltaMagnitudeDiff * 0.05f * ratioY);
+                        spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f * ratioX, 1, deltaMagnitudeDiff * 0.001f * ratioY);
                     }
                 }
             }
