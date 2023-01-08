@@ -216,11 +216,11 @@ struct ImageLoop: View {
         
         tempPost = DataHandler.shared.images
         for id in tempPost.keys {
-            if (stickers[id] == nil) {
-                stickers[id] = tempPost[id]
-                stickersL.append(tempPost[id]!)
-                stickersI.append(id)
-                stickersU.append(DataHandler.shared.stickerData[id]!)
+            if (images[id] == nil) {
+                images[id] = tempPost[id]
+                imagesL.append(tempPost[id]!)
+                imagesI.append(id)
+                imagesU.append(DataHandler.shared.imageData[id]!)
             }
         }
     }
