@@ -608,10 +608,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 .Format("Mapping Status: {0}",
                 sessionSubsystem.worldMappingStatus));
 
-            if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
-            {
+            // if (isWorldMapLoaded == false && preventReload == false && sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
+            // {
+            //     preventReload = true;
+            //     // sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+            //     InvokeRepeating("OnLoadButton", 0, 60);
+            // }
+
+            if (preventReload == false && api.lat != 0 && api.lon != 0) {
                 preventReload = true;
-                // sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
                 InvokeRepeating("OnLoadButton", 0, 60);
             }
 
