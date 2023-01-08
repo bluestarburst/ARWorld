@@ -987,9 +987,11 @@ MonoBehaviour:
   type: 
   user: 
   id: 
+  change: rotate
   arWorldMapController: {fileID: 1751548350}
   centerChunk: {fileID: 0}
   currentChunk: {fileID: 0}
+  api: {fileID: 168510958}
 --- !u!114 &1352058507
 MonoBehaviour:
   m_ObjectHideFlags: 0
