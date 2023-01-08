@@ -441,44 +441,36 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (Input.touchCount > 1)
                     {
-                        // use two fingers to rotate clockwise or counterclockwise
-                        Touch touchZero = Input.GetTouch(0);
-                        Touch touchOne = Input.GetTouch(1);
 
-                        Vector2 deltaZero = Input.GetTouch(0).deltaPosition;
-                        Vector2 deltaOne = Input.GetTouch(1).deltaPosition;
-
-                        // get avg mag of delta positions
-                        float avgDeltaMag = (deltaZero.magnitude + deltaOne.magnitude) / 2;
-                        int clockwise = 1;
-
-                        // if zero finger is above one finger
-                        if (touchZero.position.y > touchOne.position.y)
+                        if (locked == false)
                         {
-                            // if zero finger is moving right and down
-                            if (deltaZero.x > 0 && deltaZero.y < 0)
+                            lastRotation = "z";
+                        }
+
+                        if (lastRotation == "z")
+                        {
+                            // use two fingers to rotate clockwise or counterclockwise
+                            Touch touchZero = Input.GetTouch(0);
+                            Touch touchOne = Input.GetTouch(1);
+
+                            Vector2 deltaZero = Input.GetTouch(0).deltaPosition;
+                            Vector2 deltaOne = Input.GetTouch(1).deltaPosition;
+
+                            // get avg mag of delta positions
+                            float avgDeltaMag = (deltaZero.magnitude + deltaOne.magnitude) / 2;
+                            int clockwise = 1;
+
+                            // if zero finger is above one finger
+                            if (touchZero.position.y > touchOne.position.y)
                             {
-                                // if one finger is moving left and up
-                                if (deltaOne.x < 0 && deltaOne.y > 0)
+                                // if zero finger is moving right and down
+                                if (deltaZero.x > 0 && deltaZero.y < 0)
                                 {
-                                    // rotate clockwise
-                                    clockwise = 1;
-                                }
-                                else
-                                {
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                // if zero finger is moving left and down
-                                if (deltaZero.x < 0 && deltaZero.y < 0)
-                                {
-                                    // if one finger is moving right and up
-                                    if (deltaOne.x > 0 && deltaOne.y > 0)
+                                    // if one finger is moving left and up
+                                    if (deltaOne.x < 0 && deltaOne.y > 0)
                                     {
-                                        // rotate counterclockwise
-                                        clockwise = -1;
+                                        // rotate clockwise
+                                        clockwise = 1;
                                     }
                                     else
                                     {
@@ -487,37 +479,37 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                 }
                                 else
                                 {
-                                    return;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // if zero finger is below one finger
-                            // if zero finger is moving right and up
-                            if (deltaZero.x > 0 && deltaZero.y > 0)
-                            {
-                                // if one finger is moving left and down
-                                if (deltaOne.x < 0 && deltaOne.y < 0)
-                                {
-                                    // rotate clockwise
-                                    clockwise = 1;
-                                }
-                                else
-                                {
-                                    return;
+                                    // if zero finger is moving left and down
+                                    if (deltaZero.x < 0 && deltaZero.y < 0)
+                                    {
+                                        // if one finger is moving right and up
+                                        if (deltaOne.x > 0 && deltaOne.y > 0)
+                                        {
+                                            // rotate counterclockwise
+                                            clockwise = -1;
+                                        }
+                                        else
+                                        {
+                                            return;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return;
+                                    }
                                 }
                             }
                             else
                             {
-                                // if zero finger is moving left and up
-                                if (deltaZero.x < 0 && deltaZero.y > 0)
+                                // if zero finger is below one finger
+                                // if zero finger is moving right and up
+                                if (deltaZero.x > 0 && deltaZero.y > 0)
                                 {
-                                    // if one finger is moving right and down
-                                    if (deltaOne.x > 0 && deltaOne.y < 0)
+                                    // if one finger is moving left and down
+                                    if (deltaOne.x < 0 && deltaOne.y < 0)
                                     {
-                                        // rotate counterclockwise
-                                        clockwise = -1;
+                                        // rotate clockwise
+                                        clockwise = 1;
                                     }
                                     else
                                     {
@@ -526,61 +518,78 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                 }
                                 else
                                 {
-                                    return;
+                                    // if zero finger is moving left and up
+                                    if (deltaZero.x < 0 && deltaZero.y > 0)
+                                    {
+                                        // if one finger is moving right and down
+                                        if (deltaOne.x > 0 && deltaOne.y < 0)
+                                        {
+                                            // rotate counterclockwise
+                                            clockwise = -1;
+                                        }
+                                        else
+                                        {
+                                            return;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return;
+                                    }
                                 }
                             }
+
+
+                            // get only y axis rotation of spawned object
+                            Vector3 roundedRotW = new Vector3(0, trueRot.eulerAngles.y, 0);
+
+                            // get world forward vector rotated by roundedRot
+                            Vector3 worldForward = Quaternion.Euler(roundedRotW) * Vector3.forward;
+                            Vector3 worldRight = Quaternion.Euler(roundedRotW) * Vector3.right;
+
+                            // get if camera is facing parallel to world forward
+                            bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, worldForward) > 0.5f;
+                            bool isCameraFacingParallelBack = Vector3.Dot(Camera.main.transform.forward, worldForward) < -0.5f;
+
+                            // get if camera is facing parallel to world right
+                            bool isCameraFacingParallelRight = Vector3.Dot(Camera.main.transform.forward, worldRight) > 0.5f;
+                            bool isCameraFacingParallelLeft = Vector3.Dot(Camera.main.transform.forward, worldRight) < -0.5f;
+
+                            if (isCameraFacingParallel)
+                            {
+                                // swipe delta y rotates about x axis of object
+                                // spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
+                                // trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldRight) * trueRot;
+                                arWorldMapController.Log("FRONT");
+                                trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldForward) * trueRot;
+                            }
+                            else if (isCameraFacingParallelBack)
+                            {
+                                // swipe delta y rotates about x axis of object
+                                // spawnedObject.transform.Rotate(Vector3.right, -delta.y * 0.1f, Space.World);
+                                // trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldRight) * trueRot;
+                                arWorldMapController.Log("BACK");
+                                trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldForward) * trueRot;
+                            }
+                            else if (isCameraFacingParallelLeft)
+                            {
+                                // swipe delta y rotates about z axis of object
+                                // spawnedObject.transform.Rotate(Vector3.forward, -delta.y * 0.1f, Space.World);
+                                // trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldForward) * trueRot;
+                                arWorldMapController.Log("LEFT");
+                                trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldRight) * trueRot;
+                            }
+                            else if (isCameraFacingParallelRight)
+                            {
+                                // swipe delta y rotates about z axis of object
+                                // spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
+                                // trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldForward) * trueRot;
+                                arWorldMapController.Log("RIGHT");
+                                trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldRight) * trueRot;
+                            }
+
+                            // spawnedObject.transform.Rotate(Vector3.up, deltaMagnitudeDiff * 0.01f, Space.World);
                         }
-
-                        // get only y axis rotation of spawned object
-                        Vector3 roundedRotW = new Vector3(0, trueRot.eulerAngles.y, 0);
-
-                        // get world forward vector rotated by roundedRot
-                        Vector3 worldForward = Quaternion.Euler(roundedRotW) * Vector3.forward;
-                        Vector3 worldRight = Quaternion.Euler(roundedRotW) * Vector3.right;
-
-                        // get if camera is facing parallel to world forward
-                        bool isCameraFacingParallel = Vector3.Dot(Camera.main.transform.forward, worldForward) > 0.5f;
-                        bool isCameraFacingParallelBack = Vector3.Dot(Camera.main.transform.forward, worldForward) < -0.5f;
-
-                        // get if camera is facing parallel to world right
-                        bool isCameraFacingParallelRight = Vector3.Dot(Camera.main.transform.forward, worldRight) > 0.5f;
-                        bool isCameraFacingParallelLeft = Vector3.Dot(Camera.main.transform.forward, worldRight) < -0.5f;
-
-                        if (isCameraFacingParallel)
-                        {
-                            // swipe delta y rotates about x axis of object
-                            // spawnedObject.transform.Rotate(Vector3.right, delta.y * 0.1f, Space.World);
-                            // trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldRight) * trueRot;
-                            arWorldMapController.Log("FRONT");
-                            trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldForward) * trueRot;
-                        }
-                        else if (isCameraFacingParallelBack)
-                        {
-                            // swipe delta y rotates about x axis of object
-                            // spawnedObject.transform.Rotate(Vector3.right, -delta.y * 0.1f, Space.World);
-                            // trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldRight) * trueRot;
-                            arWorldMapController.Log("BACK");
-                            trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldForward) * trueRot;
-                        }
-                        else if (isCameraFacingParallelLeft)
-                        {
-                            // swipe delta y rotates about z axis of object
-                            // spawnedObject.transform.Rotate(Vector3.forward, -delta.y * 0.1f, Space.World);
-                            // trueRot = Quaternion.AngleAxis(delta.y * 0.15f, worldForward) * trueRot;
-                            arWorldMapController.Log("LEFT");
-                            trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldRight) * trueRot;
-                        }
-                        else if (isCameraFacingParallelRight)
-                        {
-                            // swipe delta y rotates about z axis of object
-                            // spawnedObject.transform.Rotate(Vector3.forward, delta.y * 0.1f, Space.World);
-                            // trueRot = Quaternion.AngleAxis(-delta.y * 0.15f, worldForward) * trueRot;
-                            arWorldMapController.Log("RIGHT");
-                            trueRot = Quaternion.AngleAxis(avgDeltaMag * clockwise * 0.1f, worldRight) * trueRot;
-                        }
-
-                        // spawnedObject.transform.Rotate(Vector3.up, deltaMagnitudeDiff * 0.01f, Space.World);
-
                     }
                     else
                     {
