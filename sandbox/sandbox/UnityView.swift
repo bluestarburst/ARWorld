@@ -172,9 +172,22 @@ struct UnityView: View {
             
             if (addingObj == "adding") {
                 VStack {
+                    HStack {
+                        Button (action: {withAnimation{change="move";showButtons = true; addingObj = ""}}, label: {
+                            Image(systemName: "x")
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color(.white).opacity(0.1))
+                                .clipShape(Circle())
+                                .padding(.horizontal,5)
+                        })
+                        Spacer()
+                    }
                     Spacer()
                     HStack {
-                        Button (action: {UnityBridge.getInstance().api.changeTransform(change: "move");change = "move"}, label: {
+                        Button (action: {withAnimation {UnityBridge.getInstance().api.changeTransform(change: "move");change = "move"}}, label: {
                             Image(systemName: "move.3d")
                                 .imageScale(.medium)
                                 .font(.title)
@@ -184,7 +197,7 @@ struct UnityView: View {
                                 .clipShape(Circle())
                                 .padding(.horizontal,5)
                         })
-                        Button (action: {UnityBridge.getInstance().api.changeTransform(change: "rotate"); change = "rotate"}, label: {
+                        Button (action: {withAnimation {UnityBridge.getInstance().api.changeTransform(change: "rotate"); change = "rotate"}}, label: {
                             Image(systemName: "rotate.3d")
                                 .imageScale(.medium)
                                 .font(.title)
@@ -194,7 +207,7 @@ struct UnityView: View {
                                 .clipShape(Circle())
                                 .padding(.horizontal,5)
                         })
-                        Button (action: {UnityBridge.getInstance().api.changeTransform(change: "scale"); change = "scale"}, label: {
+                        Button (action: {withAnimation {UnityBridge.getInstance().api.changeTransform(change: "scale"); change = "scale"}}, label: {
                             Image(systemName: "scale.3d")
                                 .imageScale(.medium)
                                 .font(.title)
@@ -207,6 +220,7 @@ struct UnityView: View {
                     }
                     .padding(.bottom, 30)
                 }
+                .transition(.bottomAndFade)
             }
             
         }
@@ -234,11 +248,13 @@ struct UnityView: View {
             }
             DataHandler.shared.setAddingObj = {
                 addingObj = DataHandler.shared.addingObj
-                if (addingObj == "adding") {
-                    showElementSelection = false
-                    showButtons = false
-                } else {
-                    showButtons = true
+                withAnimation {
+                    if (addingObj == "adding") {
+                        showElementSelection = false
+                        showButtons = false
+                    } else {
+                        showButtons = true
+                    }
                 }
             }
         }
