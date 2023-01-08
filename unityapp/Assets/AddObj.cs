@@ -279,6 +279,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private Quaternion trueRot = Quaternion.identity;
         private bool rotating = false;
         private string lastRotation = "none";
+
+        private bool locked = false;
         private Vector2 lastTouch = Vector2.zero;
         private Vector3 previousRotation = Vector3.zero;
 
@@ -290,6 +292,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (Input.touchCount < 1 && !Input.GetMouseButton(0))
             {
                 rotating = false;
+                locked = false;
                 return;
             }
 
@@ -408,13 +411,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     trueRot = spawnedObject.transform.rotation;
                 }
 
-                if (Math.Abs( lastTouch.x - position.x ) > lastTouch.y - position.y)
+                if (locked == false)
                 {
-                    lastRotation = "x";
-                }
-                else
-                {
-                    lastRotation = "y";
+                    if (Math.Abs(lastTouch.x - position.x) > Math.Abs(lastTouch.y - position.y))
+                    {
+                        lastRotation = "x";
+                    }
+                    else
+                    {
+                        lastRotation = "y";
+                    }
                 }
 
                 if (spawnedObject != null)
@@ -627,7 +633,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (previousRotation != roundedRot)
                     {
-
+                        locked = true;
                         previousRotation = roundedRot;
                         // rotate object
                         spawnedObject.transform.rotation = Quaternion.Euler(roundedRot);
