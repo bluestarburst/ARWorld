@@ -303,7 +303,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     Destroy(spawnedObject);
                     spawnedObject = null;
-                    isAdding = false;
 
                     centerChunk = null;
                     Destroy(currentChunk);
