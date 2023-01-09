@@ -232,14 +232,14 @@ struct UnityView: View {
                     HStack {
                         Spacer()
                         Button (action: {withAnimation{change="move";showButtons = true; addingObj = ""; UnityBridge.getInstance().api.changeTransform(change: "save")}}, label: {
-                            Image(systemName: "checkmark")
+                            Image(systemName: "plus")
                                 .imageScale(.medium)
                                 .font(.title)
                                 .foregroundColor(.white)
                                 .padding(10)
-                                .background(Color(.blue).opacity(1))
+                                .background(Color.pink)
                                 .clipShape(Circle())
-                                .padding(.horizontal,5)
+                                .padding(.horizontal,25)
                         })
                     }
                     .padding(.bottom, 30)
