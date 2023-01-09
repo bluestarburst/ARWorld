@@ -98,10 +98,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     return;
                 }
 
-                if (centerChunk == null || centerChunk != arWorldMapController.centerChunk)
-                {
-                    centerChunk = arWorldMapController.centerChunk;
-                }
+                centerChunk = arWorldMapController.centerChunk;
 
                 this.type = type;
                 this.user = user;
@@ -307,6 +304,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 if (spawnedObject != null)
                 {
+                    change = "move";
                     Destroy(spawnedObject);
                     spawnedObject = null;
 
