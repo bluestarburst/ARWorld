@@ -322,11 +322,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // save object to world map
 
                     // check if the chunk already exists
-
+                    isAdding = false;
                     if (arWorldMapController.chunksPos.ContainsKey(chunkPos[0] + "-" + chunkPos[1]))
                     {
                         Destroy(currentChunk);
-                        isAdding = false;
+                        
 
                         currentChunk = arWorldMapController.chunks[arWorldMapController.chunksPos[chunkPos[0] + "-" + chunkPos[1]]];
                         Chunk chunkScript = currentChunk.GetComponent<Chunk>();
@@ -395,6 +395,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         arWorldMapController.chunks.Add(anchor.trackableId.ToString(), currentChunk);
                         arWorldMapController.anchors.Add(anchor.trackableId.ToString(), anchor);
                     }
+                    currentChunk = null;
                 }
             }
 
