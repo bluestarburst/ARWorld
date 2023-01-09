@@ -226,8 +226,27 @@ struct UnityView: View {
                 .transition(.bottomAndFade)
             }
             
+            if (addingObj == "adding") {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button (action: {withAnimation{change="move";showButtons = true; addingObj = ""; UnityBridge.getInstance().api.changeTransform(change: "save")}}, label: {
+                            Image(systemName: "checkmark")
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color(.blue).opacity(1))
+                                .clipShape(Circle())
+                                .padding(.horizontal,5)
+                        })
+                    }
+                    .padding(.bottom, 30)
+                }.transition(.bottomAndFade)
+            }
+            
         }
-        
         
         //            ColorPicker("", selection: $color)
         //                .frame(width: 50, height: 50, alignment: .center)
@@ -240,8 +259,6 @@ struct UnityView: View {
         //                        let b = CGFloat(Float(arr[3]) ?? 1)
         //                        UnityBridge.getInstance().api.setColor(r: r, g: g, b: b)
         //                    }
-        
-        
         
         .onAppear {
             let api = UnityBridge.getInstance()
