@@ -82,6 +82,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public FirebaseApp app = FirebaseApp.Create();
 
+        void Awake() {
+            Application.targetFrameRate = 30;
+        }
+
         void Start()
         {
             Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
