@@ -293,7 +293,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private Vector3 wallNormalRight = Vector3.right;
         private int roundTo = 15;
 
-        private int[] chunkPos = new int[2]{0,0};
+        private int[] chunkPos = new int[2] { 0, 0 };
         private void Update()
         {
 
@@ -362,6 +362,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         chunkScript.ARCamera = arWorldMapController.ARCamera;
                         chunkScript.arWorldMapController = arWorldMapController;
                         chunkScript.id = anchor.trackableId.ToString();
+
+                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).SetAsync(new Dictionary<string, object>{
+                            { "x", currentChunk.transform.position.x },
+                            { "y", currentChunk.transform.position.y },
+                            { "z", currentChunk.transform.position.z },
+                            { "cx", chunkPos[0] },
+                            { "cy", chunkPos[1] },
+                            { "size", 0 },
+                            { "updated", DateTime.Now },
+                            { "worldMapId", arWorldMapController.worldMapId }
+                        });
 
                         arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection("posters").Document().SetAsync(new
                         {
