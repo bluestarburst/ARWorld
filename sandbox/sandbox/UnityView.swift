@@ -25,9 +25,10 @@ struct UnityView: View {
     
     @State private var showElementOptions = false
     @State private var showElementSelection = false
-    @State private var showButtons = true
+    @State private var showButtons = false
     
     @State private var addingObj = ""
+    @State private var mapStatus = ""
     @State private var change = "move"
     
     var body: some View {
@@ -173,7 +174,7 @@ struct UnityView: View {
             if (addingObj == "adding") {
                 VStack {
                     HStack {
-                        Button (action: {withAnimation{change="move";showButtons = true; addingObj = ""}}, label: {
+                        Button (action: {withAnimation{change="move";showButtons = true; addingObj = ""; UnityBridge.getInstance().api.changeTransform(change: "delete")}}, label: {
                             Image(systemName: "xmark")
                                 .imageScale(.medium)
                                 .font(.title)
@@ -256,6 +257,16 @@ struct UnityView: View {
                         showButtons = false
                     } else {
                         showButtons = true
+                    }
+                }
+            }
+            DataHandler.shared.setMapStatus = {
+                mapStatus = DataHandler.shared.mapStatus
+                withAnimation {
+                    if (mapStatus == "mapped") {
+                        showButtons = true
+                    } else {
+                        showButtons = false
                     }
                 }
             }
