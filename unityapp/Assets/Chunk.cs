@@ -19,6 +19,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public ARWorldMapController arWorldMapController;
         public bool isLoaded = false;
 
+        public int cx = 0;
+        public int cy = 0;
+
         public FirebaseFirestore db;
         // Start is called before the first frame update
         void Start()
@@ -61,6 +64,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             arWorldMapController.Log("1");
 
+            int[] chunkPos = new int[] { cx, cy };
+            arWorldMapController.chunksPos[chunkPos] = id;
+
             if (snapshot.Exists)
             {
                 arWorldMapController.Log("2");
@@ -84,10 +90,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // NOT WORKING :(
 
-                    int cx = Convert.ToInt32(posterSnapshot.GetValue<double>("cx"));
-                    int cy = Convert.ToInt32(posterSnapshot.GetValue<double>("cy"));
-                    int[] chunkPos = new int[] { cx, cy };
-                    arWorldMapController.chunksPos[chunkPos] = id;
 
                     float x = Convert.ToSingle(posterSnapshot.GetValue<double>("x"));
                     float y = Convert.ToSingle(posterSnapshot.GetValue<double>("y"));

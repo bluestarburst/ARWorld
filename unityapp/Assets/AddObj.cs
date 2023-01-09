@@ -319,6 +319,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         Destroy(currentChunk);
                         isAdding = false;
+
+                        currentChunk = arWorldMapController.chunks[arWorldMapController.chunksPos[chunkPos]];
+                        Chunk chunkScript = currentChunk.GetComponent<Chunk>();
+                        // make spawned object a child of the chunk
+                        Vector3 localPosition = currentChunk.transform.InverseTransformPoint(spawnedObject.transform.position);
+                        spawnedObject.transform.parent = currentChunk.transform;
+                        // save the local position of the spawned object relative to the chunk
+                        spawnedObject.transform.localPosition = localPosition;
+
+                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection("posters").Document(id).SetAsync(new
+                        {
+                            user = user,
+                            type = type,
+                            id = id,
+                            x = spawnedObject.transform.localPosition.x,
+                            y = spawnedObject.transform.localPosition.y,
+                            z = spawnedObject.transform.localPosition.z,
+                            
+                        });
+
+
                     }
                 }
             }
