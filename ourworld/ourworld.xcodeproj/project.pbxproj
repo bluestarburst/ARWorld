@@ -12,14 +12,15 @@
 		5818DC6E2937FCC000C8B794 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818DC6D2937FCC000C8B794 /* AuthView.swift */; };
 		5818DC8D293AED9E00C8B794 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818DC8C293AED9E00C8B794 /* LocationManager.swift */; };
 		5818DC8F293BEFF200C8B794 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818DC8E293BEFF200C8B794 /* FirebaseHandler.swift */; };
-		58ABF175293C6445000E5463 /* UnityFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E64BDA9025BAD700005368B4 /* UnityFramework.framework */; };
-		58ABF176293C6445000E5463 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E64BDA9025BAD700005368B4 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		58B75463296CB24C00E5A654 /* UnityFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E64BDA9025BAD700005368B4 /* UnityFramework.framework */; };
+		58B75464296CB24C00E5A654 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E64BDA9025BAD700005368B4 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		58B75467296CBB0100E5A654 /* ObjSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B75466296CBB0100E5A654 /* ObjSelection.swift */; };
 		58B77D7A296891FD00FAD17F /* EnvironmentValues+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B77D75296891FB00FAD17F /* EnvironmentValues+ImageCache.swift */; };
 		58B77D7B296891FD00FAD17F /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B77D76296891FC00FAD17F /* ImageLoader.swift */; };
 		58B77D7D296891FD00FAD17F /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B77D78296891FC00FAD17F /* AsyncImage.swift */; };
 		58B77D7E296891FD00FAD17F /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B77D79296891FD00FAD17F /* ImageCache.swift */; };
 		58E14E462964A18B00ACA091 /* ImageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E14E452964A18900ACA091 /* ImageSelection.swift */; };
-		58E14E4F2965538900ACA091 /* Pods_sandbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9605333315C1471BBACB1839 /* Pods_sandbox.framework */; };
+		659160E6F2C3BE7D9DE4DE2D /* Pods_ourworld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCF4CD535BCA17B5632A08A /* Pods_ourworld.framework */; };
 		E61361FC25BA3CFA0005B57A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */; };
 		E61361FE25BA3D150005B57A /* UnityBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61361FD25BA3D150005B57A /* UnityBridge.swift */; };
 		E62A7ACE2773E48A007CE3D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62A7ACD2773E48A007CE3D6 /* AppDelegate.swift */; };
@@ -31,13 +32,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		58ABF177293C6446000E5463 /* Embed Frameworks */ = {
+		58B75465296CB24D00E5A654 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				58ABF176293C6445000E5463 /* UnityFramework.framework in Embed Frameworks */,
+				58B75464296CB24C00E5A654 /* UnityFramework.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,13 +67,15 @@
 		58ABF172293C6420000E5463 /* Pods_UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58ABF178293C6458000E5463 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58ABF17B293C6463000E5463 /* FirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58B75466296CBB0100E5A654 /* ObjSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjSelection.swift; sourceTree = "<group>"; };
 		58B77D75296891FB00FAD17F /* EnvironmentValues+ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+ImageCache.swift"; sourceTree = "<group>"; };
 		58B77D76296891FC00FAD17F /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		58B77D78296891FC00FAD17F /* AsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		58B77D79296891FD00FAD17F /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		58E14E452964A18900ACA091 /* ImageSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelection.swift; sourceTree = "<group>"; };
 		809F3DDC5E7359A455FC9324 /* Pods-sandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sandbox.release.xcconfig"; path = "Target Support Files/Pods-sandbox/Pods-sandbox.release.xcconfig"; sourceTree = "<group>"; };
-		9605333315C1471BBACB1839 /* Pods_sandbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sandbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7EFBB579F0C93571A484335 /* Pods-ourworld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ourworld.release.xcconfig"; path = "Target Support Files/Pods-ourworld/Pods-ourworld.release.xcconfig"; sourceTree = "<group>"; };
+		DDCF4CD535BCA17B5632A08A /* Pods_ourworld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ourworld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E61361FD25BA3D150005B57A /* UnityBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnityBridge.swift; sourceTree = "<group>"; };
 		E62A7AC92773D326007CE3D6 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,11 +83,12 @@
 		E62A7ACF2773E4DA007CE3D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E62A7AD32773F6AC007CE3D6 /* UIWindowCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindowCustom.swift; sourceTree = "<group>"; };
 		E64BDA9025BAD700005368B4 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6DE818125BA36230019BED1 /* sandbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sandbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6DE818125BA36230019BED1 /* ourworld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ourworld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6DE818625BA36230019BED1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E6DE818825BA36240019BED1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E6DE818B25BA36240019BED1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E6DE818D25BA36240019BED1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E94679FC3E3D114ED35C05C6 /* Pods-ourworld.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ourworld.debug.xcconfig"; path = "Target Support Files/Pods-ourworld/Pods-ourworld.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +96,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58E14E4F2965538900ACA091 /* Pods_sandbox.framework in Frameworks */,
-				58ABF175293C6445000E5463 /* UnityFramework.framework in Frameworks */,
+				659160E6F2C3BE7D9DE4DE2D /* Pods_ourworld.framework in Frameworks */,
+				58B75463296CB24C00E5A654 /* UnityFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +120,8 @@
 			children = (
 				02E664DCEBAF41467D5F1E7B /* Pods-sandbox.debug.xcconfig */,
 				809F3DDC5E7359A455FC9324 /* Pods-sandbox.release.xcconfig */,
+				E94679FC3E3D114ED35C05C6 /* Pods-ourworld.debug.xcconfig */,
+				A7EFBB579F0C93571A484335 /* Pods-ourworld.release.xcconfig */,
 			);
 			name = Pods;
 			path = ../UnityBuild/Pods;
@@ -140,7 +146,7 @@
 				5818DC812938065800C8B794 /* FirebaseInstallations.framework */,
 				E62A7AC92773D326007CE3D6 /* UnityFramework.framework */,
 				E64BDA9025BAD700005368B4 /* UnityFramework.framework */,
-				9605333315C1471BBACB1839 /* Pods_sandbox.framework */,
+				DDCF4CD535BCA17B5632A08A /* Pods_ourworld.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -159,7 +165,7 @@
 		E6DE818225BA36230019BED1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E6DE818125BA36230019BED1 /* sandbox.app */,
+				E6DE818125BA36230019BED1 /* ourworld.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -171,6 +177,7 @@
 				587B96CF296614CC0066EC22 /* sandbox.entitlements */,
 				E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */,
 				58E14E452964A18900ACA091 /* ImageSelection.swift */,
+				58B75466296CBB0100E5A654 /* ObjSelection.swift */,
 				E6DE818625BA36230019BED1 /* ContentView.swift */,
 				5818DC8C293AED9E00C8B794 /* LocationManager.swift */,
 				5818DC6D2937FCC000C8B794 /* AuthView.swift */,
@@ -198,24 +205,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E6DE818025BA36230019BED1 /* sandbox */ = {
+		E6DE818025BA36230019BED1 /* ourworld */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E6DE819025BA36240019BED1 /* Build configuration list for PBXNativeTarget "sandbox" */;
+			buildConfigurationList = E6DE819025BA36240019BED1 /* Build configuration list for PBXNativeTarget "ourworld" */;
 			buildPhases = (
 				7D66A9D8A25517679D6685A6 /* [CP] Check Pods Manifest.lock */,
 				E6DE817D25BA36230019BED1 /* Sources */,
 				E6DE817E25BA36230019BED1 /* Frameworks */,
 				E6DE817F25BA36230019BED1 /* Resources */,
-				58ABF177293C6446000E5463 /* Embed Frameworks */,
 				84BD23D3963D88BC54F7C303 /* [CP] Embed Pods Frameworks */,
+				58B75465296CB24D00E5A654 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = sandbox;
+			name = ourworld;
 			productName = sandbox;
-			productReference = E6DE818125BA36230019BED1 /* sandbox.app */;
+			productReference = E6DE818125BA36230019BED1 /* ourworld.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -248,7 +255,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E6DE818025BA36230019BED1 /* sandbox */,
+				E6DE818025BA36230019BED1 /* ourworld */,
 			);
 		};
 /* End PBXProject section */
@@ -283,7 +290,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-sandbox-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-ourworld-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -296,15 +303,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sandbox/Pods-sandbox-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-ourworld/Pods-ourworld-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sandbox/Pods-sandbox-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-ourworld/Pods-ourworld-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sandbox/Pods-sandbox-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ourworld/Pods-ourworld-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -315,6 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58B77D7E296891FD00FAD17F /* ImageCache.swift in Sources */,
+				58B75467296CBB0100E5A654 /* ObjSelection.swift in Sources */,
 				58B77D7D296891FD00FAD17F /* AsyncImage.swift in Sources */,
 				5818DC6E2937FCC000C8B794 /* AuthView.swift in Sources */,
 				E62A7AD02773E4DA007CE3D6 /* SceneDelegate.swift in Sources */,
@@ -337,6 +345,7 @@
 		E6DE818E25BA36240019BED1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -398,6 +407,7 @@
 		E6DE818F25BA36240019BED1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -452,11 +462,12 @@
 		};
 		E6DE819125BA36240019BED1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 02E664DCEBAF41467D5F1E7B /* Pods-sandbox.debug.xcconfig */;
+			baseConfigurationReference = E94679FC3E3D114ED35C05C6 /* Pods-ourworld.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = sandbox/sandbox.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sandbox/Preview Content\"";
@@ -467,7 +478,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = sandbox/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ARworld;
+				INFOPLIST_KEY_CFBundleDisplayName = "ourworlds!";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -481,6 +492,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.inkobako.ourworld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -490,11 +502,12 @@
 		};
 		E6DE819225BA36240019BED1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 809F3DDC5E7359A455FC9324 /* Pods-sandbox.release.xcconfig */;
+			baseConfigurationReference = A7EFBB579F0C93571A484335 /* Pods-ourworld.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = sandbox/sandbox.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sandbox/Preview Content\"";
@@ -505,7 +518,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = sandbox/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ARworld;
+				INFOPLIST_KEY_CFBundleDisplayName = "ourworlds!";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -519,6 +532,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.inkobako.ourworld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -537,7 +551,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E6DE819025BA36240019BED1 /* Build configuration list for PBXNativeTarget "sandbox" */ = {
+		E6DE819025BA36240019BED1 /* Build configuration list for PBXNativeTarget "ourworld" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E6DE819125BA36240019BED1 /* Debug */,

@@ -130,6 +130,10 @@ class DataHandler: NSObject, ObservableObject {
     var images: [String: URL] = [:]
     var imageData: [String: String] = [:]
     
+    var updateObjects: () -> Void = {}
+    var objects: [String: URL] = [:]
+    var objectData: [String: String] = [:]
+    
     func getUserPosters() {
         db.collection("users").document(self.uid ?? "").collection("posters").getDocuments { (querySnapshot, err) in
             if let err = err {
@@ -221,6 +225,40 @@ class DataHandler: NSObject, ObservableObject {
                         }
                         self.images[document.documentID] = url
                         self.updatePosters()
+                    })
+                    
+                }
+            }
+        }
+    }
+    
+    func getUserObjects() {
+        db.collection("users").document(self.uid ?? "").collection("objects").getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("error getting documents: \(err)")
+            } else {
+                self.objects = [:]
+                self.objectData = [:]
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    
+                    self.objectData[document.documentID] = self.uid ?? ""
+                    
+                    let storageRef = self.storage.reference().child("users/" + (self.uid ?? "") + "/objects/" + document.documentID + ".jpg")
+                    storageRef.downloadURL(completion: { url, error in
+                        guard let url = url, error == nil else {
+                            let storageRef2 = self.storage.reference().child("users/" + (self.uid ?? "") + "/objects/" + document.documentID + ".png")
+                            storageRef2.downloadURL(completion: { url2, error2 in
+                                guard let url2 = url2, error2 == nil else {
+                                    return
+                                }
+                                self.objects[document.documentID] = url2
+                                self.updateObjects()
+                            })
+                            return
+                        }
+                        self.objects[document.documentID] = url
+                        self.updateObjects()
                     })
                     
                 }

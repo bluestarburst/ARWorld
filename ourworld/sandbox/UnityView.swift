@@ -31,6 +31,8 @@ struct UnityView: View {
     @State private var mapStatus = ""
     @State private var change = "move"
     
+    @State private var elementType = "image"
+    
     var body: some View {
         ZStack {
             if (showButtons) {
@@ -89,7 +91,7 @@ struct UnityView: View {
                     HStack {
                         Spacer()
                         VStack {
-                            Button( action: {withAnimation {showElementSelection = true;showElementOptions = false}}, label: {
+                            Button( action: {withAnimation {showElementSelection = true;showElementOptions = false;elementType="image"}}, label: {
                                 Image(systemName: "photo")
                                     .imageScale(.medium)
                                     .font(.title)
@@ -103,7 +105,7 @@ struct UnityView: View {
                                 .font(.title2)
                         }
                         VStack {
-                            Button( action: {print("add")}, label: {
+                            Button( action: {withAnimation {showElementSelection = true;showElementOptions = false;elementType="object"}}, label: {
                                 Image(systemName: "cube")
                                     .imageScale(.medium)
                                     .font(.title)
@@ -166,7 +168,11 @@ struct UnityView: View {
                 }
                 
                 ZStack {
-                    ImageSelection(disabled: $showElementSelection)
+                    if (elementType == "image") {
+                        ImageSelection(disabled: $showElementSelection)
+                    } else if (elementType == "object") {
+                        ObjSelection(disabled: $showElementSelection)
+                    }
                 }
                 .transition(.bottomAndFade)
             }

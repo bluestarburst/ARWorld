@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E6DE818025BA36230019BED1"
-               BuildableName = "sandbox.app"
-               BlueprintName = "sandbox"
+               BuildableName = "ourworld.app"
+               BlueprintName = "ourworld"
                ReferencedContainer = "container:ourworld.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -48,8 +48,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E6DE818025BA36230019BED1"
-            BuildableName = "sandbox.app"
-            BlueprintName = "sandbox"
+            BuildableName = "ourworld.app"
+            BlueprintName = "ourworld"
             ReferencedContainer = "container:ourworld.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -65,8 +65,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E6DE818025BA36230019BED1"
-            BuildableName = "sandbox.app"
-            BlueprintName = "sandbox"
+            BuildableName = "ourworld.app"
+            BlueprintName = "ourworld"
             ReferencedContainer = "container:ourworld.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
