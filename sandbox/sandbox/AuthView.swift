@@ -10,8 +10,8 @@ import Firebase
 import FirebaseAuth
 
 class LoginViewModel: ObservableObject {
-    @Published var countryCode = "1"
-    @Published var phNumber = "6505551234"
+    @Published var countryCode = ""
+    @Published var phNumber = ""
     @Published var oldCountryCode = ""
     @Published var oldNumber = ""
     
@@ -41,7 +41,7 @@ class LoginViewModel: ObservableObject {
         }
         
         
-                Auth.auth().settings?.isAppVerificationDisabledForTesting = true // false
+                Auth.auth().settings?.isAppVerificationDisabledForTesting = false // false
         //
         var newCountryCode = countryCode.replacingOccurrences(of: "+", with: "")
         print(newCountryCode)
