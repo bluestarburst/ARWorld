@@ -458,6 +458,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = sandbox/sandbox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sandbox/Preview Content\"";
 				DEVELOPMENT_TEAM = 6254VA6855;
 				ENABLE_PREVIEWS = YES;
@@ -466,6 +467,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = sandbox/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ARworld;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -474,6 +476,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				"LIBRARY_SEARCH_PATHS[arch=*]" = "$(inherited)";
+				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.inkobako.ourworld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -492,6 +495,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = sandbox/sandbox.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sandbox/Preview Content\"";
 				DEVELOPMENT_TEAM = 6254VA6855;
 				ENABLE_PREVIEWS = YES;
@@ -500,6 +504,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = sandbox/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ARworld;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -508,6 +513,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				"LIBRARY_SEARCH_PATHS[arch=*]" = "$(inherited)";
+				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.inkobako.ourworld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
