@@ -314,6 +314,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 if (spawnedObject != null)
                 {
+                    Vector3 localPosition = currentChunk.transform.InverseTransformPoint(spawnedObject.transform.position);
                     // save object to world map
                     if (arWorldMapController.chunksPos[chunkPos] != null)
                     {
@@ -323,12 +324,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         currentChunk = arWorldMapController.chunks[arWorldMapController.chunksPos[chunkPos]];
                         Chunk chunkScript = currentChunk.GetComponent<Chunk>();
                         // make spawned object a child of the chunk
-                        Vector3 localPosition = currentChunk.transform.InverseTransformPoint(spawnedObject.transform.position);
+
                         spawnedObject.transform.parent = currentChunk.transform;
                         // save the local position of the spawned object relative to the chunk
                         spawnedObject.transform.localPosition = localPosition;
 
-                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection("posters").Document(id).SetAsync(new
+                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection("posters").Document().SetAsync(new
                         {
                             user = user,
                             type = type,
@@ -336,10 +337,45 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             x = spawnedObject.transform.localPosition.x,
                             y = spawnedObject.transform.localPosition.y,
                             z = spawnedObject.transform.localPosition.z,
-                            
+                            rx = spawnedObject.transform.localRotation.eulerAngles.x,
+                            ry = spawnedObject.transform.localRotation.eulerAngles.y,
+                            rz = spawnedObject.transform.localRotation.eulerAngles.z,
+                            sx = spawnedObject.transform.localScale.x,
+                            sy = spawnedObject.transform.localScale.y,
+                            sz = spawnedObject.transform.localScale.z,
+                        });
+                    }
+                    else
+                    {
+                        spawnedObject.transform.parent = currentChunk.transform;
+                        // save the local position of the spawned object relative to the chunk
+                        spawnedObject.transform.localPosition = localPosition;
+
+                        Chunk chunkScript = currentChunk.GetComponent<Chunk>();
+                        var anchor = currentChunk.AddComponent<ARAnchor>();
+                        chunkScript.db = arWorldMapController.db;
+                        chunkScript.ARCamera = arWorldMapController.ARCamera;
+                        chunkScript.arWorldMapController = arWorldMapController;
+                        chunkScript.id = anchor.trackableId.ToString();
+
+                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection("posters").Document().SetAsync(new
+                        {
+                            user = user,
+                            type = type,
+                            id = id,
+                            x = spawnedObject.transform.localPosition.x,
+                            y = spawnedObject.transform.localPosition.y,
+                            z = spawnedObject.transform.localPosition.z,
+                            rx = spawnedObject.transform.localRotation.eulerAngles.x,
+                            ry = spawnedObject.transform.localRotation.eulerAngles.y,
+                            rz = spawnedObject.transform.localRotation.eulerAngles.z,
+                            sx = spawnedObject.transform.localScale.x,
+                            sy = spawnedObject.transform.localScale.y,
+                            sz = spawnedObject.transform.localScale.z,
                         });
 
-
+                        arWorldMapController.chunks.Add(anchor.trackableId.ToString(), currentChunk);
+                        arWorldMapController.anchors.Add(anchor.trackableId.ToString(), anchor);
                     }
                 }
             }
