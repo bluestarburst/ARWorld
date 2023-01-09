@@ -307,6 +307,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     centerChunk = null;
                     Destroy(currentChunk);
                     currentChunk = null;
+                    isAdding = false;
                 }
             }
             else if (change.Equals("save"))
@@ -317,6 +318,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (arWorldMapController.chunksPos[chunkPos] != null)
                     {
                         Destroy(currentChunk);
+                        isAdding = false;
                     }
                 }
             }
