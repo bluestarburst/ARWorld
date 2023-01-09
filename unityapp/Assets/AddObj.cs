@@ -178,6 +178,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
                             ratioX = texture.width / 2048f;
                             ratioY = texture.height / 2048f;
+
+                            arWorldMapController.Log("Spawned Poster");
                         }
                     });
 
@@ -251,6 +253,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             // get distance between spawned object and center chunk
             float distanceToCenterChunk = Vector3.Distance(spawnedObject.transform.position, centerChunk.transform.position);
+            arWorldMapController.Log("centerChunk");
 
             // get components of distance to center chunk in the direction of center chunk forward
             float distanceToCenterChunkForward = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.forward);
@@ -279,6 +282,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 chunkPos[0] = roundedDistanceToCenterChunkForward;
                 chunkPos[1] = roundedDistanceToCenterChunkRight;
             }
+
+            arWorldMapController.Log("currentChunk");
         }
         private Quaternion trueRot = Quaternion.identity;
         private bool rotating = false;
@@ -304,7 +309,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     Destroy(spawnedObject);
                     spawnedObject = null;
 
-                    centerChunk = null;
                     Destroy(currentChunk);
                     currentChunk = null;
                     isAdding = false;
