@@ -477,22 +477,33 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                         if (lastRotation == "z")
                         {
-        
-                            Touch touchZero = Input.GetTouch(0);
-                            Touch touchOne = Input.GetTouch(1);
 
-                            Vector2 deltaZero = Input.GetTouch(0).deltaPosition;
-                            Vector2 deltaOne = Input.GetTouch(1).deltaPosition;
+                            // Touch touchZero = Input.GetTouch(0);
+                            // Touch touchOne = Input.GetTouch(1);
 
-                            // get avg mag of delta positions
-                            float avgDeltaMag = (deltaZero.magnitude + deltaOne.magnitude) / 2;
-                            int clockwise = 1;
+                            // Vector2 deltaZero = Input.GetTouch(0).deltaPosition;
+                            // Vector2 deltaOne = Input.GetTouch(1).deltaPosition;
 
-                            // get if clockwise or counterclockwise
-                            if (deltaZero.x * deltaOne.y - deltaZero.y * deltaOne.x < 0)
-                            {
-                                clockwise = -1;
-                            }
+                            // // get avg mag of delta positions
+                            // float avgDeltaMag = (deltaZero.magnitude + deltaOne.magnitude) / 2;
+                            // int clockwise = 1;
+
+                            // // get if clockwise or counterclockwise
+                            // if (deltaZero.x * deltaOne.y - deltaZero.y * deltaOne.x < 0)
+                            // {
+                            //     clockwise = -1;
+                            // }
+
+                            Vector2 prevPos1 = Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition;  // Generate previous frame's finger positions
+                            Vector2 prevPos2 = Input.GetTouch(1).position - Input.GetTouch(1).deltaPosition;
+
+                            Vector2 prevDir = prevPos2 - prevPos1;
+                            Vector2 currDir = Input.GetTouch(1).position - Input.GetTouch(0).position;
+                            float angle = Vector2.Angle(prevDir, currDir);
+
+                            int clockwise = Vector3.Cross(prevDir, currDir).z > 0 ? 1 : -1;
+
+                            float avgDeltaMag = angle;
 
                             arWorldMapController.Log("CLOCKWISE: " + clockwise);
 
@@ -647,7 +658,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                 }
             }
-            
+
 
         }
     }
