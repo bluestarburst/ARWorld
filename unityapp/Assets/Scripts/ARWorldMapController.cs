@@ -587,7 +587,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private bool preventReload = false;
 
-        void FixedUpdate()
+        void Update()
         {
             if (supported)
             {
