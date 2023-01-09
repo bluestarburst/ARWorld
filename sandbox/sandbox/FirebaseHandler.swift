@@ -96,7 +96,8 @@ class DataHandler: NSObject, ObservableObject {
         
 //        var temp = img.resized(toWidth: 500)
         
-        let data = img.compress(to: 300).jpegData()
+//        let data = img.compress(to: 300)
+        let data = img.jpegData(compressionQuality: 0.15)
         
         if let data = data {
             storageRef.putData(data, metadata: metadata) { (metadata, error) in

@@ -232,7 +232,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E6DE817C25BA36230019BED1 /* Build configuration list for PBXProject "sandbox" */;
+			buildConfigurationList = E6DE817C25BA36230019BED1 /* Build configuration list for PBXProject "ourworld" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -468,6 +468,7 @@
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = sandbox/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ARworld;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -505,6 +506,7 @@
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = sandbox/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ARworld;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -526,7 +528,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E6DE817C25BA36230019BED1 /* Build configuration list for PBXProject "sandbox" */ = {
+		E6DE817C25BA36230019BED1 /* Build configuration list for PBXProject "ourworld" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E6DE818E25BA36240019BED1 /* Debug */,

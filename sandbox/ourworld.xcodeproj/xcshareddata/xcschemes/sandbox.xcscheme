@@ -17,7 +17,7 @@
                BlueprintIdentifier = "E6DE818025BA36230019BED1"
                BuildableName = "sandbox.app"
                BlueprintName = "sandbox"
-               ReferencedContainer = "container:sandbox.xcodeproj">
+               ReferencedContainer = "container:ourworld.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,7 +50,7 @@
             BlueprintIdentifier = "E6DE818025BA36230019BED1"
             BuildableName = "sandbox.app"
             BlueprintName = "sandbox"
-            ReferencedContainer = "container:sandbox.xcodeproj">
+            ReferencedContainer = "container:ourworld.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -67,7 +67,7 @@
             BlueprintIdentifier = "E6DE818025BA36230019BED1"
             BuildableName = "sandbox.app"
             BlueprintName = "sandbox"
-            ReferencedContainer = "container:sandbox.xcodeproj">
+            ReferencedContainer = "container:ourworld.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
