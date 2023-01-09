@@ -67,8 +67,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public API api;
 
-        private float ratioY = 0.0f;
-        private float ratioX = 0.0f;
+        private float ratioY = 1.0f;
+        private float ratioX = 1.0f;
 
         protected override void Awake()
         {
@@ -286,6 +286,29 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             arWorldMapController.Log("currentChunk");
         }
+
+        async void AddObject(string type, string user, string id)
+        {
+            isAdding = true;
+            Debug.Log("Adding: users/" + user + "/posters/" + id + ".jpg");
+            Debug.Log("type: " + type);
+
+
+            // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
+            if (m_RaycastManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), s_Hits, TrackableType.PlaneWithinPolygon))
+            {
+                Pose hitPose = s_Hits[0].pose;
+
+                StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
+
+                // get usdz file and instantiate object
+
+
+
+            }
+        }
+
+
         private Quaternion trueRot = Quaternion.identity;
         private bool rotating = false;
         private string lastRotation = "none";
@@ -329,7 +352,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (arWorldMapController.chunksPos.ContainsKey(chunkPos[0] + "-" + chunkPos[1]))
                     {
                         Destroy(currentChunk);
-                        
+
 
                         currentChunk = arWorldMapController.chunks[arWorldMapController.chunksPos[chunkPos[0] + "-" + chunkPos[1]]];
                         Chunk chunkScript = currentChunk.GetComponent<Chunk>();
