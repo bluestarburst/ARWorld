@@ -321,7 +321,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // check if the chunk already exists
 
 
-                    if (arWorldMapController.chunksPos[chunkPos[0] + "-" + chunkPos[1]] != null)
+                    if (arWorldMapController.chunksPos.ContainsKey(chunkPos[0] + "-" + chunkPos[1]))
                     {
                         Destroy(currentChunk);
                         isAdding = false;
