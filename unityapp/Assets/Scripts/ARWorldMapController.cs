@@ -13,7 +13,6 @@ using Firebase.Storage;
 using System;
 using System.Threading.Tasks;
 using System.IO.Compression;
-using Firebase.Extensions;
 #if UNITY_IOS
 using UnityEngine.XR.ARKit;
 #endif
@@ -514,56 +513,36 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 foreach (var anchor in obj.added)
                 {
 
+                    Log("ANCHOR NAME: " + anchor.name);
+                    Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
+                    var chunk = Instantiate(ChunkPrefab, anchor.transform.position, anchor.transform.rotation);
+                    Chunk chunkScript = chunk.GetComponent<Chunk>();
+                    chunkScript.db = db;
+                    chunkScript.ARCamera = ARCamera;
+                    chunkScript.arWorldMapController = this;
+                    chunkScript.id = anchor.trackableId.ToString();
 
+                    chunks.Add(anchor.trackableId.ToString(), chunk);
+                    Log("added chunk to chunks");
+                    anchors.Add(anchor.trackableId.ToString(), anchor);
 
-                    //get chunk doc from firestore
-                    DocumentReference docRef = db.Collection("maps").Document(worldMapId).Collection("chunks").Document(anchor.trackableId.ToString());
+        
 
-                    docRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+                    if (centerChunk == null && centerChunkId == anchor.trackableId.ToString())
                     {
-                        DocumentSnapshot snapshot = task.Result;
-                        if (snapshot.Exists)
-                        {
-                            Log("ANCHOR NAME: " + anchor.name);
-                            Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
-                            var chunk = Instantiate(ChunkPrefab, anchor.transform.position, anchor.transform.rotation);
-                            Chunk chunkScript = chunk.GetComponent<Chunk>();
-                            Log("Document data for " + snapshot.Id + " document:");
-                            Dictionary<string, object> documentDictionary = snapshot.ToDictionary();
-                            chunkScript.cx = (int)documentDictionary["cx"];
-                            chunkScript.cy = (int)documentDictionary["cy"];
 
-                            chunkScript.db = db;
-                            chunkScript.ARCamera = ARCamera;
-                            chunkScript.arWorldMapController = this;
-                            chunkScript.id = anchor.trackableId.ToString();
-
-                            chunks.Add(anchor.trackableId.ToString(), chunk);
-                            Log("added chunk to chunks");
-                            anchors.Add(anchor.trackableId.ToString(), anchor);
-
-
-                            if (centerChunk == null && centerChunkId == anchor.trackableId.ToString())
-                            {
 #if UNITY_IOS
-                                var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+                        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
 #else
-                                XRSessionSubsystem sessionSubsystem = null;
+                        XRSessionSubsystem sessionSubsystem = null;
 #endif
-                                Console.WriteLine("SETTING CENTER CHUNK");
-                                centerChunk = chunk;
-                                sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
-                                centerChunkId = "";
-                                HostNativeAPI.mapStatus("mapped");
-                            }
-                        }
-                        else
-                        {
-                            Log("Document " + snapshot.Id + " does not exist!");
-                        }
-                    });
-
-
+                        Console.WriteLine("SETTING CENTER CHUNK");
+                        centerChunk = chunk;
+                        chunksPos[new int[]{0, 0}] = anchor.trackableId.ToString();
+                        sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+                        centerChunkId = "";
+                        HostNativeAPI.mapStatus("mapped");
+                    }
 
                 }
             }
