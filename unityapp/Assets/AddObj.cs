@@ -505,7 +505,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                             int clockwise = Vector3.Cross(prevDir, currDir).z > 0 ? 1 : -1;
 
-                            float avgDeltaMag = -angle;
+                            float avgDeltaMag = angle;
 
                             arWorldMapController.Log("CLOCKWISE: " + clockwise);
 
