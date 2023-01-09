@@ -260,9 +260,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 await Task.Delay(1000);
             }
             await createChunks(1, 0);
+            OnSaveButton();
             if (!repeating)
             {
-                InvokeRepeating("OnSaveButton", 15, 15);
+                // InvokeRepeating("OnSaveButton", 15, 15);
                 repeating = true;
             }
         }
@@ -363,10 +364,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
+            OnSaveButton();
 
             if (!repeating)
             {
-                InvokeRepeating("OnSaveButton", 15, 15);
+                // InvokeRepeating("OnSaveButton", 15, 15);
                 repeating = true;
             }
 

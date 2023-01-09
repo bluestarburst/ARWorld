@@ -397,6 +397,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                     currentChunk = null;
                 }
+                arWorldMapController.OnSaveButton();
             }
 
             if (Input.touchCount < 1 && !Input.GetMouseButton(0))
