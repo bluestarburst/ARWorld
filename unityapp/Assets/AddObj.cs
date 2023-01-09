@@ -297,7 +297,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private int roundTo = 15;
 
         private int[] chunkPos = new int[2] { 0, 0 };
-        private void Update()
+        private void FixedUpdate()
         {
 
             if (change.Equals("delete"))

@@ -31,7 +31,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             if (ARCamera == null || arWorldMapController == null || id == null)
             {
