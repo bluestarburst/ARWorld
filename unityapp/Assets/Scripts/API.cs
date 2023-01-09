@@ -84,6 +84,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Awake() {
             Application.targetFrameRate = 30;
+            // half the target resolution of the camera
+            Screen.SetResolution(Screen.width / 2, Screen.height / 2, true);
         }
 
         void Start()
