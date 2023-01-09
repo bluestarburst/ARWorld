@@ -7,6 +7,7 @@ using Firebase.Firestore;
 using Firebase.Storage;
 using UnityEngine.UI;
 using System;
+using Firebase.Extensions;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -113,17 +114,42 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     arWorldMapController.Log("Loading poster users/" + posterData["user"] + "/posters/" + posterData["id"] + ".png");
 
+
+
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                     // get image data
                     byte[] data = await storageRef.Child("users/" + posterData["user"] + "/posters/" + posterData["id"] + ".png").GetBytesAsync(1024 * 1024);
 
-                    // create texture
-                    Texture2D texture = new Texture2D(1, 1);
-                    // load texture
-                    texture.LoadImage(data);
-                    // set diffuse texture
-                    poster.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                    await storageRef.Root.Child("users/" + posterData["user"] + "/" + posterData["type"] + "/" + posterData["id"] + ".jpg").GetDownloadUrlAsync().ContinueWithOnMainThread(async task2 =>
+                    {
+                        if (task2.IsFaulted || task2.IsCanceled)
+                        {
+                            Console.WriteLine("FAULTED PNG");
+
+                            byte[] data = await storageRef.Child("users/" + posterData["user"] + "/" + posterData["type"] + "/" + posterData["id"] + ".png").GetBytesAsync(1024 * 1024);
+                            // create texture
+                            Texture2D texture = new Texture2D(1, 1);
+                            // load texture
+                            texture.LoadImage(data);
+                            // set diffuse texture
+                            poster.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                            // get width and height of image and set scale of poster
+                        }
+                        else
+                        {
+                            Console.WriteLine("WORKING JPG");
+
+                            byte[] data = await storageRef.Child("users/" + posterData["user"] + "/" + posterData["type"] + "/" + posterData["id"] + ".jpg").GetBytesAsync(1024 * 1024);
+                            // create texture
+                            Texture2D texture = new Texture2D(1, 1);
+                            // load texture
+                            texture.LoadImage(data);
+                            // set diffuse texture
+                            poster.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                            // get width and height of image and set scale of poster
+                        }
+                    });
 
 
 
