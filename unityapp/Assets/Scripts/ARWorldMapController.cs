@@ -121,6 +121,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public GameObject ChunkPrefab;
 
         public Dictionary<string, GameObject> chunks = new Dictionary<string, GameObject>();
+        public Dictionary<int[], string> chunksPos = new Dictionary<int[], string>();
         public Dictionary<string, ARAnchor> anchors = new Dictionary<string, ARAnchor>();
 
         public ARPlaneManager planeManager;
@@ -422,6 +423,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     { "x", chunk.transform.position.x },
                     { "y", chunk.transform.position.y },
                     { "z", chunk.transform.position.z },
+                    { "cx", 0 },
+                    { "cy", 0},
                     { "size", 0 },
                     { "updated", DateTime.Now },
                     { "worldMapId", worldMapId }

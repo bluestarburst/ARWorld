@@ -269,11 +269,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (currentChunk == null)
             {
                 currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
+                chunkPos[0] = roundedDistanceToCenterChunkForward;
+                chunkPos[1] = roundedDistanceToCenterChunkRight;
             }
             else
             {
                 currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
                 currentChunk.transform.rotation = centerChunk.transform.rotation;
+                chunkPos[0] = roundedDistanceToCenterChunkForward;
+                chunkPos[1] = roundedDistanceToCenterChunkRight;
             }
         }
         private Quaternion trueRot = Quaternion.identity;
@@ -288,6 +292,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private Vector3 wallNormalForward = Vector3.forward;
         private Vector3 wallNormalRight = Vector3.right;
         private int roundTo = 15;
+
+        private int[] chunkPos = new int[2];
         private void Update()
         {
 
@@ -394,11 +400,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (currentChunk == null)
                     {
                         currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
+                        chunkPos[0] = roundedDistanceToCenterChunkForward;
+                        chunkPos[1] = roundedDistanceToCenterChunkRight;
                     }
                     else
                     {
                         currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
                         currentChunk.transform.rotation = centerChunk.transform.rotation;
+                        chunkPos[0] = roundedDistanceToCenterChunkForward;
+                        chunkPos[1] = roundedDistanceToCenterChunkRight;
                     }
 
                     Vector3 eulerRot = spawnedObject.transform.rotation.eulerAngles;
@@ -623,6 +633,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     centerChunk = null;
                     Destroy(currentChunk);
                     currentChunk = null;
+                }
+            }
+            else if (change.Equals("save"))
+            {
+                if (spawnedObject != null)
+                {
+                    // save object to world map
+                    if (arWorldMapController.chunksPos[chunkPos] != null)
+                    {
+                        Destroy(currentChunk);
+                    }
                 }
             }
 

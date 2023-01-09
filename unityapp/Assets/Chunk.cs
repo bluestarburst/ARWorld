@@ -84,6 +84,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // NOT WORKING :(
 
+                    int cx = Convert.ToInt32(posterSnapshot.GetValue<double>("cx"));
+                    int cy = Convert.ToInt32(posterSnapshot.GetValue<double>("cy"));
+                    int[] chunkPos = new int[] { cx, cy };
+                    arWorldMapController.chunksPos[chunkPos] = id;
+
                     float x = Convert.ToSingle(posterSnapshot.GetValue<double>("x"));
                     float y = Convert.ToSingle(posterSnapshot.GetValue<double>("y"));
                     float z = Convert.ToSingle(posterSnapshot.GetValue<double>("z"));
