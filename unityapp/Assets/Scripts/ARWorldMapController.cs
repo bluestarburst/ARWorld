@@ -121,7 +121,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public GameObject ChunkPrefab;
 
         public Dictionary<string, GameObject> chunks = new Dictionary<string, GameObject>();
-        public Dictionary<int[], string> chunksPos = new Dictionary<int[], string>();
+        public Dictionary<string, string> chunksPos = new Dictionary<string, string>();
         public Dictionary<string, ARAnchor> anchors = new Dictionary<string, ARAnchor>();
 
         public ARPlaneManager planeManager;
@@ -538,7 +538,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 #endif
                         Console.WriteLine("SETTING CENTER CHUNK");
                         centerChunk = chunk;
-                        chunksPos[new int[]{0, 0}] = anchor.trackableId.ToString();
+                        chunksPos["0-0"] = anchor.trackableId.ToString();
                         sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
                         centerChunkId = "";
                         HostNativeAPI.mapStatus("mapped");

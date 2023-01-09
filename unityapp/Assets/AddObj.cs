@@ -293,7 +293,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private Vector3 wallNormalRight = Vector3.right;
         private int roundTo = 15;
 
-        private int[] chunkPos = new int[2];
+        private int[] chunkPos = new int[2]{0,0};
         private void Update()
         {
 
@@ -314,14 +314,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 if (spawnedObject != null)
                 {
+                    change = "move";
                     Vector3 localPosition = currentChunk.transform.InverseTransformPoint(spawnedObject.transform.position);
                     // save object to world map
-                    if (arWorldMapController.chunksPos[chunkPos] != null)
+
+                    // check if the chunk already exists
+
+
+                    if (arWorldMapController.chunksPos[chunkPos[0] + "-" + chunkPos[1]] != null)
                     {
                         Destroy(currentChunk);
                         isAdding = false;
 
-                        currentChunk = arWorldMapController.chunks[arWorldMapController.chunksPos[chunkPos]];
+                        currentChunk = arWorldMapController.chunks[arWorldMapController.chunksPos[chunkPos[0] + "-" + chunkPos[1]]];
                         Chunk chunkScript = currentChunk.GetComponent<Chunk>();
                         // make spawned object a child of the chunk
 

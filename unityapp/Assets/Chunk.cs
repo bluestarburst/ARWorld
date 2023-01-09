@@ -67,7 +67,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             cx = Convert.ToInt32(snapshot.GetValue<double>("cx"));
             cy = Convert.ToInt32(snapshot.GetValue<double>("cy"));
             int[] chunkPos = new int[] { cx, cy };
-            arWorldMapController.chunksPos[chunkPos] = id;
+            arWorldMapController.chunksPos[cx + "-" + cy] = id;
 
             if (snapshot.Exists)
             {
