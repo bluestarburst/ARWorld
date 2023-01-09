@@ -297,6 +297,30 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private void Update()
         {
 
+            if (change.Equals("delete"))
+            {
+                if (spawnedObject != null)
+                {
+                    Destroy(spawnedObject);
+                    spawnedObject = null;
+
+                    centerChunk = null;
+                    Destroy(currentChunk);
+                    currentChunk = null;
+                }
+            }
+            else if (change.Equals("save"))
+            {
+                if (spawnedObject != null)
+                {
+                    // save object to world map
+                    if (arWorldMapController.chunksPos[chunkPos] != null)
+                    {
+                        Destroy(currentChunk);
+                    }
+                }
+            }
+
             if (Input.touchCount < 1 && !Input.GetMouseButton(0))
             {
                 rotating = false;
@@ -453,7 +477,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                         if (lastRotation == "z")
                         {
-                            // use two fingers to rotate clockwise or counterclockwise
+        
                             Touch touchZero = Input.GetTouch(0);
                             Touch touchOne = Input.GetTouch(1);
 
@@ -623,29 +647,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                 }
             }
-            else if (change.Equals("delete"))
-            {
-                if (spawnedObject != null)
-                {
-                    Destroy(spawnedObject);
-                    spawnedObject = null;
-
-                    centerChunk = null;
-                    Destroy(currentChunk);
-                    currentChunk = null;
-                }
-            }
-            else if (change.Equals("save"))
-            {
-                if (spawnedObject != null)
-                {
-                    // save object to world map
-                    if (arWorldMapController.chunksPos[chunkPos] != null)
-                    {
-                        Destroy(currentChunk);
-                    }
-                }
-            }
+            
 
         }
     }
