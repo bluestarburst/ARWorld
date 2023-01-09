@@ -251,6 +251,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
 
+            arWorldMapController.Log("before center chunk");
             // get distance between spawned object and center chunk
             float distanceToCenterChunk = Vector3.Distance(spawnedObject.transform.position, centerChunk.transform.position);
             arWorldMapController.Log("centerChunk");
