@@ -68,8 +68,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             DocumentReference docRef = db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(id);
             DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
-            arWorldMapController.Log("1");
-
             cx = Convert.ToInt32(snapshot.GetValue<double>("cx"));
             cy = Convert.ToInt32(snapshot.GetValue<double>("cy"));
             int[] chunkPos = new int[] { cx, cy };
@@ -77,7 +75,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (snapshot.Exists)
             {
-                arWorldMapController.Log("2");
                 // get chunk data
                 Dictionary<string, object> chunkData = snapshot.ToDictionary();
 
@@ -90,7 +87,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // go through posters and add them to the chunk
                 foreach (DocumentSnapshot posterSnapshot in postersSnapshot.Documents)
                 {
-                    arWorldMapController.Log("3");
                     Dictionary<string, object> posterData = posterSnapshot.ToDictionary();
                     arWorldMapController.Log("Loading poster " + posterData["id"] + " from chunk " + id);
                     // create poster
@@ -167,10 +163,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // go through posters and add them to the chunk
                 foreach (DocumentSnapshot objectSnapshot in objectsSnapshot.Documents)
                 {
-                    arWorldMapController.Log("3");
                     Dictionary<string, object> posterData = objectSnapshot.ToDictionary();
-                    arWorldMapController.Log("Loading poster " + posterData["id"] + " from chunk " + id);
+                    arWorldMapController.Log("Loading object " + posterData["id"] + " from chunk " + id);
                     // create poster
+
+                    arWorldMapController.Log("getting locations");
 
                     float x = Convert.ToSingle(objectSnapshot.GetValue<double>("x"));
                     float y = Convert.ToSingle(objectSnapshot.GetValue<double>("y"));
@@ -186,12 +183,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     float sy = Convert.ToSingle(objectSnapshot.GetValue<double>("sy"));
                     float sz = Convert.ToSingle(objectSnapshot.GetValue<double>("sz"));
 
+                    arWorldMapController.Log("getting storage ref");
+
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
                     // get image data
                     // byte[] data = await storageRef.Child("users/" + posterData["user"] + "/posters/" + posterData["id"] + ".png").GetBytesAsync(1024 * 1024);
+                    arWorldMapController.Log("URL");
 
                     string url = "users/" + posterData["user"] + "/" + posterData["type"] + "/" + posterData["id"] + ".glb";
+
+                    arWorldMapController.Log("exists");
 
                     if (File.Exists(preFilePath + url))
                     {
@@ -199,7 +201,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         // obj = Importer.LoadFromFile(preFilePath + url);
                         LoadModel(preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz);
                         // obj.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                        return;
+                        continue;
                     }
 
                     arWorldMapController.Log("creating new file");
