@@ -316,7 +316,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 if (File.Exists(preFilePath + url))
                 {
-                    File.Delete(preFilePath + url);
+                    // File.Delete(preFilePath + url);
                     // spawnedObject = Importer.LoadFromFile(preFilePath + url);
                     // spawnedObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                     // return;
