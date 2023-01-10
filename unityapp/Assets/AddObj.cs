@@ -316,6 +316,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 arWorldMapController.Log("creating new file");
 
+                if (File.Exists(preFilePath + url))
+                {
+                    // File.Delete(preFilePath + url);
+                    LoadModel(preFilePath + url);
+                    return;
+                }
+
                 // get glb file and instantiate object
                 // await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetFileAsync(preFilePath + url);
                 await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetDownloadUrlAsync().ContinueWith((Task<Uri> task) =>

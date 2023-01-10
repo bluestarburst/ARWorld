@@ -195,6 +195,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     arWorldMapController.Log("exists");
 
+                    if (File.Exists(preFilePath + url))
+                    {
+                        // File.Delete(preFilePath + url);
+                        LoadModel(preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz);
+                        continue;
+                    }
+
                     arWorldMapController.Log("creating new file");
 
                     // get glb file and instantiate object
