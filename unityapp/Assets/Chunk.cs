@@ -197,11 +197,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (File.Exists(preFilePath + url))
                     {
+                        File.Delete(preFilePath + url);
                         // File.Delete(preFilePath + url);
                         // obj = Importer.LoadFromFile(preFilePath + url);
-                        LoadModel(preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz);
+                        // LoadModel(preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz);
                         // obj.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                        continue;
+                        // continue;
                     }
 
                     arWorldMapController.Log("creating new file");
