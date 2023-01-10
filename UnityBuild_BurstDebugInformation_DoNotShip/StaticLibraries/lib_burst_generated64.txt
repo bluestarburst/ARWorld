@@ -199,6 +199,8 @@ Library: lib_burst_generated64
 --root-assembly=/Users/bryanthargreaves/Desktop/apps/ARWorld/unityapp/Temp/StagingArea/Data/Managed/Unity.RenderPipelines.Universal.Shaders.dll
 --root-assembly=/Users/bryanthargreaves/Desktop/apps/ARWorld/unityapp/Temp/StagingArea/Data/Managed/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
 --root-assembly=/Users/bryanthargreaves/Desktop/apps/ARWorld/unityapp/Temp/StagingArea/Data/Managed/Unity.XR.OpenXR.Features.OculusQuestSupport.dll
+--root-assembly=/Users/bryanthargreaves/Desktop/apps/ARWorld/unityapp/Temp/StagingArea/Data/Managed/Siccity.GLTFUtility.dll
+--root-assembly=/Users/bryanthargreaves/Desktop/apps/ARWorld/unityapp/Temp/StagingArea/Data/Managed/Dracodec.dll
 --assembly-folder=/Users/bryanthargreaves/Desktop/apps/ARWorld/unityapp/Temp/StagingArea/Data/Managed/
 --pdb-search-paths=Temp/ManagedSymbols/
 --method=Unity.Jobs.IJobForExtensions+ForJobStruct`1[[UnityEngine.Rendering.Universal.SliceCullingJob, Unity.RenderPipelines.Universal.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.Rendering.Universal.SliceCullingJob&, Unity.RenderPipelines.Universal.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--1998da082e6413092f0e7bcd5a0e9331
