@@ -535,8 +535,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
-            arWorldMapController.Log("TOUCH EXISTS");
-
             // get position of touch
 
             Vector3 position = Vector3.zero;
@@ -554,7 +552,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (change.Equals("move"))
             {
-                arWorldMapController.Log("MOVE");
 
                 // if touch is on screen
                 if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
