@@ -316,8 +316,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 if (File.Exists(preFilePath + url))
                 {
-                    File.Delete(preFilePath + url);
-                    // spawnedObject = Importer.LoadFromFile(preFilePath + url);
+                    // File.Delete(preFilePath + url);
+                    spawnedObject = Importer.LoadFromFile(preFilePath + url);
+                    return;
                 }
 
                 arWorldMapController.Log("creating new file");
@@ -380,6 +381,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 if (spawnedObject != null)
                 {
+
+                    string tempType = "posters";
+                    if (type.Equals("objects")) {
+                        tempType = "objects";
+                    }
+
+
                     change = "move";
                     Vector3 localPosition = currentChunk.transform.InverseTransformPoint(spawnedObject.transform.position);
                     // save object to world map
@@ -399,7 +407,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         // save the local position of the spawned object relative to the chunk
                         spawnedObject.transform.localPosition = localPosition;
 
-                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection("posters").Document().SetAsync(new
+                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
                         {
                             user = user,
                             type = type,
