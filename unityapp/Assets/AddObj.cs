@@ -387,6 +387,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             arWorldMapController.Log("currentChunk");
+            change = "move";
         }
 
 
