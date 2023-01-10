@@ -318,6 +318,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     // File.Delete(preFilePath + url);
                     spawnedObject = Importer.LoadFromFile(preFilePath + url);
+                    spawnedObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                     return;
                 }
 
@@ -868,6 +869,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             spawnedObject = Importer.LoadFromFile(path);
             spawnedObject.transform.position = tempPos;
+            spawnedObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         }
 
         IEnumerator GetFileRequest(string url, string path, Action<UnityWebRequest> callback)
