@@ -197,7 +197,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (File.Exists(preFilePath + url))
                     {
-                        File.Delete(preFilePath + url);
+                        // File.Delete(preFilePath + url);
                         LoadModel(preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz);
                         continue;
                     }

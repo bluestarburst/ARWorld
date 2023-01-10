@@ -559,6 +559,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         return;
                     }
+
+                    // arWorldMapController.Log("position");
+
                     if (m_RaycastManager.Raycast(position, s_Hits, TrackableType.PlaneWithinPolygon))
                     {
                         Pose hitPose = s_Hits[0].pose;
