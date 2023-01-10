@@ -448,7 +448,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             { "worldMapId", arWorldMapController.worldMapId }
                         });
 
-                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection("posters").Document().SetAsync(new
+                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
                         {
                             user = user,
                             type = type,
