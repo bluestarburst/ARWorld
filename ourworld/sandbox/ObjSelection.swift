@@ -21,7 +21,7 @@ struct ObjSelection: View {
     
     @State private var scrollWidth = CGFloat.zero
     
-    @State private var type: String = "stickers"
+    @State private var type: String = "objects"
     
     var body: some View {
         VStack {
@@ -39,14 +39,14 @@ struct ObjSelection: View {
                     GeometryReader { geometry in
                         ScrollView(.horizontal, showsIndicators: true) {
                             HStack {
-                                Button(action: {withAnimation{type="stickers"}}, label: {
+                                Button(action: {withAnimation{type="objects"}}, label: {
                                     Image(systemName: "moon.stars.fill")
                                 })
                                 .imageScale(.medium)
                                 .font(.title)
-                                .foregroundColor(type == "stickers" ? .pink : .white)
+                                .foregroundColor(type == "objects" ? .pink : .white)
                                 .padding(.horizontal,10)
-                                .disabled(type == "stickers")
+                                .disabled(type == "objects")
                                 
                                 Button(action: {withAnimation{type="posters"}}, label: {
                                     Image(systemName: "doc.fill")
@@ -77,7 +77,7 @@ struct ObjSelection: View {
                             HStack {
                                 Spacer()
                                 switch type {
-                                case "posters":
+                                case "objects":
                                     Text("add new poster")
                                         .foregroundColor(.white)
                                 case "stickers":
@@ -171,7 +171,7 @@ struct ObjLoop: View {
                     ForEach(0..<4) {index in
                         let temp = (index10 * 4) + index
                         switch type {
-                        case "posters":
+                        case "objects":
                             if (objectsL.count > temp) {
                                 Box(url: objectsL[temp], user: objectsU[temp], id: objectsI[temp], type: type )
                                     .onTapGesture {
