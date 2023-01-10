@@ -77,6 +77,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             base.Awake();
             m_RaycastManager = GetComponent<ARRaycastManager>();
+            preFilePath = $"{Application.persistentDataPath}/Files";
         }
 
         // protected override void OnPress
@@ -817,7 +818,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         //     ));
         // }
 
-        private string preFilePath = $"{Application.persistentDataPath}/Files";  
+        private string preFilePath = "";   
 
         // string GetFilePath(string url)
         // {
