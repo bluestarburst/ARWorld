@@ -407,7 +407,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private int[] chunkPos = new int[2] { 0, 0 };
         private void Update()
         {
-
             if (change.Equals("delete"))
             {
                 if (spawnedObject != null)
@@ -523,6 +522,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
+            arWorldMapController.Log("TOUCH EXISTS");
+
             // get position of touch
 
             Vector3 position = Vector3.zero;
@@ -540,6 +541,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (change.Equals("move"))
             {
+                arWorldMapController.Log("MOVE");
 
                 // if touch is on screen
                 if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
@@ -582,16 +584,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
                         // if poster, make the rotation same as the plane normal
-                        if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
-                        {
-                            Console.WriteLine("POSTER");
-                            // spawnedObject.transform.rotation = hitPose.rotation;
-                            spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * 0.1f;
-                        }
-                        else
-                        {
-                            spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
-                        }
+                        // if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
+                        // {
+                        //     Console.WriteLine("POSTER");
+                        // spawnedObject.transform.rotation = hitPose.rotation;
+                        spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * 0.1f;
+                        // }
+                        // else
+                        // {
+                        //     spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * Math.Max(distance, 0.1f);
+                        // }
 
                     }
                     else
