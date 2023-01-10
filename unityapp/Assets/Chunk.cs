@@ -8,6 +8,10 @@ using Firebase.Storage;
 using UnityEngine.UI;
 using System;
 using Firebase.Extensions;
+using Siccity.GLTFUtility;
+using System.IO;
+using UnityEngine.Networking;
+using System.Threading.Tasks;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -42,6 +46,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // if distance is greater than 100, destroy chunk
             if (!isLoaded && distance < 10)
             {
+                preFilePath = $"{Application.persistentDataPath}/Files";
                 arWorldMapController.Log("Loading chunk " + id);
                 try
                 {
@@ -155,6 +160,125 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 }
 
+
+                // get posters from chunk
+                CollectionReference objectsRef = db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(id).Collection("objects");
+                QuerySnapshot objectsSnapshot = await objectsRef.GetSnapshotAsync();
+                // go through posters and add them to the chunk
+                foreach (DocumentSnapshot objectSnapshot in objectsSnapshot.Documents)
+                {
+                    arWorldMapController.Log("3");
+                    Dictionary<string, object> posterData = objectSnapshot.ToDictionary();
+                    arWorldMapController.Log("Loading poster " + posterData["id"] + " from chunk " + id);
+                    // create poster
+
+                    float x = Convert.ToSingle(objectSnapshot.GetValue<double>("x"));
+                    float y = Convert.ToSingle(objectSnapshot.GetValue<double>("y"));
+                    float z = Convert.ToSingle(objectSnapshot.GetValue<double>("z"));
+
+
+                    float rx = Convert.ToSingle(objectSnapshot.GetValue<double>("rx"));
+                    float ry = Convert.ToSingle(objectSnapshot.GetValue<double>("ry"));
+                    float rz = Convert.ToSingle(objectSnapshot.GetValue<double>("rz"));
+
+
+                    float sx = Convert.ToSingle(objectSnapshot.GetValue<double>("sx"));
+                    float sy = Convert.ToSingle(objectSnapshot.GetValue<double>("sy"));
+                    float sz = Convert.ToSingle(objectSnapshot.GetValue<double>("sz"));
+
+                    // get poster image
+                    StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
+                    // get image data
+                    // byte[] data = await storageRef.Child("users/" + posterData["user"] + "/posters/" + posterData["id"] + ".png").GetBytesAsync(1024 * 1024);
+
+                    string url = "users/" + posterData["user"] + "/" + posterData["type"] + "/" + posterData["id"] + ".glb";
+
+                    if (File.Exists(preFilePath + url))
+                    {
+                        // File.Delete(preFilePath + url);
+                        // obj = Importer.LoadFromFile(preFilePath + url);
+                        LoadModel(preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz);
+                        // obj.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                        return;
+                    }
+
+                    arWorldMapController.Log("creating new file");
+
+                    // get glb file and instantiate object
+                    // await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetFileAsync(preFilePath + url);
+                    await storageRef.Child("users/" + posterData["user"] + "/" + posterData["type"] + "/" + posterData["id"] + ".glb").GetDownloadUrlAsync().ContinueWith((Task<Uri> task) =>
+                    {
+                        if (!task.IsFaulted && !task.IsCanceled)
+                        {
+                            arWorldMapController.Log("WORKING GLB");
+                            arWorldMapController.Log(task.Result.ToString());
+                            DownloadFile(task.Result.ToString(), preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz);
+                        }
+                        else
+                        {
+                            arWorldMapController.Log(task.Exception.ToString());
+                        }
+                    });
+
+
+
+
+
+                }
+
+            }
+        }
+
+        async public void DownloadFile(string url, string filePath, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz)
+        {
+
+            if (File.Exists(filePath))
+            {
+                Debug.Log("Found the same file locally, Loading!!!");
+
+                LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz);
+
+                return;
+            }
+
+            StartCoroutine(GetFileRequest(url, filePath, (UnityWebRequest req) =>
+            {
+                if (req.isNetworkError || req.isHttpError)
+                {
+                    //Logging any errors that may happen
+                    Debug.Log($"{req.error} : {req.downloadHandler.text}");
+                }
+
+                else
+                {
+                    //Save the model fetched from firebase into spaceShip 
+                    LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz);
+
+                }
+            }
+
+            ));
+        }
+
+        private string preFilePath = "";
+
+        void LoadModel(string path, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz)
+        {
+            GameObject obj = Importer.LoadFromFile(path);
+            obj.transform.position = new Vector3(x, y, z);
+            obj.transform.localRotation = Quaternion.Euler(rx, ry, rz);
+            obj.transform.localScale = new Vector3(sx, sy, sz);
+        }
+
+        IEnumerator GetFileRequest(string url, string path, Action<UnityWebRequest> callback)
+        {
+            using (UnityWebRequest req = UnityWebRequest.Get(url))
+            {
+                req.downloadHandler = new DownloadHandlerFile(path);
+
+                yield return req.SendWebRequest();
+
+                callback(req);
             }
         }
 
