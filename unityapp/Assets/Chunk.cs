@@ -237,7 +237,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (File.Exists(filePath))
             {
-                Debug.Log("Found the same file locally, Loading!!!");
+                arWorldMapController.Log("Found the same file locally, Loading!!!");
 
                 LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz);
 
@@ -249,7 +249,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (req.isNetworkError || req.isHttpError)
                 {
                     //Logging any errors that may happen
-                    Debug.Log($"{req.error} : {req.downloadHandler.text}");
+                    arWorldMapController.Log($"{req.error} : {req.downloadHandler.text}");
                 }
 
                 else
