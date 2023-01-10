@@ -267,7 +267,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             GameObject obj = Importer.LoadFromFile(path);
             obj.transform.parent = transform;
 
-            obj.transform.position = new Vector3(x, y, z);
+            obj.transform.localPosition = new Vector3(x, y, z);
             obj.transform.localRotation = Quaternion.Euler(rx, ry, rz);
             obj.transform.localScale = new Vector3(sx, sy, sz);
         }
