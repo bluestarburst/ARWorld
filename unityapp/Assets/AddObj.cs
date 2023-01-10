@@ -11,6 +11,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 using Firebase.Extensions;
+using Siccity.GLTFUtility;
+using System.IO; 
+using UnityEngine.Networking;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -74,6 +77,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             base.Awake();
             m_RaycastManager = GetComponent<ARRaycastManager>();
+            preFilePath = $"{Application.persistentDataPath}/Files";
         }
 
         // protected override void OnPress
@@ -108,6 +112,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     HostNativeAPI.addingObj("adding"); // not adding
                     AddPoster(type, user, id);
+                } else if (type.Equals("object")) {
+                    AddObject(type, user, id);
                 }
                 return;
             }
@@ -301,9 +307,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
 
-                // get usdz file and instantiate object
+                string url = "users/" + user + "/" + type + "/" + id + ".glb";
 
+                if (File.Exists(preFilePath + url)) {
+                    spawnedObject = Importer.LoadFromFile(preFilePath + url);
+                }
 
+                // get glb file and instantiate object
+                await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetFileAsync(preFilePath + url);
+                
+                spawnedObject = Importer.LoadFromFile(preFilePath + url);
+
+                spawnedObject.transform.position = hitPose.position;
 
             }
         }
@@ -766,5 +781,69 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
         }
+
+
+
+
+
+        // async public void DownloadFile(string url)
+        // {
+        //     string path = filePath;      //GetFilePath(url); 
+
+        //     if (File.Exists(path))
+        //     {
+        //         Debug.Log("Found the same file locally, Loading!!!");
+
+        //         LoadModel(path);
+
+        //         return;
+        //     }
+
+        //     StartCoroutine(GetFileRequest(url, (UnityWebRequest req) =>
+        //     {
+        //         if (req.isNetworkError || req.isHttpError)
+        //         {
+        //             //Logging any errors that may happen
+        //             Debug.Log($"{req.error} : {req.downloadHandler.text}");
+        //         }
+
+        //         else
+        //         {
+        //             //Save the model fetched from firebase into spaceShip 
+        //             LoadModel(path);
+
+        //         }
+        //     }
+
+        //     ));
+        // }
+
+        private string preFilePath = "";   
+
+        // string GetFilePath(string url)
+        // {
+        //     string[] pieces = url.Split('/');
+        //     string filename = pieces[pieces.Length - 1];
+
+        //     return $"{filePath}{filename}";
+        // }
+
+        // void LoadModel(string path)
+        // {
+        //     GameObject model = Importer.LoadFromFile(filePath);
+        // }
+
+        // IEnumerator GetFileRequest(string url, Action<UnityWebRequest> callback)
+        // {
+        //     using (UnityWebRequest req = UnityWebRequest.Get(url))
+        //     {
+        //         req.downloadHandler = new DownloadHandlerFile(filePath);
+
+        //         yield return req.SendWebRequest();
+
+        //         callback(req);
+        //     }
+        // }
+
     }
 }
