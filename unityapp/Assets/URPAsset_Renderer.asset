@@ -29,9 +29,9 @@ MonoBehaviour:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7,
       type: 3}
   m_RendererFeatures:
-  - {fileID: 1730650522012539560}
   - {fileID: -7171350091228633674}
-  m_RendererFeatureMap: a8dae6fa7a810418b6255a64163f7a9c
+  - {fileID: 1730650522012539560}
+  m_RendererFeatureMap: b6255a64163f7a9ca8dae6fa7a810418
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -104,7 +104,7 @@ MonoBehaviour:
     colorFormat: 0
     depthBufferBits: 16
     filterMode: 0
-    backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    backgroundColor: {r: 0, g: 0, b: 0, a: 1}
     perObjectData: 0
     enableDynamicBatching: 0
     enableInstancing: 0
