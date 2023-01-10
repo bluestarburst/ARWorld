@@ -12,7 +12,7 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 using Firebase.Extensions;
 using Siccity.GLTFUtility;
-using System.IO; 
+using System.IO;
 using UnityEngine.Networking;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -112,7 +112,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     HostNativeAPI.addingObj("adding");
                     AddPoster(type, user, id);
-                } else if (type.Equals("objects")) {
+                }
+                else if (type.Equals("objects"))
+                {
                     HostNativeAPI.addingObj("adding");
                     AddObject(type, user, id);
                 }
@@ -312,7 +314,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 string url = "users/" + user + "/" + type + "/" + id + ".glb";
 
-                if (File.Exists(preFilePath + url)) {
+                if (File.Exists(preFilePath + url))
+                {
                     File.Delete(preFilePath + url);
                     // spawnedObject = Importer.LoadFromFile(preFilePath + url);
                 }
@@ -321,7 +324,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 // get glb file and instantiate object
                 // await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetFileAsync(preFilePath + url);
-                await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetDownloadUrlAsync().ContinueWith((Task<Uri> task) => {
+                await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetDownloadUrlAsync().ContinueWith((Task<Uri> task) =>
+                {
                     if (!task.IsFaulted && !task.IsCanceled)
                     {
                         arWorldMapController.Log("WORKING GLB");
@@ -333,7 +337,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         arWorldMapController.Log(task.Exception.ToString());
                     }
                 });
-                
+
                 // spawnedObject = Importer.LoadFromFile(preFilePath + url);
 
                 // spawnedObject.transform.position = hitPose.position;
@@ -792,7 +796,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
                         // scale object
-                        spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f * ratioX, 1, deltaMagnitudeDiff * 0.001f * ratioY);
+                        if (type.Equals("objects"))
+                        {
+                            spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f);
+                        }
+                        else
+                        {
+                            spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f * ratioX, 1, deltaMagnitudeDiff * 0.001f * ratioY);
+                        }
                     }
                 }
             }
@@ -835,7 +846,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             ));
         }
 
-        private string preFilePath = "";   
+        private string preFilePath = "";
 
         // string GetFilePath(string url)
         // {
