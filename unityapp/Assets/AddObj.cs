@@ -321,24 +321,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     // File.Delete(preFilePath + url);
                     LoadModel(preFilePath + url);
-                    return;
                 }
-
-                // get glb file and instantiate object
-                // await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetFileAsync(preFilePath + url);
-                await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetDownloadUrlAsync().ContinueWith((Task<Uri> task) =>
+                else
                 {
-                    if (!task.IsFaulted && !task.IsCanceled)
+
+                    // get glb file and instantiate object
+                    // await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetFileAsync(preFilePath + url);
+                    await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetDownloadUrlAsync().ContinueWith((Task<Uri> task) =>
                     {
-                        arWorldMapController.Log("WORKING GLB");
-                        arWorldMapController.Log(task.Result.ToString());
-                        DownloadFile(task.Result.ToString(), preFilePath + url);
-                    }
-                    else
-                    {
-                        arWorldMapController.Log(task.Exception.ToString());
-                    }
-                });
+                        if (!task.IsFaulted && !task.IsCanceled)
+                        {
+                            arWorldMapController.Log("WORKING GLB");
+                            arWorldMapController.Log(task.Result.ToString());
+                            DownloadFile(task.Result.ToString(), preFilePath + url);
+                        }
+                        else
+                        {
+                            arWorldMapController.Log(task.Exception.ToString());
+                        }
+                    });
+                }
 
                 // spawnedObject = Importer.LoadFromFile(preFilePath + url);
 
@@ -384,7 +386,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
 
                     string tempType = "posters";
-                    if (type.Equals("objects")) {
+                    if (type.Equals("objects"))
+                    {
                         tempType = "objects";
                     }
 
