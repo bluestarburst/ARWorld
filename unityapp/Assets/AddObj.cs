@@ -110,9 +110,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
                 {
-                    HostNativeAPI.addingObj("adding"); // not adding
+                    HostNativeAPI.addingObj("adding");
                     AddPoster(type, user, id);
                 } else if (type.Equals("objects")) {
+                    HostNativeAPI.addingObj("adding");
                     AddObject(type, user, id);
                 }
                 return;
