@@ -78,7 +78,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
             base.Awake();
             m_RaycastManager = GetComponent<ARRaycastManager>();
             preFilePath = $"{Application.persistentDataPath}/Files";
-            Directory.Delete(preFilePath, true);
+
+            // if directory exists, delete all files inside it
+            if (Directory.Exists(preFilePath))
+            {
+                string[] files = Directory.GetFiles(preFilePath);
+                foreach (string file in files)
+                {
+                    File.Delete(file);
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(preFilePath);
+            }
         }
 
         // protected override void OnPress
