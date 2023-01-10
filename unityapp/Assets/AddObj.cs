@@ -342,11 +342,51 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     });
                 }
 
+                if (onPlacedObject != null)
+                {
+                    onPlacedObject();
+                }
+
                 // spawnedObject = Importer.LoadFromFile(preFilePath + url);
 
                 // spawnedObject.transform.position = hitPose.position;
 
             }
+
+            arWorldMapController.Log("before center chunk");
+            // get distance between spawned object and center chunk
+            float distanceToCenterChunk = Vector3.Distance(spawnedObject.transform.position, centerChunk.transform.position);
+            arWorldMapController.Log("centerChunk");
+
+            // get components of distance to center chunk in the direction of center chunk forward
+            float distanceToCenterChunkForward = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.forward);
+
+            // get components of distance to center chunk in the direction of center chunk right
+            float distanceToCenterChunkRight = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.right);
+
+            // round down to nearest 1 unit
+            int roundedDistanceToCenterChunkForward = (int)Math.Round(distanceToCenterChunkForward);
+            int roundedDistanceToCenterChunkRight = (int)Math.Round(distanceToCenterChunkRight);
+
+            // convert to coordinates relative to the world map
+
+            Vector3 centerChunkCoordinates = centerChunk.transform.position;
+
+            if (currentChunk == null)
+            {
+                currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
+                chunkPos[0] = roundedDistanceToCenterChunkForward;
+                chunkPos[1] = roundedDistanceToCenterChunkRight;
+            }
+            else
+            {
+                currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
+                currentChunk.transform.rotation = centerChunk.transform.rotation;
+                chunkPos[0] = roundedDistanceToCenterChunkForward;
+                chunkPos[1] = roundedDistanceToCenterChunkRight;
+            }
+
+            arWorldMapController.Log("currentChunk");
         }
 
 
