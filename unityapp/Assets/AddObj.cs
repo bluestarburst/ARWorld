@@ -297,8 +297,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         async void AddObject(string type, string user, string id)
         {
             isAdding = true;
-            Debug.Log("Adding: users/" + user + "/objects/" + id + ".glb");
-            Debug.Log("type: " + type);
+            arWorldMapController.Log("Adding: users/" + user + "/objects/" + id + ".glb");
+            arWorldMapController.Log("type: " + type);
 
 
             // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
@@ -316,18 +316,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // spawnedObject = Importer.LoadFromFile(preFilePath + url);
                 }
 
+                arWorldMapController.Log("creating new file");
+
                 // get glb file and instantiate object
                 // await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetFileAsync(preFilePath + url);
                 await storageRef.Child("users/" + user + "/" + type + "/" + id + ".glb").GetDownloadUrlAsync().ContinueWith((Task<Uri> task) => {
                     if (!task.IsFaulted && !task.IsCanceled)
                     {
-                        Debug.Log("WORKING GLB");
-                        Debug.Log(task.Result);
+                        arWorldMapController.Log("WORKING GLB");
+                        arWorldMapController.Log(task.Result.ToString());
                         DownloadFile(task.Result.ToString(), preFilePath + url);
                     }
                     else
                     {
-                        Debug.Log(task.Exception.ToString());
+                        arWorldMapController.Log(task.Exception.ToString());
                     }
                 });
                 
