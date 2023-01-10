@@ -308,7 +308,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 string url = "users/" + user + "/" + type + "/" + id + ".glb";
 
-                if (File.Exists(preFilePath + url) {
+                if (File.Exists(preFilePath + url)) {
                     spawnedObject = Importer.LoadFromFile(preFilePath + url);
                 }
 
