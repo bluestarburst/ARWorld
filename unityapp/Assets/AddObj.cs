@@ -428,6 +428,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private float opacity = 0;
 
         private float radius = 0;
+        private Vector3 renderPosition = Vector3.zero;
 
         public void meshLoading()
         {
@@ -584,29 +585,32 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else
                 {
-                    foreach (Renderer render in renderers)
+
+                    Vector3 positionI = Input.GetTouch(0).position;
+                    if (m_RaycastManager.Raycast(positionI, s_Hits, TrackableType.PlaneWithinPolygon))
                     {
-                        render.GetPropertyBlock(myBlock); // retrieve the renderer's existing Property Block 
-                        Vector3 positionI = Input.GetTouch(0).position;
-                        if (m_RaycastManager.Raycast(positionI, s_Hits, TrackableType.PlaneWithinPolygon))
+                        Pose hitPose = s_Hits[0].pose;
+                        if (radius < 0.5f)
                         {
-                            Pose hitPose = s_Hits[0].pose;
-                            if (radius < 10f)
-                            {
-                                radius += 0.1f;
-                            }
-                            opacity = 1;
-
-
-                            myBlock.SetVector("_Pos", hitPose.position);
-
+                            radius += 0.1f;
                         }
-                        myBlock.SetFloat("_Opacity", opacity);
-                        myBlock.SetFloat("_Radius", radius);
-                        render.SetPropertyBlock(myBlock); // apply your values onto the renderer's existing Block
+                        opacity = 1;
+
+                        renderPosition = hitPose.position;
                     }
+                    
+                }
+                foreach (Renderer render in renderers)
+                {
+                    render.GetPropertyBlock(myBlock);
+                    myBlock.SetFloat("_Opacity", opacity);
+                    myBlock.SetFloat("_Radius", radius);
+                    myBlock.SetVector("_Pos", renderPosition);
+                    render.SetPropertyBlock(myBlock); // apply your values onto the renderer's existing Block
                 }
             }
+
+
 
             if (Input.touchCount < 1 && !Input.GetMouseButton(0))
             {
