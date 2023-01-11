@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2351712869566821610}
   - component: {fileID: 2351712869566821611}
   - component: {fileID: 2351712869566821608}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MeshVisualizationPrefab
   m_TagString: Mesh
   m_Icon: {fileID: 0}

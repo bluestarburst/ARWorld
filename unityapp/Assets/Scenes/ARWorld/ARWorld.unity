@@ -1155,6 +1155,9 @@ MonoBehaviour:
   centerChunk: {fileID: 0}
   currentChunk: {fileID: 0}
   api: {fileID: 168510958}
+  layersToInclude:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &1352058507
 MonoBehaviour:
   m_ObjectHideFlags: 0
