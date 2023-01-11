@@ -104,7 +104,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _QueueControl: 1
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Shininess: 0
@@ -122,7 +122,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_1221528D: {r: 1, g: 0, b: 0, a: 0}
+    - Color_1221528D: {r: 0, g: 0, b: 0, a: 1}
     - Color_6F4043B5: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0.003921569}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
