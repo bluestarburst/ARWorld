@@ -437,9 +437,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             arWorldMapController.Log("New mesh?");
             arWorldMapController.Log("meshLoading");
-            GameObject[] temp = GameObject.FindGameObjectsWithTag("Mesh");
-            meshObjects = temp;
-            sharedMat = meshObjects[0].GetComponent<Renderer>().sharedMaterial;
+            meshObjects = GameObject.FindGameObjectsWithTag("Mesh");
+
+            if (meshObjects.Length == 0)
+            {
+                arWorldMapController.Log("No mesh found");
+                return;
+            }
+
+            renderers = new Renderer[meshObjects.Length];
+            for (int i = 0; i < meshObjects.Length; i++)
+            {
+                renderers[i] = meshObjects[i].GetComponent<Renderer>();
+            }
             meshLoaded = true;
         }
 
