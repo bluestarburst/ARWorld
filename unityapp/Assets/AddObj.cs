@@ -418,8 +418,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private int roundTo = 15;
 
         private int[] chunkPos = new int[2] { 0, 0 };
+
+        private GameObject meshObject;
+        private bool meshLoaded = false;
+
+        private MaterialPropertyBlock myBlock;
+        private Renderer renderer;
+
+        private float opacity = 0;
+
+        private float radius = 0;
+
         private void Update()
         {
+
             if (change.Equals("delete"))
             {
                 if (spawnedObject != null)
@@ -528,6 +540,63 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 arWorldMapController.OnSaveButton();
             }
 
+            // decrease opacity smoothly
+            if (opacity > 0)
+            {
+                opacity -= 0.01f;
+            }
+
+            bool shouldStop = Input.touchCount < 1 && !Input.GetMouseButton(0);
+
+
+            // get gameobject by name
+            if (!meshLoaded)
+            {
+                try
+                {
+                    meshObject = GameObject.FindGameObjectWithTag("Mesh");
+                    renderer = meshObject.GetComponent<Renderer>();
+                    myBlock = new MaterialPropertyBlock();
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+            else
+            {
+                if (Input.touchCount < 1 && !Input.GetMouseButton(0))
+                {
+                    if (opacity > 0)
+                    {
+                        opacity -= 0.001f;
+                    } else {
+                        radius = 0;
+                    }
+                }
+                else
+                {
+                    renderer.GetPropertyBlock(myBlock); // retrieve the renderer's existing Property Block 
+                    Vector3 positionI = Input.GetTouch(0).position;
+                    if (m_RaycastManager.Raycast(positionI, s_Hits, TrackableType.PlaneWithinPolygon))
+                    {
+                        Pose hitPose = s_Hits[0].pose;
+                        if (radius < 0.5f)
+                        {
+                            radius += 0.001f;
+                        }
+                        opacity = 1;
+
+                        
+                        myBlock.SetVector("_Pos", hitPose.position);
+                        
+                    }
+                    myBlock.SetFloat("_Opacity", opacity);
+                    myBlock.SetFloat("_Radius", radius);
+                    renderer.SetPropertyBlock(myBlock); // apply your values onto the renderer's existing Block
+                }
+            }
+
             if (Input.touchCount < 1 && !Input.GetMouseButton(0))
             {
                 rotating = false;
@@ -535,20 +604,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
-            // get position of touch
-
             Vector3 position = Vector3.zero;
-            if (Input.GetMouseButton(0))
-            {
-                position = Input.mousePosition;
-            }
-            else if (Input.touchCount > 0)
-            {
-                position = Input.GetTouch(0).position;
-            }
 
             position = Input.GetTouch(0).position;
-
 
             if (change.Equals("move"))
             {
