@@ -431,6 +431,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private Plane fakePlane;
 
+        private float moveOffset = 0.1f;
+
         private void Update()
         {
 
@@ -601,10 +603,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                     break;
                             }
                         }
+                        return;
                     }
 
                     var hasHit = Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, selectedLayers);
-
                     if (hasHit)
                     {
 
@@ -634,7 +636,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             Vector3 planePosition = hit.point;
                             // create a plane that goes through the hit position and is perpendicular to the camera
                             fakePlane = new Plane(planeNormal, planePosition);
-
+                            return;
                         }
 
                     }
