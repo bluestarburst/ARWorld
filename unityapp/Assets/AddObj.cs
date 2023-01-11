@@ -654,6 +654,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     }
 
+                    moveChild.transform.position = spawnedObject.transform.position;
+
 
                     // arWorldMapController.Log("position");
 
