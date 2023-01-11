@@ -73,6 +73,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private float ratioY = 1.0f;
         private float ratioX = 1.0f;
 
+        public LayerMask layersToInclude;
+
         protected override void Awake()
         {
             base.Awake();
@@ -576,7 +578,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     if (opacity > 0)
                     {
-                        opacity -= 0.1f;
+                        opacity -= 0.01f;
                     }
                     else
                     {
@@ -587,16 +589,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
 
                     Vector3 positionI = Input.GetTouch(0).position;
-                    if (m_RaycastManager.Raycast(positionI, s_Hits, TrackableType.PlaneWithinPolygon))
+                    var ray = Camera.main.ScreenPointToRay(positionI);
+                    var hasHit = Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, layersToInclude);
+
+                    if (hasHit)
                     {
-                        Pose hitPose = s_Hits[0].pose;
                         if (radius < 1f)
                         {
-                            radius += 0.1f;
+                            radius += 0.05f;
                         }
                         opacity = 1;
 
-                        renderPosition = hitPose.position;
+                        renderPosition = hit.point;
                     }
                     
                 }
