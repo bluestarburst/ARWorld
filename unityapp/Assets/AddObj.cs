@@ -438,25 +438,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             arWorldMapController.Log("New mesh?");
             arWorldMapController.Log("meshLoading");
             GameObject[] temp = GameObject.FindGameObjectsWithTag("Mesh");
-            if (temp.Length == meshObjects.Length)
-            {
-                return;
-            }
             meshObjects = temp;
-            myBlock = new MaterialPropertyBlock();
             sharedMat = meshObjects[0].GetComponent<Renderer>().sharedMaterial;
-
-            if (meshObjects.Length > 0)
-            {
-                renderers = new Renderer[meshObjects.Length];
-                for (int i = 0; i < meshObjects.Length; i++)
-                {
-                    renderers[i] = meshObjects[i].GetComponent<Renderer>();
-                }
-                meshLoaded = true;
-            }
-
-
+            meshLoaded = true;
         }
 
         private void Update()
@@ -610,15 +594,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 sharedMat.SetFloat("_Radius", radius);
                 sharedMat.SetVector("_Pos", renderPosition);
 
-                foreach (Renderer render in renderers)
-                {
-                    render.GetPropertyBlock(myBlock);
-                    myBlock.SetFloat("_Opacity", opacity);
-                    myBlock.SetFloat("_Radius", radius);
-                    myBlock.SetVector("_Pos", renderPosition);
-
-                    render.SetPropertyBlock(myBlock); // apply your values onto the renderer's existing Block
-                }
             }
 
 
