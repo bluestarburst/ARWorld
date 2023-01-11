@@ -604,6 +604,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 sharedMat.SetFloat("_Radius", radius);
                 sharedMat.SetVector("_Pos", renderPosition);
 
+                foreach (Renderer renderer in renderers)
+                {
+                    renderer.GetPropertyBlock(myBlock);
+                    myBlock.SetFloat("_Opacity", opacity);
+                    myBlock.SetFloat("_Radius", radius);
+                    myBlock.SetVector("_Pos", renderPosition);
+                    renderer.SetPropertyBlock(myBlock);
+
+                }
+
             }
 
 
