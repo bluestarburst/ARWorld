@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: outline
-  m_Shader: {fileID: 4800000, guid: 90cadb91a7902754f9fe5b4563306677, type: 3}
+  m_Shader: {fileID: 4800000, guid: ede309ce4e8ad9a48a2bd0e815b16028, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 2
@@ -55,9 +55,12 @@ Material:
     - _Thickness: 0.1
     - _WireSmoothness: 3
     - _WireThickness: 450
+    - _lineWidth: 0.1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
     - _WireColor: {r: 1, g: 1, b: 1, a: 1}
+    - _lineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _surfaceColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4572235771231007880
 MonoBehaviour:
