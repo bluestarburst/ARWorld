@@ -73,6 +73,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private float ratioY = 1.0f;
         private float ratioX = 1.0f;
 
+        public GameObject MoveComponentPrefab;
+
         protected override void Awake()
         {
             base.Awake();
@@ -308,6 +310,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             arWorldMapController.Log("currentChunk");
+
+            var moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform);
         }
 
         Vector3 tempPos = new Vector3(0, 0, 0);
@@ -401,6 +405,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             arWorldMapController.Log("currentChunk");
             change = "move";
+
+            var moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform);
         }
 
 

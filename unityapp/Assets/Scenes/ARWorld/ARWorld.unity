@@ -195,6 +195,7 @@ MonoBehaviour:
   layersToInclude:
     serializedVersion: 2
     m_Bits: 1024
+  arWorldMapController: {fileID: 1751548350}
 --- !u!114 &138682565
 MonoBehaviour:
   m_ObjectHideFlags: 0
