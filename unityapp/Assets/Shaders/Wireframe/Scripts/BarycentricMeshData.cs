@@ -28,7 +28,6 @@ public class BarycentricMeshData : MonoBehaviour
     List<MeshFilter> m_AddedMeshes = new List<MeshFilter>();
     List<MeshFilter> m_UpdatedMeshes = new List<MeshFilter>();
 
-    private bool isInit = false;
     [SerializeField]
     public AddObj addObj;
 
@@ -45,11 +44,6 @@ public class BarycentricMeshData : MonoBehaviour
     void MeshManagerOnmeshesChanged(ARMeshesChangedEventArgs obj)
     {
 
-        if (!isInit) {
-            addObj.meshLoading();
-            isInit = true;
-        }
-
         m_AddedMeshes = obj.added;
         m_UpdatedMeshes = obj.updated;
         
@@ -57,6 +51,7 @@ public class BarycentricMeshData : MonoBehaviour
         foreach (MeshFilter filter in m_AddedMeshes)
         {
             m_DataBuilder.GenerateData(filter.mesh);
+            addObj.meshLoading();
         }
 
         foreach (MeshFilter filter in m_UpdatedMeshes)

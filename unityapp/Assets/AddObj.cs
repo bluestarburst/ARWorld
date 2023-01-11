@@ -419,11 +419,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private int[] chunkPos = new int[2] { 0, 0 };
 
-        private GameObject meshObject;
+        private GameObject[] meshObjects = new GameObject[0];
         private bool meshLoaded = false;
 
         private MaterialPropertyBlock myBlock;
-        private Renderer renderers;
+        private Renderer[] renderers = new Renderer[0];
 
         private float opacity = 0;
 
@@ -431,11 +431,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void meshLoading()
         {
+            arWorldMapController.Log("New mesh?");
             arWorldMapController.Log("meshLoading");
-            meshObject = GameObject.FindGameObjectWithTag("Mesh");
-            renderers = meshObject.GetComponent<MeshRenderer>();
+            GameObject[] temp = GameObject.FindGameObjectsWithTag("Mesh");
+            if (temp.Length == meshObjects.Length)
+            {
+                return;
+            }
+            meshObjects = temp;
             myBlock = new MaterialPropertyBlock();
-            meshLoaded = true;
+
+            if (meshObjects.Length > 0)
+            {
+                renderers = new Renderer[meshObjects.Length];
+                for (int i = 0; i < meshObjects.Length; i++)
+                {
+                    renderers[i] = meshObjects[i].GetComponent<MeshRenderer>();
+                }
+                meshLoaded = true;
+            }
+
+
         }
 
         private void Update()
@@ -551,11 +567,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             bool shouldStop = Input.touchCount < 1 && !Input.GetMouseButton(0);
 
+            meshLoading();
 
             // get gameobject by name
             if (meshLoaded)
             {
-                arWorldMapController.Log("LOADED");
+                
                 if (Input.touchCount < 1 && !Input.GetMouseButton(0))
                 {
                     if (opacity > 0)
@@ -569,25 +586,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else
                 {
-                    renderers.GetPropertyBlock(myBlock); // retrieve the renderer's existing Property Block 
-                    Vector3 positionI = Input.GetTouch(0).position;
-                    if (m_RaycastManager.Raycast(positionI, s_Hits, TrackableType.PlaneWithinPolygon))
+                    foreach (Renderer render in renderers)
                     {
-                        Pose hitPose = s_Hits[0].pose;
-                        if (radius < 10f)
+                        render.GetPropertyBlock(myBlock); // retrieve the renderer's existing Property Block 
+                        Vector3 positionI = Input.GetTouch(0).position;
+                        if (m_RaycastManager.Raycast(positionI, s_Hits, TrackableType.PlaneWithinPolygon))
                         {
-                            radius += 0.1f;
+                            Pose hitPose = s_Hits[0].pose;
+                            if (radius < 10f)
+                            {
+                                radius += 0.1f;
+                            }
+                            opacity = 1;
+
+
+                            myBlock.SetVector("_Pos", hitPose.position);
+
                         }
-                        opacity = 1;
-
-
-                        myBlock.SetVector("_Pos", hitPose.position);
-
+                        myBlock.SetFloat("_Opacity", opacity);
+                        myBlock.SetFloat("_Radius", radius);
+                        render.SetPropertyBlock(myBlock); // apply your values onto the renderer's existing Block
                     }
-                    myBlock.SetFloat("_Opacity", opacity);
-                    myBlock.SetFloat("_Radius", radius);
-                    renderers.SetPropertyBlock(myBlock); // apply your values onto the renderer's existing Block
-                    arWorldMapController.Log("Rendering");
                 }
             }
 
