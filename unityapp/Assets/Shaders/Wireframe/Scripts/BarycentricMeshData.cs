@@ -31,6 +31,9 @@ public class BarycentricMeshData : MonoBehaviour
     [SerializeField]
     public LayerMask layersToInclude;
 
+    [SerializeField]
+    ARWorldMapController arWorldMapController;
+
     void OnEnable()
     {
         m_MeshManager.meshesChanged += MeshManagerOnmeshesChanged;
@@ -42,39 +45,39 @@ public class BarycentricMeshData : MonoBehaviour
     }
 
     private GameObject[] meshObjects = new GameObject[0];
-        private bool meshLoaded = false;
+    private bool meshLoaded = false;
 
-        private MaterialPropertyBlock myBlock;
-        private MeshRenderer[] renderers = new MeshRenderer[0];
-        private Material sharedMat;
+    private MaterialPropertyBlock myBlock;
+    private MeshRenderer[] renderers = new MeshRenderer[0];
+    private Material sharedMat;
 
-        private float opacity = 0;
+    private float opacity = 0;
 
-        private float radius = 0;
-        private Vector3 renderPosition = Vector3.zero;
+    private float radius = 0;
+    private Vector3 renderPosition = Vector3.zero;
 
-        public void meshLoading()
+    public void meshLoading()
+    {
+        meshObjects = GameObject.FindGameObjectsWithTag("Mesh");
+
+        if (myBlock == null)
         {
-            meshObjects = GameObject.FindGameObjectsWithTag("Mesh");
-
-            if (myBlock == null)
-            {
-                myBlock = new MaterialPropertyBlock();
-            }
-
-            if (meshObjects.Length == 0)
-            {
-                return;
-            }
-
-            renderers = new MeshRenderer[meshObjects.Length];
-            for (int i = 0; i < meshObjects.Length; i++)
-            {
-                renderers[i] = meshObjects[i].GetComponent<MeshRenderer>();
-            }
-
-            meshLoaded = true;
+            myBlock = new MaterialPropertyBlock();
         }
+
+        if (meshObjects.Length == 0)
+        {
+            return;
+        }
+
+        renderers = new MeshRenderer[meshObjects.Length];
+        for (int i = 0; i < meshObjects.Length; i++)
+        {
+            renderers[i] = meshObjects[i].GetComponent<MeshRenderer>();
+        }
+
+        meshLoaded = true;
+    }
 
     void MeshManagerOnmeshesChanged(ARMeshesChangedEventArgs obj)
     {
@@ -106,35 +109,45 @@ public class BarycentricMeshData : MonoBehaviour
         if (meshLoaded)
         {
 
-            if (Input.touchCount < 1 && !Input.GetMouseButton(0))
+            if (!arWorldMapController.isWorldMapLoaded)
             {
-                if (opacity > 0)
-                {
-                    opacity -= 0.02f;
-                }
-                else
-                {
-                    radius = 0;
-                }
+                opacity = 1;
+                radius = 100f;
+                renderPosition = Camera.main.transform.position;
             }
             else
             {
 
-                Vector3 positionI = Input.GetTouch(0).position;
-                var ray = Camera.main.ScreenPointToRay(positionI);
-                var hasHit = Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, layersToInclude);
-
-                if (hasHit)
+                if (Input.touchCount < 1 && !Input.GetMouseButton(0))
                 {
-                    if (radius < 0.5f)
+                    if (opacity > 0)
                     {
-                        radius += 0.05f;
+                        opacity -= 0.02f;
                     }
-                    opacity = 1;
-
-                    renderPosition = hit.point;
+                    else
+                    {
+                        radius = 0;
+                    }
                 }
+                else
+                {
 
+                    Vector3 positionI = Input.GetTouch(0).position;
+                    var ray = Camera.main.ScreenPointToRay(positionI);
+                    var hasHit = Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, layersToInclude);
+
+                    if (hasHit)
+                    {
+                        if (radius < 0.5f)
+                        {
+                            radius += 0.05f;
+                        }
+                        opacity = 1;
+
+                        renderPosition = hit.point;
+                    }
+
+                }
             }
 
             foreach (MeshRenderer renderer in renderers)
