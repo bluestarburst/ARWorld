@@ -552,6 +552,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 rotating = false;
                 locked = false;
                 pressAndHold = false;
+                moveChild.transform.position = spawnedObject.transform.position;
                 return;
             }
 
