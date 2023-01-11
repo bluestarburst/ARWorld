@@ -139,6 +139,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
+        private GameObject moveChild;
         async void AddPoster(string type, string user, string id)
         {
             isAdding = true;
@@ -312,7 +313,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             arWorldMapController.Log("currentChunk");
 
-            var moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform);
+            moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
         Vector3 tempPos = new Vector3(0, 0, 0);
@@ -407,7 +408,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             arWorldMapController.Log("currentChunk");
             change = "move";
 
-            var moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform);
+            moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
 
@@ -592,21 +593,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             switch (axisMove)
                             {
                                 case "X":
-                                    spawnedObject.transform.position = new Vector3(ray.GetPoint(enter).x, pressPosition.y, pressPosition.z);
+                                    moveChild.transform.position = new Vector3(ray.GetPoint(enter).x, pressPosition.y, pressPosition.z);
+                                    
                                     break;
                                 case "Y":
                                     float cameraRotationY = Camera.main.transform.eulerAngles.y;
                                     Vector3 planeDir = Quaternion.Euler(0, cameraRotationY, 0) * Vector3.forward;
                                     fakePlane = new Plane(planeDir, pressPosition);
-                                    spawnedObject.transform.position = new Vector3(pressPosition.x, ray.GetPoint(enter).y, pressPosition.z);
+                                    moveChild.transform.position = new Vector3(pressPosition.x, ray.GetPoint(enter).y, pressPosition.z);
                                     break;
                                 case "Z":
-                                    spawnedObject.transform.position = new Vector3(pressPosition.x, pressPosition.y, ray.GetPoint(enter).z);
+                                    moveChild.transform.position = new Vector3(pressPosition.x, pressPosition.y, ray.GetPoint(enter).z);
                                     break;
                                 default:
-                                    spawnedObject.transform.position = ray.GetPoint(enter);
+                                    moveChild.transform.position = ray.GetPoint(enter);
                                     break;
                             }
+                            spawnedObject.transform.position = moveChild.transform.position;
                         }
                         return;
                     }
@@ -623,7 +626,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             {
                                 arWorldMapController.Log("X");
                                 axisMove = "X";
-                                fakePlane = new Plane(Vector3.right, hit.point);
+                                fakePlane = new Plane(Vector3.up, hit.point);
                             }
                             else if (hit.collider.gameObject.name == "Y")
                             {
@@ -642,6 +645,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                 axisMove = "Z";
                                 fakePlane = new Plane(Vector3.up, hit.point);
                             }
+                            moveChild.transform.position = spawnedObject.transform.position;
 
 
                             return;
