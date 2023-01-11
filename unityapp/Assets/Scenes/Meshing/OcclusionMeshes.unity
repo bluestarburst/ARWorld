@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44407046, g: 0.49331486, b: 0.57238823, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -345,7 +345,6 @@ GameObject:
   m_Component:
   - component: {fileID: 870156090}
   - component: {fileID: 870156089}
-  - component: {fileID: 870156091}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -430,26 +429,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &870156091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 870156088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 1
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &1060722025
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,7 +707,6 @@ MonoBehaviour:
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_StartingSelectedInteractable: {fileID: 0}
-  m_StartingTargetFilter: {fileID: 0}
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -895,10 +873,10 @@ MonoBehaviour:
   m_TrackingStateAction:
     m_UseReference: 0
     m_Action:
-      m_Name: Tracking State
+      m_Name: 
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 487db2a2-89d4-4e43-86e7-3276395c6674
+      m_Id: 
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -927,10 +905,10 @@ MonoBehaviour:
   m_SelectActionValue:
     m_UseReference: 0
     m_Action:
-      m_Name: Select Action Value
+      m_Name: 
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: c3485dbc-b0a4-4678-8bfd-cfc4dca92e00
+      m_Id: 
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -951,10 +929,10 @@ MonoBehaviour:
   m_ActivateActionValue:
     m_UseReference: 0
     m_Action:
-      m_Name: Activate Action Value
+      m_Name: 
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: c77ca615-3a90-4a9d-b1de-87a187679417
+      m_Id: 
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -991,10 +969,10 @@ MonoBehaviour:
   m_UIPressActionValue:
     m_UseReference: 0
     m_Action:
-      m_Name: UI Press Action Value
+      m_Name: 
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 7976b9f1-185e-4d8c-a660-bbabfc31331f
+      m_Id: 
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -1315,7 +1293,6 @@ MonoBehaviour:
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_StartingSelectedInteractable: {fileID: 0}
-  m_StartingTargetFilter: {fileID: 0}
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -1482,10 +1459,10 @@ MonoBehaviour:
   m_TrackingStateAction:
     m_UseReference: 0
     m_Action:
-      m_Name: Tracking State
+      m_Name: 
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 6da12a5b-0e76-4d46-8e1e-b7de688b6cb3
+      m_Id: 
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -1514,10 +1491,10 @@ MonoBehaviour:
   m_SelectActionValue:
     m_UseReference: 0
     m_Action:
-      m_Name: Select Action Value
+      m_Name: 
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 5021f5c9-aec4-4659-aada-b23b5e5db242
+      m_Id: 
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -1538,10 +1515,10 @@ MonoBehaviour:
   m_ActivateActionValue:
     m_UseReference: 0
     m_Action:
-      m_Name: Activate Action Value
+      m_Name: 
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: bf4973f8-7674-4efb-9db9-99e8da0c6441
+      m_Id: 
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -1594,10 +1571,10 @@ MonoBehaviour:
   m_UIPressActionValue:
     m_UseReference: 0
     m_Action:
-      m_Name: UI Press Action Value
+      m_Name: 
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: ccc619bb-3e75-4732-961e-9aedc4104e9b
+      m_Id: 
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -1801,7 +1778,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -1829,7 +1805,6 @@ MonoBehaviour:
     type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
 --- !u!1 &1655239049
 GameObject:
   m_ObjectHideFlags: 0
@@ -1983,7 +1958,6 @@ MonoBehaviour:
   m_AutoFocus: 1
   m_LightEstimation: 0
   m_FacingDirection: 1
-  m_RenderMode: 0
 --- !u!114 &1878373384
 MonoBehaviour:
   m_ObjectHideFlags: 0
