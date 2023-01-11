@@ -425,7 +425,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private bool meshLoaded = false;
 
         private MaterialPropertyBlock myBlock;
-        private MeshRenderer[] renderers = new MeshRenderer[0];
+        private Renderer[] renderers = new Renderer[0];
+        private Material sharedMat;
 
         private float opacity = 0;
 
@@ -443,13 +444,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             meshObjects = temp;
             myBlock = new MaterialPropertyBlock();
+            sharedMat = meshObjects[0].GetComponent<Renderer>().sharedMaterial;
 
             if (meshObjects.Length > 0)
             {
-                renderers = new MeshRenderer[meshObjects.Length];
+                renderers = new Renderer[meshObjects.Length];
                 for (int i = 0; i < meshObjects.Length; i++)
                 {
-                    renderers[i] = meshObjects[i].GetComponent<MeshRenderer>();
+                    renderers[i] = meshObjects[i].GetComponent<Renderer>();
                 }
                 meshLoaded = true;
             }
@@ -573,7 +575,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // get gameobject by name
             if (meshLoaded)
             {
-                
+
                 if (Input.touchCount < 1 && !Input.GetMouseButton(0))
                 {
                     if (opacity > 0)
@@ -602,14 +604,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                         renderPosition = hit.point;
                     }
-                    
+
                 }
-                foreach (MeshRenderer render in renderers)
+                sharedMat.SetFloat("_Opacity", opacity);
+                sharedMat.SetFloat("_Radius", radius);
+                sharedMat.SetVector("_Pos", renderPosition);
+
+                foreach (Renderer render in renderers)
                 {
                     render.GetPropertyBlock(myBlock);
                     myBlock.SetFloat("_Opacity", opacity);
                     myBlock.SetFloat("_Radius", radius);
                     myBlock.SetVector("_Pos", renderPosition);
+
                     render.SetPropertyBlock(myBlock); // apply your values onto the renderer's existing Block
                 }
             }
