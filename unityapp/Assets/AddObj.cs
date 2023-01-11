@@ -74,6 +74,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private float ratioX = 1.0f;
 
         public GameObject MoveComponentPrefab;
+        public LayerMask selectedLayers;
 
         protected override void Awake()
         {
@@ -419,13 +420,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private Vector3 previousRotation = Vector3.zero;
 
         private Vector3 wallNormalUp = Vector3.up;
-        private Vector3 wallNormalForward = Vector3.forward;
-        private Vector3 wallNormalRight = Vector3.right;
+
         private int roundTo = 15;
 
         private int[] chunkPos = new int[2] { 0, 0 };
 
-        
+        private bool pressAndHold = false;
+        private Vector3 pressPosition = Vector3.zero;
+        private string axisMove = "X";
+
+        private Plane fakePlane;
 
         private void Update()
         {
@@ -544,6 +548,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 rotating = false;
                 locked = false;
+                pressAndHold = false;
                 return;
             }
 
@@ -572,6 +577,68 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         return;
                     }
+
+
+
+                    var ray = Camera.main.ScreenPointToRay(position);
+
+                    // get if hit the plane
+                    if (pressAndHold)
+                    {
+                        if (fakePlane.Raycast(ray, out float enter)) {
+                            switch (axisMove) {
+                                case "X":
+                                    spawnedObject.transform.position = new Vector3(ray.GetPoint(enter).x, pressPosition.y, pressPosition.z);
+                                    break;
+                                case "Y":
+                                    spawnedObject.transform.position = new Vector3(pressPosition.x, ray.GetPoint(enter).y, pressPosition.z);
+                                    break;
+                                case "Z":
+                                    spawnedObject.transform.position = new Vector3(pressPosition.x, pressPosition.y, ray.GetPoint(enter).z);
+                                    break;
+                                default:
+                                    spawnedObject.transform.position = ray.GetPoint(enter);
+                                    break;
+                            }
+                        }
+                    }
+
+                    var hasHit = Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, selectedLayers);
+
+                    if (hasHit)
+                    {
+
+                        if (!pressAndHold)
+                        {
+                            pressPosition = spawnedObject.transform.position;
+                            pressAndHold = true;
+                            if (hit.collider.gameObject.name == "X")
+                            {
+                                arWorldMapController.Log("X");
+                                axisMove = "X";
+                            }
+                            else if (hit.collider.gameObject.name == "Y")
+                            {
+                                arWorldMapController.Log("Y");
+                                axisMove = "Y";
+                            }
+                            else if (hit.collider.gameObject.name == "Z")
+                            {
+                                arWorldMapController.Log("Z");
+                                axisMove = "Z";
+                            }
+
+                            // create a plane pointing at camera
+                            Vector3 planeNormal = Camera.main.transform.forward;
+                            // create a plane at the hit position
+                            Vector3 planePosition = hit.point;
+                            // create a plane that goes through the hit position and is perpendicular to the camera
+                            fakePlane = new Plane(planeNormal, planePosition);
+
+                        }
+
+                    }
+
 
                     // arWorldMapController.Log("position");
 

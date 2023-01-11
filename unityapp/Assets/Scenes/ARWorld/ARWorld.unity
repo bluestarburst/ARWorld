@@ -1160,6 +1160,9 @@ MonoBehaviour:
   api: {fileID: 168510958}
   MoveComponentPrefab: {fileID: 9191169306543018968, guid: 519b4a65dd5efb84b8a582cb5b1a785a,
     type: 3}
+  selectedLayers:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &1352058507
 MonoBehaviour:
   m_ObjectHideFlags: 0
