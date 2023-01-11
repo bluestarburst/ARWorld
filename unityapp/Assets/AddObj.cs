@@ -425,7 +425,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private bool meshLoaded = false;
 
         private MaterialPropertyBlock myBlock;
-        private Renderer[] renderers = new Renderer[0];
+        private MeshRenderer[] renderers = new MeshRenderer[0];
         private Material sharedMat;
 
         private float opacity = 0;
@@ -445,10 +445,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
-            renderers = new Renderer[meshObjects.Length];
+            renderers = new MeshRenderer[meshObjects.Length];
             for (int i = 0; i < meshObjects.Length; i++)
             {
-                renderers[i] = meshObjects[i].GetComponent<Renderer>();
+                renderers[i] = meshObjects[i].GetComponent<MeshRenderer>();
             }
             meshLoaded = true;
         }
@@ -604,7 +604,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 sharedMat.SetFloat("_Radius", radius);
                 sharedMat.SetVector("_Pos", renderPosition);
 
-                foreach (Renderer renderer in renderers)
+                foreach (MeshRenderer renderer in renderers)
                 {
                     renderer.GetPropertyBlock(myBlock);
                     myBlock.SetFloat("_Opacity", opacity);
