@@ -580,7 +580,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     if (opacity > 0)
                     {
-                        opacity -= 0.01f;
+                        opacity -= 0.02f;
                     }
                     else
                     {
@@ -596,7 +596,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (hasHit)
                     {
-                        if (radius < 1f)
+                        if (radius < 0.5f)
                         {
                             radius += 0.05f;
                         }
