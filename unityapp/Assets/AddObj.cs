@@ -587,12 +587,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     // get if hit the plane
                     if (pressAndHold)
                     {
-                        if (fakePlane.Raycast(ray, out float enter)) {
-                            switch (axisMove) {
+                        if (fakePlane.Raycast(ray, out float enter))
+                        {
+                            switch (axisMove)
+                            {
                                 case "X":
                                     spawnedObject.transform.position = new Vector3(ray.GetPoint(enter).x, pressPosition.y, pressPosition.z);
                                     break;
                                 case "Y":
+                                    float cameraRotationY = Camera.main.transform.eulerAngles.y;
+                                    Vector3 planeDir = Quaternion.Euler(0, cameraRotationY, 0) * Vector3.forward;
+                                    fakePlane = new Plane(planeDir, pressPosition);
                                     spawnedObject.transform.position = new Vector3(pressPosition.x, ray.GetPoint(enter).y, pressPosition.z);
                                     break;
                                 case "Z":
@@ -624,8 +629,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             {
                                 arWorldMapController.Log("Y");
                                 axisMove = "Y";
-                                Vector3 planeNormal = Camera.main.transform.forward;
-                                fakePlane = new Plane(planeNormal, hit.point);
+
+                                //Get camera rotation around y-axis 
+                                float cameraRotationY = Camera.main.transform.eulerAngles.y;
+                                Vector3 planeDir = Quaternion.Euler(0, cameraRotationY, 0) * Vector3.forward;
+
+                                fakePlane = new Plane(planeDir, hit.point);
                             }
                             else if (hit.collider.gameObject.name == "Z")
                             {
