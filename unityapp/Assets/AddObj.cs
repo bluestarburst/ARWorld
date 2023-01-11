@@ -555,7 +555,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 try
                 {
                     meshObject = GameObject.FindGameObjectWithTag("Mesh");
-                    renderer = meshObject.GetComponent<Renderer>();
+                    renderer = meshObject.GetComponent<MeshRenderer>();
                     myBlock = new MaterialPropertyBlock();
                     meshLoaded = true;
                 }
