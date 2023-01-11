@@ -439,6 +439,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             arWorldMapController.Log("meshLoading");
             meshObjects = GameObject.FindGameObjectsWithTag("Mesh");
 
+            if (myBlock == null)
+            {
+                myBlock = new MaterialPropertyBlock();
+            }
+
             if (meshObjects.Length == 0)
             {
                 arWorldMapController.Log("No mesh found");
@@ -450,6 +455,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 renderers[i] = meshObjects[i].GetComponent<MeshRenderer>();
             }
+
             meshLoaded = true;
         }
 
@@ -600,18 +606,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
 
                 }
-                sharedMat.SetFloat("_Opacity", opacity);
-                sharedMat.SetFloat("_Radius", radius);
-                sharedMat.SetVector("_Pos", renderPosition);
 
                 foreach (MeshRenderer renderer in renderers)
                 {
+
+
                     renderer.GetPropertyBlock(myBlock);
                     myBlock.SetFloat("_Opacity", opacity);
                     myBlock.SetFloat("_Radius", radius);
                     myBlock.SetVector("_Pos", renderPosition);
                     renderer.SetPropertyBlock(myBlock);
-
                 }
 
             }
