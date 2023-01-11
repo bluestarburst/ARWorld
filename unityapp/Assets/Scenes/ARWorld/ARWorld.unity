@@ -1158,7 +1158,8 @@ MonoBehaviour:
   centerChunk: {fileID: 0}
   currentChunk: {fileID: 0}
   api: {fileID: 168510958}
-  MoveComponentPrefab: {fileID: 0}
+  MoveComponentPrefab: {fileID: 9191169306543018968, guid: 519b4a65dd5efb84b8a582cb5b1a785a,
+    type: 3}
 --- !u!114 &1352058507
 MonoBehaviour:
   m_ObjectHideFlags: 0
