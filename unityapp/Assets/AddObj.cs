@@ -618,24 +618,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             {
                                 arWorldMapController.Log("X");
                                 axisMove = "X";
+                                fakePlane = new Plane(Vector3.right, hit.point);
                             }
                             else if (hit.collider.gameObject.name == "Y")
                             {
                                 arWorldMapController.Log("Y");
                                 axisMove = "Y";
+                                Vector3 planeNormal = Camera.main.transform.forward;
+                                fakePlane = new Plane(planeNormal, hit.point);
                             }
                             else if (hit.collider.gameObject.name == "Z")
                             {
                                 arWorldMapController.Log("Z");
                                 axisMove = "Z";
+                                fakePlane = new Plane(Vector3.up, hit.point);
                             }
 
-                            // create a plane pointing at camera
-                            Vector3 planeNormal = Camera.main.transform.forward;
-                            // create a plane at the hit position
-                            Vector3 planePosition = hit.point;
-                            // create a plane that goes through the hit position and is perpendicular to the camera
-                            fakePlane = new Plane(planeNormal, planePosition);
+
                             return;
                         }
 
