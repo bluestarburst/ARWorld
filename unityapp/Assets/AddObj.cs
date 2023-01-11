@@ -549,12 +549,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 arWorldMapController.OnSaveButton();
             }
 
-            // decrease opacity smoothly
-            if (opacity > 0)
-            {
-                opacity -= 0.01f;
-            }
-
             bool shouldStop = Input.touchCount < 1 && !Input.GetMouseButton(0);
 
 
@@ -566,7 +560,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     if (opacity > 0)
                     {
-                        opacity -= 0.001f;
+                        opacity -= 0.1f;
                     }
                     else
                     {
