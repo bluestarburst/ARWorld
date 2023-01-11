@@ -423,7 +423,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private bool meshLoaded = false;
 
         private MaterialPropertyBlock myBlock;
-        private Renderer[] renderers = new Renderer[0];
+        private MeshRenderer[] renderers = new MeshRenderer[0];
 
         private float opacity = 0;
 
@@ -444,7 +444,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (meshObjects.Length > 0)
             {
-                renderers = new Renderer[meshObjects.Length];
+                renderers = new MeshRenderer[meshObjects.Length];
                 for (int i = 0; i < meshObjects.Length; i++)
                 {
                     renderers[i] = meshObjects[i].GetComponent<MeshRenderer>();
@@ -590,7 +590,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (m_RaycastManager.Raycast(positionI, s_Hits, TrackableType.PlaneWithinPolygon))
                     {
                         Pose hitPose = s_Hits[0].pose;
-                        if (radius < 0.5f)
+                        if (radius < 1f)
                         {
                             radius += 0.1f;
                         }
@@ -600,7 +600,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                     
                 }
-                foreach (Renderer render in renderers)
+                foreach (MeshRenderer render in renderers)
                 {
                     render.GetPropertyBlock(myBlock);
                     myBlock.SetFloat("_Opacity", opacity);
