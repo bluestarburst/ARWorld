@@ -423,7 +423,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private bool meshLoaded = false;
 
         private MaterialPropertyBlock myBlock;
-        private Renderer renderer;
+        private Renderer renderers;
 
         private float opacity = 0;
 
@@ -433,7 +433,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             arWorldMapController.Log("meshLoading");
             meshObject = GameObject.FindGameObjectWithTag("Mesh");
-            renderer = meshObject.GetComponent<MeshRenderer>();
+            renderers = meshObject.GetComponent<MeshRenderer>();
             myBlock = new MaterialPropertyBlock();
             meshLoaded = true;
         }
@@ -575,7 +575,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else
                 {
-                    renderer.GetPropertyBlock(myBlock); // retrieve the renderer's existing Property Block 
+                    renderers.GetPropertyBlock(myBlock); // retrieve the renderer's existing Property Block 
                     Vector3 positionI = Input.GetTouch(0).position;
                     if (m_RaycastManager.Raycast(positionI, s_Hits, TrackableType.PlaneWithinPolygon))
                     {
@@ -592,7 +592,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                     myBlock.SetFloat("_Opacity", opacity);
                     myBlock.SetFloat("_Radius", radius);
-                    renderer.SetPropertyBlock(myBlock); // apply your values onto the renderer's existing Block
+                    renderers.SetPropertyBlock(myBlock); // apply your values onto the renderer's existing Block
                     arWorldMapController.Log("Rendering");
                 }
             }
