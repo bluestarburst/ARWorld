@@ -567,8 +567,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             bool shouldStop = Input.touchCount < 1 && !Input.GetMouseButton(0);
 
-            meshLoading();
-
             // get gameobject by name
             if (meshLoaded)
             {
