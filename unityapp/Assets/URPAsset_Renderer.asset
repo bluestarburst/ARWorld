@@ -27,13 +27,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: RenderObjects
+    passTag: ShadowVisible
     Event: 300
     filterSettings:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 0
+        m_Bits: 2048
       PassNames: []
     overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0
