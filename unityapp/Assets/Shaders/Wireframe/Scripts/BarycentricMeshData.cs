@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARFoundation.Samples;
 
 public class BarycentricMeshData : MonoBehaviour
 {
@@ -27,6 +28,10 @@ public class BarycentricMeshData : MonoBehaviour
     List<MeshFilter> m_AddedMeshes = new List<MeshFilter>();
     List<MeshFilter> m_UpdatedMeshes = new List<MeshFilter>();
 
+    private bool isInit = false;
+    [SerializeField]
+    public AddObj addObj;
+
     void OnEnable()
     {
         m_MeshManager.meshesChanged += MeshManagerOnmeshesChanged;        
@@ -39,6 +44,12 @@ public class BarycentricMeshData : MonoBehaviour
 
     void MeshManagerOnmeshesChanged(ARMeshesChangedEventArgs obj)
     {
+
+        if (!isInit) {
+            addObj.meshLoading();
+            isInit = true;
+        }
+
         m_AddedMeshes = obj.added;
         m_UpdatedMeshes = obj.updated;
         

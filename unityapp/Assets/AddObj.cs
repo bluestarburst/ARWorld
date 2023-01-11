@@ -429,6 +429,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private float radius = 0;
 
+        public void meshLoading()
+        {
+            arWorldMapController.Log("meshLoading");
+            meshObject = GameObject.FindGameObjectWithTag("Mesh");
+            renderer = meshObject.GetComponent<MeshRenderer>();
+            myBlock = new MaterialPropertyBlock();
+            meshLoaded = true;
+        }
+
         private void Update()
         {
 
@@ -550,28 +559,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
             // get gameobject by name
-            if (!meshLoaded)
+            if (meshLoaded)
             {
-                try
-                {
-                    meshObject = GameObject.FindGameObjectWithTag("Mesh");
-                    renderer = meshObject.GetComponent<MeshRenderer>();
-                    myBlock = new MaterialPropertyBlock();
-                    meshLoaded = true;
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
-            else
-            {
+                arWorldMapController.Log("LOADED");
                 if (Input.touchCount < 1 && !Input.GetMouseButton(0))
                 {
                     if (opacity > 0)
                     {
                         opacity -= 0.001f;
-                    } else {
+                    }
+                    else
+                    {
                         radius = 0;
                     }
                 }
@@ -582,19 +580,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (m_RaycastManager.Raycast(positionI, s_Hits, TrackableType.PlaneWithinPolygon))
                     {
                         Pose hitPose = s_Hits[0].pose;
-                        if (radius < 0.5f)
+                        if (radius < 10f)
                         {
-                            radius += 0.001f;
+                            radius += 0.1f;
                         }
                         opacity = 1;
 
-                        
+
                         myBlock.SetVector("_Pos", hitPose.position);
-                        
+
                     }
                     myBlock.SetFloat("_Opacity", opacity);
                     myBlock.SetFloat("_Radius", radius);
                     renderer.SetPropertyBlock(myBlock); // apply your values onto the renderer's existing Block
+                    arWorldMapController.Log("Rendering");
                 }
             }
 
