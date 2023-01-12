@@ -54,7 +54,6 @@ public class BarycentricMeshData : MonoBehaviour
     private float opacity = 0;
 
     private float radius = 0;
-    private float time = 0;
     private Vector3 renderPosition = Vector3.zero;
 
     public void meshLoading()
@@ -89,30 +88,12 @@ public class BarycentricMeshData : MonoBehaviour
 
         foreach (MeshFilter filter in m_AddedMeshes)
         {
-
-            // get renderer from filter
-            filter.gameObject.GetComponent<MeshRenderer>().GetPropertyBlock(myBlock);
-            if (myBlock == null)
-            {
-                myBlock = new MaterialPropertyBlock();
-            }
-            myBlock.SetFloat("_Timer", Time.time);
-            filter.gameObject.GetComponent<MeshRenderer>().SetPropertyBlock(myBlock);
-
             m_DataBuilder.GenerateData(filter.mesh);
             meshLoading();
         }
 
         foreach (MeshFilter filter in m_UpdatedMeshes)
         {
-            // get renderer from filter
-            filter.gameObject.GetComponent<MeshRenderer>().GetPropertyBlock(myBlock);
-            if (myBlock == null)
-            {
-                myBlock = new MaterialPropertyBlock();
-            }
-            myBlock.SetFloat("_Timer", Time.time);
-            filter.gameObject.GetComponent<MeshRenderer>().SetPropertyBlock(myBlock);
             m_DataBuilder.GenerateData(filter.sharedMesh);
         }
         /*
