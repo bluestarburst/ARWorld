@@ -47,13 +47,14 @@ public class BarycentricMeshData : MonoBehaviour
     private GameObject[] meshObjects = new GameObject[0];
     private bool meshLoaded = false;
 
-    private MaterialPropertyBlock myBlock = new MaterialPropertyBlock();
+    private MaterialPropertyBlock myBlock;
     private MeshRenderer[] renderers = new MeshRenderer[0];
     private Material sharedMat;
 
     private float opacity = 0;
 
     private float radius = 0;
+    private float time = 0;
     private Vector3 renderPosition = Vector3.zero;
 
     public void meshLoading()
@@ -88,12 +89,30 @@ public class BarycentricMeshData : MonoBehaviour
 
         foreach (MeshFilter filter in m_AddedMeshes)
         {
+
+            // get renderer from filter
+            filter.gameObject.GetComponent<MeshRenderer>().GetPropertyBlock(myBlock);
+            if (myBlock == null)
+            {
+                myBlock = new MaterialPropertyBlock();
+            }
+            myBlock.SetFloat("_Timer", Time.time);
+            filter.gameObject.GetComponent<MeshRenderer>().SetPropertyBlock(myBlock);
+
             m_DataBuilder.GenerateData(filter.mesh);
             meshLoading();
         }
 
         foreach (MeshFilter filter in m_UpdatedMeshes)
         {
+            // get renderer from filter
+            filter.gameObject.GetComponent<MeshRenderer>().GetPropertyBlock(myBlock);
+            if (myBlock == null)
+            {
+                myBlock = new MaterialPropertyBlock();
+            }
+            myBlock.SetFloat("_Timer", Time.time);
+            filter.gameObject.GetComponent<MeshRenderer>().SetPropertyBlock(myBlock);
             m_DataBuilder.GenerateData(filter.sharedMesh);
         }
         /*
@@ -110,6 +129,10 @@ public class BarycentricMeshData : MonoBehaviour
     {
         opacity = 0;
         isMapLoaded = true;
+    }
+
+    void Start() {
+        myBlock = new MaterialPropertyBlock();
     }
 
     void Update()
