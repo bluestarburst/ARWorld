@@ -187,8 +187,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
 
-                            float maxWidth = 0.5f;
-                            float maxHeight = 0.5f;
+                            float maxWidth = 0.1f;
+                            float maxHeight = 0.1f;
 
                             float width = texture.width;
                             float height = texture.height;
