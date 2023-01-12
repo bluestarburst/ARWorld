@@ -186,9 +186,31 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
-                            ratioX = texture.width / 2048f;
-                            ratioY = texture.height / 2048f;
+
+                            float maxWidth = 0.5f;
+                            float maxHeight = 0.5f;
+
+                            float width = texture.width;
+                            float height = texture.height;
+
+                            // maintain aspect ratio and scale width and height
+                            if (width > height)
+                            {
+                                float ratio = width / height;
+                                width = maxWidth;
+                                height = width / ratio;
+                            }
+                            else
+                            {
+                                float ratio = height / width;
+                                height = maxHeight;
+                                width = height / ratio;
+                            }
+
+                            spawnedObject.transform.localScale = new Vector3(width, 1, height);
+
+                            ratioX = width;
+                            ratioY = height;
                         }
                         else
                         {
@@ -202,11 +224,30 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
-                            ratioX = texture.width / 2048f;
-                            ratioY = texture.height / 2048f;
+                            float maxWidth = 0.5f;
+                            float maxHeight = 0.5f;
 
-                            arWorldMapController.Log("Spawned Poster");
+                            float width = texture.width;
+                            float height = texture.height;
+
+                            // maintain aspect ratio and scale width and height
+                            if (width > height)
+                            {
+                                float ratio = width / height;
+                                width = maxWidth;
+                                height = width / ratio;
+                            }
+                            else
+                            {
+                                float ratio = height / width;
+                                height = maxHeight;
+                                width = height / ratio;
+                            }
+
+                            spawnedObject.transform.localScale = new Vector3(width, 1, height);
+
+                            ratioX = width;
+                            ratioY = height;
                         }
                     });
 
@@ -245,9 +286,30 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
-                            ratioX = texture.width / 2048f;
-                            ratioY = texture.height / 2048f;
+                            float maxWidth = 0.5f;
+                            float maxHeight = 0.5f;
+                            
+                            float width = texture.width;
+                            float height = texture.height;
+
+                            // maintain aspect ratio and scale width and height
+                            if (width > height)
+                            {
+                                float ratio = width / height;
+                                width = maxWidth;
+                                height = width / ratio;
+                            }
+                            else
+                            {
+                                float ratio = height / width;
+                                height = maxHeight;
+                                width = height / ratio;
+                            }
+
+                            spawnedObject.transform.localScale = new Vector3(width, 1, height);
+
+                            ratioX = width;
+                            ratioY = height;
                         }
                         else
                         {
@@ -261,9 +323,30 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            spawnedObject.transform.localScale = new Vector3(texture.width / 2048f, 1, texture.height / 2048f);
-                            ratioX = texture.width / 2048f;
-                            ratioY = texture.height / 2048f;
+                            float maxWidth = 0.5f;
+                            float maxHeight = 0.5f;
+                            
+                            float width = texture.width;
+                            float height = texture.height;
+
+                            // maintain aspect ratio and scale width and height
+                            if (width > height)
+                            {
+                                float ratio = width / height;
+                                width = maxWidth;
+                                height = width / ratio;
+                            }
+                            else
+                            {
+                                float ratio = height / width;
+                                height = maxHeight;
+                                width = height / ratio;
+                            }
+
+                            spawnedObject.transform.localScale = new Vector3(width, 1, height);
+
+                            ratioX = width;
+                            ratioY = height;
                         }
                     });
                 }
@@ -595,7 +678,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             {
                                 case "X":
                                     moveChild.transform.position = new Vector3(ray.GetPoint(enter).x, pressPosition.y, pressPosition.z);
-                                    
+
                                     break;
                                 case "Y":
                                     float cameraRotationY = Camera.main.transform.eulerAngles.y;
