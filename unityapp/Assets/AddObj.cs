@@ -224,8 +224,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            float maxWidth = 0.5f;
-                            float maxHeight = 0.5f;
+                            float maxWidth = 0.1f;
+                            float maxHeight = 0.1f;
 
                             float width = texture.width;
                             float height = texture.height;
@@ -286,8 +286,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            float maxWidth = 0.5f;
-                            float maxHeight = 0.5f;
+                            float maxWidth = 0.1f;
+                            float maxHeight = 0.1f;
 
                             float width = texture.width;
                             float height = texture.height;
@@ -323,8 +323,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // set diffuse texture
                             spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
                             // get width and height of image and set scale of poster
-                            float maxWidth = 0.5f;
-                            float maxHeight = 0.5f;
+                            float maxWidth = 0.1f;
+                            float maxHeight = 0.1f;
 
                             float width = texture.width;
                             float height = texture.height;
@@ -1069,6 +1069,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         {
                             spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f * ratioX, 1, deltaMagnitudeDiff * 0.001f * ratioY);
                         }
+                        
+                        moveChild.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f);
                     }
                 }
             }
