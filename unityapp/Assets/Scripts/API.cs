@@ -82,10 +82,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public FirebaseApp app = FirebaseApp.Create();
 
-        void Awake() {
-            Application.targetFrameRate = 30;
-            // half the target resolution of the camera
-            Screen.SetResolution(Screen.width / 2, Screen.height / 2, true);
+        public bool finishedStart = false;
+
+        void Awake()
+        {
+            if (!finishedStart)
+            {
+                Application.targetFrameRate = 30;
+                // half the target resolution of the camera
+                Screen.SetResolution(Screen.width / 2, Screen.height / 2, true);
+                finishedStart = true;
+            }
+        }
+
+        void OnApplicationFocus(bool focusStatus)
+        {
+
         }
 
         void Start()

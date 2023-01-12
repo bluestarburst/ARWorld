@@ -1064,13 +1064,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         if (type.Equals("objects"))
                         {
                             spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f);
+                            moveChild.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f);
                         }
                         else
                         {
                             spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f * ratioX, 1, deltaMagnitudeDiff * 0.001f * ratioY);
                         }
                         
-                        moveChild.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f);
                     }
                 }
             }

@@ -108,7 +108,6 @@ public class BarycentricMeshData : MonoBehaviour
     {
         if (meshLoaded)
         {
-
             if (!arWorldMapController.isWorldMapLoaded)
             {
                 opacity = 1;
