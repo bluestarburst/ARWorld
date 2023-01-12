@@ -14,12 +14,13 @@ struct SettingsSelection: View {
     @State var prevOffset = CGFloat(80)
     
     @Binding var disabled: Bool
+    @Binding var showMesh: Bool
     
     @State private var scrollWidth = CGFloat.zero
     
-    @State private var type: String = "stickers"
+    @State private var type: String = "general"
     
-    @State private var showMesh = false
+    
     
     var body: some View {
         VStack {
@@ -37,14 +38,14 @@ struct SettingsSelection: View {
                     GeometryReader { geometry in
                         ScrollView(.horizontal, showsIndicators: true) {
                             HStack {
-                                Button(action: {withAnimation{type="stickers"}}, label: {
-                                    Image(systemName: "moon.stars.fill")
+                                Button(action: {withAnimation{type="general"}}, label: {
+                                    Image(systemName: "gearshape.fill")
                                 })
                                 .imageScale(.medium)
                                 .font(.title)
-                                .foregroundColor(type == "stickers" ? .pink : .white)
+                                .foregroundColor(type == "general" ? .pink : .white)
                                 .padding(.horizontal,10)
-                                .disabled(type == "stickers")
+                                .disabled(type == "general")
                                 
                                 Button(action: {withAnimation{type="posters"}}, label: {
                                     Image(systemName: "doc.fill")
@@ -55,14 +56,14 @@ struct SettingsSelection: View {
                                 .padding(.horizontal,10)
                                 .disabled(type == "posters")
                                 
-                                Button(action: {withAnimation{type="images"}}, label: {
-                                    Image(systemName: "photo.fill")
+                                Button(action: {withAnimation{type="info"}}, label: {
+                                    Image(systemName: "info.circle.fill")
                                 })
                                 .imageScale(.medium)
                                 .font(.title)
-                                .foregroundColor(type == "images" ? .pink : .white)
+                                .foregroundColor(type == "info" ? .pink : .white)
                                 .padding(.horizontal,10)
-                                .disabled(type == "images")
+                                .disabled(type == "info")
                             }
                             .padding(.horizontal,25)
                             .frame(minWidth: geometry.size.width)
@@ -79,7 +80,8 @@ struct SettingsSelection: View {
                                     UnityBridge.getInstance().api.changeSettings(change: "mesh-off")
                                 }
                             }
-                    }.padding (30)
+                            .padding (30)
+                    }
                 }.gesture(
                     DragGesture()
                         .onChanged {gesture in
@@ -98,7 +100,7 @@ struct SettingsSelection: View {
                         offset = max(gesture.translation.height + minOffset, 0)
                     }
                     .onEnded { gesture in
-                        if (offset > 400 || gesture.predictedEndTranslation.height > 400) {
+                        if (offset > 200 || gesture.predictedEndTranslation.height > 200) {
                             withAnimation {
                                 disabled = false
                                 offset = CGFloat(1000)
