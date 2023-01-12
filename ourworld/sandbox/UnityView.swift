@@ -21,6 +21,7 @@ struct UnityView: View {
         red: 0.98, green: 0.9, blue: 0.2)
     
     @Binding var isLoaded: Bool
+    var changePage: (Int) -> Void
     @StateObject var manager = LocationManager()
     
     @State private var showElementOptions = false
@@ -33,6 +34,8 @@ struct UnityView: View {
     
     @State private var elementType = "image"
     
+    @State private var mapOffset = CGFloat(-100)
+    
     var body: some View {
         ZStack {
             if (showButtons) {
@@ -41,8 +44,32 @@ struct UnityView: View {
                     HStack {
                         Spacer()
                         VStack {
-                            Spacer()
                             Button( action: {}, label: {
+                                if (mapStatus == "saving") {
+                                    ProgressView()
+                                        .imageScale(.medium)
+                                        .font(.title2)
+                                        .foregroundColor(.white)
+                                        .padding(10)
+                                        .background(Color(.white).opacity(0.1))
+                                        .clipShape(Circle())
+                                        .padding(.vertical,15)
+                                        .disabled(true)
+                                } else if (mapStatus == "mapped") {
+                                    Image(systemName: "checkmark")
+                                        .imageScale(.medium)
+                                        .font(.title2)
+                                        .foregroundColor(.green)
+                                        .padding(10)
+                                        .background(Color(.white).opacity(0.1))
+                                        .clipShape(Circle())
+                                        .padding(.vertical,15)
+                                }
+                        
+                            })
+                            .offset(y: mapOffset)
+                            Spacer()
+                            Button( action: {changePage(1)}, label: {
                                 Image(systemName: "photo")
                                     .imageScale(.medium)
                                     .font(.title2)
@@ -287,6 +314,10 @@ struct UnityView: View {
                 mapStatus = DataHandler.shared.mapStatus
                 withAnimation {
                     if (mapStatus == "mapped") {
+                        mapOffset = -100
+                        showButtons = true
+                    } else if(mapStatus == "saving") {
+                        mapOffset = 0
                         showButtons = true
                     } else {
                         showButtons = false

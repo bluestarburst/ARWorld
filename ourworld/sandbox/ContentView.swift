@@ -18,6 +18,15 @@ struct ContentView: View {
     @State var normal = CGFloat(100)
     
     @State var pages = 0
+    
+    func changePage(num: Int) {
+        if (num == 1) {
+            withAnimation {
+                pages = 1
+                offset = 0
+            }
+        }
+    }
 
     var body: some View {
         ZStack {
@@ -25,7 +34,7 @@ struct ContentView: View {
                 AuthView(page: $page)
             } else {
                 
-                UnityView(isLoaded: $isLoaded)
+                UnityView(isLoaded: $isLoaded, changePage: self.changePage)
                     .gesture(DragGesture())
                     .onAppear {
                         DataHandler.shared.getUID()
@@ -59,7 +68,9 @@ struct ContentView: View {
                     .gesture(
                         DragGesture()
                             .onChanged{ gesture in
-                                offset = normal + gesture.translation.width
+                                withAnimation {
+                                    offset = normal + gesture.translation.width
+                                }
                             }
                             .onEnded { _ in
                                 if (offset > -230) {
@@ -85,7 +96,9 @@ struct ContentView: View {
                         DragGesture()
                             .onChanged{ gesture in
                                 if (pages == 1) {
-                                    offset = gesture.translation.width
+                                    withAnimation {
+                                        offset = gesture.translation.width
+                                    }
                                 }
                             }
                             .onEnded { _ in
