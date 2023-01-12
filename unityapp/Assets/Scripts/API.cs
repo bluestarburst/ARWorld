@@ -75,6 +75,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     {
         public GameObject cube;
         public ARWorldMapController worldMapController;
+        public BarycentricMeshData bay;
         public AddObj addObj;
         public float lat = 0.0f;
         public float lon = 0.0f;
@@ -143,6 +144,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 case "change-transform":
                     _ChangeTransform(serializedMessage);
                     break;
+                case "change-settings":
+                    _ChangeSettings(serializedMessage);
+                    break;
                 default:
                     Debug.LogError("Unrecognized message '" + header.type + "'");
                     break;
@@ -162,6 +166,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 alt = msg.data[2];
             }
             // print("updateVars");
+        }
+
+        public void _ChangeSettings(string serialized) {
+            var msg = JsonConvert.DeserializeObject<MessageWithData<string>>(serialized);
+            if (msg.data != null)
+            {
+                switch (msg.data) {
+                    case "mesh-on":
+                        bay.showMesh = true;
+                        break;
+                    case "mesh-off":
+                        bay.showMesh = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         public void _ChangeTransform(string serialized)

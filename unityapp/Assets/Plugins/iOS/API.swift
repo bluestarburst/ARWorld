@@ -71,6 +71,10 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-transform", data: change)
     }
 
+    public func changeSettings(change: String) {
+        sendMessage(type: "change-settings", data: change)
+    }
+
     public func test(_ value: String) {
         self.testCallback(value)
     }
