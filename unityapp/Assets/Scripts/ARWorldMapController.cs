@@ -351,7 +351,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 Log("Deserialized successfully.");
                 isWorldMapLoaded = true;
-                bay.loadedMap();
                 worldMapId = newId;
             }
             else
@@ -463,7 +462,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             isWorldMapLoaded = true;
-            bay.loadedMap();
 
             // data.Dispose();
             // worldMap.Dispose();
@@ -508,6 +506,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             db = FirebaseFirestore.GetInstance(api.app);
         }
 
+        private bool firstLoad = true;
+
         private void AnchorManager_anchorsChanged(ARAnchorsChangedEventArgs obj)
         {
             // throw new NotImplementedException();
@@ -517,6 +517,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Debug.Log("added");
                 foreach (var anchor in obj.added)
                 {
+                    if (firstLoad) {
+                        bay.loadedMap();
+                        firstLoad = false;
+                    }
 
                     Log("ANCHOR NAME: " + anchor.name);
                     Log("TRACKABLE NAME: " + anchor.trackableId.ToString());
