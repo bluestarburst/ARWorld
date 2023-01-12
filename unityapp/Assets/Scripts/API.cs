@@ -76,6 +76,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public GameObject cube;
         public ARWorldMapController worldMapController;
         public BarycentricMeshData bay;
+        public AROcclusionManager occlusionManager;
         public AddObj addObj;
         public float lat = 0.0f;
         public float lon = 0.0f;
@@ -175,9 +176,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 switch (msg.data) {
                     case "mesh-on":
                         bay.showMesh = true;
+                        occlusionManager.enabled = false;
                         break;
                     case "mesh-off":
                         bay.showMesh = false;
+                        occlusionManager.enabled = true;
                         break;
                     default:
                         break;

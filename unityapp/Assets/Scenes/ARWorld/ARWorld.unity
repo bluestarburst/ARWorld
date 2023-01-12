@@ -2298,6 +2298,11 @@ PrefabInstance:
       objectReference: {fileID: 1352058506}
     - target: {fileID: 5933530076690600731, guid: 802f7a60df8a22844baa3b364b690720,
         type: 3}
+      propertyPath: occlusionManager
+      value: 
+      objectReference: {fileID: 1393218334}
+    - target: {fileID: 5933530076690600731, guid: 802f7a60df8a22844baa3b364b690720,
+        type: 3}
       propertyPath: worldMapController
       value: 
       objectReference: {fileID: 1751548350}
