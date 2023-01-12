@@ -196,6 +196,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   arWorldMapController: {fileID: 1751548350}
+  showMesh: 0
 --- !u!114 &138682565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2280,6 +2281,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5933530076690600731, guid: 802f7a60df8a22844baa3b364b690720,
+        type: 3}
+      propertyPath: bay
+      value: 
+      objectReference: {fileID: 138682564}
     - target: {fileID: 5933530076690600731, guid: 802f7a60df8a22844baa3b364b690720,
         type: 3}
       propertyPath: cube
