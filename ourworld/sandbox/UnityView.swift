@@ -42,7 +42,7 @@ struct UnityView: View {
                         Spacer()
                         VStack {
                             Spacer()
-                            Button( action: {DataHandler.shared.tryStore()}, label: {
+                            Button( action: {}, label: {
                                 Image(systemName: "photo")
                                     .imageScale(.medium)
                                     .font(.title2)
@@ -52,7 +52,7 @@ struct UnityView: View {
                                     .clipShape(Circle())
                                     .padding(.vertical,5)
                             })
-                            Button( action: {DataHandler.shared.signOut()}, label: {
+                            Button( action: {}, label: {
                                 Image(systemName: "camera")
                                     .imageScale(.medium)
                                     .font(.title2)
