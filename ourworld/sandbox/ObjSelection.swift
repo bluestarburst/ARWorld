@@ -185,7 +185,6 @@ struct ObjLoop: View {
                         default:
                             Box()
                         }
-                        
                     }
                     Spacer()
                 }
