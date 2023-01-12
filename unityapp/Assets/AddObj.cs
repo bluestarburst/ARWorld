@@ -654,9 +654,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     }
 
-                    moveChild.transform.position = spawnedObject.transform.position;
-
-
                     // arWorldMapController.Log("position");
 
                     if (m_RaycastManager.Raycast(position, s_Hits, TrackableType.PlaneWithinPolygon))
@@ -684,6 +681,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         //     Console.WriteLine("POSTER");
                         // spawnedObject.transform.rotation = hitPose.rotation;
                         spawnedObject.transform.position = hitPose.position + hitPose.rotation * Vector3.up * 0.1f;
+                        moveChild.transform.position = spawnedObject.transform.position;
                         // }
                         // else
                         // {
@@ -696,6 +694,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         // if no plane is hit, move object to 0.5 units in front of camera at position of touch
                         Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1.5f));
                         spawnedObject.transform.position = touchPosition;
+                        moveChild.transform.position = spawnedObject.transform.position;
                     }
 
 
