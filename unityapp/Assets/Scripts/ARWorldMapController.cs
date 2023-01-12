@@ -146,6 +146,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 #if UNITY_IOS
             try
             {
+                HostNativeAPI.mapStatus("saving");
                 StartCoroutine(Save());
             }
             catch (Exception e)
@@ -454,6 +455,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 await mapRef.PutBytesAsync(data);
                 Log("Upload complete?");
+                HostNativeAPI.mapStatus("mapped");
             }
             catch (System.Exception)
             {
