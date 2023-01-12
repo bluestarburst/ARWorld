@@ -106,7 +106,8 @@ public class BarycentricMeshData : MonoBehaviour
 
     private bool isMapLoaded = false;
 
-    public void loadedMap() {
+    public void loadedMap()
+    {
         opacity = 0;
         isMapLoaded = true;
     }
@@ -158,8 +159,15 @@ public class BarycentricMeshData : MonoBehaviour
 
             foreach (MeshRenderer renderer in renderers)
             {
-
+                if (myBlock == null)
+                {
+                    myBlock = new MaterialPropertyBlock();
+                }
                 renderer.GetPropertyBlock(myBlock);
+                if (myBlock == null)
+                {
+                    myBlock = new MaterialPropertyBlock();
+                }
                 myBlock.SetFloat("_Opacity", opacity);
                 myBlock.SetFloat("_Radius", radius);
                 myBlock.SetVector("_Pos", renderPosition);
