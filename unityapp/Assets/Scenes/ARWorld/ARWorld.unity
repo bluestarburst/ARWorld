@@ -1787,6 +1787,7 @@ MonoBehaviour:
   posterPrefab: {fileID: 2491148595152579251, guid: 05a316b586693c9419cf47feeecf86f9,
     type: 3}
   chunksToLoad: 0
+  bay: {fileID: 138682564}
 --- !u!4 &1751548351
 Transform:
   m_ObjectHideFlags: 0

@@ -104,11 +104,18 @@ public class BarycentricMeshData : MonoBehaviour
                 */
     }
 
+    private bool isMapLoaded = false;
+
+    public void loadedMap() {
+        opacity = 0;
+        isMapLoaded = true;
+    }
+
     void Update()
     {
         if (meshLoaded)
         {
-            if (!arWorldMapController.isWorldMapLoaded)
+            if (!isMapLoaded)
             {
                 opacity = 1;
                 radius = 100f;

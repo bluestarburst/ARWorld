@@ -136,6 +136,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public int chunksToLoad = 0;
 
+        public BarycentricMeshData bay;
+
         /// <summary>
         /// Create an <c>ARWorldMap</c> and save it to disk.
         /// </summary>
@@ -349,8 +351,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 Log("Deserialized successfully.");
                 isWorldMapLoaded = true;
+                bay.loadedMap();
                 worldMapId = newId;
-
             }
             else
             {
@@ -461,6 +463,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             isWorldMapLoaded = true;
+            bay.loadedMap();
 
             // data.Dispose();
             // worldMap.Dispose();
