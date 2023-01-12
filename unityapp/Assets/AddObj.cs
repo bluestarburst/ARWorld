@@ -523,6 +523,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (change.Equals("delete"))
             {
+                if (moveChild != null)
+                {
+                    Destroy(moveChild);
+                    moveChild = null;
+                }
                 if (spawnedObject != null)
                 {
                     change = "move";
@@ -536,6 +541,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else if (change.Equals("save"))
             {
+                if (moveChild != null)
+                {
+                    Destroy(moveChild);
+                    moveChild = null;
+                }
                 if (spawnedObject != null)
                 {
 
@@ -647,7 +657,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (change.Equals("move"))
             {
-
+                moveChild.SetActive(true);
                 // if touch is on screen
                 if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
                 {
@@ -826,6 +836,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else if (change.Equals("rotate"))
             {
+                moveChild.SetActive(false);
                 if (rotating == false)
                 {
                     rotating = true;
@@ -1020,6 +1031,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else if (change.Equals("scale"))
             {
+                moveChild.SetActive(false);
                 // scale object using two finger pinch
                 if (spawnedObject != null)
                 {
