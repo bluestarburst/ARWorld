@@ -86,6 +86,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public bool finishedStart = false;
 
+        public GameObject logs;
+
         void Awake()
         {
             if (!finishedStart)
@@ -169,11 +171,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // print("updateVars");
         }
 
-        public void _ChangeSettings(string serialized) {
+        public void _ChangeSettings(string serialized)
+        {
             var msg = JsonConvert.DeserializeObject<MessageWithData<string>>(serialized);
             if (msg.data != null)
             {
-                switch (msg.data) {
+                switch (msg.data)
+                {
                     case "mesh-on":
                         bay.showMesh = true;
                         occlusionManager.enabled = false;
@@ -181,6 +185,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     case "mesh-off":
                         bay.showMesh = false;
                         occlusionManager.enabled = true;
+                        break;
+                    case "logs-on":
+                        logs.SetActive(true);
+                        break;
+                    case "logs-off":
+                        logs.SetActive(false);
                         break;
                     default:
                         break;
