@@ -16,12 +16,11 @@ extension AnyTransition {
 struct UnityView: View {
     
     
-    @State private var color = Color(
-        .sRGB,
-        red: 0.98, green: 0.9, blue: 0.2)
+    //    @State private var color = Color(.sRGB,red: 0.98, green: 0.9, blue: 0.2)
     
     @Binding var isLoaded: Bool
     var changePage: (Int) -> Void
+    
     @StateObject var manager = LocationManager()
     
     @State private var showElementOptions = false
@@ -36,12 +35,28 @@ struct UnityView: View {
     
     @State private var mapOffset = CGFloat(-100)
     
+    @State private var showSettings = false
+    
+    
     var body: some View {
         ZStack {
             if (showButtons) {
                 VStack {
                     Spacer()
                     HStack {
+                        VStack {
+                            Button( action: {withAnimation{showSettings=true}}, label: {
+                                Image(systemName: "gearshape")
+                                    .imageScale(.medium)
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.vertical,5)
+                            })
+                            Spacer()
+                        }
                         Spacer()
                         VStack {
                             Button( action: {}, label: {
@@ -65,7 +80,7 @@ struct UnityView: View {
                                         .clipShape(Circle())
                                         .padding(.vertical,15)
                                 }
-                        
+                                
                             })
                             .offset(y: mapOffset)
                             Spacer()
@@ -277,6 +292,29 @@ struct UnityView: View {
                     }
                     .padding(.bottom, 30)
                 }.transition(.bottomAndFade)
+            }
+            
+            if (showSettings) {
+                VStack{
+                    Spacer()
+                    HStack {
+                        Spacer()
+                    }
+                }
+                .background(.black.opacity(0.5))
+                .transition(.opacity)
+                .onTapGesture {
+                    withAnimation {
+                        showSettings = false
+                    }
+                }
+                
+                ZStack {
+
+                    SettingsSelection(disabled: $showSettings)
+                    
+                }
+                .transition(.bottomAndFade)
             }
             
         }
