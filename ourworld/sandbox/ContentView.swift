@@ -55,7 +55,7 @@ struct ContentView: View {
                         Spacer()
                     }
                     .frame(width: 10)
-                    .background(.white)
+                    .background(.black.opacity(0.02))
                     .gesture(
                         DragGesture()
                             .onChanged{ gesture in
@@ -63,7 +63,7 @@ struct ContentView: View {
                             }
                             .onEnded { _ in
                                 if (offset > -230) {
-                                    UnityBridge.getInstance().unload()
+//                                    UnityBridge.getInstance().unload()
                                     withAnimation{
                                         offset = 0
                                         pages = 1
@@ -80,7 +80,7 @@ struct ContentView: View {
                         Spacer()
                     }
                     .frame(width: 10)
-                    .background(.white)
+                    .background(.black.opacity(0.02))
                     .gesture(
                         DragGesture()
                             .onChanged{ gesture in
@@ -90,7 +90,7 @@ struct ContentView: View {
                             }
                             .onEnded { _ in
                                 if (offset < -100) {
-                                    UnityBridge.getInstance().show()
+//                                    UnityBridge.getInstance().show()
                                     withAnimation{
                                         offset = normal
                                         pages = 0
