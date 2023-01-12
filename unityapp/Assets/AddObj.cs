@@ -690,17 +690,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                 switch (axisMove)
                                 {
                                     case "X":
-                                        moveChild.transform.position = new Vector3(ray.GetPoint(enter).x, pressPosition.y, pressPosition.z);
+                                        moveChild.transform.position = new Vector3(ray.GetPoint(enter).x + moveOffset, pressPosition.y, pressPosition.z);
 
                                         break;
                                     case "Y":
                                         float cameraRotationY = Camera.main.transform.eulerAngles.y;
                                         Vector3 planeDir = Quaternion.Euler(0, cameraRotationY, 0) * Vector3.forward;
                                         fakePlane = new Plane(planeDir, pressPosition);
-                                        moveChild.transform.position = new Vector3(pressPosition.x, ray.GetPoint(enter).y, pressPosition.z);
+                                        moveChild.transform.position = new Vector3(pressPosition.x, ray.GetPoint(enter).y + moveOffset, pressPosition.z);
+
                                         break;
                                     case "Z":
-                                        moveChild.transform.position = new Vector3(pressPosition.x, pressPosition.y, ray.GetPoint(enter).z);
+                                        moveChild.transform.position = new Vector3(pressPosition.x, pressPosition.y, ray.GetPoint(enter).z + moveOffset);
                                         break;
                                     default:
                                         moveChild.transform.position = ray.GetPoint(enter);
@@ -725,6 +726,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                     arWorldMapController.Log("X");
                                     axisMove = "X";
                                     fakePlane = new Plane(Vector3.up, hit.point);
+
+                                    moveOffset = hit.point.x - spawnedObject.transform.position.x;
                                 }
                                 else if (hit.collider.gameObject.name == "Y")
                                 {
@@ -736,12 +739,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                     Vector3 planeDir = Quaternion.Euler(0, cameraRotationY, 0) * Vector3.forward;
 
                                     fakePlane = new Plane(planeDir, hit.point);
+
+                                    moveOffset = hit.point.y - spawnedObject.transform.position.y;
                                 }
                                 else if (hit.collider.gameObject.name == "Z")
                                 {
                                     arWorldMapController.Log("Z");
                                     axisMove = "Z";
                                     fakePlane = new Plane(Vector3.up, hit.point);
+
+                                    moveOffset = hit.point.z - spawnedObject.transform.position.z;
                                 }
                                 moveChild.transform.position = spawnedObject.transform.position;
 
