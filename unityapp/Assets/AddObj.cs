@@ -639,9 +639,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 arWorldMapController.OnSaveButton();
             }
 
-            if (change.Equals("move")) {
+            if (change.Equals("move"))
+            {
                 moveChild.SetActive(true);
-            } else {
+            }
+            else
+            {
                 moveChild.SetActive(false);
             }
 
@@ -730,7 +733,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                     axisMove = "X";
                                     fakePlane = new Plane(Vector3.up, hit.point);
 
-                                    moveOffset = hit.point.x - spawnedObject.transform.position.x;
+                                    moveOffset = spawnedObject.transform.position.x - hit.point.x;
                                 }
                                 else if (hit.collider.gameObject.name == "Y")
                                 {
@@ -743,7 +746,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                                     fakePlane = new Plane(planeDir, hit.point);
 
-                                    moveOffset = hit.point.y - spawnedObject.transform.position.y;
+                                    moveOffset = spawnedObject.transform.position.y - hit.point.y;
                                 }
                                 else if (hit.collider.gameObject.name == "Z")
                                 {
@@ -751,7 +754,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                     axisMove = "Z";
                                     fakePlane = new Plane(Vector3.up, hit.point);
 
-                                    moveOffset = hit.point.z - spawnedObject.transform.position.z;
+                                    moveOffset = spawnedObject.transform.position.z - hit.point.z;
                                 }
                                 moveChild.transform.position = spawnedObject.transform.position;
 
@@ -1040,7 +1043,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else if (change.Equals("scale"))
             {
-                
+
                 // scale object using two finger pinch
                 if (spawnedObject != null)
                 {
