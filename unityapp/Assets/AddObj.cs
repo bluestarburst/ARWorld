@@ -288,7 +288,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // get width and height of image and set scale of poster
                             float maxWidth = 0.5f;
                             float maxHeight = 0.5f;
-                            
+
                             float width = texture.width;
                             float height = texture.height;
 
@@ -325,7 +325,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // get width and height of image and set scale of poster
                             float maxWidth = 0.5f;
                             float maxHeight = 0.5f;
-                            
+
                             float width = texture.width;
                             float height = texture.height;
 
@@ -517,6 +517,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private float moveOffset = 0.1f;
 
+        private bool notMoveTool = false;
         private void Update()
         {
 
@@ -635,6 +636,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 rotating = false;
                 locked = false;
                 pressAndHold = false;
+                notMoveTool = false;
                 moveChild.transform.position = spawnedObject.transform.position;
                 return;
             }
@@ -665,82 +667,86 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         return;
                     }
 
-
-
-                    var ray = Camera.main.ScreenPointToRay(position);
-
-                    // get if hit the plane
-                    if (pressAndHold)
-                    {
-                        if (fakePlane.Raycast(ray, out float enter))
-                        {
-                            switch (axisMove)
-                            {
-                                case "X":
-                                    moveChild.transform.position = new Vector3(ray.GetPoint(enter).x, pressPosition.y, pressPosition.z);
-
-                                    break;
-                                case "Y":
-                                    float cameraRotationY = Camera.main.transform.eulerAngles.y;
-                                    Vector3 planeDir = Quaternion.Euler(0, cameraRotationY, 0) * Vector3.forward;
-                                    fakePlane = new Plane(planeDir, pressPosition);
-                                    moveChild.transform.position = new Vector3(pressPosition.x, ray.GetPoint(enter).y, pressPosition.z);
-                                    break;
-                                case "Z":
-                                    moveChild.transform.position = new Vector3(pressPosition.x, pressPosition.y, ray.GetPoint(enter).z);
-                                    break;
-                                default:
-                                    moveChild.transform.position = ray.GetPoint(enter);
-                                    break;
-                            }
-                            spawnedObject.transform.position = moveChild.transform.position;
-                        }
-                        return;
-                    }
-
-                    var hasHit = Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, selectedLayers);
-                    if (hasHit)
+                    if (!notMoveTool)
                     {
 
-                        if (!pressAndHold)
+                        var ray = Camera.main.ScreenPointToRay(position);
+
+                        // get if hit the plane
+                        if (pressAndHold)
                         {
-                            pressPosition = spawnedObject.transform.position;
-                            pressAndHold = true;
-                            if (hit.collider.gameObject.name == "X")
+                            if (fakePlane.Raycast(ray, out float enter))
                             {
-                                arWorldMapController.Log("X");
-                                axisMove = "X";
-                                fakePlane = new Plane(Vector3.up, hit.point);
+                                switch (axisMove)
+                                {
+                                    case "X":
+                                        moveChild.transform.position = new Vector3(ray.GetPoint(enter).x, pressPosition.y, pressPosition.z);
+
+                                        break;
+                                    case "Y":
+                                        float cameraRotationY = Camera.main.transform.eulerAngles.y;
+                                        Vector3 planeDir = Quaternion.Euler(0, cameraRotationY, 0) * Vector3.forward;
+                                        fakePlane = new Plane(planeDir, pressPosition);
+                                        moveChild.transform.position = new Vector3(pressPosition.x, ray.GetPoint(enter).y, pressPosition.z);
+                                        break;
+                                    case "Z":
+                                        moveChild.transform.position = new Vector3(pressPosition.x, pressPosition.y, ray.GetPoint(enter).z);
+                                        break;
+                                    default:
+                                        moveChild.transform.position = ray.GetPoint(enter);
+                                        break;
+                                }
+                                spawnedObject.transform.position = moveChild.transform.position;
                             }
-                            else if (hit.collider.gameObject.name == "Y")
-                            {
-                                arWorldMapController.Log("Y");
-                                axisMove = "Y";
-
-                                //Get camera rotation around y-axis 
-                                float cameraRotationY = Camera.main.transform.eulerAngles.y;
-                                Vector3 planeDir = Quaternion.Euler(0, cameraRotationY, 0) * Vector3.forward;
-
-                                fakePlane = new Plane(planeDir, hit.point);
-                            }
-                            else if (hit.collider.gameObject.name == "Z")
-                            {
-                                arWorldMapController.Log("Z");
-                                axisMove = "Z";
-                                fakePlane = new Plane(Vector3.up, hit.point);
-                            }
-                            moveChild.transform.position = spawnedObject.transform.position;
-
-
                             return;
                         }
 
+
+                        var hasHit = Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, selectedLayers);
+                        if (hasHit)
+                        {
+
+                            if (!pressAndHold)
+                            {
+                                pressPosition = spawnedObject.transform.position;
+                                pressAndHold = true;
+                                if (hit.collider.gameObject.name == "X")
+                                {
+                                    arWorldMapController.Log("X");
+                                    axisMove = "X";
+                                    fakePlane = new Plane(Vector3.up, hit.point);
+                                }
+                                else if (hit.collider.gameObject.name == "Y")
+                                {
+                                    arWorldMapController.Log("Y");
+                                    axisMove = "Y";
+
+                                    //Get camera rotation around y-axis 
+                                    float cameraRotationY = Camera.main.transform.eulerAngles.y;
+                                    Vector3 planeDir = Quaternion.Euler(0, cameraRotationY, 0) * Vector3.forward;
+
+                                    fakePlane = new Plane(planeDir, hit.point);
+                                }
+                                else if (hit.collider.gameObject.name == "Z")
+                                {
+                                    arWorldMapController.Log("Z");
+                                    axisMove = "Z";
+                                    fakePlane = new Plane(Vector3.up, hit.point);
+                                }
+                                moveChild.transform.position = spawnedObject.transform.position;
+
+
+                                return;
+                            }
+
+                        }
                     }
 
                     // arWorldMapController.Log("position");
 
                     if (m_RaycastManager.Raycast(position, s_Hits, TrackableType.PlaneWithinPolygon))
                     {
+                        notMoveTool = true;
                         Pose hitPose = s_Hits[0].pose;
                         wallNormalUp = s_Hits[0].pose.up;
 
