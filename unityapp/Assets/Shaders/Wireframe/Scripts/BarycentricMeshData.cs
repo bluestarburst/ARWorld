@@ -47,7 +47,7 @@ public class BarycentricMeshData : MonoBehaviour
     private GameObject[] meshObjects = new GameObject[0];
     private bool meshLoaded = false;
 
-    private MaterialPropertyBlock myBlock;
+    private MaterialPropertyBlock myBlock = new MaterialPropertyBlock();
     private MeshRenderer[] renderers = new MeshRenderer[0];
     private Material sharedMat;
 
@@ -158,7 +158,6 @@ public class BarycentricMeshData : MonoBehaviour
 
             foreach (MeshRenderer renderer in renderers)
             {
-
 
                 renderer.GetPropertyBlock(myBlock);
                 myBlock.SetFloat("_Opacity", opacity);
