@@ -23,9 +23,6 @@
         },
         {
             "m_Id": "08a8cc14f42b4c53b8e519fa1ffc8231"
-        },
-        {
-            "m_Id": "8a8ac18830ce474490b7b5b2a25bd732"
         }
     ],
     "m_Keywords": [],
@@ -3635,33 +3632,6 @@
 }
 
 {
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "8a8ac18830ce474490b7b5b2a25bd732",
-    "m_Guid": {
-        "m_GuidSerialized": "eeb80d94-f892-4db6-ad6b-430e544902fb"
-    },
-    "m_Name": "Timer",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Timer",
-    "m_DefaultReferenceName": "_Timer",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 0.0,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
-    }
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "8afc86fa1876608c96111815958d3202",
@@ -3863,9 +3833,6 @@
         },
         {
             "m_Id": "08a8cc14f42b4c53b8e519fa1ffc8231"
-        },
-        {
-            "m_Id": "8a8ac18830ce474490b7b5b2a25bd732"
         }
     ]
 }

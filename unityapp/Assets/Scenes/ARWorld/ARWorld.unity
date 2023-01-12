@@ -1065,6 +1065,7 @@ GameObject:
   - component: {fileID: 1352058504}
   - component: {fileID: 1352058506}
   - component: {fileID: 1352058507}
+  - component: {fileID: 1352058508}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -1176,6 +1177,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AnchorPrefab: {fileID: 0}
+--- !u!114 &1352058508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352058499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beae32e1912b34424bb5f15077ed8fba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ParticipantPrefab: {fileID: 8182956443887353202, guid: 7ab75e6d1363a42c883343aef7bc3596,
+    type: 3}
 --- !u!1 &1360589905
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,6 +1803,7 @@ MonoBehaviour:
     type: 3}
   chunksToLoad: 0
   bay: {fileID: 138682564}
+  collab: {fileID: 1814830393}
 --- !u!4 &1751548351
 Transform:
   m_ObjectHideFlags: 0
@@ -1814,6 +1830,7 @@ GameObject:
   - component: {fileID: 1814830392}
   - component: {fileID: 1814830391}
   - component: {fileID: 1814830390}
+  - component: {fileID: 1814830393}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -1863,6 +1880,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1814830393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814830389}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c1d01ad3d754ef788a30c12b724743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ServiceType: test
 --- !u!1 &1818641020
 GameObject:
   m_ObjectHideFlags: 0
