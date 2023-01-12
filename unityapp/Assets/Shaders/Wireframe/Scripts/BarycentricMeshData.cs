@@ -177,7 +177,7 @@ public class BarycentricMeshData : MonoBehaviour
                 myBlock.SetFloat("_Opacity", opacity);
                 myBlock.SetFloat("_Radius", radius);
                 myBlock.SetVector("_Pos", renderPosition);
-                myBlock.SetInteger("_ShowMesh", (showMesh ? 1 : 0));
+                myBlock.SetFloat("_ShowMesh", (showMesh ? 1.0f : 0.0f));
                 renderer.SetPropertyBlock(myBlock);
             }
 
