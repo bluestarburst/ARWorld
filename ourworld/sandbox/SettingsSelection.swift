@@ -15,6 +15,7 @@ struct SettingsSelection: View {
     
     @Binding var disabled: Bool
     @Binding var showMesh: Bool
+    @Binding var showLogs: Bool
     
     @State private var scrollWidth = CGFloat.zero
     
@@ -46,15 +47,7 @@ struct SettingsSelection: View {
                                 .foregroundColor(type == "general" ? .pink : .white)
                                 .padding(.horizontal,10)
                                 .disabled(type == "general")
-                                
-                                Button(action: {withAnimation{type="posters"}}, label: {
-                                    Image(systemName: "doc.fill")
-                                })
-                                .imageScale(.medium)
-                                .font(.title)
-                                .foregroundColor(type == "posters" ? .pink : .white)
-                                .padding(.horizontal,10)
-                                .disabled(type == "posters")
+                        
                                 
                                 Button(action: {withAnimation{type="info"}}, label: {
                                     Image(systemName: "info.circle.fill")
@@ -72,15 +65,32 @@ struct SettingsSelection: View {
                     }.frame(height: 40)
                     
                     ScrollView {
-                        Toggle("Show Mesh", isOn: $showMesh)
-                            .onChange(of: showMesh) { change in
-                                if (change) {
-                                    UnityBridge.getInstance().api.changeSettings(change: "mesh-on")
-                                } else {
-                                    UnityBridge.getInstance().api.changeSettings(change: "mesh-off")
+                        if (type == "general") {
+                            Toggle("Show Mesh", isOn: $showMesh)
+                                .onChange(of: showMesh) { change in
+                                    if (change) {
+                                        UnityBridge.getInstance().api.changeSettings(change: "mesh-on")
+                                    } else {
+                                        UnityBridge.getInstance().api.changeSettings(change: "mesh-off")
+                                    }
                                 }
-                            }
-                            .padding (30)
+                                .padding (.horizontal,30)
+                                .padding (.vertical,15)
+                            Toggle("Show Logs (for nerds)", isOn: $showMesh)
+                                .onChange(of: showLogs) { change in
+                                    if (change) {
+                                        UnityBridge.getInstance().api.changeSettings(change: "logs-on")
+                                    } else {
+                                        UnityBridge.getInstance().api.changeSettings(change: "logs-off")
+                                    }
+                                }
+                                .padding (.horizontal,30)
+                                .padding (.vertical,15)
+                        } else if (type == "info") {
+                            Text("       App made by Bryant Hargreaves with the use of Unity AR Foundation and SwiftUI! This stuff take up a lot of storage so plz gimme money ;-; Also, I'm looking for a job so if u wanna hire me, hit me up :D")
+                                .padding (.horizontal,30)
+                                .padding (.vertical,15)
+                        }
                     }
                 }.gesture(
                     DragGesture()

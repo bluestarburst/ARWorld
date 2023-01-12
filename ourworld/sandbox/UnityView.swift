@@ -37,6 +37,7 @@ struct UnityView: View {
     
     @State private var showSettings = false
     @State private var showMesh = false
+    @State private var showLogs = true
     
     var body: some View {
         ZStack {
@@ -311,7 +312,7 @@ struct UnityView: View {
                 
                 ZStack {
 
-                    SettingsSelection(disabled: $showSettings, showMesh: $showMesh)
+                    SettingsSelection(disabled: $showSettings, showMesh: $showMesh, showLogs: $showLogs)
                     
                 }
                 .transition(.bottomAndFade)
@@ -336,6 +337,7 @@ struct UnityView: View {
             api.show()
             manager.sendDat = {
                 api.api.updateVars(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
+                api.api.changeSettings(change: (showLogs ? "logs-on" : "logs-off"))
             }
             DataHandler.shared.setAddingObj = {
                 addingObj = DataHandler.shared.addingObj
