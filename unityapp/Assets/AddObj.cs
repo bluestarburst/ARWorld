@@ -139,7 +139,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        private GameObject moveChild;
+        private GameObject moveChild = null;
         async void AddPoster(string type, string user, string id)
         {
             isAdding = true;
@@ -639,13 +639,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 arWorldMapController.OnSaveButton();
             }
 
-            if (change.Equals("move"))
+            if (moveChild != null)
             {
-                moveChild.SetActive(true);
-            }
-            else
-            {
-                moveChild.SetActive(false);
+                if (change.Equals("move"))
+                {
+                    moveChild.SetActive(true);
+                }
+                else
+                {
+                    moveChild.SetActive(false);
+                }
             }
 
             if (Input.touchCount < 1 && !Input.GetMouseButton(0))
@@ -654,7 +657,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 locked = false;
                 pressAndHold = false;
                 notMoveTool = false;
-                moveChild.transform.position = spawnedObject.transform.position;
+                if (moveChild != null)
+                {
+                    moveChild.transform.position = spawnedObject.transform.position;
+                }
                 return;
             }
 
@@ -1070,7 +1076,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         {
                             spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f * ratioX, 1, deltaMagnitudeDiff * 0.001f * ratioY);
                         }
-                        
+
                     }
                 }
             }
