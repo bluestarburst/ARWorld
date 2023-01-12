@@ -36,7 +36,7 @@ struct UnityView: View {
     @State private var mapOffset = CGFloat(-100)
     
     @State private var showSettings = false
-    
+    @State private var showMesh = false
     
     var body: some View {
         ZStack {
@@ -311,7 +311,7 @@ struct UnityView: View {
                 
                 ZStack {
 
-                    SettingsSelection(disabled: $showSettings)
+                    SettingsSelection(disabled: $showSettings, showMesh: $showMesh)
                     
                 }
                 .transition(.bottomAndFade)
