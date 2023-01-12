@@ -639,7 +639,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 arWorldMapController.OnSaveButton();
             }
 
-
+            if (change.Equals("move")) {
+                moveChild.SetActive(true);
+            } else {
+                moveChild.SetActive(false);
+            }
 
             if (Input.touchCount < 1 && !Input.GetMouseButton(0))
             {
@@ -657,7 +661,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (change.Equals("move"))
             {
-                moveChild.SetActive(true);
                 // if touch is on screen
                 if (position.x > 0 && position.x < Screen.width && position.y > 0 && position.y < Screen.height)
                 {
@@ -843,7 +846,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else if (change.Equals("rotate"))
             {
-                moveChild.SetActive(false);
                 if (rotating == false)
                 {
                     rotating = true;
@@ -1038,7 +1040,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else if (change.Equals("scale"))
             {
-                moveChild.SetActive(false);
+                
                 // scale object using two finger pinch
                 if (spawnedObject != null)
                 {
