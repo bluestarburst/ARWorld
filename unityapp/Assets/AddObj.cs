@@ -635,6 +635,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         arWorldMapController.anchors.Add(anchor.trackableId.ToString(), anchor);
                     }
                     currentChunk = null;
+                    spawnedObject = null;
                 }
                 arWorldMapController.OnSaveButton();
             }
