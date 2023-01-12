@@ -200,7 +200,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             return output.ToArray();
         }
 
-
+        private int trys = 0;
 #if UNITY_IOS
         IEnumerator Save()
         {
@@ -208,6 +208,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (chunks.Count < chunksToLoad)
             {
                 Log("Not enough chunks loaded to save.");
+                trys += 1;
+                if (trys > 2) {
+                    Log("Loading Backup");
+                    
+                }
                 yield break;
             }
 
