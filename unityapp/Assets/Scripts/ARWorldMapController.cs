@@ -138,6 +138,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public BarycentricMeshData bay;
 
+        public CollaborativeSession collab;
+
         /// <summary>
         /// Create an <c>ARWorldMap</c> and save it to disk.
         /// </summary>
@@ -330,6 +332,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
+            collab.serviceType = newId;
+            collab.enabled = true;
+
             Console.WriteLine("Closest map is " + newId + " with error " + error);
             Log("Loading map " + newId);
 
@@ -403,6 +408,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     { "centerChunkId", centerChunkId },
                 });
                 worldMapId = docRef.Id;
+                collab.serviceType = docRef.Id;
+                collab.enabled = true;
                 Debug.Log("Added document with ID: " + docRef.Id);
             }
             else
@@ -519,7 +526,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Debug.Log("added");
                 foreach (var anchor in obj.added)
                 {
-                    if (firstLoad) {
+                    if (firstLoad)
+                    {
                         bay.loadedMap();
                         firstLoad = false;
                     }
@@ -537,7 +545,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     Log("added chunk to chunks");
                     anchors.Add(anchor.trackableId.ToString(), anchor);
 
-        
+
 
                     if (centerChunk == null && centerChunkId == anchor.trackableId.ToString())
                     {

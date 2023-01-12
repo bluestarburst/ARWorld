@@ -36,7 +36,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnEnable()
         {
-    #if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
             var subsystem = GetSubsystem();
             if (!ARKitSessionSubsystem.supportsCollaboration || subsystem == null)
             {
@@ -44,14 +44,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
+            m_ARSession = GetComponent<ARSession>();
+            m_MCSession = new MCSession(SystemInfo.deviceName, m_ServiceType);
             subsystem.collaborationRequested = true;
             m_MCSession.Enabled = true;
-    #else
+#else
             DisableNotSupported("Collaborative sessions are an ARKit 3 feature; This platform does not support them.");
-    #endif
+#endif
         }
 
-    #if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
         MCSession m_MCSession;
 
         ARKitSessionSubsystem GetSubsystem()
@@ -60,12 +62,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return null;
 
             return m_ARSession.subsystem as ARKitSessionSubsystem;
-        }
-
-        void Awake()
-        {
-            m_ARSession = GetComponent<ARSession>();
-            m_MCSession = new MCSession(SystemInfo.deviceName, m_ServiceType);
         }
 
         void OnDisable()
@@ -139,6 +135,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             m_MCSession.Dispose();
         }
-    #endif
+#endif
     }
 }
