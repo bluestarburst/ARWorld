@@ -1,0 +1,69 @@
+.FilesDragAndDroparea {
+    width: 400px;
+    height: 200px;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+    font-size: 24px;
+    color: #555555;
+    border: 2px #c3c3c3 dashed;
+    border-radius: 12px;
+
+}
+
+.areaicon {
+    font-size: 32px;
+    margin-top: 10px;
+}
+
+.FilesDragAndDropplaceholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+    background-color: #e7e7e7;
+    border-radius: 12px;
+    color: #7f8e99;
+    font-size: 24px;
+    opacity: .9;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.FilesDragAndDrop {
+    position: relative;
+    cursor: pointer;
+
+    .FilesDragAndDropplaceholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-flow: column nowrap;
+        background-color: #e7e7e7;
+        border-radius: 12px;
+        border-color: #1483d3;
+        color: #1483d3;
+        font-size: 24px;
+        opacity: .9;
+        text-align: center;
+        line-height: 1.4;
+    }
+}
