@@ -109,10 +109,6 @@ function Canv(props) {
         } else {
             // the file is a zipped folder with a gltf file inside
             var zip = new JSZip();
-            zip.loadAsync(file).then(function (zip) {
-                zip.file("model.gltf").async("string").then(function (data) {
-                    var gltf = JSON.parse(data);
-                    validateBytes(new Uint8Array(data)).then((
         }
 
     };

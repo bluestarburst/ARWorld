@@ -5,11 +5,8 @@ import { RecaptchaVerifier, GoogleAuthProvider, signInWithRedirect, TwitterAuthP
 
 // import firebase from "firebase";
 
-import google from "../assets/imgs/google-black.png";
-import twitter from "../assets/imgs/twitter-black.png";
 import cube from "../assets/imgs/cube.gif";
 
-import back from "../assets/imgs/back.png";
 import React, { useState, useRef, useEffect } from "react";
 
 const googleProvider = new GoogleAuthProvider();
