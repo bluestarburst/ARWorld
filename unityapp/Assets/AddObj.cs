@@ -562,6 +562,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // check if the chunk already exists
                     isAdding = false;
+
+                    // increment the number of creations by one
+                    arWorldMapController.db.Collection(type).Document(id).UpdateAsync("creations", FieldValue.Increment(1));
+
                     if (arWorldMapController.chunksPos.ContainsKey(chunkPos[0] + "-" + chunkPos[1]))
                     {
                         Destroy(currentChunk);
