@@ -725,6 +725,40 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                         break;
                                 }
                                 spawnedObject.transform.position = moveChild.transform.position;
+
+                                // get distance between spawned object and center chunk
+                                float distanceToCenterChunks = Vector3.Distance(spawnedObject.transform.position, centerChunk.transform.position);
+
+                                // get components of distance to center chunk in the direction of center chunk forward
+                                float distanceToCenterChunkForwards = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.forward);
+
+                                // get components of distance to center chunk in the direction of center chunk right
+                                float distanceToCenterChunkRights = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.right);
+
+                                // round down to nearest 1 unit
+                                int roundedDistanceToCenterChunkForwards = (int)Math.Round(distanceToCenterChunkForwards);
+                                int roundedDistanceToCenterChunkRights = (int)Math.Round(distanceToCenterChunkRights);
+
+                                // convert to coordinates relative to the world map
+
+                                Vector3 centerChunkCoordinatess = centerChunk.transform.position;
+
+                                if (currentChunk == null)
+                                {
+                                    currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinatess + centerChunk.transform.forward * roundedDistanceToCenterChunkForwards + centerChunk.transform.right * roundedDistanceToCenterChunkRights, centerChunk.transform.rotation);
+                                    chunkPos[0] = roundedDistanceToCenterChunkForwards;
+                                    chunkPos[1] = roundedDistanceToCenterChunkRights;
+                                }
+                                else
+                                {
+                                    currentChunk.transform.position = centerChunkCoordinatess + centerChunk.transform.forward * roundedDistanceToCenterChunkForwards + centerChunk.transform.right * roundedDistanceToCenterChunkRights;
+                                    currentChunk.transform.rotation = centerChunk.transform.rotation;
+                                    chunkPos[0] = roundedDistanceToCenterChunkForwards;
+                                    chunkPos[1] = roundedDistanceToCenterChunkRights;
+                                }
+
+                                Vector3 eulerRots = spawnedObject.transform.rotation.eulerAngles;
+                                spawnedObject.transform.rotation = Quaternion.Euler(new Vector3(Mathf.Round(eulerRots.x / roundTo) * roundTo, Mathf.Round(eulerRots.y / roundTo) * roundTo, Mathf.Round(eulerRots.z / roundTo) * roundTo));
                             }
                             return;
                         }
