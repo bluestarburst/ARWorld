@@ -15,6 +15,9 @@ import { OBJExporter } from 'three/examples/jsm/exporters/OBJExporter'
 
 import { useControls, button, folder } from 'leva'
 
+// import computeBoundingSphere function from three.js
+import { computeBoundingSphere } from 'three/src/math/Sphere.js'
+
 import { OrbitControls } from '@react-three/drei'
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from "three";
@@ -38,6 +41,7 @@ import { Button, TextField } from '@mui/material';
 import { WebIO } from '@gltf-transform/core';
 import { DracoMeshCompression, KHRONOS_EXTENSIONS } from '@gltf-transform/extensions';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { Mesh } from 'three';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCA6g-FDnRDgmR9zQCuIOOuKifEPkHnAhE",
@@ -155,15 +159,8 @@ function Canv(props) {
 
     const link = document.createElement('a');
 
-    useState(() => {
-        console.log("loading model")
-        console.log(model)
-        if (model != null) {
-            setScreenshot(true)
-        }
-    })
-
     const onUpload = (files) => {
+        setRendered(false)
         var file = files[0]
         setFile(file)
         setFileName(file.name.substring(0, file.name.lastIndexOf('.')));
@@ -254,6 +251,7 @@ function Canv(props) {
     }
 
     const sceneRef = useRef();
+    const scaleRef = useRef();
 
     const [scene, setScene] = useState(null);
 
@@ -380,6 +378,34 @@ function Canv(props) {
         }, { binary: true, trs: false, onlyVisible: false, truncateDrawRange: true, embedImages: true });
     };
 
+    const geomUpper = new THREE.SphereGeometry(1, 28, 28)
+    const geomLower = new THREE.SphereGeometry(0.3, 28, 28)
+    const orange = new THREE.MeshLambertMaterial({ color: "orange" })
+    const orange2 = new THREE.MeshLambertMaterial({ color: "orange", transparent: true, opacity: 0.1 })
+    const pink2 = new THREE.MeshLambertMaterial({ color: "pink", transparent: true, opacity: 0.5 })
+
+    const [rendered, setRendered] = useState(false)
+
+    function onceRendered() {
+
+        var mroot = scaleRef.current;
+        var bbox = new THREE.Box3().setFromObject(mroot);
+        var cent = bbox.getCenter(new THREE.Vector3());
+        var size = bbox.getSize(new THREE.Vector3());
+
+        //Rescale the object to normalized space
+        var maxAxis = Math.max(size.x, size.y, size.z);
+        mroot.scale.multiplyScalar(1.0 / maxAxis);
+        bbox.setFromObject(mroot);
+        bbox.getCenter(cent);
+        bbox.getSize(size);
+        //Reposition to 0,halfY,0
+        mroot.position.copy(cent).multiplyScalar(-1);
+        // mroot.position.y -= (size.y * 0.5);
+        setRendered(true)
+        setScreenshot(true)
+    }
+
     return (
         <div className='page'>
             {model != null ? <div className='page'>
@@ -396,9 +422,13 @@ function Canv(props) {
 
                         <Suspense fallback={null}>
                             {/* <group ref={gltf} ></group> */}
-                            <group ref={sceneRef}>
-                                <primitive object={model} onload={console.log} />
+                            <group ref={sceneRef} onAfterRender={onceRendered} >
+                                <group ref={scaleRef}>
+                                    <Model object={model} onRender={onceRendered} rendered={rendered} />
+                                </group>
+
                             </group>
+
 
                             {/* <primitive group={gltf} /> */}
                         </Suspense>
@@ -451,14 +481,21 @@ function Canv(props) {
         </div>
     );
 
-    // return (
-    //     <Canvas>
-    //         <ambientLight />
-    //         <pointLight position={[10, 10, 10]} />
-    //         <Box position={[-1.2, 0, 0]} />
-    //         <Box position={[1.2, 0, 0]} />
-    //     </Canvas>
-    // )
+}
+
+function Model(props) {
+
+    useEffect(() => {
+        if (!props.rendered) {
+            props.onRender()
+        }
+    })
+
+    return (
+        <Suspense>
+            {props.object != null ? <primitive object={props.object} /> : <></>}
+        </Suspense>
+    )
 }
 
 function Page(props) {
