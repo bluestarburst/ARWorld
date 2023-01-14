@@ -268,7 +268,7 @@ function Canv(props) {
         const arrayBuffer = await io.writeBinary(document); // ArrayBuffer
 
         // create firestore document
-        var docs = addDoc(collection(db, "objects"), {
+        var docs = await addDoc(collection(db, "objects"), {
             name: fileName,
             user: auth.currentUser.uid,
             creations: 0,
