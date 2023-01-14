@@ -87,6 +87,8 @@ function Scene(props) {
 
                 var thing = gl.domElement.toDataURL('image/jpg').replace('image/jpg', 'image/octet-stream');
 
+
+
                 var img = new Image();
                 img.src = thing;
                 img.onload = function () {
@@ -98,6 +100,17 @@ function Scene(props) {
                     var dataURL = canvas.toDataURL('image/jpg');
                     console.log(dataURL);
                     props.setThumbnail(dataURL);
+
+                    // turn the dataURL into a blob
+                    fetch(dataURL)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            // create a file from the blob
+                            const file = new File([blob], "thumbnail.jpg", { type: 'image/jpg' });
+                            console.log(file)
+                            props.setThumbnailData(file);
+                        });
+
                 }
 
                 console.log(thing);
@@ -136,6 +149,7 @@ function Canv(props) {
     const [gltf, setGltf] = useState(null);
 
     const [thumbnail, setThumbnail] = useState(null);
+    const [thumbnailData, setThumbnailData] = useState(null);
 
     const [screenshot, setScreenshot] = useState(false);
 
@@ -312,7 +326,8 @@ function Canv(props) {
 
             //upload thumbnail to same locataion as object
             var storageRef2 = ref(storage, "users/" + auth.currentUser.uid + "/objects/" + docRef.id + ".jpg");
-            var uploadTask2 = uploadBytesResumable(storageRef2, thumbnail);
+
+            var uploadTask2 = uploadBytesResumable(storageRef2, thumbnailData);
             uploadTask2.on('state_changed',
                 (snapshot) => {
                     // Observe state change events such as progress, pause, and resume
@@ -352,9 +367,6 @@ function Canv(props) {
     }
 
     const handleExport = () => {
-        // const exporter = new OBJExporter();
-        // const result = exporter.parse(sceneRef.current);
-        // saveString(result, "object.obj");
 
         const exporter = new GLTFExporter();
         exporter.parse(sceneRef.current || scene, (gltf) => {
@@ -373,7 +385,7 @@ function Canv(props) {
             {model != null ? <div className='page'>
                 <Canvas gl={{ preserveDrawingBuffer: true }} camera={{ position: [-3, 3, -3] }} >
 
-                    <Scene setScreenshot={setScreenshot} screenshot={screenshot} setThumbnail={setThumbnail} thumbnail={thumbnail} setScene={setScene}>
+                    <Scene setScreenshot={setScreenshot} screenshot={screenshot} setThumbnail={setThumbnail} thumbnail={thumbnail} setScene={setScene} setThumbnailData={setThumbnailData}>
                         <ambientLight />
                         <pointLight position={[10, 10, 10]} />
                         <OrbitControls />
