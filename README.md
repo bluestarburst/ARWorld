@@ -1,4 +1,4 @@
 # AR is epic
 that is all
 
-also, the website is [here]([url](https://bluestarburst.github.io/ARWorld/)){:target="_blank"}
+also, the website is [here](https://bluestarburst.github.io/ARWorld/){:target="_blank"}
