@@ -5,6 +5,7 @@
 .DS_Store
 UnityBuild/
 web
+docs
 
 # Xcode
 #
