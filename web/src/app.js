@@ -311,7 +311,7 @@ function Canv(props) {
             );
 
             //upload thumbnail to same locataion as object
-            var storageRef2 = ref(storage, "users/" + auth.currentUser.uid + "/objects/" + docRef.id + ".glb");
+            var storageRef2 = ref(storage, "users/" + auth.currentUser.uid + "/objects/" + docRef.id + ".jpg");
             var uploadTask2 = uploadBytesResumable(storageRef2, thumbnail);
             uploadTask2.on('state_changed',
                 (snapshot) => {
@@ -336,6 +336,8 @@ function Canv(props) {
         }).catch((error) => {
             console.error("Error adding document: ", error);
         });
+
+        setModel(null);
 
         // Save the compressed GLB.
         var blobs = new Blob([arrayBuffer], { type: 'application/octet-stream' })
