@@ -37,7 +37,7 @@ struct UnityView: View {
     
     @State private var showSettings = false
     @State private var showMesh = false
-    @State private var showLogs = true
+    @State private var showLogs = false
     
     var body: some View {
         ZStack {
@@ -54,7 +54,7 @@ struct UnityView: View {
                                     .padding(10)
                                     .background(Color(.white).opacity(0.1))
                                     .clipShape(Circle())
-                                    .padding(.vertical,5)
+                                    .padding(.vertical,15)
                             })
                             Spacer()
                         }

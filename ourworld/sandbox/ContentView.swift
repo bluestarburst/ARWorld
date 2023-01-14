@@ -47,11 +47,12 @@ struct ContentView: View {
                         HStack {
                             Spacer()
                         }
-                        Text("\(offset)")
+                        
+                        FindView()
                             
                         Spacer()
                     }
-                    .background(.yellow)
+                    .background(.black)
                     .offset(x: offset)
                     .onAppear {
                         normal = -geometry.size.width
