@@ -268,7 +268,7 @@ function Canv(props) {
         const arrayBuffer = await io.writeBinary(document); // ArrayBuffer
 
         // create firestore document
-        var docs = await addDoc(collection(db, "objects"), {
+        var docs = addDoc(collection(db, "objects"), {
             name: fileName,
             user: auth.currentUser.uid,
             creations: 0,
@@ -283,7 +283,7 @@ function Canv(props) {
                 id: docRef.id
             })
 
-            updateDoc(docs, {
+            updateDoc(doc(db, "objects", docRef.id), {
                 id: docRef.id
             })
 
@@ -342,7 +342,7 @@ function Canv(props) {
 
         link.href = URL.createObjectURL(blobs);
         link.download = "scene.glb";
-        link.click();
+        // link.click();
     }
 
     function saveString(text, filename) {
