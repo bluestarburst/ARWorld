@@ -8,9 +8,9 @@
     flex-flow: column nowrap;
     font-size: 24px;
     color: #555555;
-    border: 2px #c3c3c3 dashed;
+    border: 2px #595959 dashed;
     border-radius: 12px;
-
+    text-align: center;
 }
 
 .areaicon {
@@ -31,11 +31,12 @@
     align-items: center;
     justify-content: center;
     flex-flow: column nowrap;
-    background-color: #e7e7e7;
+    background-color: #909090;
     border-radius: 12px;
-    color: #7f8e99;
+    color: #555555;
+    border: 2px #218a3d dashed;
     font-size: 24px;
-    opacity: .9;
+    opacity: 1;
     text-align: center;
     line-height: 1.4;
 }
@@ -59,8 +60,8 @@
         flex-flow: column nowrap;
         background-color: #e7e7e7;
         border-radius: 12px;
-        border-color: #1483d3;
-        color: #1483d3;
+        border: 2px #218a3d dashed;
+        color: #555555;
         font-size: 24px;
         opacity: .9;
         text-align: center;

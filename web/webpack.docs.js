@@ -1,12 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 function createCopy(pathW = '') {
     return ({
         entry: './src/app.js',
         output: {
-            path: path.resolve(__dirname, 'docs' + pathW),
+            path: path.resolve(__dirname, 'docs/public' + pathW),
             filename: 'appBundle.js',
         },
         module: {
@@ -33,8 +33,16 @@ function createCopy(pathW = '') {
             new HtmlWebpackPlugin({
                 filename: 'index.html',
                 template: path.resolve(__dirname, './public/index.html'),
+            }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    { from: 'assets' }
+                ]
             })
-        ]
+        ],
+        experiments: {
+            topLevelAwait: true
+        }
     })
 }
 

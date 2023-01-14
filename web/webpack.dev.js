@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 function createCopy(pathW = '') {
     return ({
@@ -32,8 +33,16 @@ function createCopy(pathW = '') {
             new HtmlWebpackPlugin({
                 filename: 'index.html',
                 template: path.resolve(__dirname, './public/index.html'),
+            }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    { from: 'assets' }
+                ]
             })
-        ]
+        ],
+        experiments: {
+            topLevelAwait: true
+        }
     })
 }
 

@@ -7,6 +7,7 @@ import { RecaptchaVerifier, GoogleAuthProvider, signInWithRedirect, TwitterAuthP
 
 import cube from "../assets/imgs/cube.gif";
 
+import back from "../assets/imgs/back.png";
 import React, { useState, useRef, useEffect } from "react";
 
 const googleProvider = new GoogleAuthProvider();
@@ -27,19 +28,23 @@ export default function Login(props) {
 
         <div className="login" >
             <LoginModal show={showLoginModal} dismiss={onDismiss} app={props.app} auth={props.auth} />
-
             <img src={back} className="back" />
 
-            <div className="inline login-header">
-                <h1><b>OurWorlds!</b></h1>
+            <div className="login front">
+
+                <div className="inline login-header">
+                    <h1><b>OurWorlds!</b></h1>
+                </div>
+
+                <h5>Join a community that brings worlds together </h5>
+
+                <div app={props.app} onClick={() => { setShowLoginModal(true) }} className="third-party google">
+                    {/* <img src={google} alt="Google" /> */}
+                    <p>Sign in with a Phone Number</p>
+                </div>
             </div>
 
-            <h5>Join a community that brings worlds together </h5>
 
-            <div app={props.app} onClick={() => { setShowLoginModal(true) }} className="third-party google">
-                {/* <img src={google} alt="Google" /> */}
-                <p>Sign in with a Phone Number</p>
-            </div>
 
             {/* <br />
 
@@ -155,6 +160,9 @@ function LoginModal(props) {
 
     return (
         <div className={props.show ? "login-modal" : "login-modal none"} >
+            <div className="back2" onClick={props.dismiss}>
+
+            </div>
             <div className="login-modal-content" id="login-modal" onClick={_ => { }}>
                 <h1>Sign In</h1>
                 {!isAuth ? <>
@@ -178,9 +186,7 @@ function LoginModal(props) {
                     </Button>
                 </>}
             </div>
-            <div className="back" onClick={props.dismiss}>
 
-            </div>
         </div>
     )
 

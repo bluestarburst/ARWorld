@@ -12,11 +12,14 @@ html {
   /* scroll-behavior: smooth !important; */
   overflow-x: hidden;
   height: 100%;
+  background-color: gray !important;
 }
 
 body {
   height: 100%;
   width: 100%;
+
+  background-color: gray !important;
 }
 
 h1 {
@@ -30,14 +33,68 @@ p {
 
 .back {
   position: absolute;
-  z-index: -1;
   width: 100vw;
   height: 100vh;
+  z-index: -0.5;
   object-fit: cover;
 }
 
+.back2 {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  object-fit: cover;
+}
+
+.front {
+  z-index: 1;
+}
+
+.third-party {
+  color: black;
+  /* width: 100%; */
+  /* padding: 0 2rem; */
+  min-width: 275px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 1rem; */
+  background-color: white;
+  border-radius: 100px;
+  /* justify-content: space-between; */
+  padding: 0.5rem;
+  gap: 1rem;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.third-party img {
+  height: 1.75rem;
+}
+
+.third-party p {
+  /* width: 100%; */
+  margin: 0;
+}
+
+.third-party:hover {
+  cursor: pointer;
+  background-color: rgb(215, 215, 215);
+}
+
+.google {
+  /* background: linear-gradient(
+    to bottom,
+    rgb(255, 123, 113) 0%,
+    rgb(252, 59, 123) 100%
+  ); */
+  border-color: rgb(255, 69, 69);
+}
+
 .none {
-  display: none;
+  display: none !important;
 }
 
 .inline {
@@ -112,7 +169,7 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 100;
 
   overflow: hidden;
 }
@@ -221,4 +278,73 @@ p {
   min-height: 100px;
   width: 100%;
   /* background-color: blue; */
+}
+
+.screenshot {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 2px rgb(85, 85, 85) solid;
+  pointer-events: none;
+  border-radius: 24px;
+}
+
+.instructions span {
+  width: 1rem !important;
+  height: 1rem !important;
+  transform: translateY(1.5rem);
+  color: rgb(85, 85, 85);
+  margin-right: 0.5rem;
+}
+
+.instructions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 2rem;
+}
+
+.preview {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.preview img {
+  width: 200px;
+  height: 200px;
+  border-radius: 24px;
+  border: 2px rgb(85, 85, 85) solid;
+  margin-bottom: 1rem;
+  background-color: rgba(0, 0, 0, 0.248);
+}
+
+.hidden {
+  opacity: 0;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(255, 80, 153) !important;
+  cursor: pointer;
+}
+
+.upload {
+  position: absolute;
+  bottom: 0;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 2;
+  margin: 2rem;
+  color: white;
 }
