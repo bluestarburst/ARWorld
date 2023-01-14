@@ -2,11 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-function createCopy(pathW = '') {
+function createCopy() {
     return ({
         entry: './src/app.js',
         output: {
-            path: path.resolve(__dirname, 'docs/public' + pathW),
+            path: path.resolve(__dirname, '../docs'),
             filename: 'appBundle.js',
         },
         module: {
