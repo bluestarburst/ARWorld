@@ -266,6 +266,8 @@ class DataHandler: NSObject, ObservableObject {
         }
     }
     
+    
+    
     func readImage(id: String) -> Bool {
         if let path = documentDirectoryPath() {
             let jpgImageURL = path.appendingPathComponent(id + ".jpg")
@@ -280,6 +282,47 @@ class DataHandler: NSObject, ObservableObject {
             print(jpgImage)
         }
         return false
+    }
+    
+    var lastDoc: DocumentSnapshot? = nil
+    var lastType: String? = nil
+    
+    var addNextTop: (_ user: String, _ id: String, _ url: URL) -> Void = {_,_,_  in}
+    
+    func getTopThumbs(type: String) {
+        if (type != self.lastType) {
+            lastDoc = nil
+        }
+        self.lastType = type
+        db.collection(type).order(by: "created").limit(to: 25).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    self.lastDoc = document
+                    print("\(document.documentID) => \(document.data())")
+                    let usr = document.data()["user"] ?? ""
+                    self.getFromStorage(user: usr as! String, id: document.documentID, type: type)
+                }
+            }
+        }
+    }
+    
+    func getFromStorage(user: String, id: String, type: String) {
+        let storageRef = self.storage.reference().child("users/" + user + "/" + type + "/" + id + ".jpg")
+        storageRef.downloadURL(completion: { url, error in
+            guard let url = url, error == nil else {
+                let storageRef2 = self.storage.reference().child("users/" + user + "/" + type + "/" + id + ".png")
+                storageRef2.downloadURL(completion: { url2, error2 in
+                    guard let url2 = url2, error2 == nil else {
+                        return
+                    }
+                    self.addNextTop(user,id,url2)
+                })
+                return
+            }
+            self.addNextTop(user,id,url)
+        })
     }
     
     

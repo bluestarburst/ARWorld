@@ -40,7 +40,7 @@ struct ObjSelection: View {
                         ScrollView(.horizontal, showsIndicators: true) {
                             HStack {
                                 Button(action: {withAnimation{type="objects"}}, label: {
-                                    Image(systemName: "moon.stars.fill")
+                                    Image(systemName: "cube.fill")
                                 })
                                 .imageScale(.medium)
                                 .font(.title)
@@ -48,23 +48,6 @@ struct ObjSelection: View {
                                 .padding(.horizontal,10)
                                 .disabled(type == "objects")
                                 
-                                Button(action: {withAnimation{type="posters"}}, label: {
-                                    Image(systemName: "doc.fill")
-                                })
-                                .imageScale(.medium)
-                                .font(.title)
-                                .foregroundColor(type == "posters" ? .pink : .white)
-                                .padding(.horizontal,10)
-                                .disabled(type == "posters")
-                                
-                                Button(action: {withAnimation{type="images"}}, label: {
-                                    Image(systemName: "photo.fill")
-                                })
-                                .imageScale(.medium)
-                                .font(.title)
-                                .foregroundColor(type == "images" ? .pink : .white)
-                                .padding(.horizontal,10)
-                                .disabled(type == "images")
                             }
                             .padding(.horizontal,25)
                             .frame(minWidth: geometry.size.width)
@@ -73,32 +56,6 @@ struct ObjSelection: View {
                     }.frame(height: 40)
                     
                     ScrollView {
-                        Button(action: {showImagePicker = true}, label: {
-                            HStack {
-                                Spacer()
-                                switch type {
-                                case "objects":
-                                    Text("add new poster")
-                                        .foregroundColor(.white)
-                                case "stickers":
-                                    Text("add new sticker")
-                                        .foregroundColor(.white)
-                                case "images":
-                                    Text("add new image")
-                                        .foregroundColor(.white)
-                                default:
-                                    Text("add new element")
-                                        .foregroundColor(.white)
-                                }
-                                
-                                Spacer()
-                            }
-                            .padding()
-                            .background(.gray.opacity(0.25))
-                        })
-                        .cornerRadius(16)
-                        .padding(.vertical, 5)
-                        .padding(.horizontal, 25)
                         ObjLoop(type: $type, disabled: $disabled)
                     }
                 }.gesture(

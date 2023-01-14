@@ -76,7 +76,7 @@ struct SettingsSelection: View {
                                 }
                                 .padding (.horizontal,30)
                                 .padding (.vertical,15)
-                            Toggle("Show Logs (for nerds)", isOn: $showMesh)
+                            Toggle("Show Logs (for nerds)", isOn: $showLogs)
                                 .onChange(of: showLogs) { change in
                                     if (change) {
                                         UnityBridge.getInstance().api.changeSettings(change: "logs-on")
