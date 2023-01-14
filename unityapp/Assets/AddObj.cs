@@ -491,7 +491,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             arWorldMapController.Log("currentChunk");
             change = "move";
 
-            moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            // moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
 
@@ -1173,6 +1173,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             spawnedObject = Importer.LoadFromFile(path);
             spawnedObject.transform.position = tempPos;
             spawnedObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
         IEnumerator GetFileRequest(string url, string path, Action<UnityWebRequest> callback)
