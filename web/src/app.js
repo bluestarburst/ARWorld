@@ -28,7 +28,7 @@ import './assets/styles.scss'
 
 import * as firebase from 'firebase/app';
 // import 'firebase/auth';
-import { getAuth, browserSessionPersistence, browserPopupRedirectResolver, initializeAuth, RecaptchaVerifier } from "firebase/auth";
+import { getAuth, browserSessionPersistence, browserLocalPersistence, browserPopupRedirectResolver, initializeAuth, RecaptchaVerifier } from "firebase/auth";
 import { getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { getFirestore, collection, addDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 
@@ -56,10 +56,16 @@ gltfLoader.setDRACOLoader(new DRACOLoader());
 
 const app = firebase.initializeApp(firebaseConfig);
 
+// create auth with local persistence
+
 const auth = initializeAuth(app, {
-    persistence: browserSessionPersistence,
+    persistence: browserLocalPersistence,
     popupRedirectResolver: browserPopupRedirectResolver,
 });
+
+// (async () => {
+//     await setPersistence(auth, browserLocalPersistence);
+// })();
 
 const storage = getStorage();
 const db = getFirestore(app);
@@ -422,6 +428,11 @@ function Canv(props) {
                     </div>
                 </FilesDragAndDrop>
             }
+            <div className='signout'>
+                <Button variant="contained" color="primary" onClick={_ => {
+                    auth.signOut()
+                }}>Sign Out</Button>
+            </div>
         </div>
     );
 
