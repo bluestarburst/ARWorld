@@ -271,6 +271,7 @@ function Canv(props) {
         var docs = await addDoc(collection(db, "objects"), {
             name: fileName,
             user: auth.currentUser.uid,
+            creations: 0,
             tags: tags
         }).then((docRef) => {
             console.log("Document written with ID: ", docRef.id);
