@@ -150,6 +150,15 @@ struct FindLoop: View {
                                 //                            disabled = false
                             }
                         }.transition(.opacity)
+//                    if (arr.count - 1 == index) {
+//                        let rem = 4 - (arr.count % 4)
+//                        if (rem != 4) {
+//                            ForEach(0...rem) {
+//                                Box()
+//                            }
+//                        }
+//                        
+//                    }
                 }
                 .frame(width:UIScreen.screenWidth)
                 
