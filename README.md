@@ -6,7 +6,7 @@ also, the website is [here](https://bluestarburst.github.io/ARWorld/)
 # Todo
 1.) finish previews (add report feature)
 
-2.) make a universal add (no element options) header above offset
+2.) make a universal add (no element options) elements above offset
 
 3.) upload to testflight
 
