@@ -104,7 +104,7 @@ struct FindView: View {
                         }
                     
                     ScrollView {
-                        
+                        FindLoop(type: $type)
                     }
                 }
             }
@@ -123,33 +123,62 @@ struct FindLoop: View {
     
     @Binding var type: String
     
-    @Binding var disabled: Bool
+//    @Binding var disabled: Bool
     
     @State var arr: [[String: Any]] = []
     
-    func addItem(user: String, id: String, url: URL) {
-        arr.append([
-            "user": user,
-            "id": id,
-            "url": url
-        ])
+    func addItem(_ user: String, _ id: String, _ url: URL) {
+        withAnimation {
+            arr.append([
+                "user": user,
+                "id": id,
+                "url": url
+            ])
+        }
     }
     
     var body: some View {
         VStack {
-            WrappingHStack(0...arr.count-1, id:\.self) {
-                let index = $0
-                let dat = arr[index]
-                Box(url: dat["url"] as! URL, user: dat["user"] as! String, id: dat["id"] as! String, type: type )
-                    .onTapGesture {
-                        withAnimation {
-                            disabled = false
-                        }
-                    }
+            
+            if (arr.count > 0) {
+                WrappingHStack(0..<arr.count, id:\.self, alignment: .center) {
+                    let index = $0
+                    let dat = arr[index]
+                    Box(url: dat["url"] as? URL, user: dat["user"] as! String, id: dat["id"] as! String, type: type )
+                        .onTapGesture {
+                            withAnimation {
+                                //                            disabled = false
+                            }
+                        }.transition(.opacity)
+                }
+                .frame(width:UIScreen.screenWidth)
+                
+                /*
+                 WrappingHStack {
+                     ForEach(0...<arr.count, id:\.self) {
+                         let index = $0
+                         let dat = arr[index]
+                         Box(url: dat["url"] as? URL, user: dat["user"] as! String, id: dat["id"] as! String, type: type )
+                             .onTapGesture {
+                                 withAnimation {
+                                     //                            disabled = false
+                                 }
+                             }.transition(.opacity)
+                     }
+                 }
+                 */
             }
+                
+            
         }
         .onAppear {
             DataHandler.shared.addNextTop = addItem
+            DataHandler.shared.getTopThumbs(type: type)
+        }
+        .onChange(of: $type.wrappedValue) { _ in
+            withAnimation {
+                arr = []
+            }
             DataHandler.shared.getTopThumbs(type: type)
         }
     }
@@ -160,4 +189,10 @@ struct FindView_Previews: PreviewProvider {
     static var previews: some View {
         FindView()
     }
+}
+
+extension UIScreen {
+    static let screenWidth = UIScreen.main.bounds.size.width
+    static let screenHeight = UIScreen.main.bounds.size.height
+    static let screenSize = UIScreen.main.bounds.size
 }

@@ -79,14 +79,16 @@ class DataHandler: NSObject, ObservableObject {
         
         doc.setData([
             "user": (self.uid ?? ""),
-            "type": type
+            "type": type,
+            "creations": 0
         ])
         
         var userDoc = db.collection("users").document(self.uid ?? "").collection(type).document(id)
         
         userDoc.setData([
             "user": (self.uid ?? ""),
-            "type": type
+            "type": type,
+            "creations": 0
         ])
         
         let storageRef = storage.reference().child("users/" + (self.uid ?? "") + "/" + type + "/" + id + ".jpg")
@@ -294,7 +296,8 @@ class DataHandler: NSObject, ObservableObject {
             lastDoc = nil
         }
         self.lastType = type
-        db.collection(type).order(by: "created").limit(to: 25).getDocuments { (querySnapshot, err) in
+        print("swifty " + type)
+        db.collection(type).order(by: "creations").limit(to: 25).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("error getting documents: \(err)")
             } else {
@@ -302,6 +305,7 @@ class DataHandler: NSObject, ObservableObject {
                     self.lastDoc = document
                     print("\(document.documentID) => \(document.data())")
                     let usr = document.data()["user"] ?? ""
+                    print(usr)
                     self.getFromStorage(user: usr as! String, id: document.documentID, type: type)
                 }
             }

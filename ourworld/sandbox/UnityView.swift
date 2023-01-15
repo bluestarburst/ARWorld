@@ -39,6 +39,8 @@ struct UnityView: View {
     @State private var showMesh = false
     @State private var showLogs = false
     
+    @State private var isAdding = false
+    
     var body: some View {
         ZStack {
             if (showButtons) {
@@ -343,9 +345,11 @@ struct UnityView: View {
                 addingObj = DataHandler.shared.addingObj
                 withAnimation {
                     if (addingObj == "adding") {
+                        isAdding = true
                         showElementSelection = false
                         showButtons = false
                     } else {
+                        isAdding = false
                         showButtons = true
                     }
                 }
@@ -355,10 +359,11 @@ struct UnityView: View {
                 withAnimation {
                     if (mapStatus == "mapped") {
                         mapOffset = -100
-                        showButtons = true
+                        if (!isAdding) {
+                            showButtons = true
+                        }
                     } else if(mapStatus == "saving") {
                         mapOffset = 0
-                        showButtons = true
                     } else {
                         showButtons = false
                     }
