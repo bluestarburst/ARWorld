@@ -375,7 +375,7 @@ function Canv(props) {
                 const gltfString = JSON.stringify(gltf);
                 saveString(gltfString, "scene.gltf");
             }
-        }, { binary: true, trs: false, onlyVisible: false, truncateDrawRange: true, embedImages: true });
+        }, { binary: true });
     };
 
     const geomUpper = new THREE.SphereGeometry(1, 28, 28)
@@ -401,7 +401,7 @@ function Canv(props) {
         bbox.getSize(size);
         //Reposition to 0,halfY,0
         mroot.position.copy(cent).multiplyScalar(-1);
-        // mroot.position.y -= (size.y * 0.5);
+        mroot.position.y += (size.y * 0.5);
         setRendered(true)
         setScreenshot(true)
     }
