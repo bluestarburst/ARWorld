@@ -1175,6 +1175,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // spawnedObject = Importer.LoadFromFile(path);
             // Importer.ImportGLBAsync(path, new ImportSettings(), OnFinishAsync);
             byte[] arr = File.ReadAllBytes(path);
+            Console.WriteLine("Loading glb from bytes");
             spawnedObject = Importer.LoadFromBytes(arr);
             // Importer.ImportGLBAsync(File.ReadAllBytes(path), new ImportSettings(), OnFinishAsync);
 
