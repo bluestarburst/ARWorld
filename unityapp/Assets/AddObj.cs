@@ -1173,7 +1173,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             Console.WriteLine("Loading model");
             // spawnedObject = Importer.LoadFromFile(path);
-            Importer.ImportGLBAsync(path, new ImportSettings(), OnFinishAsync);
+            // Importer.ImportGLBAsync(path, new ImportSettings(), OnFinishAsync);
+            Importer.ImportGLBAsync(File.ReadAllBytes(path), new ImportSettings(), OnFinishAsync);
 
             
         }
