@@ -1175,6 +1175,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // spawnedObject = Importer.LoadFromFile(path);
             Importer.ImportGLBAsync(path, new ImportSettings(), OnFinishAsync);
             
+            
         }
 
         void OnFinishAsync(GameObject result, AnimationClip[] animations)
