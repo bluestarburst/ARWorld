@@ -1171,10 +1171,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void LoadModel(string path)
         {
-            Console.WriteLine("Loading model");
+            Console.WriteLine("Loading glb");
             // spawnedObject = Importer.LoadFromFile(path);
             // Importer.ImportGLBAsync(path, new ImportSettings(), OnFinishAsync);
-            Importer.ImportGLBAsync(File.ReadAllBytes(path), new ImportSettings(), OnFinishAsync);
+            byte[] arr = File.ReadAllBytes(path);
+            spawnedObject = Importer.LoadFromBytes(arr);
+            // Importer.ImportGLBAsync(File.ReadAllBytes(path), new ImportSettings(), OnFinishAsync);
+
+            Console.WriteLine("Finished importing");
+            // spawnedObject = result;
+            spawnedObject.transform.position = tempPos;
+            spawnedObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
 
             
         }
@@ -1184,7 +1192,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Console.WriteLine("Finished importing " + result.name);
             spawnedObject = result;
             spawnedObject.transform.position = tempPos;
-            spawnedObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            spawnedObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
