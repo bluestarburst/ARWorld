@@ -538,7 +538,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     currentChunk = null;
                     isAdding = false;
                 }
-                
+
             }
             else if (change.Equals("save"))
             {
@@ -1172,7 +1172,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void LoadModel(string path)
         {
             Console.WriteLine("Loading model");
-            spawnedObject = Importer.LoadFromFile(path);
+            // spawnedObject = Importer.LoadFromFile(path);
+            Importer.ImportGLBAsync(path, new ImportSettings(), OnFinishAsync);
+            
+        }
+
+        void OnFinishAsync(GameObject result, AnimationClip[] animations)
+        {
+            Debug.Log("Finished importing " + result.name);
+            spawnedObject = result;
             spawnedObject.transform.position = tempPos;
             spawnedObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
