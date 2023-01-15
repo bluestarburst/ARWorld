@@ -45,3 +45,6 @@ xcuserdata/
 # Carthage/Checkouts
 
 Carthage/Build/
+node_modules/
+google-services.json
+secure/
