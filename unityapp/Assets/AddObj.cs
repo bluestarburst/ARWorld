@@ -538,6 +538,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     currentChunk = null;
                     isAdding = false;
                 }
+                
             }
             else if (change.Equals("save"))
             {
@@ -1170,6 +1171,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void LoadModel(string path)
         {
+            Console.WriteLine("Loading model");
             spawnedObject = Importer.LoadFromFile(path);
             spawnedObject.transform.position = tempPos;
             spawnedObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);

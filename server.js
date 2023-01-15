@@ -124,4 +124,8 @@ function deleteImage(id) {
 
 
 
-deleteObject('men7BSvRZTIIcKehVvw5');
+deleteObject('Mug42xLHsrR11lgYdGeX');
+deleteObject('maF0DgAK7ysXv7x1Lv0L');
+deleteObject('catoon_coffee');
+deleteObject('rAeEtemmVDrlQrDpyW43');
+deleteObject('vwlguVspiK13pnNyMDhA');
