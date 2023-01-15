@@ -22,6 +22,10 @@ class DataHandler: NSObject, ObservableObject {
     var setAddingObj: () -> Void = {}
     var setMapStatus: () -> Void = {}
     
+    var setPreview: (_ type: String, _ user: String, _ id: String, _ url: URL) -> Void = {_,_,_,_ in
+
+    }
+    
     override init() {
         super.init()
 

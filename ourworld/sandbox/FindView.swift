@@ -126,6 +126,7 @@ struct FindLoop: View {
 //    @Binding var disabled: Bool
     
     @State var arr: [[String: Any]] = []
+    @State var refresh = false
     
     func addItem(_ user: String, _ id: String, _ url: URL) {
         withAnimation {
@@ -140,7 +141,7 @@ struct FindLoop: View {
     var body: some View {
         VStack {
             
-            if (arr.count > 0) {
+            if (arr.count > 0 && refresh) {
                 WrappingHStack(0..<arr.count, id:\.self, alignment: .center) {
                     let index = $0
                     let dat = arr[index]
@@ -176,6 +177,17 @@ struct FindLoop: View {
                      }
                  }
                  */
+            } else {
+                Text("")
+                    .onAppear {
+                        withAnimation {
+                            refresh = true
+                        }
+                    }.onChange(of: arr.count) { _ in
+                        withAnimation {
+                            refresh = !refresh
+                        }
+                    }
             }
                 
             
@@ -185,8 +197,9 @@ struct FindLoop: View {
             DataHandler.shared.getTopThumbs(type: type)
         }
         .onChange(of: $type.wrappedValue) { _ in
+            arr = []
             withAnimation {
-                arr = []
+                refresh = false
             }
             DataHandler.shared.getTopThumbs(type: type)
         }

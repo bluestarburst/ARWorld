@@ -16,7 +16,8 @@ struct Box: View {
     @State var type: String = "posters"
     
     var body: some View {
-        Button(action: {if (url != nil) {UnityBridge.getInstance().api.addObject(type: type, user: user, id: id)}}, label: {
+        Button(action: {if (url != nil) {DataHandler.shared.setPreview(type, user, id, url!)}
+        }, label: {
             ZStack {
                 Color(.gray).opacity(0.5)
                 if (url != nil) {

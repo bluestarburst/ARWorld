@@ -121,6 +121,8 @@ struct ContentView: View {
                     
                 }
                 
+                PreviewObj()
+                
                 
                 
             }
