@@ -44,3 +44,5 @@ xcuserdata/
 # Carthage/Checkouts
 
 Carthage/Build/
+secure/
+node_modules/
