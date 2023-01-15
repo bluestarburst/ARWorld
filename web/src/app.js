@@ -409,12 +409,12 @@ function Canv(props) {
     return (
         <div className='page'>
             {model != null ? <div className='page'>
-                <Canvas gl={{ preserveDrawingBuffer: true }} camera={{ position: [-3, 3, -3] }} >
+                <Canvas gl={{ preserveDrawingBuffer: true }} camera={{ position: [-3, 3, -3] }}>
 
                     <Scene setScreenshot={setScreenshot} screenshot={screenshot} setThumbnail={setThumbnail} thumbnail={thumbnail} setScene={setScene} setThumbnailData={setThumbnailData}>
                         <ambientLight />
                         <pointLight position={[10, 10, 10]} />
-                        <OrbitControls />
+                        <OrbitControls target={[0,0.5,0]} />
                         {!screenshot ? <>
                             <gridHelper />
                             <axesHelper scale={[3, 3, 3]} />
