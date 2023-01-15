@@ -1174,13 +1174,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Console.WriteLine("Loading model");
             // spawnedObject = Importer.LoadFromFile(path);
             Importer.ImportGLBAsync(path, new ImportSettings(), OnFinishAsync);
-            
+
             
         }
 
         void OnFinishAsync(GameObject result, AnimationClip[] animations)
         {
-            Debug.Log("Finished importing " + result.name);
+            Console.WriteLine("Finished importing " + result.name);
             spawnedObject = result;
             spawnedObject.transform.position = tempPos;
             spawnedObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
