@@ -20,6 +20,7 @@ target 'Unity-iPhone' do
 end
 target 'sandbox' do
   project '../sandbox/sandbox.xcodeproj'
+  pod 'WrappingHStack'
   sharedpod
 end
 use_frameworks! :linkage => :dynamic
