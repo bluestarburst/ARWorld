@@ -29,14 +29,20 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow ARWorld to see the world around you and create an AR map!</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Please allow ARWorld to create a collaborative AR experience with other devices nearby</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Please allow ARWorld to use your location to get AR objects around you!</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Would you like to share your photos to the world?</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Please allow ARWorld to send you updates about nearby ARworlds</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

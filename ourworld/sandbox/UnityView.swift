@@ -313,9 +313,7 @@ struct UnityView: View {
                 }
                 
                 ZStack {
-
                     SettingsSelection(disabled: $showSettings, showMesh: $showMesh, showLogs: $showLogs)
-                    
                 }
                 .transition(.bottomAndFade)
             }
@@ -345,6 +343,9 @@ struct UnityView: View {
                 addingObj = DataHandler.shared.addingObj
                 withAnimation {
                     if (addingObj == "adding") {
+                        showSettings = false
+                        showElementSelection = false
+
                         isAdding = true
                         showElementSelection = false
                         showButtons = false

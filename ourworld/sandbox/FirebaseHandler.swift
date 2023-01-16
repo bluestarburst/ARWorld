@@ -22,9 +22,7 @@ class DataHandler: NSObject, ObservableObject {
     var setAddingObj: () -> Void = {}
     var setMapStatus: () -> Void = {}
     
-    var setPreview: (_ type: String, _ user: String, _ id: String, _ url: URL) -> Void = {_,_,_,_ in
-
-    }
+    var setPreview: (_ type: String, _ user: String, _ id: String, _ url: URL) -> Void = {_,_,_,_ in }
     
     override init() {
         super.init()
@@ -331,6 +329,16 @@ class DataHandler: NSObject, ObservableObject {
             }
             self.addNextTop(user,id,url)
         })
+    }
+    
+    func getPrevData(type: String, user: String, id: String, _ completion: @escaping ((String,Int) -> Void)) {
+        db.collection(type).document(id).getDocument { (document, error) in
+            if let document = document, document.exists {
+                let dat = document.data()
+                completion(dat!["name"] as? String ?? "",dat!["creations"] as? Int ?? 0)
+            }
+            
+        }
     }
     
     

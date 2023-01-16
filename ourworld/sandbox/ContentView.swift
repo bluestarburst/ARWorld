@@ -19,6 +19,8 @@ struct ContentView: View {
     
     @State var pages = 0
     
+    @State var disabled = false
+    
     func changePage(num: Int) {
         if (num == 1) {
             withAnimation {
@@ -121,7 +123,12 @@ struct ContentView: View {
                     
                 }
                 
-                PreviewObj()
+                PreviewObj(disabled: $disabled).onChange(of: disabled) { dis in
+                    withAnimation{
+                        offset = normal
+                        pages = 0
+                    }
+                }
                 
                 
                 
