@@ -133,6 +133,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public FirebaseFirestore db = FirebaseFirestore.GetInstance(FirebaseApp.Create());
 
         public GameObject posterPrefab;
+        public GameObject spotlightPrefab;
 
         public int chunksToLoad = 0;
 
@@ -141,6 +142,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public CollaborativeSession collab;
 
         public bool showChunks = false;
+
+        public float last_lat = 0;
+        public float last_lon = 0;
+        public float last_alt = 0;
 
         /// <summary>
         /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -283,6 +288,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var error = Double.MaxValue;
             var newId = "";
             var tempCenterChunkId = "";
+            last_lat = api.lat;
+            last_lon = api.lon;
+            last_alt = api.alt;
             foreach (DocumentSnapshot documentSnapshot in querySnapshot.Documents)
             {
                 Console.WriteLine("Document {0} returned by query maps", documentSnapshot.Id);
@@ -630,6 +638,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
             if (sessionSubsystem == null) return;
+
+
+            var locError = Math.Abs(last_lat - api.lat) + Math.Abs(last_lon - api.lon) + Math.Abs(last_alt - api.alt);
+            var locErrorInMeters = locError * 111000;
+            // var locErrorInFeet = locErrorInMeters * 3.28084;
+            // if distance between last lat, long, and altitude and current lat, long, and altitude is greater than 5 meters, load new map
+            if (locErrorInMeters > 5)
+            {
+                OnLoadButton();
+                // load new map
+                // if (isWorldMapLoaded == false)
+                // {
+                //     preventReload = false;
+                //     LoadMap();
+                // }
+            }
 
             var numLogsToShow = 20;
             string msg = "";
