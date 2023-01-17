@@ -135,7 +135,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     HostNativeAPI.addingObj("adding");
                     AddObject(type, user, id);
                 }
-                else if (type.Equals("spotlight"))
+                else if (type.Equals("spotlights"))
                 {
                     HostNativeAPI.addingObj("adding");
                     AddLight(type);
@@ -512,13 +512,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 switch (type)
                 {
-                    case "spotlight":
+                    case "spotlights":
                         spawnedObject = Instantiate(arWorldMapController.spotlightPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.5f, Quaternion.identity);
                         break;
-                    case "pointlight":
+                    case "pointlights":
                         // spawnedObject = Instantiate(arWorldMapController.pointlightPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.5f, Quaternion.identity);
                         break;
-                    case "directionallight":
+                    case "directionallights":
                         // spawnedObject = Instantiate(arWorldMapController.directionallightPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.5f, Quaternion.identity);
                         break;
                 }
