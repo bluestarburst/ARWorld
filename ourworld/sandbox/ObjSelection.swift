@@ -52,7 +52,7 @@ struct ObjSelection: View {
                         .clipShape(Circle())
                         .padding(.vertical,5)
                 })
-                Button( action: {changeSelection("object")}, label: {
+                Button( action: {changeSelection("effect")}, label: {
                     Image(systemName: "sparkle")
                         .imageScale(.large)
                         .font(.title2)

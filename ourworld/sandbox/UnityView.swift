@@ -227,7 +227,7 @@ struct UnityView: View {
                     } else if (elementType == "object") {
                         ObjSelection(disabled: $showElementSelection, changeSelection: self.changeSelection)
                     } else if (elementType == "effect") {
-//                        EffectSelection(disabled: $showElementSelection, changeSelection: self.changeSelection)
+                        EffectSelection(disabled: $showElementSelection, changeSelection: self.changeSelection)
                     }
                 }
                 .transition(.bottomAndFade)

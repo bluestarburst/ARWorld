@@ -44,11 +44,13 @@ class LoginViewModel: ObservableObject {
                 Auth.auth().settings?.isAppVerificationDisabledForTesting = false // false
         //
         var newCountryCode = countryCode.replacingOccurrences(of: "+", with: "")
+        newCountryCode = newCountryCode.replacingOccurrences(of: " ", with: "")
         print(newCountryCode)
         
         var newPhNumber = phNumber.replacingOccurrences(of: "(", with: "")
         newPhNumber = newPhNumber.replacingOccurrences(of: ")", with: "")
         newPhNumber = newPhNumber.replacingOccurrences(of: "-", with: "")
+        newPhNumber = newPhNumber.replacingOccurrences(of: " ", with: "")
         print(newPhNumber)
         
 //        UnityBridge.getInstance().api.getPhoneResult = {result in
@@ -77,6 +79,7 @@ class LoginViewModel: ObservableObject {
                 PhoneAuthProvider.provider().verifyPhoneNumber("+\(newCountryCode + newPhNumber)",uiDelegate: nil) {
                     ID, err in
                     if let error = err{
+                        print(error)
                         withAnimation {
                             self.loading = false
                             self.phoneError = true
