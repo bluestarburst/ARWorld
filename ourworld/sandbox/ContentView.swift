@@ -27,6 +27,12 @@ struct ContentView: View {
                 pages = 1
                 offset = 0
             }
+        } else if (num == 0) {
+            withAnimation {
+                pages = 1
+                offset = 0
+                page = 0
+            }
         }
     }
 

@@ -240,7 +240,7 @@ struct AuthView: View {
                             .background(Color.pink)
                             .cornerRadius(8)
                     })
-                    .disabled(model.countryCode == "" || model.phNumber == "" || model.isLoading)
+                    .disabled(model.countryCode == "" || model.phNumber == "" || model.loading)
                     .opacity(model.countryCode == "" || model.phNumber == "" ? 0.6 : 1)
                     .padding(.top,10)
                     .padding(.bottom,15)

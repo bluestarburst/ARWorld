@@ -43,24 +43,25 @@ struct UnityView: View {
     
     var body: some View {
         ZStack {
-            if (showButtons) {
-                VStack {
-                    Spacer()
-                    HStack {
-                        VStack {
-                            Button( action: {withAnimation{showSettings=true}}, label: {
-                                Image(systemName: "gearshape")
-                                    .imageScale(.medium)
-                                    .font(.title2)
-                                    .foregroundColor(.white)
-                                    .padding(10)
-                                    .background(Color(.white).opacity(0.1))
-                                    .clipShape(Circle())
-                                    .padding(.vertical,15)
-                            })
-                            Spacer()
-                        }
+            
+            VStack {
+                Spacer()
+                HStack {
+                    VStack {
+                        Button( action: {withAnimation{showSettings=true}}, label: {
+                            Image(systemName: "gearshape")
+                                .imageScale(.medium)
+                                .font(.title2)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color(.white).opacity(0.1))
+                                .clipShape(Circle())
+                                .padding(.vertical,15)
+                        })
                         Spacer()
+                    }
+                    Spacer()
+                    if (showButtons) {
                         VStack {
                             Button( action: {}, label: {
                                 if (mapStatus == "saving") {
@@ -122,8 +123,9 @@ struct UnityView: View {
                         .transition(.bottomAndFade)
                     }
                 }
-                .padding()
             }
+            .padding()
+            
             
             if (showElementOptions) {
                 VStack {
@@ -313,7 +315,7 @@ struct UnityView: View {
                 }
                 
                 ZStack {
-                    SettingsSelection(disabled: $showSettings, showMesh: $showMesh, showLogs: $showLogs)
+                    SettingsSelection(disabled: $showSettings, showMesh: $showMesh, showLogs: $showLogs, changePage: self.changePage)
                 }
                 .transition(.bottomAndFade)
             }

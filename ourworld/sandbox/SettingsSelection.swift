@@ -21,6 +21,8 @@ struct SettingsSelection: View {
     
     @State private var type: String = "general"
     
+    var changePage: (Int) -> Void
+    
     
     
     var body: some View {
@@ -47,6 +49,15 @@ struct SettingsSelection: View {
                                 .foregroundColor(type == "general" ? .pink : .white)
                                 .padding(.horizontal,10)
                                 .disabled(type == "general")
+                                
+                                Button(action: {withAnimation{type="user"}}, label: {
+                                    Image(systemName: "person.fill")
+                                })
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(type == "user" ? .pink : .white)
+                                .padding(.horizontal,10)
+                                .disabled(type == "user")
                         
                                 
                                 Button(action: {withAnimation{type="info"}}, label: {
@@ -90,6 +101,18 @@ struct SettingsSelection: View {
                             Text("       App made by Bryant Hargreaves with the use of Unity AR Foundation and SwiftUI! This stuff take up a lot of storage so plz gimme money ;-; Also, I'm looking for a job so if u wanna hire me, hit me up :D")
                                 .padding (.horizontal,30)
                                 .padding (.vertical,15)
+                        } else if (type == "user") {
+                            Button(action: {DataHandler.shared.signOut();changePage(0)}, label: {
+                                Spacer()
+                                Text("Sign out")
+                                    .foregroundColor(.white)
+                                    .padding()
+                                Spacer()
+                            })
+                            .background(.pink)
+                            .cornerRadius(16)
+                            .padding(.horizontal,30)
+                            .padding(.vertical,10)
                         }
                     }
                 }.gesture(
