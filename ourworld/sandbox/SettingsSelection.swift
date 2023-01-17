@@ -15,6 +15,7 @@ struct SettingsSelection: View {
     
     @Binding var disabled: Bool
     @Binding var showMesh: Bool
+    @Binding var showChunks: Bool
     @Binding var showLogs: Bool
     
     @State private var scrollWidth = CGFloat.zero
@@ -83,6 +84,16 @@ struct SettingsSelection: View {
                                         UnityBridge.getInstance().api.changeSettings(change: "mesh-on")
                                     } else {
                                         UnityBridge.getInstance().api.changeSettings(change: "mesh-off")
+                                    }
+                                }
+                                .padding (.horizontal,30)
+                                .padding (.vertical,15)
+                            Toggle("Show Chunks", isOn: $showChunks)
+                                .onChange(of: showChunks) { change in
+                                    if (change) {
+                                        UnityBridge.getInstance().api.changeSettings(change: "chunks-on")
+                                    } else {
+                                        UnityBridge.getInstance().api.changeSettings(change: "chunks-off")
                                     }
                                 }
                                 .padding (.horizontal,30)

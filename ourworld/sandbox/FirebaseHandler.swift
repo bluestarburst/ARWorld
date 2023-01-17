@@ -111,7 +111,7 @@ class DataHandler: NSObject, ObservableObject {
                 
                 if let metadata = metadata {
                     print("Metadata: ", metadata)
-                    self.getUserPosters()
+                    self.getUserPosters(type: self.posterType)
                 }
             }
         }
@@ -124,147 +124,50 @@ class DataHandler: NSObject, ObservableObject {
         return path.first
     }
     
-    var updatePosters: () -> Void = {}
-    var posters: [String: URL] = [:]
-    var posterData: [String: String] = [:]
+    var posterType = "stickers"
     
-    var stickers: [String: URL] = [:]
-    var stickerData: [String: String] = [:]
+    var addNextUserPoster: (_ user: String, _ id: String, _ url: URL) -> Void = {_,_,_  in}
     
-    var images: [String: URL] = [:]
-    var imageData: [String: String] = [:]
-    
-    var updateObjects: () -> Void = {}
-    var objects: [String: URL] = [:]
-    var objectData: [String: String] = [:]
-    
-    func getUserPosters() {
-        db.collection("users").document(self.uid ?? "").collection("posters").getDocuments { (querySnapshot, err) in
-            if let err = err {
-                print("error getting documents: \(err)")
-            } else {
-                self.posters = [:]
-                self.posterData = [:]
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
-                    
-                    self.posterData[document.documentID] = self.uid ?? ""
-                    
-                    let storageRef = self.storage.reference().child("users/" + (self.uid ?? "") + "/posters/" + document.documentID + ".jpg")
-                    storageRef.downloadURL(completion: { url, error in
-                        guard let url = url, error == nil else {
-                            let storageRef2 = self.storage.reference().child("users/" + (self.uid ?? "") + "/posters/" + document.documentID + ".png")
-                            storageRef2.downloadURL(completion: { url2, error2 in
-                                guard let url2 = url2, error2 == nil else {
-                                    return
-                                }
-                                self.posters[document.documentID] = url2
-                                self.updatePosters()
-                            })
-                            return
-                        }
-                        self.posters[document.documentID] = url
-                        self.updatePosters()
-                    })
-                    
-                }
-            }
+    func getUserPosters(type: String) {
+        self.posterType = type
+        if (type != self.lastType) {
+            lastDoc = nil
         }
-        
-        db.collection("users").document(self.uid ?? "").collection("stickers").getDocuments { (querySnapshot, err) in
+        self.lastType = type
+        print("swifty " + type)
+        db.collection("users").document(self.uid ?? "").collection(type).limit(to: 25).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("error getting documents: \(err)")
             } else {
-                self.stickers = [:]
-                self.stickerData = [:]
                 for document in querySnapshot!.documents {
+                    self.lastDoc = document
                     print("\(document.documentID) => \(document.data())")
-                    
-                    self.stickerData[document.documentID] = self.uid ?? ""
-                    
-                    let storageRef = self.storage.reference().child("users/" + (self.uid ?? "") + "/stickers/" + document.documentID + ".jpg")
-                    storageRef.downloadURL(completion: { url, error in
-                        guard let url = url, error == nil else {
-                            let storageRef2 = self.storage.reference().child("users/" + (self.uid ?? "") + "/stickers/" + document.documentID + ".png")
-                            storageRef2.downloadURL(completion: { url2, error2 in
-                                guard let url2 = url2, error2 == nil else {
-                                    return
-                                }
-                                self.stickers[document.documentID] = url2
-                                self.updatePosters()
-                            })
-                            return
-                        }
-                        self.stickers[document.documentID] = url
-                        self.updatePosters()
-                    })
-                    
-                }
-            }
-        }
-        
-        db.collection("users").document(self.uid ?? "").collection("images").getDocuments { (querySnapshot, err) in
-            if let err = err {
-                print("error getting documents: \(err)")
-            } else {
-                self.images = [:]
-                self.imageData = [:]
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
-                    
-                    self.imageData[document.documentID] = self.uid ?? ""
-                    
-                    let storageRef = self.storage.reference().child("users/" + (self.uid ?? "") + "/images/" + document.documentID + ".jpg")
-                    storageRef.downloadURL(completion: { url, error in
-                        guard let url = url, error == nil else {
-                            let storageRef2 = self.storage.reference().child("users/" + (self.uid ?? "") + "/images/" + document.documentID + ".png")
-                            storageRef2.downloadURL(completion: { url2, error2 in
-                                guard let url2 = url2, error2 == nil else {
-                                    return
-                                }
-                                self.images[document.documentID] = url2
-                                self.updatePosters()
-                            })
-                            return
-                        }
-                        self.images[document.documentID] = url
-                        self.updatePosters()
-                    })
-                    
+                    let usr = document.data()["user"] ?? ""
+                    print(usr)
+                    self.getFromStorage(user: usr as! String, id: document.documentID, type: type, self.addNextUserPoster)
                 }
             }
         }
     }
     
-    func getUserObjects() {
-        db.collection("users").document(self.uid ?? "").collection("objects").getDocuments { (querySnapshot, err) in
+    var addNextUserObj: (_ user: String, _ id: String, _ url: URL) -> Void = {_,_,_  in}
+    
+    func getUserObjects(type: String) {
+        if (type != self.lastType) {
+            lastDoc = nil
+        }
+        self.lastType = type
+        print("swifty " + type)
+        db.collection("users").document(self.uid ?? "").collection(type).limit(to: 25).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("error getting documents: \(err)")
             } else {
-                self.objects = [:]
-                self.objectData = [:]
                 for document in querySnapshot!.documents {
+                    self.lastDoc = document
                     print("\(document.documentID) => \(document.data())")
-                    
-                    self.objectData[document.documentID] = self.uid ?? ""
-                    
-                    let storageRef = self.storage.reference().child("users/" + (self.uid ?? "") + "/objects/" + document.documentID + ".jpg")
-                    storageRef.downloadURL(completion: { url, error in
-                        guard let url = url, error == nil else {
-                            let storageRef2 = self.storage.reference().child("users/" + (self.uid ?? "") + "/objects/" + document.documentID + ".png")
-                            storageRef2.downloadURL(completion: { url2, error2 in
-                                guard let url2 = url2, error2 == nil else {
-                                    return
-                                }
-                                self.objects[document.documentID] = url2
-                                self.updateObjects()
-                            })
-                            return
-                        }
-                        self.objects[document.documentID] = url
-                        self.updateObjects()
-                    })
-                    
+                    let usr = document.data()["user"] ?? ""
+                    print(usr)
+                    self.getFromStorage(user: usr as! String, id: document.documentID, type: type, self.addNextUserObj)
                 }
             }
         }
@@ -279,7 +182,7 @@ class DataHandler: NSObject, ObservableObject {
             let jpgImage = FileManager.default.contents(atPath: jpgImageURL.path)
             
             if (jpgImage != nil) {
-                self.posters[id] = jpgImageURL
+//                self.posters[id] = jpgImageURL
                 return true
             }
             
@@ -308,13 +211,13 @@ class DataHandler: NSObject, ObservableObject {
                     print("\(document.documentID) => \(document.data())")
                     let usr = document.data()["user"] ?? ""
                     print(usr)
-                    self.getFromStorage(user: usr as! String, id: document.documentID, type: type)
+                    self.getFromStorage(user: usr as! String, id: document.documentID, type: type, self.addNextTop)
                 }
             }
         }
     }
     
-    func getFromStorage(user: String, id: String, type: String) {
+    func getFromStorage(user: String, id: String, type: String, _ addToArr: @escaping ((String,String,URL) -> Void)) {
         let storageRef = self.storage.reference().child("users/" + user + "/" + type + "/" + id + ".jpg")
         storageRef.downloadURL(completion: { url, error in
             guard let url = url, error == nil else {
@@ -323,11 +226,11 @@ class DataHandler: NSObject, ObservableObject {
                     guard let url2 = url2, error2 == nil else {
                         return
                     }
-                    self.addNextTop(user,id,url2)
+                    addToArr(user,id,url2)
                 })
                 return
             }
-            self.addNextTop(user,id,url)
+            addToArr(user,id,url)
         })
     }
     

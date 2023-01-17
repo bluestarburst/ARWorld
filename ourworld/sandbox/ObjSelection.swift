@@ -5,6 +5,7 @@
 //  Created by Bryant Hargreaves on 1/3/23.
 //
 
+import WrappingHStack
 import SwiftUI
 
 struct ObjSelection: View {
@@ -23,17 +24,59 @@ struct ObjSelection: View {
     
     @State private var type: String = "objects"
     
+    var changeSelection: (String) -> Void
+    
     var body: some View {
         VStack {
             Spacer()
             
+            HStack {
+                Spacer()
+                Button( action: {changeSelection("image")}, label: {
+                    Image(systemName: "photo")
+                        .imageScale(.large)
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Color(.white).opacity(0.1))
+                        .clipShape(Circle())
+                        .padding(.vertical,5)
+                })
+                Button( action: {changeSelection("object")}, label: {
+                    Image(systemName: "cube")
+                        .imageScale(.large)
+                        .font(.title2)
+                        .foregroundColor(.pink)
+                        .padding(10)
+                        .background(Color(.white).opacity(0.1))
+                        .clipShape(Circle())
+                        .padding(.vertical,5)
+                })
+                Button( action: {changeSelection("object")}, label: {
+                    Image(systemName: "sparkle")
+                        .imageScale(.large)
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Color(.white).opacity(0.1))
+                        .clipShape(Circle())
+                        .padding(.vertical,5)
+                })
+                Spacer()
+            }
+            .offset(y: offset)
+            
+            
             VStack {
+                
+                
                 HStack {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: 30, height: 10)
                         .foregroundColor(.white)
                 }
                 .padding()
+                
                 
                 VStack {
                     GeometryReader { geometry in
@@ -99,63 +142,79 @@ struct ObjSelection: View {
 
 struct ObjLoop: View {
     
-    @State var objects: [String:URL] = [:]
-    @State var objectsL: [URL] = []
-    @State var objectsI: [String] = []
-    @State var objectsU: [String] = []
-    
     @Binding var type: String
     
     @Binding var disabled: Bool
     
-    func updateObjects() {
-        var tempPost = DataHandler.shared.objects
-        for id in tempPost.keys {
-            if (objects[id] == nil) {
-                objects[id] = tempPost[id]
-                objectsL.append(tempPost[id]!)
-                objectsI.append(id)
-                objectsU.append(DataHandler.shared.objectData[id]!)
-            }
+    @State var arr: [[String: Any]] = []
+    @State var refresh = false
+    
+    func addItem(_ user: String, _ id: String, _ url: URL) {
+        withAnimation {
+            arr.append([
+                "user": user,
+                "id": id,
+                "url": url
+            ])
         }
     }
     
     var body: some View {
         VStack {
-            ForEach(0..<5) { index10 in
-                HStack {
-                    Spacer()
-                    ForEach(0..<4) {index in
-                        let temp = (index10 * 4) + index
-                        switch type {
-                        case "objects":
-                            if (objectsL.count > temp) {
-                                Box(url: objectsL[temp], user: objectsU[temp], id: objectsI[temp], type: type )
-                                    .onTapGesture {
-                                        withAnimation {
-                                            disabled = false
-                                        }
-                                    }
-                            } else {
+            
+            if (arr.count > 0 && refresh) {
+                WrappingHStack(0..<arr.count, id:\.self, alignment: .center) {
+                    let index = $0
+                    let dat = arr[index]
+                    Box(url: dat["url"] as? URL, user: dat["user"] as! String, id: dat["id"] as! String, type: type )
+                        .onTapGesture {
+                            withAnimation {
+                                disabled = false
+                            }
+                        }.transition(.opacity)
+                    if (arr.count - 1 == index) {
+                        let rem = 4 - (arr.count % 4)
+                        if (rem != 4) {
+                            ForEach(1...rem, id: \.self) { _ in
                                 Box()
                             }
-                        default:
-                            Box()
+                        }
+
+                    }
+                }
+                .frame(width:UIScreen.screenWidth)
+                
+            } else {
+                Text("")
+                    .onAppear {
+                        withAnimation {
+                            refresh = true
+                        }
+                    }.onChange(of: arr.count) { _ in
+                        withAnimation {
+                            refresh = !refresh
                         }
                     }
-                    Spacer()
-                }
             }
-        }.onAppear {
-            DataHandler.shared.updateObjects = updateObjects
-            DataHandler.shared.getUserObjects()
+                
+            
+        }
+        .onAppear {
+            DataHandler.shared.addNextUserObj = addItem
+            DataHandler.shared.getUserObjects(type: type)
+        }
+        .onChange(of: $type.wrappedValue) { _ in
+            arr = []
+            withAnimation {
+                refresh = false
+            }
+            DataHandler.shared.getUserObjects(type: type)
         }
     }
 }
 
 struct ObjSelection_Previews: PreviewProvider {
-    
     static var previews: some View {
-        ObjSelection(disabled: .constant(true))
+        ObjSelection(disabled: .constant(true), changeSelection: {_ in})
     }
 }

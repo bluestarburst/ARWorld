@@ -5,6 +5,7 @@
 //  Created by Bryant Hargreaves on 1/3/23.
 //
 
+import WrappingHStack
 import SwiftUI
 
 struct Box: View {
@@ -56,10 +57,46 @@ struct ImageSelection: View {
     
     @State private var type: String = "stickers"
     
+    var changeSelection: (String) -> Void
+    
     var body: some View {
         VStack {
             Spacer()
-            
+            HStack {
+                Spacer()
+                Button( action: {changeSelection("image")}, label: {
+                    Image(systemName: "photo")
+                        .imageScale(.large)
+                        .font(.title2)
+                        .foregroundColor(.pink)
+                        .padding(10)
+                        .background(Color(.white).opacity(0.1))
+                        .clipShape(Circle())
+                        .padding(.vertical,5)
+                })
+                Button( action: {changeSelection("object")}, label: {
+                    Image(systemName: "cube")
+                        .imageScale(.large)
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Color(.white).opacity(0.1))
+                        .clipShape(Circle())
+                        .padding(.vertical,5)
+                })
+                Button( action: {changeSelection("object")}, label: {
+                    Image(systemName: "sparkle")
+                        .imageScale(.large)
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Color(.white).opacity(0.1))
+                        .clipShape(Circle())
+                        .padding(.vertical,5)
+                })
+                Spacer()
+            }
+            .offset(y: offset)
             VStack {
                 HStack {
                     RoundedRectangle(cornerRadius: 10)
@@ -175,109 +212,73 @@ struct ImageSelection: View {
 
 struct ImageLoop: View {
     
-    @State var posters: [String:URL] = [:]
-    @State var postersL: [URL] = []
-    @State var postersI: [String] = []
-    @State var postersU: [String] = []
-    
-    @State var stickers: [String:URL] = [:]
-    @State var stickersL: [URL] = []
-    @State var stickersI: [String] = []
-    @State var stickersU: [String] = []
-    
-    @State var images: [String:URL] = [:]
-    @State var imagesL: [URL] = []
-    @State var imagesI: [String] = []
-    @State var imagesU: [String] = []
-    
     @Binding var type: String
     
     @Binding var disabled: Bool
     
-    func updatePosters() {
-        var tempPost = DataHandler.shared.posters
-        for id in tempPost.keys {
-            if (posters[id] == nil) {
-                posters[id] = tempPost[id]
-                postersL.append(tempPost[id]!)
-                postersI.append(id)
-                postersU.append(DataHandler.shared.posterData[id]!)
-            }
-        }
-        
-        tempPost = DataHandler.shared.stickers
-        for id in tempPost.keys {
-            if (stickers[id] == nil) {
-                stickers[id] = tempPost[id]
-                stickersL.append(tempPost[id]!)
-                stickersI.append(id)
-                stickersU.append(DataHandler.shared.stickerData[id]!)
-            }
-        }
-        
-        tempPost = DataHandler.shared.images
-        for id in tempPost.keys {
-            if (images[id] == nil) {
-                images[id] = tempPost[id]
-                imagesL.append(tempPost[id]!)
-                imagesI.append(id)
-                imagesU.append(DataHandler.shared.imageData[id]!)
-            }
+    @State var arr: [[String: Any]] = []
+    @State var refresh = false
+    
+    func addItem(_ user: String, _ id: String, _ url: URL) {
+        withAnimation {
+            arr.append([
+                "user": user,
+                "id": id,
+                "url": url
+            ])
         }
     }
     
     var body: some View {
         VStack {
-            ForEach(0..<5) { index10 in
-                HStack {
-                    Spacer()
-                    ForEach(0..<4) {index in
-                        let temp = (index10 * 4) + index
-                        switch type {
-                        case "posters":
-                            if (postersL.count > temp) {
-                                Box(url: postersL[temp], user: postersU[temp], id: postersI[temp], type: type )
-                                    .onTapGesture {
-                                        withAnimation {
-                                            disabled = false
-                                        }
-                                    }
-                            } else {
+            
+            if (arr.count > 0 && refresh) {
+                WrappingHStack(0..<arr.count, id:\.self, alignment: .center) {
+                    let index = $0
+                    let dat = arr[index]
+                    Box(url: dat["url"] as? URL, user: dat["user"] as! String, id: dat["id"] as! String, type: type )
+                        .onTapGesture {
+                            withAnimation {
+                                disabled = false
+                            }
+                        }.transition(.opacity)
+                    if (arr.count - 1 == index) {
+                        let rem = 4 - (arr.count % 4)
+                        if (rem != 4) {
+                            ForEach(1...rem, id: \.self) { _ in
                                 Box()
                             }
-                        case "stickers":
-                            if (stickersL.count > temp) {
-                                Box(url: stickersL[temp], user: stickersU[temp], id: stickersI[temp], type: type )
-                                    .onTapGesture {
-                                        withAnimation {
-                                            disabled = false
-                                        }
-                                    }
-                            } else {
-                                Box()
-                            }
-                        case "images":
-                            if (imagesL.count > temp) {
-                                Box(url: imagesL[temp], user: imagesU[temp], id: imagesI[temp], type: type )
-                                    .onTapGesture {
-                                        withAnimation {
-                                            disabled = false
-                                        }
-                                    }
-                            } else {
-                                Box()
-                            }
-                        default:
-                            Box()
                         }
-                        
+
                     }
-                    Spacer()
                 }
+                .frame(width:UIScreen.screenWidth)
+                
+            } else {
+                Text("")
+                    .onAppear {
+                        withAnimation {
+                            refresh = true
+                        }
+                    }.onChange(of: arr.count) { _ in
+                        withAnimation {
+                            refresh = !refresh
+                        }
+                    }
             }
-        }.onAppear {
-            DataHandler.shared.updatePosters = updatePosters
-            DataHandler.shared.getUserPosters()
+                
+            
+        }
+        .onAppear {
+            DataHandler.shared.addNextUserPoster = addItem
+            DataHandler.shared.getUserPosters(type: type)
+        }
+        .onChange(of: $type.wrappedValue) { _ in
+            arr = []
+            withAnimation {
+                refresh = false
+            }
+            DataHandler.shared.getUserPosters(type: type)
         }
     }
 }
@@ -285,7 +286,7 @@ struct ImageLoop: View {
 struct ImageSelection_Previews: PreviewProvider {
     
     static var previews: some View {
-        ImageSelection(disabled: .constant(true))
+        ImageSelection(disabled: .constant(true), changeSelection: {_ in})
     }
 }
 

@@ -57,10 +57,18 @@ struct ContentView: View {
                         }
                         
                         FindView()
+                            .padding(.top,30)
                             
                         Spacer()
                     }
+                    
+                    
                     .background(.black)
+                    .cornerRadius(24)
+                    
+                    .ignoresSafeArea()
+                    
+                    
                     .offset(x: offset)
                     .onAppear {
                         normal = -geometry.size.width

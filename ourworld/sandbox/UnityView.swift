@@ -37,9 +37,16 @@ struct UnityView: View {
     
     @State private var showSettings = false
     @State private var showMesh = false
+    @State private var showChunks = false
     @State private var showLogs = false
     
     @State private var isAdding = false
+    
+    func changeSelection(changeType: String) {
+        withAnimation {
+            elementType = changeType
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -108,7 +115,7 @@ struct UnityView: View {
                                     .clipShape(Circle())
                                     .padding(.vertical,5)
                             })
-                            Button( action: {withAnimation {showElementOptions = true}}, label: {
+                            Button( action: {withAnimation {showElementSelection = true;elementType="object"}}, label: {
                                 Image(systemName: "plus")
                                     .imageScale(.large)
                                     .font(.title2)
@@ -127,75 +134,75 @@ struct UnityView: View {
             .padding()
             
             
-            if (showElementOptions) {
-                VStack {
-                    
-                    Spacer()
-                    Text("Choose an Element to Create")
-                        .font(.title)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 20)
-                    HStack {
-                        Spacer()
-                        VStack {
-                            Button( action: {withAnimation {showElementSelection = true;showElementOptions = false;elementType="image"}}, label: {
-                                Image(systemName: "photo")
-                                    .imageScale(.medium)
-                                    .font(.title)
-                                    .foregroundColor(.white)
-                                    .padding(10)
-                                    .background(Color(.white).opacity(0.1))
-                                    .clipShape(Circle())
-                                    .padding(.horizontal,5)
-                            })
-                            Text("Photo")
-                                .font(.title2)
-                        }
-                        VStack {
-                            Button( action: {withAnimation {showElementSelection = true;showElementOptions = false;elementType="object"}}, label: {
-                                Image(systemName: "cube")
-                                    .imageScale(.medium)
-                                    .font(.title)
-                                    .foregroundColor(.white)
-                                    .padding(10)
-                                    .background(Color(.white).opacity(0.1))
-                                    .clipShape(Circle())
-                                    .padding(.horizontal,5)
-                            })
-                            Text("3D Object")
-                                .font(.title2)
-                        }
-                        VStack {
-                            Button( action: {print("add")}, label: {
-                                Image(systemName: "sparkle")
-                                    .imageScale(.medium)
-                                    .font(.title)
-                                    .foregroundColor(.white)
-                                    .padding(10)
-                                    .background(Color(.white).opacity(0.1))
-                                    .clipShape(Circle())
-                                    .padding(.horizontal,5)
-                            })
-                            Text("Effect")
-                                .font(.title2)
-                        }
-                        Spacer()
-                    }
-                    Spacer()
-                    
-                }
-                .background(
-                    Color(.black)
-                        .opacity(0.5)
-                        .onTapGesture {
-                            withAnimation {
-                                showElementOptions = false
-                            }
-                        }
-                        .transition(.opacity)
-                )
-                
-            }
+//            if (showElementOptions) {
+//                VStack {
+//
+//                    Spacer()
+//                    Text("Choose an Element to Create")
+//                        .font(.title)
+//                        .multilineTextAlignment(.center)
+//                        .padding(.horizontal, 20)
+//                    HStack {
+//                        Spacer()
+//                        VStack {
+//                            Button( action: {withAnimation {showElementSelection = true;showElementOptions = false;elementType="image"}}, label: {
+//                                Image(systemName: "photo")
+//                                    .imageScale(.medium)
+//                                    .font(.title)
+//                                    .foregroundColor(.white)
+//                                    .padding(10)
+//                                    .background(Color(.white).opacity(0.1))
+//                                    .clipShape(Circle())
+//                                    .padding(.horizontal,5)
+//                            })
+//                            Text("Photo")
+//                                .font(.title2)
+//                        }
+//                        VStack {
+//                            Button( action: {withAnimation {showElementSelection = true;showElementOptions = false;elementType="object"}}, label: {
+//                                Image(systemName: "cube")
+//                                    .imageScale(.medium)
+//                                    .font(.title)
+//                                    .foregroundColor(.white)
+//                                    .padding(10)
+//                                    .background(Color(.white).opacity(0.1))
+//                                    .clipShape(Circle())
+//                                    .padding(.horizontal,5)
+//                            })
+//                            Text("3D Object")
+//                                .font(.title2)
+//                        }
+//                        VStack {
+//                            Button( action: {print("add")}, label: {
+//                                Image(systemName: "sparkle")
+//                                    .imageScale(.medium)
+//                                    .font(.title)
+//                                    .foregroundColor(.white)
+//                                    .padding(10)
+//                                    .background(Color(.white).opacity(0.1))
+//                                    .clipShape(Circle())
+//                                    .padding(.horizontal,5)
+//                            })
+//                            Text("Effect")
+//                                .font(.title2)
+//                        }
+//                        Spacer()
+//                    }
+//                    Spacer()
+//
+//                }
+//                .background(
+//                    Color(.black)
+//                        .opacity(0.5)
+//                        .onTapGesture {
+//                            withAnimation {
+//                                showElementOptions = false
+//                            }
+//                        }
+//                        .transition(.opacity)
+//                )
+//
+//            }
             
             
             
@@ -216,9 +223,11 @@ struct UnityView: View {
                 
                 ZStack {
                     if (elementType == "image") {
-                        ImageSelection(disabled: $showElementSelection)
+                        ImageSelection(disabled: $showElementSelection, changeSelection: self.changeSelection)
                     } else if (elementType == "object") {
-                        ObjSelection(disabled: $showElementSelection)
+                        ObjSelection(disabled: $showElementSelection, changeSelection: self.changeSelection)
+                    } else if (elementType == "effect") {
+//                        EffectSelection(disabled: $showElementSelection, changeSelection: self.changeSelection)
                     }
                 }
                 .transition(.bottomAndFade)
@@ -315,7 +324,7 @@ struct UnityView: View {
                 }
                 
                 ZStack {
-                    SettingsSelection(disabled: $showSettings, showMesh: $showMesh, showLogs: $showLogs, changePage: self.changePage)
+                    SettingsSelection(disabled: $showSettings, showMesh: $showMesh, showChunks: $showChunks, showLogs: $showLogs, changePage: self.changePage)
                 }
                 .transition(.bottomAndFade)
             }
