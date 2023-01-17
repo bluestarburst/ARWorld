@@ -140,6 +140,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public CollaborativeSession collab;
 
+        public bool showChunks = false;
+
         /// <summary>
         /// Create an <c>ARWorldMap</c> and save it to disk.
         /// </summary>

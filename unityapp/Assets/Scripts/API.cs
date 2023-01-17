@@ -192,6 +192,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     case "logs-off":
                         logs.SetActive(false);
                         break;
+                    case "chunks-on":
+                        worldMapController.showChunks = true;
+                        break;
+                    case "chunks-off":
+                        worldMapController.showChunks = false;
+                        break;
                     default:
                         break;
                 }

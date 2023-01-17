@@ -28,6 +28,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public int cy = 0;
 
         public FirebaseFirestore db;
+
+        public bool showMat = false;
         // Start is called before the first frame update
         void Start()
         {
@@ -41,6 +43,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 return;
             }
+
+            // if arWorldMapController.showChunks is false, hide chunk material
+            if (!showMat && arWorldMapController.showChunks)
+            {
+                // go through children and turn disable the renderers
+                foreach (Transform child in transform)
+                {
+                    child.GetComponent<MeshRenderer>().enabled = true;
+                }
+                showMat = true;
+            }
+            else if (showMat && !arWorldMapController.showChunks)
+            {
+                // go through children and turn enable the renderers
+                foreach (Transform child in transform)
+                {
+                    child.GetComponent<MeshRenderer>().enabled = false;
+                }
+                showMat = false;
+            }
+
             // get distance between camera and chunk
             float distance = Vector3.Distance(ARCamera.transform.position, transform.position);
             // if distance is greater than 100, destroy chunk
