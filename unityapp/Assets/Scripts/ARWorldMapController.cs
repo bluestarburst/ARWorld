@@ -644,7 +644,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var locErrorInMeters = locError * 111000;
             // var locErrorInFeet = locErrorInMeters * 3.28084;
             // if distance between last lat, long, and altitude and current lat, long, and altitude is greater than 5 meters, load new map
-            if (locErrorInMeters > 5)
+            if (locErrorInMeters > 10)
             {
                 OnLoadButton();
                 // load new map
