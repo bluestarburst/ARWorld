@@ -14,6 +14,7 @@ import { OBJExporter } from 'three/examples/jsm/exporters/OBJExporter'
 // import { downloadJson } from './utils.js'
 
 import { useControls, button, folder } from 'leva'
+import JSZip from 'jszip'
 
 // import computeBoundingSphere function from three.js
 import { computeBoundingSphere } from 'three/src/math/Sphere.js'
@@ -199,6 +200,13 @@ function Canv(props) {
         } else {
             // the file is a zipped folder with a gltf file inside
             var zip = new JSZip();
+            // get all files in zipped folder
+            zip.loadAsync(file).then(function (zip) {
+                // check if there is a .obj file in the zip
+                // var gltfFile = zip.file(/\.gltf$/i)[0];
+                console.log(zip)
+            });
+
         }
 
     };
