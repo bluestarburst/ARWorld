@@ -273,24 +273,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             await createChunks(1, 0);
             // OnSaveButton();
-            if (!repeating)
-            {
-                InvokeRepeating("OnSaveButton", 15, 15);
-                repeating = true;
-            }
         }
+
+        // create arraylist of strings to store potential chunk ids
+        public List<(double, string)> potentialChunkIds = new List<(double, string)>();
+        public int potentialChunkIdsCurrent = 0;
 
         async void retrieveFirestoreMap(ARKitSessionSubsystem sessionSubsystem)
         {
             CollectionReference mapsRef = db.Collection("maps");
-            Query query = mapsRef.OrderBy("location").Limit(5);
+
+            // create a boudning box around (api.lat,api.lon) current location within 50 meters
+            GeoPoint southwest = new GeoPoint(api.lat - 0.00045, api.lon - 0.00045);
+            GeoPoint northeast = new GeoPoint(api.lat + 0.00045, api.lon + 0.00045);
+
+            Query query = mapsRef.WhereGreaterThanOrEqualTo("location", southwest).WhereLessThanOrEqualTo("location", northeast);
+
             QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
             var error = Double.MaxValue;
             var newId = "";
             var tempCenterChunkId = "";
-            last_lat = api.lat;
-            last_lon = api.lon;
-            last_alt = api.alt;
+
             foreach (DocumentSnapshot documentSnapshot in querySnapshot.Documents)
             {
                 Console.WriteLine("Document {0} returned by query maps", documentSnapshot.Id);
@@ -299,12 +302,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 var location = documentSnapshot.GetValue<GeoPoint>("location");
 
-                var locError = Math.Abs(location.Latitude - api.lat) + Math.Abs(location.Longitude - api.lon);
+                var locError = Math.Abs(location.Latitude - api.lat) + Math.Abs(location.Longitude - api.lon) + Math.Abs(tempAlt - api.alt);
                 var locErrorInMeters = locError * 111000;
                 var locErrorInFeet = locErrorInMeters * 3.28084;
 
+                // put potential chunk ids into arraylist and sort by error in altitude and location error
+                potentialChunkIds.Add((locErrorInMeters, documentSnapshot.Id));
+
                 Log("Location error is " + locErrorInMeters);
-                if (tempErr < error && locErrorInMeters < 10)
+                if (tempErr < error)
                 {
                     error = tempErr;
                     newId = documentSnapshot.Id;
@@ -312,6 +318,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     tempCenterChunkId = documentSnapshot.GetValue<string>("centerChunkId");
                 }
             }
+
+            potentialChunkIds.Sort((x, y) => x.Item1.CompareTo(y.Item1));
 
             if (newId == worldMapId && newId != "")
             {
@@ -321,26 +329,79 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             centerChunk = null;
             centerChunkId = tempCenterChunkId;
-            CancelInvoke("OnSaveButton");
+            repeating = false;
+            chunks.Clear();
+            anchors.Clear();
 
             if (newId == "")
             {
                 Log("No nearby maps found");
                 Log("Saving current map");
 
-
-                //hi
-
-                // if (!repeating)
-                // {
-                //     InvokeRepeating("OnSaveButton", 15, 15);
-                //     repeating = true;
-                // }
-
                 // OnSaveButton();
                 WaitUntilMappedSave();
                 return;
             }
+
+            collab.serviceType = newId;
+            collab.enabled = true;
+
+            Console.WriteLine("Closest map is " + newId + " with error " + error);
+            Log("Loading map " + newId);
+
+            InvokeRepeating("getNextPotentialChunkId", 0, 15);
+
+            FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
+            StorageReference storageRef = storage.RootReference;
+            StorageReference mapsdbRef = storageRef.Child("maps");
+            StorageReference mapRef = mapsdbRef.Child(newId + ".worldmap");
+            var data = await mapRef.GetBytesAsync(1024 * 1024 * 20);
+
+            // data = Decompress(data);
+
+            // byte[] to native array
+            var nativeData = new NativeArray<byte>(data.Length, Allocator.Temp);
+            nativeData.CopyFrom(data);
+
+            ARWorldMap worldMap;
+            if (ARWorldMap.TryDeserialize(nativeData, out worldMap)) nativeData.Dispose();
+
+            if (worldMap.valid)
+            {
+                Log("Deserialized successfully.");
+                worldMapId = newId;
+            }
+            else
+            {
+                Debug.LogError("Data is not a valid ARWorldMap.");
+                Log("not valid world map");
+                return;
+                // yield break;
+            }
+
+            Log("Apply ARWorldMap to current session.");
+            sessionSubsystem.ApplyWorldMap(worldMap);
+            // OnSaveButton();
+
+        }
+
+
+        async void getNextPotentialChunkId()
+        {
+            if (potentialChunkIds.Count == 0)
+            {
+                Log("No nearby maps found");
+                Log("Saving current map");
+                OnSaveButton();
+                return;
+            }
+
+            var newId = potentialChunkIds[potentialChunkIdsCurrent].Item2;
+            var error = potentialChunkIds[potentialChunkIdsCurrent].Item1;
+            potentialChunkIdsCurrent++;
+
+            centerChunk = null;
+            centerChunkId = newId;
 
             collab.serviceType = newId;
             collab.enabled = true;
@@ -366,7 +427,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (worldMap.valid)
             {
                 Log("Deserialized successfully.");
-                isWorldMapLoaded = true;
                 worldMapId = newId;
             }
             else
@@ -377,17 +437,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // yield break;
             }
 
-
+            var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
 
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
             // OnSaveButton();
-
-            if (!repeating)
-            {
-                InvokeRepeating("OnSaveButton", 15, 15);
-                repeating = true;
-            }
 
         }
 
@@ -533,6 +587,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Debug.Log("anchors changed");
             if (obj.added.Count > 0)
             {
+                
                 Debug.Log("added");
                 foreach (var anchor in obj.added)
                 {
@@ -540,6 +595,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         bay.loadedMap();
                         firstLoad = false;
+                    }
+
+                    if (!repeating)
+                    {
+                        CancelInvoke("getNextPotentialChunkId");
+                        InvokeRepeating("OnSaveButton", 15, 15);
+                        repeating = true;
+                        isWorldMapLoaded = true;
                     }
 
                     Log("ANCHOR NAME: " + anchor.name);
@@ -644,7 +707,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var locErrorInMeters = locError * 111000;
             // var locErrorInFeet = locErrorInMeters * 3.28084;
             // if distance between last lat, long, and altitude and current lat, long, and altitude is greater than 5 meters, load new map
-            if (locErrorInMeters > 10)
+            if (anchors.Count == 0 && locErrorInMeters > 30)
             {
                 OnLoadButton();
                 // load new map
