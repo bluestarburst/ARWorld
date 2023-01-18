@@ -353,7 +353,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Console.WriteLine("Closest map is " + newId + " with error " + error);
             Log("Loading map " + newId);
 
-            InvokeRepeating("getNextPotentialChunkId", 0, 15);
+            InvokeRepeating("getNextPotentialChunkId", 0, 10);
 
             FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
             StorageReference storageRef = storage.RootReference;
@@ -411,7 +411,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (potentialChunkIdsCurrent >= potentialChunkIds.Count)
             {
                 potentialChunkIdsCurrent = 0;
+                OnSaveButton();
+                return;
             }
+
+            // double err = potentialChunkIds[potentialChunkIdsCurrent].Item1;
 
             var newId = potentialChunkIds[potentialChunkIdsCurrent].Item2;
             var error = potentialChunkIds[potentialChunkIdsCurrent].Item1;
