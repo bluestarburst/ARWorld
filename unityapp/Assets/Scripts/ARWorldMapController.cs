@@ -387,7 +387,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         public bool shouldGetNextPotentialChunkId = false;
-        async void getNextPotentialChunkId()
+        void getNextPotentialChunkId()
+        {
+            getNextPotentialChunkIdAsync();
+        }
+        async void getNextPotentialChunkIdAsync()
         {
             if (!shouldGetNextPotentialChunkId) {
                 return;
