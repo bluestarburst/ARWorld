@@ -147,6 +147,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public float last_lon = 0;
         public float last_alt = 0;
 
+        // create arraylist of strings to store potential chunk ids
+        public List<(double, string)> potentialChunkIds = new List<(double, string)>();
+        public int potentialChunkIdsCurrent = 0;
+        bool shouldGetNextPotentialChunkId = false;
+
         /// <summary>
         /// Create an <c>ARWorldMap</c> and save it to disk.
         /// </summary>
@@ -276,9 +281,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // OnSaveButton();
         }
 
-        // create arraylist of strings to store potential chunk ids
-        public List<(double, string)> potentialChunkIds = new List<(double, string)>();
-        public int potentialChunkIdsCurrent = 0;
+        
 
         async void retrieveFirestoreMap(ARKitSessionSubsystem sessionSubsystem)
         {
@@ -386,7 +389,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         }
 
-        public bool shouldGetNextPotentialChunkId = false;
+        
         void getNextPotentialChunkId()
         {
             getNextPotentialChunkIdAsync();
