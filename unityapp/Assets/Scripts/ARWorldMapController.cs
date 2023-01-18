@@ -251,6 +251,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             SaveAndDisposeWorldMap(worldMapData.ToArray());
         }
 
+        public bool firstLoadMap = false;
         IEnumerator Load()
         {
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
@@ -703,19 +704,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (sessionSubsystem == null) return;
 
 
-            var locError = Math.Abs(last_lat - api.lat) + Math.Abs(last_lon - api.lon) + Math.Abs(last_alt - api.alt);
-            var locErrorInMeters = locError * 111000;
+            // var locError = Math.Abs(last_lat - api.lat) + Math.Abs(last_lon - api.lon) + Math.Abs(last_alt - api.alt);
+            // var locErrorInMeters = locError * 111000;
             // var locErrorInFeet = locErrorInMeters * 3.28084;
             // if distance between last lat, long, and altitude and current lat, long, and altitude is greater than 5 meters, load new map
-            if (anchors.Count == 0 && locErrorInMeters > 30)
-            {
+            // if (anchors.Count == 0 && locErrorInMeters > 30)
+            // {
+            //     last_lat = api.lat;
+            //     last_lon = api.lon;
+            //     last_alt = api.alt;
+            //     OnLoadButton();
+            //     // load new map
+            //     // if (isWorldMapLoaded == false)
+            //     // {
+            //     //     preventReload = false;
+            //     //     LoadMap();
+            //     // }
+            // }
+
+            if (!firstLoadMap) {
                 OnLoadButton();
-                // load new map
-                // if (isWorldMapLoaded == false)
-                // {
-                //     preventReload = false;
-                //     LoadMap();
-                // }
+                firstLoadMap = true;
             }
 
             var numLogsToShow = 20;
