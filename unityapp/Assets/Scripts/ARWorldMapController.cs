@@ -386,15 +386,24 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         }
 
-
+        public bool shouldGetNextPotentialChunkId = false;
         async void getNextPotentialChunkId()
         {
+            if (!shouldGetNextPotentialChunkId) {
+                return;
+            }
+
             if (potentialChunkIds.Count == 0)
             {
                 Log("No nearby maps found");
                 Log("Saving current map");
                 OnSaveButton();
                 return;
+            }
+
+            if (potentialChunkIdsCurrent >= potentialChunkIds.Count)
+            {
+                potentialChunkIdsCurrent = 0;
             }
 
             var newId = potentialChunkIds[potentialChunkIdsCurrent].Item2;
@@ -588,7 +597,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Debug.Log("anchors changed");
             if (obj.added.Count > 0)
             {
-                
+
                 Debug.Log("added");
                 foreach (var anchor in obj.added)
                 {
@@ -722,7 +731,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             //     // }
             // }
 
-            if (!firstLoadMap) {
+            if (!firstLoadMap)
+            {
                 OnLoadButton();
                 firstLoadMap = true;
             }
