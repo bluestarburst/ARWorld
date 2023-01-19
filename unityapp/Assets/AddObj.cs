@@ -722,7 +722,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     currentChunk = null;
                     spawnedObject = null;
                 }
-                arWorldMapController.OnSaveButton();
+
+                arWorldMapController.OnSaveButtonDelay(3);
             }
 
             if (moveChild != null)

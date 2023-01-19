@@ -174,6 +174,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
 #endif
         }
 
+        public void OnSaveButtonDelay(int delay)
+        {
+
+#if UNITY_IOS
+            try
+            {
+                HostNativeAPI.mapStatus("saving");
+                Invoke("OnSaveButton", delay);
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+            }
+
+#endif
+        }
+
         /// <summary>
         /// Load an <c>ARWorldMap</c> from disk and apply it
         /// to the current session.
@@ -288,6 +305,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         async void retrieveFirestoreMap(ARKitSessionSubsystem sessionSubsystem)
         {
+            CancelInvoke("getNextPotentialChunkId");
             CollectionReference mapsRef = db.Collection("maps");
 
             // create a boudning box around (api.lat,api.lon) current location within 50 meters
@@ -357,7 +375,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Console.WriteLine("Closest map is " + newId + " with error " + error);
             Log("Loading map " + newId);
 
-            InvokeRepeating("getNextPotentialChunkId", 0, 5);
+            InvokeRepeating("getNextPotentialChunkId", 0, 2.5f);
 
             FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
             StorageReference storageRef = storage.RootReference;
@@ -419,7 +437,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // OnSaveButton();
                 trys += 1;
 
-                if (trys > 3)
+                if (trys > 5)
                 {
                     Log("No nearby maps found");
                     Log("Saving current map");
@@ -428,7 +446,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
 
                 CancelInvoke("getNextPotentialChunkId");
-                OnLoadButton();
+                // OnLoadButton();
                 return;
             }
 
@@ -638,7 +656,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (!repeating)
                     {
                         CancelInvoke("getNextPotentialChunkId");
-                        InvokeRepeating("OnSaveButton", 15, 15);
+                        // InvokeRepeating("OnSaveButton", 15, 15);
+                        InvokeRepeating("OnLoadButton", 10, 10);
                         repeating = true;
                         isWorldMapLoaded = true;
                     }
@@ -825,11 +844,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             //     InvokeRepeating("OnLoadButton", 0, 60);
             // }
 
-            if (preventReload == false && api.lat != 0 && api.lon != 0)
-            {
-                preventReload = true;
-                InvokeRepeating("OnLoadButton", 0, 30);
-            }
+            // if (preventReload == false && api.lat != 0 && api.lon != 0)
+            // {
+            //     preventReload = true;
+
+            // }
 
 
 #endif
