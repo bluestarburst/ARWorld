@@ -217,7 +217,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             return output.ToArray();
         }
 
-        
+
 #if UNITY_IOS
         IEnumerator Save()
         {
@@ -284,7 +284,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // OnSaveButton();
         }
 
-        
+
 
         async void retrieveFirestoreMap(ARKitSessionSubsystem sessionSubsystem)
         {
@@ -393,14 +393,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         }
 
-        
+
         void getNextPotentialChunkId()
         {
             getNextPotentialChunkIdAsync();
         }
         async void getNextPotentialChunkIdAsync()
         {
-            if (!shouldGetNextPotentialChunkId) {
+            if (!shouldGetNextPotentialChunkId)
+            {
                 return;
             }
 
@@ -758,11 +759,44 @@ namespace UnityEngine.XR.ARFoundation.Samples
             //     // }
             // }
 
-            if (!firstLoadMap)
+            if (!firstLoadMap && api.lat != 0 && api.lon != 0 && api.alt != 0)
             {
                 OnLoadButton();
                 firstLoadMap = true;
             }
+
+
+            if (chunks.Count > 0)
+            {
+
+                bool check = false;
+                // find gameobjects with tag "chunk" and add them to chunks
+                foreach (GameObject chunk in chunks.Values)
+                {
+                    // get x and z position of chunk
+                    Vector3 chunkPos = new Vector3(chunk.transform.position.x, 0, chunk.transform.position.z);
+                    // get camera x z position
+                    Vector3 cameraPos = new Vector3(ARCamera.transform.position.x, 0, ARCamera.transform.position.z);
+
+                    var dist = Vector3.Distance(chunkPos, cameraPos);
+                    if (dist < 1)
+                    {
+                        if (planeManager.enabled == false)
+                        {
+                            Log("enabling plane manager");
+                            planeManager.enabled = true;
+                        }
+                        check = true;
+                        break;
+                    }
+                }
+                if (!check && planeManager.enabled == true)
+                {
+                    Log("disabling plane manager");
+                    planeManager.enabled = false;
+                }
+            }
+
 
             var numLogsToShow = 20;
             string msg = "";
