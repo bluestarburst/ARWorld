@@ -149,6 +149,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         // create arraylist of strings to store potential chunk ids
         public List<(double, string)> potentialChunkIds = new List<(double, string)>();
+        public Dictionary<string, GeoPoint> potentialChunkIdsPos = new Dictionary<string, GeoPoint>();
         public int potentialChunkIdsCurrent = 0;
         bool shouldGetNextPotentialChunkId = false;
 
@@ -312,6 +313,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 // put potential chunk ids into arraylist and sort by error in altitude and location error
                 potentialChunkIds.Add((locErrorInMeters, documentSnapshot.Id));
+                potentialChunkIdsPos.Add(documentSnapshot.Id, documentSnapshot.GetValue<GeoPoint>("location"));
 
                 Log("Location error is " + locErrorInMeters);
                 if (tempErr < error)
@@ -411,7 +413,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (potentialChunkIdsCurrent >= potentialChunkIds.Count)
             {
                 potentialChunkIdsCurrent = 0;
-                OnSaveButton();
+                // OnSaveButton();
+                CancelInvoke("getNextPotentialChunkId");
+                OnLoadButton();
                 return;
             }
 
