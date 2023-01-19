@@ -153,6 +153,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public int potentialChunkIdsCurrent = 0;
         bool shouldGetNextPotentialChunkId = false;
 
+        int trys = 0;
+
         /// <summary>
         /// Create an <c>ARWorldMap</c> and save it to disk.
         /// </summary>
@@ -215,7 +217,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             return output.ToArray();
         }
 
-        private int trys = 0;
+        
 #if UNITY_IOS
         IEnumerator Save()
         {
