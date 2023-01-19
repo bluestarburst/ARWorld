@@ -414,7 +414,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 potentialChunkIdsCurrent = 0;
                 // OnSaveButton();
-                trys = 0;
+                trys += 1;
+
+                if (trys > 3)
+                {
+                    Log("No nearby maps found");
+                    Log("Saving current map");
+                    OnSaveButton();
+                    return;
+                }
+
                 CancelInvoke("getNextPotentialChunkId");
                 OnLoadButton();
                 return;
