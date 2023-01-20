@@ -319,6 +319,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var newId = "";
             var tempCenterChunkId = "";
 
+            potentialChunkIds.Clear();
+            potentialChunkIdsPos.Clear();
+
             foreach (DocumentSnapshot documentSnapshot in querySnapshot.Documents)
             {
                 Console.WriteLine("Document {0} returned by query maps", documentSnapshot.Id);
