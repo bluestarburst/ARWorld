@@ -360,6 +360,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
 
+            potentialChunkIdsCurrent = 1;
+
             potentialChunkIds.Sort((x, y) => x.Item1.CompareTo(y.Item1));
 
             if (newId == worldMapId && newId != "")
@@ -422,7 +424,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
-            Invoke("getNextPotentialChunkId", 10f);
+            await WaitUntilMapped();
+            // Invoke("getNextPotentialChunkId", 10f);
+            getNextPotentialChunkId();
             // OnSaveButton();
 
         }
@@ -460,32 +464,32 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 potentialChunkIdsCurrent = 0;
                 // OnSaveButton();
-                if (shouldGetNextPotentialChunkId)
+                // if (shouldGetNextPotentialChunkId)
+                // {
+                //     trys += 1;
+                // }
+
+                // Log("No nearby maps found... RETRYING");
+
+                // if (trys > 1)
+                // {
+                Log("No nearby maps found");
+                Log("Saving current map");
+                CancelInvoke("getNextPotentialChunkId");
+                if (worldMapId == "")
                 {
-                    trys += 1;
+                    sessionSubsystem.Reset();
+                    WaitUntilMappedSave();
+                    // OnSaveButton();
                 }
 
-                Log("No nearby maps found... RETRYING");
-
-                if (trys > 1)
-                {
-                    Log("No nearby maps found");
-                    Log("Saving current map");
-                    CancelInvoke("getNextPotentialChunkId");
-                    if (worldMapId == "")
-                    {
-                        sessionSubsystem.Reset();
-                        WaitUntilMappedSave();
-                        // OnSaveButton();
-                    }
-
-                    return;
-                }
+                return;
+                // }
 
                 // 
-                CancelInvoke("getNextPotentialChunkId");
-                OnLoadButton();
-                return;
+                // CancelInvoke("getNextPotentialChunkId");
+                // OnLoadButton();
+                // return;
             }
 
             // double err = potentialChunkIds[potentialChunkIdsCurrent].Item1;
@@ -537,7 +541,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             sessionSubsystem.ApplyWorldMap(worldMap);
 
             await WaitUntilMapped();
-            Invoke("getNextPotentialChunkId", 10f);
+            // Invoke("getNextPotentialChunkId", 10f);
+            getNextPotentialChunkId();
             // OnSaveButton();
 
         }
