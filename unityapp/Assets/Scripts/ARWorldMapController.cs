@@ -423,10 +423,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
         async void getNextPotentialChunkIdAsync()
         {
-            if (!shouldGetNextPotentialChunkId)
-            {
-                return;
-            }
+            // if (!shouldGetNextPotentialChunkId)
+            // {
+            //     return;
+            // }
 
             if (potentialChunkIds.Count == 0)
             {
@@ -442,7 +442,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 potentialChunkIdsCurrent = 0;
                 // OnSaveButton();
-                trys += 1;
+                if (shouldGetNextPotentialChunkId) {
+                    trys += 1;
+                }
+                
                 Log("No nearby maps found... RETRYING");
 
                 if (trys > 5)
