@@ -445,12 +445,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     Log("No nearby maps found");
                     Log("Saving current map");
+                    CancelInvoke("getNextPotentialChunkId");
                     OnSaveButton();
                     return;
                 }
 
+                // 
                 CancelInvoke("getNextPotentialChunkId");
-                // OnLoadButton();
+                OnLoadButton();
                 return;
             }
 
