@@ -435,6 +435,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
+            var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+
             if (potentialChunkIdsCurrent >= potentialChunkIds.Count)
             {
                 potentialChunkIdsCurrent = 0;
@@ -449,7 +451,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     CancelInvoke("getNextPotentialChunkId");
                     if (worldMapId == "")
                     {
-                        OnSaveButton();
+                        sessionSubsystem.Reset();
+                        WaitUntilMappedSave();
+                        // OnSaveButton();
                     }
 
                     return;
@@ -504,7 +508,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // yield break;
             }
 
-            var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+            
 
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
