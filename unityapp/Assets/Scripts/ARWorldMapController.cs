@@ -301,7 +301,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             await createChunks(1, 0);
-            // OnSaveButton();
+            OnSaveButton();
         }
 
 
