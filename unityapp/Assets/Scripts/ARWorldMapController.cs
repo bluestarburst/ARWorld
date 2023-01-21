@@ -240,7 +240,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         IEnumerator Save()
         {
 
-            if (chunks.Count < chunksToLoad)
+            if (chunks.Count < chunksToLoad && worldMapId.Length != 0)
             {
                 Log("Not enough chunks loaded to save.");
                 yield break;
