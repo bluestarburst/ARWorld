@@ -70,7 +70,7 @@ struct ContentView: View {
                     
                     
                     .offset(x: offset)
-                    .onAppear {
+                    .onAppear { 
                         normal = -geometry.size.width
                         offset = -geometry.size.width
                     }
