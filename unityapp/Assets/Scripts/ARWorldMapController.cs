@@ -439,6 +439,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 potentialChunkIdsCurrent = 0;
                 // OnSaveButton();
                 trys += 1;
+                Log("No nearby maps found... RETRYING");
 
                 if (trys > 5)
                 {
@@ -466,7 +467,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             collab.enabled = true;
 
             Console.WriteLine("Closest map is " + newId + " with error " + error);
-            Log("Loading map " + newId);
+            Log("Loading new map " + newId);
 
             FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
             StorageReference storageRef = storage.RootReference;
@@ -784,6 +785,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (!firstLoadMap && api.lat != 0.0f && api.lon != 0.0f && api.alt != 0.0f)
             {
+                Log("first load map");
+                Log("lat: " + api.lat + " lon: " + api.lon + " alt: " + api.alt);
                 OnLoadButton();
                 firstLoadMap = true;
             }
@@ -853,6 +856,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             //     preventReload = true;
 
             // }
+
+            if (sessionSubsystem.worldMappingStatus == ARWorldMappingStatus.Mapped)
+            {
+                shouldGetNextPotentialChunkId = true;
+            }
 
 
 #endif
