@@ -484,7 +484,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             StorageReference storageRef = storage.RootReference;
             StorageReference mapsdbRef = storageRef.Child("maps");
             StorageReference mapRef = mapsdbRef.Child(newId + ".worldmap");
-            var data = await mapRef.GetBytesAsync(1024 * 1024 * 20);
+            var data = await mapRef.GetBytesAsync(1024 * 1024 * 55);
 
             data = Decompress(data);
 
