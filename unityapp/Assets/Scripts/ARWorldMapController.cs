@@ -274,7 +274,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             var worldMapData = worldMap.Serialize(Allocator.Temp);
 
-            SaveAndDisposeWorldMap(worldMapData.ToArray());
+            SaveAndDisposeWorldMap(Compress(worldMapData.ToArray()));
         }
 
         public bool firstLoadMap = false;
@@ -385,9 +385,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             StorageReference storageRef = storage.RootReference;
             StorageReference mapsdbRef = storageRef.Child("maps");
             StorageReference mapRef = mapsdbRef.Child(newId + ".worldmap");
-            var data = await mapRef.GetBytesAsync(1024 * 1024 * 20);
+            var data = await mapRef.GetBytesAsync(1024 * 1024 * 55);
 
-            // data = Decompress(data);
+            data = Decompress(data);
 
             // byte[] to native array
             var nativeData = new NativeArray<byte>(data.Length, Allocator.Temp);
@@ -486,7 +486,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             StorageReference mapRef = mapsdbRef.Child(newId + ".worldmap");
             var data = await mapRef.GetBytesAsync(1024 * 1024 * 20);
 
-            // data = Decompress(data);
+            data = Decompress(data);
 
             // byte[] to native array
             var nativeData = new NativeArray<byte>(data.Length, Allocator.Temp);
