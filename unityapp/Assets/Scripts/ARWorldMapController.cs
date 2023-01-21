@@ -447,7 +447,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     Log("No nearby maps found");
                     Log("Saving current map");
                     CancelInvoke("getNextPotentialChunkId");
-                    OnSaveButton();
+                    if (worldMapId == "")
+                    {
+                        OnSaveButton();
+                    }
+
                     return;
                 }
 
