@@ -274,7 +274,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             var worldMapData = worldMap.Serialize(Allocator.Temp);
 
-            SaveAndDisposeWorldMap(Compress(worldMapData.ToArray()));
+            var tempData = Compress(worldMapData.ToArray());
+
+            // check size of worldmap is greater than 55 mb
+            if (tempData.Length > 55000000)
+            {
+                Log("World map is too large to save.");
+                yield break;
+            }
+
+            SaveAndDisposeWorldMap(tempData);
         }
 
         public bool firstLoadMap = false;
