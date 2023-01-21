@@ -782,7 +782,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             //     // }
             // }
 
-            if (!firstLoadMap && api.lat != 0 && api.lon != 0 && api.alt != 0)
+            if (!firstLoadMap && api.lat != 0.0f && api.lon != 0.0f && api.alt != 0.0f)
             {
                 OnLoadButton();
                 firstLoadMap = true;
