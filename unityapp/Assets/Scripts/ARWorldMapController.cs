@@ -549,6 +549,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
             return true;
         }
 
+        // an async method that waits for the world map to be mapped and returns a boolean
+        async Task<bool> WaitUntilMapped()
+        {
+            var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+            while (sessionSubsystem.worldMappingStatus != ARWorldMappingStatus.Mapped)
+            {
+                await Task.Delay(100);
+            }
+            return true;
+        }
+
+
 
         async void SaveAndDisposeWorldMap(byte[] data)
         {
