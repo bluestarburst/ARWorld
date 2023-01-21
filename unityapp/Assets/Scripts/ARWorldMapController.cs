@@ -443,6 +443,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+            sessionSubsystem.Reset();
 
             if (potentialChunkIdsCurrent >= potentialChunkIds.Count)
             {
