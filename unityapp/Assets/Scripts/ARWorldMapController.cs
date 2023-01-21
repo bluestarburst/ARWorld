@@ -381,7 +381,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Console.WriteLine("Closest map is " + newId + " with error " + error);
             Log("Loading map " + newId);
 
-            InvokeRepeating("getNextPotentialChunkId", 0, 5f);
+            
 
             FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
             StorageReference storageRef = storage.RootReference;
@@ -413,6 +413,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
+            Invoke("getNextPotentialChunkId", 5f);
             // OnSaveButton();
 
         }
@@ -428,6 +429,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // {
             //     return;
             // }
+
+            if ( chunks.Count != 0) {
+                return;
+            }
 
             if (potentialChunkIds.Count == 0)
             {
@@ -517,6 +522,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
+
+            Invoke("getNextPotentialChunkId", 5);
             // OnSaveButton();
 
         }
