@@ -109,6 +109,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
         public string worldMapId = "";
+        public string tempWorldMapId = "";
 
         public bool isWorldMapLoaded = false;
 
@@ -398,7 +399,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (worldMap.valid)
             {
                 Log("Deserialized successfully.");
-                worldMapId = newId;
+                tempWorldMapId = newId;
             }
             else
             {
@@ -489,7 +490,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (worldMap.valid)
             {
                 Log("Deserialized successfully.");
-                worldMapId = newId;
+                tempWorldMapId = newId;
             }
             else
             {
@@ -653,6 +654,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Debug.Log("added");
                 foreach (var anchor in obj.added)
                 {
+
+                    if (worldMapId.Length == 0 && tempWorldMapId.Length != 0)
+                    {
+                        worldMapId = tempWorldMapId;
+                    }
+
                     if (firstLoad)
                     {
                         bay.loadedMap();
