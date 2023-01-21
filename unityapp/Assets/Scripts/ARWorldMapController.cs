@@ -683,7 +683,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         CancelInvoke("getNextPotentialChunkId");
                         // InvokeRepeating("OnSaveButton", 0, 15);
-                        OnSaveButton();
+                        // OnSaveButton();
                         // InvokeRepeating("OnLoadButton", 10, 10);
                         repeating = true;
                         isWorldMapLoaded = true;
