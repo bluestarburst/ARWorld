@@ -690,7 +690,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (!repeating)
                     {
                         CancelInvoke("getNextPotentialChunkId");
-                        // InvokeRepeating("OnSaveButton", 0, 15);
+                        InvokeRepeating("OnSaveButton", 0, 15);
                         // OnSaveButton();
                         // InvokeRepeating("OnLoadButton", 10, 10);
                         repeating = true;
