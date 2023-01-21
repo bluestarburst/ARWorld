@@ -454,7 +454,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 
                 Log("No nearby maps found... RETRYING");
 
-                if (trys > 5)
+                if (trys > 2)
                 {
                     Log("No nearby maps found");
                     Log("Saving current map");
