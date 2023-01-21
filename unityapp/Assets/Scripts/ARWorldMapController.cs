@@ -413,7 +413,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
-            Invoke("getNextPotentialChunkId", 5f);
+            Invoke("getNextPotentialChunkId", 10f);
             // OnSaveButton();
 
         }
@@ -523,7 +523,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
 
-            Invoke("getNextPotentialChunkId", 5);
+            Invoke("getNextPotentialChunkId", 10f);
             // OnSaveButton();
 
         }
