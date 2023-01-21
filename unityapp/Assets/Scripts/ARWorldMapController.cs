@@ -298,6 +298,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 await Task.Delay(1000);
             }
+            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             await createChunks(1, 0);
             // OnSaveButton();
         }
@@ -379,7 +380,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Console.WriteLine("Closest map is " + newId + " with error " + error);
             Log("Loading map " + newId);
 
-            InvokeRepeating("getNextPotentialChunkId", 0, 2.5f);
+            InvokeRepeating("getNextPotentialChunkId", 0, 5f);
 
             FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
             StorageReference storageRef = storage.RootReference;
@@ -431,7 +432,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 Log("No nearby maps found");
                 Log("Saving current map");
-                OnSaveButton();
+                WaitUntilMappedSave();
                 return;
             }
 
