@@ -293,6 +293,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         async void WaitUntilMappedSave()
         {
+            tempWorldMapId = worldMapId;
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
             while (sessionSubsystem.worldMappingStatus != ARWorldMappingStatus.Mapped)
             {
