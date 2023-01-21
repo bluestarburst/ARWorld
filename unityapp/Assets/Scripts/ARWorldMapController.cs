@@ -453,6 +453,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
             sessionSubsystem.Reset();
+            await WaitUntilWorldMapReady();
 
             if (potentialChunkIdsCurrent >= potentialChunkIds.Count)
             {
@@ -464,7 +465,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 
                 Log("No nearby maps found... RETRYING");
 
-                if (trys > 2)
+                if (trys > 1)
                 {
                     Log("No nearby maps found");
                     Log("Saving current map");
@@ -536,6 +537,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Invoke("getNextPotentialChunkId", 10f);
             // OnSaveButton();
 
+        }
+
+        // an async method that waits for the world map to be ready and returns a boolean
+        async Task<bool> WaitUntilWorldMapReady()
+        {
+            while (!m_ARSession.subsystem.running)
+            {
+                await Task.Delay(100);
+            }
+            return true;
         }
 
 
