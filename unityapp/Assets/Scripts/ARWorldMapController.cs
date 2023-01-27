@@ -431,7 +431,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
             // Invoke("getNextPotentialChunkId", 10f);
-            getNextPotentialChunkId();
+            Invoke("getNextPotentialChunkId", 5f);
             // OnSaveButton();
         }
 
@@ -461,11 +461,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
-            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Instant);
+            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             await Task.Delay(1000);
             sessionSubsystem.Reset();
             await WaitUntilWorldMapReady();
-            sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Instant);
+            sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
 
             if (potentialChunkIdsCurrent >= potentialChunkIds.Count)
             {
