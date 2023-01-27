@@ -537,10 +537,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
 
-            Log("Apply ARWorldMap to current session.");
-            sessionSubsystem.ApplyWorldMap(worldMap);
+            
 
             await WaitUntilMapped();
+            Log("Apply ARWorldMap to current session.");
+            sessionSubsystem.ApplyWorldMap(worldMap);
             // Invoke("getNextPotentialChunkId", 10f);
             getNextPotentialChunkId();
             // OnSaveButton();
