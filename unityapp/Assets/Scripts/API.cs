@@ -82,6 +82,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public float lon = 0.0f;
         public float alt = 0.0f;
 
+        public bool recievedData = false;
+
         public FirebaseApp app = FirebaseApp.Create();
 
         public bool finishedStart = false;
@@ -129,6 +131,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             switch (header.type)
             {
                 case "update-vars":
+                    recievedData = true;
                     _UpdateVars(serializedMessage);
                     break;
                 case "change-color":
