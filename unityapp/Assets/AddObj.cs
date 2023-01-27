@@ -571,7 +571,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             arWorldMapController.Log("currentChunk");
             change = "move";
 
-            // moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
 
