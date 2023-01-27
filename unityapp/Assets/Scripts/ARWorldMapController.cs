@@ -312,7 +312,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 await Task.Delay(1000);
             }
-            sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Instant);
             sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             await createChunks(1, 0);
             OnSaveButton();
@@ -462,6 +461,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+            await Task.Delay(1000);
             sessionSubsystem.Reset();
             await WaitUntilWorldMapReady();
             sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Instant);
@@ -484,6 +485,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 CancelInvoke("getNextPotentialChunkId");
                 if (worldMapId == "")
                 {
+                    sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+                    await Task.Delay(1000);
                     sessionSubsystem.Reset();
                     await WaitUntilWorldMapReady();
                     sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Instant);
@@ -774,7 +777,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         Console.WriteLine("SETTING CENTER CHUNK");
                         centerChunk = chunk;
                         chunksPos["0-0"] = anchor.trackableId.ToString();
-                        sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Instant);
                         sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
                         centerChunkId = "";
                         HostNativeAPI.mapStatus("mapped");
@@ -1004,7 +1006,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         centerChunkIdToSave = anchor.trackableId.ToString();
                         centerChunkId = anchor.trackableId.ToString();
                         centerChunk = chunk;
-                        sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Instant);
                         sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
                         HostNativeAPI.mapStatus("mapped");
                     }
