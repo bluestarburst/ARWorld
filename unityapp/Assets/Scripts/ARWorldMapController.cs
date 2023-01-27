@@ -296,6 +296,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 yield break;
             }
 
+            if (!api.recievedData) {
+                yield break;
+            }
+
             retrieveFirestoreMap(sessionSubsystem);
 
         }
