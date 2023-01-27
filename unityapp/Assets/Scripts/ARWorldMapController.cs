@@ -739,6 +739,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (!repeating)
                     {
+                        
                         CancelInvoke("getNextPotentialChunkId");
                         InvokeRepeating("OnSaveButton", 15, 15);
                         // OnSaveButton();
@@ -767,6 +768,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 #if UNITY_IOS
                         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+
+                        sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
 #else
                         XRSessionSubsystem sessionSubsystem = null;
 #endif
