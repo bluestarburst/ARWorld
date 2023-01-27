@@ -476,26 +476,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     trys += 1;
                 }
 
-                // Log("No nearby maps found... RETRYING");
-
-                // if (trys > 1)
-                // {
-                // Log("No nearby maps found");
-                // Log("Saving current map");
-                // CancelInvoke("getNextPotentialChunkId");
-                // if (worldMapId == "")
-                // {
-                //     sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
-                //     await Task.Delay(1000);
-                //     sessionSubsystem.Reset();
-                //     await WaitUntilWorldMapReady();
-                //     sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Instant);
-                //     WaitUntilMappedSave();
-                //     // OnSaveButton();
-                // }
-
-                // return;
-                // }
+                if (trys > 3)
+                {
+                    Log("No nearby maps found");
+                    HostNativeAPI.mapStatus("failed");
+                    return;
+                }
 
                 // 
                 CancelInvoke("getNextPotentialChunkId");
