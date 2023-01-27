@@ -41,6 +41,8 @@
 	<string>Please allow ARWorld to create a collaborative AR experience with other devices nearby</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Please allow ARWorld to use your location to get AR objects around you!</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Please allow ARWorld to track your motion in order to manage your real-time movement</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Would you like to share your photos to the world?</string>
 	<key>NSUserNotificationsUsageDescription</key>
