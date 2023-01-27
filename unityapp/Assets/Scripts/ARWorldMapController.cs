@@ -422,9 +422,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // yield break;
             }
 
+            
+            await WaitUntilMapped();
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
-            await WaitUntilMapped();
             // Invoke("getNextPotentialChunkId", 10f);
             getNextPotentialChunkId();
             // OnSaveButton();
