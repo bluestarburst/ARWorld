@@ -324,9 +324,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             CancelInvoke("getNextPotentialChunkId");
             CollectionReference mapsRef = db.Collection("maps");
 
-            // create a boudning box around (api.lat,api.lon) current location within 50 meters
-            GeoPoint southwest = new GeoPoint(api.lat - 0.00045, api.lon - 0.00045);
-            GeoPoint northeast = new GeoPoint(api.lat + 0.00045, api.lon + 0.00045);
+            // create a boudning box around (api.lat,api.lon) current location within 100 meters
+            var southwest = new GeoPoint(api.lat - 0.0009, api.lon - 0.0015);
+            var northeast = new GeoPoint(api.lat + 0.0009, api.lon + 0.0015);
 
             Query query = mapsRef.WhereGreaterThanOrEqualTo("location", southwest).WhereLessThanOrEqualTo("location", northeast);
 
