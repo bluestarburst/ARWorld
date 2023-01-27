@@ -210,7 +210,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public void OnResetButton()
         {
-            m_ARSession.Reset();
         }
 
         public byte[] Compress(byte[] data)
@@ -296,7 +295,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 yield break;
             }
 
-            if (!api.recievedData) {
+            if (!api.recievedData)
+            {
                 yield break;
             }
 
@@ -426,7 +426,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // yield break;
             }
 
-            
+
             await WaitUntilMapped();
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
@@ -461,7 +461,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
-            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+            // without animation
+            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Instant);
+            // wait 100 ms
+            await Task.Delay(100);
             sessionSubsystem.Reset();
             await WaitUntilWorldMapReady();
             sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
@@ -484,7 +487,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 CancelInvoke("getNextPotentialChunkId");
                 if (worldMapId == "")
                 {
-                    sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+                    // without animation
+                    sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Instant);
+                    // wait 100 ms
+                    await Task.Delay(100);
                     sessionSubsystem.Reset();
                     await WaitUntilWorldMapReady();
                     sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
@@ -546,7 +552,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
 
-            
+
 
             await WaitUntilMapped();
             Log("Apply ARWorldMap to current session.");
@@ -739,7 +745,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (!repeating)
                     {
-                        
+
                         CancelInvoke("getNextPotentialChunkId");
                         InvokeRepeating("OnSaveButton", 15, 15);
                         // OnSaveButton();
@@ -769,7 +775,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 #if UNITY_IOS
                         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
 
-                        sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
 #else
                         XRSessionSubsystem sessionSubsystem = null;
 #endif
