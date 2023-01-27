@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44673008, g: 0.4965883, b: 0.575022, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -342,6 +342,7 @@ GameObject:
   - component: {fileID: 705507995}
   - component: {fileID: 705507994}
   - component: {fileID: 705507996}
+  - component: {fileID: 705507997}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -446,6 +447,19 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!114 &705507997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705507993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42daa7d07af7f4009863795cfb98b711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arcamman: {fileID: 1393218331}
 --- !u!1001 &898503782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -863,7 +877,7 @@ MonoBehaviour:
   m_FocusMode: -1
   m_LightEstimationMode: -1
   m_AutoFocus: 1
-  m_LightEstimation: 0
+  m_LightEstimation: -1
   m_FacingDirection: 1
   m_RenderMode: 0
 --- !u!81 &1393218332
@@ -1036,6 +1050,7 @@ MonoBehaviour:
   m_MappingStatusText: {fileID: 1839110614}
   api: {fileID: 168510958}
   worldMapId: 
+  tempWorldMapId: 
   isWorldMapLoaded: 0
   repeating: 0
   AROrigin: {fileID: 1352058499}
@@ -1058,6 +1073,8 @@ MonoBehaviour:
   last_lat: 0
   last_lon: 0
   last_alt: 0
+  potentialChunkIdsCurrent: 0
+  firstLoadMap: 0
 --- !u!4 &1751548351
 Transform:
   m_ObjectHideFlags: 0
