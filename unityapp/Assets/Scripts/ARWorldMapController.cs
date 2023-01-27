@@ -429,7 +429,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // Invoke("getNextPotentialChunkId", 10f);
             getNextPotentialChunkId();
             // OnSaveButton();
-
         }
 
 
