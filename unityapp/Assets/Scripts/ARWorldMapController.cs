@@ -461,8 +461,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             sessionSubsystem.Reset();
             await WaitUntilWorldMapReady();
+            sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
 
             if (potentialChunkIdsCurrent >= potentialChunkIds.Count)
             {
@@ -482,7 +484,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 CancelInvoke("getNextPotentialChunkId");
                 if (worldMapId == "")
                 {
+                    sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
                     sessionSubsystem.Reset();
+                    await WaitUntilWorldMapReady();
+                    sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
                     WaitUntilMappedSave();
                     // OnSaveButton();
                 }
