@@ -1064,7 +1064,7 @@ MonoBehaviour:
   centerChunk: {fileID: 0}
   posterPrefab: {fileID: 2491148595152579251, guid: 05a316b586693c9419cf47feeecf86f9,
     type: 3}
-  spotlightPrefab: {fileID: 3935323067386996903, guid: 3467760889126b449a812dc0bacc6a9e,
+  spotlightPrefab: {fileID: 6514671412015856445, guid: 85f0a5329860107409682a680981095e,
     type: 3}
   chunksToLoad: 0
   bay: {fileID: 138682564}
