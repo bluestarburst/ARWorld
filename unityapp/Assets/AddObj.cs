@@ -1188,10 +1188,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
                         // scale object
-                        if (type.Equals("objects") || type.Equals("spotlights"))
+                        if (type.Equals("objects"))
                         {
                             spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f);
                             moveChild.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f);
+                        }
+                        else if (type.Equals("spotlights"))
+                        {
+                            spawnedObject.transform.localScale -= new Vector3(0, deltaMagnitudeDiff * 0.001f, 0);
                         }
                         else
                         {
@@ -1266,7 +1270,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             spawnedObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
 
-            
+
         }
 
         void OnFinishAsync(GameObject result, AnimationClip[] animations)

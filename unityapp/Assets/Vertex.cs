@@ -9,34 +9,37 @@ using System;
 [ExecuteInEditMode]
 public class Vertex : MonoBehaviour
 {
-    Mesh originalMesh;
+    public Mesh originalMesh;
     Mesh clonedMesh;
     MeshFilter meshFilter;
     int[] triangles;
 
     // [HideInInspector]
     public Vector3[] vertices;
+    public Vector3[] prev_vertices;
 
-    // [HideInInspector]
+    [HideInInspector]
     public bool isCloned = false;
 
     // For Editor
-    public float radius = 0.2f;
-    public float pull = 0.3f;
-    public float handleSize = 0.03f;
     public List<int>[] connectedVertices;
     public List<Vector3[]> allTriangleList;
     public bool moveVertexPoint = true;
 
+    public float topRadius = 1f;
+    public float bottomRadius = 1f;
+
     void Start()
     {
         InitMesh();
+        getTopVertices();
+        getBottomVertices();
     }
 
     public void InitMesh()
     {
         meshFilter = GetComponent<MeshFilter>();
-        originalMesh = meshFilter.sharedMesh; //1
+        // originalMesh = meshFilter.sharedMesh; //1
         clonedMesh = new Mesh(); //2
 
         clonedMesh.name = "clone";
@@ -47,6 +50,7 @@ public class Vertex : MonoBehaviour
         meshFilter.mesh = clonedMesh;  //3
 
         vertices = clonedMesh.vertices; //4
+        prev_vertices = clonedMesh.vertices;
         triangles = clonedMesh.triangles;
         isCloned = true; //5
         Debug.Log("Init & Cloned");
@@ -162,5 +166,90 @@ public class Vertex : MonoBehaviour
         vertices[3] = new Vector3(1, 2, 4);
         clonedMesh.vertices = vertices;
         clonedMesh.RecalculateNormals();
+    }
+
+    public List<int> topVertices = new List<int>();
+    public void getTopVertices()
+    {
+        topVertices.Clear();
+        topVertices = new List<int>();
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            if (vertices[i].y >= 1f)
+            {
+                topVertices.Add(i);
+            }
+        }
+        Debug.Log("Top Vertices: " + topVertices.Count);
+
+        // multiply x and z by 2
+        for (int i = 0; i < topVertices.Count; i++)
+        {
+            vertices[topVertices[i]] = new Vector3(prev_vertices[topVertices[i]].x * 2, prev_vertices[topVertices[i]].y, prev_vertices[topVertices[i]].z * 2);
+        }
+        clonedMesh.vertices = vertices;
+        clonedMesh.RecalculateNormals();
+    }
+
+    public void updateTopVertices()
+    {
+        for (int i = 0; i < topVertices.Count; i++)
+        {
+            vertices[topVertices[i]] = new Vector3(prev_vertices[topVertices[i]].x * topRadius, prev_vertices[topVertices[i]].y, prev_vertices[topVertices[i]].z * topRadius);
+        }
+        clonedMesh.vertices = vertices;
+        clonedMesh.RecalculateNormals();
+    }
+
+    public List<int> bottomVertices = new List<int>();
+
+    public void getBottomVertices()
+    {
+        bottomVertices.Clear();
+        bottomVertices = new List<int>();
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            if (vertices[i].y <= -1f)
+            {
+                bottomVertices.Add(i);
+            }
+        }
+        Debug.Log("Bottom Vertices: " + bottomVertices.Count);
+
+        // multiply x and z by 2
+        for (int i = 0; i < bottomVertices.Count; i++)
+        {
+            vertices[bottomVertices[i]] = new Vector3(prev_vertices[bottomVertices[i]].x * 2, prev_vertices[bottomVertices[i]].y, prev_vertices[bottomVertices[i]].z * 2);
+        }
+        clonedMesh.vertices = vertices;
+        clonedMesh.RecalculateNormals();
+    }
+
+    public void updateBottomVertices()
+    {
+        for (int i = 0; i < bottomVertices.Count; i++)
+        {
+            vertices[bottomVertices[i]] = new Vector3(prev_vertices[bottomVertices[i]].x * bottomRadius, prev_vertices[bottomVertices[i]].y, prev_vertices[bottomVertices[i]].z * bottomRadius);
+        }
+        clonedMesh.vertices = vertices;
+        clonedMesh.RecalculateNormals();
+    }
+
+    public Light light;
+    public GameObject lightObj;
+
+    void Update()
+    {
+        updateTopVertices();
+        updateBottomVertices();
+
+        light.range = transform.localScale.y * 2 + 0.2f;
+
+        // get radius of the bottom and find the angle
+        float angle = (Mathf.Atan((bottomRadius * 0.25f) / light.range) * Mathf.Rad2Deg) * 2;
+
+        light.spotAngle = angle + 5;
+        light.innerSpotAngle = angle;
+
     }
 }
