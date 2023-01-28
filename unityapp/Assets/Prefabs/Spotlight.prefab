@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6514671412015856445}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &6514671412015856384
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda5e3350d65eb749bd300be556f833a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalMesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
   vertices:
   - {x: -0.71329284, y: -1, z: -0.23176289}
   - {x: -0.6067631, y: -1, z: -0.4408392}
@@ -329,9 +330,9 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 1
-  m_SpotAngle: 45
-  m_InnerSpotAngle: 40
+  m_Range: 1.2
+  m_SpotAngle: 39.70805
+  m_InnerSpotAngle: 34.70805
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
