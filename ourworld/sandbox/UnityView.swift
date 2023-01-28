@@ -42,6 +42,9 @@ struct UnityView: View {
     
     @State private var isAdding = false
     
+    @State private var topRadius = 0.5
+    @State private var botRadius = 1.5
+    
     func changeSelection(changeType: String) {
         withAnimation {
             elementType = changeType
@@ -251,6 +254,26 @@ struct UnityView: View {
                     .padding(30)
                     .padding(.top,45)
                     Spacer()
+                    Slider(value: $topRadius, in: 0.1...1) {
+                        Text("top radius")
+                    } minimumValueLabel: {
+                        Text("0.1")
+                    } maximumValueLabel: {
+                        Text("1")
+                    }.onChange(of: topRadius) { _ in
+                        UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
+                    }
+                    
+                    Slider(value: $botRadius, in: 0.1...1) {
+                        Text("bottom radius")
+                    } minimumValueLabel: {
+                        Text("0.1")
+                    } maximumValueLabel: {
+                        Text("1")
+                    }.onChange(of: botRadius) { _ in
+                        UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
+                    }
+                    
                     HStack {
                         Button (action: {withAnimation {UnityBridge.getInstance().api.changeTransform(change: "move");change = "move"}}, label: {
                             Image(systemName: "move.3d")
