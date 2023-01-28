@@ -75,6 +75,10 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-settings", data: change)
     }
 
+    public func changeRadius(top: CGFloat, bottom: CGFloat) {
+        sendMessage(type: "change-radius", data: [top, bottom])
+    }
+
     public func test(_ value: String) {
         self.testCallback(value)
     }
