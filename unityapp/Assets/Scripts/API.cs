@@ -90,6 +90,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public GameObject logs;
 
+        public float topR;
+        public float botR;
+
         void Awake()
         {
             if (!finishedStart)
@@ -153,6 +156,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 case "change-settings":
                     _ChangeSettings(serializedMessage);
                     break;
+                case "change-radius":
+                    _ChangeRadius(serializedMessage);
+                    break;
                 default:
                     Debug.LogError("Unrecognized message '" + header.type + "'");
                     break;
@@ -172,6 +178,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 alt = msg.data[2];
             }
             // print("updateVars");
+        }
+
+        public void _ChangeRadius(string serialized)
+        {
+            var msg = JsonConvert.DeserializeObject<MessageWithData<float[]>>(serialized);
+            if (msg.data != null && msg.data.Length >= 2)
+            {
+                topR = msg.data[0];
+                botR = msg.data[1];
+            }
         }
 
         public void _ChangeSettings(string serialized)

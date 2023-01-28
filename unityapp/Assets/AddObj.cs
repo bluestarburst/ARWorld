@@ -726,6 +726,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 arWorldMapController.OnSaveButtonDelay(3);
             }
 
+            if (type.Equals("spotlights")) {
+                spawnedObject.GetComponent<Vertex>().topRadius = api.topR;
+                spawnedObject.GetComponent<Vertex>().topRadius = api.botR;
+            }
+
             if (moveChild != null)
             {
                 if (change.Equals("move"))
