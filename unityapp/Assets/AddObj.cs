@@ -728,7 +728,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (type.Equals("spotlights")) {
                 spawnedObject.GetComponent<Vertex>().topRadius = api.topR;
-                spawnedObject.GetComponent<Vertex>().topRadius = api.botR;
+                spawnedObject.GetComponent<Vertex>().bottomRadius = api.botR;
             }
 
             if (moveChild != null)
