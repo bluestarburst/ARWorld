@@ -90,8 +90,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public GameObject logs;
 
-        public float topR;
-        public float botR;
+        public float topR = 0.5f;
+        public float botR = 1.5f;
 
         void Awake()
         {
