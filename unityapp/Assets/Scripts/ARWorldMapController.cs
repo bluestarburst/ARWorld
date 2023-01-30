@@ -134,7 +134,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public FirebaseFirestore db = FirebaseFirestore.GetInstance(FirebaseApp.Create());
 
         public GameObject posterPrefab;
+
         public GameObject spotlightPrefab;
+        public GameObject filterPrefab;
 
         public int chunksToLoad = 0;
 

@@ -140,6 +140,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     HostNativeAPI.addingObj("adding");
                     AddLight(type);
                 }
+                else if (type.Equals("filters"))
+                {
+                    HostNativeAPI.addingObj("filters");
+                    AddFilter(type);
+                }
                 return;
             }
         }
@@ -574,7 +579,71 @@ namespace UnityEngine.XR.ARFoundation.Samples
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
+        async void AddFilter(String type)
+        {
+            isAdding = true;
 
+
+            // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
+            if (m_RaycastManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), s_Hits, TrackableType.PlaneWithinPolygon))
+            {
+                Pose hitPose = s_Hits[0].pose;
+                tempPos = hitPose.position;
+
+
+                spawnedObject = Instantiate(arWorldMapController.filterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.5f, Quaternion.identity);
+
+                // spawnedObject = Instantiate(arWorldMapController.spotlightPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.5f, Quaternion.identity);
+
+                if (onPlacedObject != null)
+                {
+                    onPlacedObject();
+                }
+
+                // spawnedObject = Importer.LoadFromFile(preFilePath + url);
+
+                // spawnedObject.transform.position = hitPose.position;
+
+            }
+
+            arWorldMapController.Log("before center chunk");
+            // get distance between spawned object and center chunk
+            float distanceToCenterChunk = Vector3.Distance(spawnedObject.transform.position, centerChunk.transform.position);
+            arWorldMapController.Log("centerChunk");
+
+            // get components of distance to center chunk in the direction of center chunk forward
+            float distanceToCenterChunkForward = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.forward);
+
+            // get components of distance to center chunk in the direction of center chunk right
+            float distanceToCenterChunkRight = Vector3.Dot(spawnedObject.transform.position - centerChunk.transform.position, centerChunk.transform.right);
+
+            // round down to nearest 1 unit
+            int roundedDistanceToCenterChunkForward = (int)Math.Round(distanceToCenterChunkForward);
+            int roundedDistanceToCenterChunkRight = (int)Math.Round(distanceToCenterChunkRight);
+
+            // convert to coordinates relative to the world map
+
+            Vector3 centerChunkCoordinates = centerChunk.transform.position;
+
+            if (currentChunk == null)
+            {
+                currentChunk = Instantiate(arWorldMapController.ChunkPrefab, centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight, centerChunk.transform.rotation);
+                chunkPos[0] = roundedDistanceToCenterChunkForward;
+                chunkPos[1] = roundedDistanceToCenterChunkRight;
+            }
+            else
+            {
+                currentChunk.transform.position = centerChunkCoordinates + centerChunk.transform.forward * roundedDistanceToCenterChunkForward + centerChunk.transform.right * roundedDistanceToCenterChunkRight;
+                currentChunk.transform.rotation = centerChunk.transform.rotation;
+                chunkPos[0] = roundedDistanceToCenterChunkForward;
+                chunkPos[1] = roundedDistanceToCenterChunkRight;
+            }
+
+            arWorldMapController.Log("currentChunk");
+            change = "move";
+
+            moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+        }
         private Quaternion trueRot = Quaternion.identity;
         private bool rotating = false;
         private string lastRotation = "none";
@@ -660,21 +729,44 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         // save the local position of the spawned object relative to the chunk
                         spawnedObject.transform.localPosition = localPosition;
 
-                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
+                        if (type.Equals("spotlights"))
                         {
-                            user = user,
-                            type = type,
-                            id = id,
-                            x = spawnedObject.transform.localPosition.x,
-                            y = spawnedObject.transform.localPosition.y,
-                            z = spawnedObject.transform.localPosition.z,
-                            rx = spawnedObject.transform.localRotation.eulerAngles.x,
-                            ry = spawnedObject.transform.localRotation.eulerAngles.y,
-                            rz = spawnedObject.transform.localRotation.eulerAngles.z,
-                            sx = spawnedObject.transform.localScale.x,
-                            sy = spawnedObject.transform.localScale.y,
-                            sz = spawnedObject.transform.localScale.z,
-                        });
+                            arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
+                            {
+                                user = user,
+                                type = type,
+                                id = id,
+                                x = spawnedObject.transform.localPosition.x,
+                                y = spawnedObject.transform.localPosition.y,
+                                z = spawnedObject.transform.localPosition.z,
+                                rx = spawnedObject.transform.localRotation.eulerAngles.x,
+                                ry = spawnedObject.transform.localRotation.eulerAngles.y,
+                                rz = spawnedObject.transform.localRotation.eulerAngles.z,
+                                sx = spawnedObject.transform.localScale.x,
+                                sy = spawnedObject.transform.localScale.y,
+                                sz = spawnedObject.transform.localScale.z,
+                                topR = api.topR,
+                                botR = api.botR,
+                            });
+                        }
+                        else
+                        {
+                            arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
+                            {
+                                user = user,
+                                type = type,
+                                id = id,
+                                x = spawnedObject.transform.localPosition.x,
+                                y = spawnedObject.transform.localPosition.y,
+                                z = spawnedObject.transform.localPosition.z,
+                                rx = spawnedObject.transform.localRotation.eulerAngles.x,
+                                ry = spawnedObject.transform.localRotation.eulerAngles.y,
+                                rz = spawnedObject.transform.localRotation.eulerAngles.z,
+                                sx = spawnedObject.transform.localScale.x,
+                                sy = spawnedObject.transform.localScale.y,
+                                sz = spawnedObject.transform.localScale.z,
+                            });
+                        }
                     }
                     else
                     {
@@ -726,7 +818,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 arWorldMapController.OnSaveButtonDelay(3);
             }
 
-            if (type.Equals("spotlights")) {
+            if (type.Equals("spotlights"))
+            {
                 spawnedObject.GetComponent<Vertex>().topRadius = api.topR;
                 spawnedObject.GetComponent<Vertex>().bottomRadius = api.botR;
             }
@@ -1193,10 +1286,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
                         // scale object
-                        if (type.Equals("objects"))
+                        if (type.Equals("objects") || type.Equals("filters"))
                         {
                             spawnedObject.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f);
-                            moveChild.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f);
+                            // moveChild.transform.localScale -= new Vector3(deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f, deltaMagnitudeDiff * 0.001f);
                         }
                         else if (type.Equals("spotlights"))
                         {
