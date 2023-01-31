@@ -1066,6 +1066,8 @@ MonoBehaviour:
     type: 3}
   spotlightPrefab: {fileID: 6514671412015856445, guid: 85f0a5329860107409682a680981095e,
     type: 3}
+  filterPrefab: {fileID: 8632387284707692229, guid: 80bccc2cd01083c46a18658af85761ae,
+    type: 3}
   chunksToLoad: 0
   bay: {fileID: 138682564}
   collab: {fileID: 1814830393}
