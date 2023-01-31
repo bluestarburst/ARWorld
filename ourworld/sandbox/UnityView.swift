@@ -32,6 +32,7 @@ struct UnityView: View {
     @State private var change = "move"
     
     @State private var elementType = "image"
+    @State private var type = "spotlights"
     
     @State private var mapOffset = CGFloat(-100)
     
@@ -230,7 +231,7 @@ struct UnityView: View {
                     } else if (elementType == "object") {
                         ObjSelection(disabled: $showElementSelection, changeSelection: self.changeSelection)
                     } else if (elementType == "effect") {
-                        EffectSelection(disabled: $showElementSelection, changeSelection: self.changeSelection)
+                        EffectSelection(disabled: $showElementSelection, changeSelection: self.changeSelection, type: $type)
                     }
                 }
                 .transition(.bottomAndFade)
@@ -254,27 +255,32 @@ struct UnityView: View {
                     .padding(30)
                     .padding(.top,45)
                     Spacer()
-                    VStack {
-                        Slider(value: $topRadius, in: 0...1.5) {
-                            Text("top radius")
-                        } minimumValueLabel: {
-                            Text("0")
-                        } maximumValueLabel: {
-                            Text("1.5")
-                        }.onChange(of: topRadius) { _ in
-                            UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
-                        }
-                        
-                        Slider(value: $botRadius, in: 0.1...2) {
-                            Text("bottom radius")
-                        } minimumValueLabel: {
-                            Text("0.1")
-                        } maximumValueLabel: {
-                            Text("2")
-                        }.onChange(of: botRadius) { _ in
-                            UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
-                        }
-                    }.padding()
+                    if (type == "spotlights") {
+                        VStack {
+                            Slider(value: $topRadius, in: 0...1.5) {
+                                Text("top radius")
+                            } minimumValueLabel: {
+                                Text("0")
+                            } maximumValueLabel: {
+                                Text("1.5")
+                            }.onChange(of: topRadius) { _ in
+                                UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
+                            }
+                            
+                            Slider(value: $botRadius, in: 0.1...2) {
+                                Text("bottom radius")
+                            } minimumValueLabel: {
+                                Text("0.1")
+                            } maximumValueLabel: {
+                                Text("2")
+                            }.onChange(of: botRadius) { _ in
+                                UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
+                            }
+                        }.padding()
+                            .onAppear {
+                                UnityBridge.getInstance().api.changeRadius(top: 0.50, bottom: 1.50)
+                            }
+                    }
                     
                     HStack {
                         Button (action: {withAnimation {UnityBridge.getInstance().api.changeTransform(change: "move");change = "move"}}, label: {

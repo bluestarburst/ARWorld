@@ -24,9 +24,9 @@ struct EffectSelection: View {
     
     @State private var scrollWidth = CGFloat.zero
     
-    @State private var type: String = "spotlights"
-    
     var changeSelection: (String) -> Void
+    
+    @Binding var type: String
     
     var body: some View {
         VStack {
@@ -254,7 +254,7 @@ struct EffectSelection: View {
 struct EffectSelection_Previews: PreviewProvider {
     
     static var previews: some View {
-        EffectSelection(disabled: .constant(true), changeSelection: {_ in})
+        EffectSelection(disabled: .constant(true), changeSelection: {_ in}, type: .constant(""))
     }
 }
 
