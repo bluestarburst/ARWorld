@@ -137,6 +137,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public GameObject spotlightPrefab;
         public GameObject filterPrefab;
+        public GameObject camFilterPrefab;
 
         public int chunksToLoad = 0;
 

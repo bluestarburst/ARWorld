@@ -142,7 +142,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else if (type.Equals("filters"))
                 {
-                    HostNativeAPI.addingObj("adding");
+                    HostNativeAPI.addingObj("preview");
                     AddFilter(type);
                 }
                 return;
@@ -792,21 +792,44 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             { "worldMapId", arWorldMapController.worldMapId }
                         });
 
-                        arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
+                        if (type.Equals("spotlights"))
                         {
-                            user = user,
-                            type = type,
-                            id = id,
-                            x = spawnedObject.transform.localPosition.x,
-                            y = spawnedObject.transform.localPosition.y,
-                            z = spawnedObject.transform.localPosition.z,
-                            rx = spawnedObject.transform.localRotation.eulerAngles.x,
-                            ry = spawnedObject.transform.localRotation.eulerAngles.y,
-                            rz = spawnedObject.transform.localRotation.eulerAngles.z,
-                            sx = spawnedObject.transform.localScale.x,
-                            sy = spawnedObject.transform.localScale.y,
-                            sz = spawnedObject.transform.localScale.z,
-                        });
+                            arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
+                            {
+                                user = user,
+                                type = type,
+                                id = id,
+                                x = spawnedObject.transform.localPosition.x,
+                                y = spawnedObject.transform.localPosition.y,
+                                z = spawnedObject.transform.localPosition.z,
+                                rx = spawnedObject.transform.localRotation.eulerAngles.x,
+                                ry = spawnedObject.transform.localRotation.eulerAngles.y,
+                                rz = spawnedObject.transform.localRotation.eulerAngles.z,
+                                sx = spawnedObject.transform.localScale.x,
+                                sy = spawnedObject.transform.localScale.y,
+                                sz = spawnedObject.transform.localScale.z,
+                                topR = api.topR,
+                                botR = api.botR,
+                            });
+                        }
+                        else
+                        {
+                            arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
+                            {
+                                user = user,
+                                type = type,
+                                id = id,
+                                x = spawnedObject.transform.localPosition.x,
+                                y = spawnedObject.transform.localPosition.y,
+                                z = spawnedObject.transform.localPosition.z,
+                                rx = spawnedObject.transform.localRotation.eulerAngles.x,
+                                ry = spawnedObject.transform.localRotation.eulerAngles.y,
+                                rz = spawnedObject.transform.localRotation.eulerAngles.z,
+                                sx = spawnedObject.transform.localScale.x,
+                                sy = spawnedObject.transform.localScale.y,
+                                sz = spawnedObject.transform.localScale.z,
+                            });
+                        }
 
                         arWorldMapController.chunks.Add(anchor.trackableId.ToString(), currentChunk);
                         arWorldMapController.anchors.Add(anchor.trackableId.ToString(), anchor);
