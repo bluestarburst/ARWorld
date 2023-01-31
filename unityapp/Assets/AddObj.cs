@@ -142,7 +142,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else if (type.Equals("filters"))
                 {
-                    HostNativeAPI.addingObj("filters");
+                    HostNativeAPI.addingObj("adding");
                     AddFilter(type);
                 }
                 return;
