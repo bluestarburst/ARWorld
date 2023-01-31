@@ -255,12 +255,12 @@ struct UnityView: View {
                     .padding(.top,45)
                     Spacer()
                     VStack {
-                        Slider(value: $topRadius, in: 0.1...1.5) {
+                        Slider(value: $topRadius, in: 0...1.5) {
                             Text("top radius")
                         } minimumValueLabel: {
-                            Text("0.1")
+                            Text("0")
                         } maximumValueLabel: {
-                            Text("1")
+                            Text("1.5")
                         }.onChange(of: topRadius) { _ in
                             UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
                         }
@@ -270,7 +270,7 @@ struct UnityView: View {
                         } minimumValueLabel: {
                             Text("0.1")
                         } maximumValueLabel: {
-                            Text("1")
+                            Text("2")
                         }.onChange(of: botRadius) { _ in
                             UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
                         }

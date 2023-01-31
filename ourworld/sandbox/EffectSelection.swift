@@ -96,6 +96,15 @@ struct EffectSelection: View {
                                 .padding(.horizontal,10)
                                 .disabled(type == "arealights")
                                 
+                                Button(action: {withAnimation{type="filters"}}, label: {
+                                    Image(systemName: "sparkle")
+                                })
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(type == "filters" ? .pink : .white)
+                                .padding(.horizontal,10)
+                                .disabled(type == "filters")
+                                
                             }
                             .padding(.horizontal,25)
                             .frame(minWidth: geometry.size.width)
@@ -113,6 +122,9 @@ struct EffectSelection: View {
                                         .foregroundColor(.white)
                                 case "arealights":
                                     Text("add new area light")
+                                        .foregroundColor(.white)
+                                case "filters":
+                                    Text("add new filter")
                                         .foregroundColor(.white)
                                 default:
                                     Text("add new element")
