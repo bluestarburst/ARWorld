@@ -9,12 +9,13 @@ public class CamFilter : MonoBehaviour
     public float threshold = 0.5f;
     public bool isColor = false;
     
+    private Material material;
 
     // Start is called before the first frame update
     void Start()
     {
         // get the material component of this object
-        Material material = GetComponent<Renderer>().material;
+        material = GetComponent<Renderer>().material;
         // set the shader property
         material.SetColor("_Color", color);
         material.SetFloat("_Saturation", saturation);
@@ -25,14 +26,20 @@ public class CamFilter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // get the material component of this object
+        // Material material = GetComponent<Renderer>().material;
+        // set the shader property
+        material.SetColor("_Color", color);
+        material.SetFloat("_Saturation", saturation);
+        material.SetFloat("_Threshold", threshold);
+        material.SetInt("_IsColor", isColor ? 1 : 0);
     }
 
     // do during editing in the editor
     void OnValidate()
     {
         // get the material component of this object
-        Material material = GetComponent<Renderer>().material;
+        material = GetComponent<Renderer>().material;
         // set the shader property
         material.SetColor("_Color", color);
         material.SetFloat("_Saturation", saturation);
