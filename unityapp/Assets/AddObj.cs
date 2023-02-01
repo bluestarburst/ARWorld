@@ -76,6 +76,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public GameObject MoveComponentPrefab;
         public LayerMask selectedLayers;
 
+        public CamFilter innerFilter;
+
         protected override void Awake()
         {
             base.Awake();
@@ -108,6 +110,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // }
 
         }
+
+        bool isPrev = false;
 
         public void CreateObjectInFrontOfCamera(string type, string user, string id)
         {
@@ -142,6 +146,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else if (type.Equals("filters"))
                 {
+                    isPrev = true;
+                    innerFilter.transform.GetChild(0).gameObject.SetActive(true);
                     HostNativeAPI.addingObj("preview");
                     AddFilter(type);
                 }
@@ -669,9 +675,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private bool notMoveTool = false;
         private void Update()
         {
+            if (isPrev && !change.Equals("delete")) {
+                innerFilter.color = api.inputColor;
+                innerFilter.saturation = api.inputSaturation;
+                innerFilter.threshold = api.inputThreshold;
+                innerFilter.isColor = api.inputIsColor;
+                return;
+            }
 
             if (change.Equals("delete"))
             {
+                innerFilter.transform.GetChild(0).gameObject.SetActive(false);
                 if (moveChild != null)
                 {
                     Destroy(moveChild);

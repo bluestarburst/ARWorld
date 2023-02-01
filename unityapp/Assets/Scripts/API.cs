@@ -93,6 +93,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public float topR = 0.5f;
         public float botR = 1.5f;
 
+        public Color inputColor = Color.black;
+        public float inputSaturation = 1.0f;
+        public float inputThreshold = 0.5f;
+        public bool inputIsColor = false;
+
         void Awake()
         {
             if (!finishedStart)
@@ -159,6 +164,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 case "change-radius":
                     _ChangeRadius(serializedMessage);
                     break;
+                case "change-filter":
+                    _ChangeFilter(serializedMessage);
+                    break;
                 default:
                     Debug.LogError("Unrecognized message '" + header.type + "'");
                     break;
@@ -178,6 +186,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 alt = msg.data[2];
             }
             // print("updateVars");
+        }
+
+        public void _ChangeFilter(string serialized)
+        {
+            var msg = JsonConvert.DeserializeObject<MessageWithData<float[]>>(serialized);
+            if (msg.data != null && msg.data.Length >= 4)
+            {
+                inputColor = new Color(msg.data[0], msg.data[1], msg.data[2]);
+                inputSaturation = msg.data[3];
+                inputThreshold = msg.data[4];
+                inputIsColor = msg.data[5] == 1.0f;
+            }
         }
 
         public void _ChangeRadius(string serialized)
