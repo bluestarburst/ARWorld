@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: innerFilter
-  m_Shader: {fileID: -6465566751694194690, guid: b27f78731cbd7bd4f98a1fa88c80951a,
+  m_Shader: {fileID: -6465566751694194690, guid: d2a1b19b6917ef84d96bea05a408d6a2,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
