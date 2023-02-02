@@ -316,6 +316,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             sessionSubsystem.Reset();
             await WaitUntilWorldMapReady();
             sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
+            WaitUntilMappedSave();
         }
 
         public async void WaitUntilMappedSave()
