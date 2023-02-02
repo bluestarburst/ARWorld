@@ -307,6 +307,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         }
 
+        public async void ResetAndWaitUntilMappedSave() {
+            var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+            await Task.Delay(1000);
+            sessionSubsystem.Reset();
+            await WaitUntilWorldMapReady();
+            sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
+        }
+
         public async void WaitUntilMappedSave()
         {
             tempWorldMapId = worldMapId;

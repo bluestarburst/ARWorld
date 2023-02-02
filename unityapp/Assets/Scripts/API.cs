@@ -146,7 +146,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     _UpdateCubeColor(serializedMessage);
                     break;
                 case "save-map":
-                    _SaveMap(serializedMessage);
+                    worldMapController.ResetAndWaitUntilMappedSave();
+                    // _SaveMap(serializedMessage);
                     // HostNativeAPI.saveMap("hehehe");
                     break;
                 case "load-map":
