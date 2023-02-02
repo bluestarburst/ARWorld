@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// using unity UI
+using UnityEngine.UI;
 public class CamFilter : MonoBehaviour
 {
     public bool isVisible = false;
