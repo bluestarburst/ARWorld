@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CamFilter : MonoBehaviour
 {
+    public bool isVisible = false;
     public Color color = Color.black;
     public float saturation = 1.0f;
     public float threshold = 0.5f;
@@ -11,9 +12,14 @@ public class CamFilter : MonoBehaviour
 
     public bool isNormal = true;
 
+    
+
     private Material material;
 
-
+    public void setVisible(bool visible) {
+        isVisible = visible;
+        GetComponent<Renderer>().enabled = isVisible;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +31,17 @@ public class CamFilter : MonoBehaviour
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
         material.SetInt("_IsColor", isColor ? 1 : 0);
+
+        GetComponent<Renderer>().enabled = isVisible;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isVisible) {
+            return;
+        }
+
         // if (isNormal)
         // {
         //     material.SetColor("_Color", Color.black);
@@ -53,6 +65,9 @@ public class CamFilter : MonoBehaviour
     // do during editing in the editor
     void OnValidate()
     {
+        if (!isVisible) {
+            return;
+        }
         // get the material component of this object
         material = GetComponent<Renderer>().material;
         // set the shader property

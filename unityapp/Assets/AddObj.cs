@@ -147,7 +147,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 else if (type.Equals("filters"))
                 {
                     isPrev = true;
-                    innerFilter.transform.GetChild(0).gameObject.SetActive(true);
+                    innerFilter.setVisible(true);
                     HostNativeAPI.addingObj("preview");
                     AddFilter(type);
                 }
@@ -685,7 +685,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (change.Equals("delete"))
             {
-                innerFilter.transform.GetChild(0).gameObject.SetActive(false);
+                innerFilter.setVisible(false);
                 if (moveChild != null)
                 {
                     Destroy(moveChild);
