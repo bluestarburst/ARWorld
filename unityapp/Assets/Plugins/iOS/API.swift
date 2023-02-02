@@ -51,8 +51,8 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "save-map", data: "")
     }
 
-    public func loadMap(lat: CGFloat, lon: CGFloat, alt: CGFloat) {
-        sendMessage(type: "load-map", data: [lat, lon, alt])
+    public func loadMap() {
+        sendMessage(type: "load-map", data: "")
     }
 
     public func updateVars(lat: CGFloat, lon: CGFloat, alt: CGFloat) {
