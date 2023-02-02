@@ -79,6 +79,10 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-radius", data: [top, bottom])
     }
 
+    public func changeFilter(r: CGFloat, g: CGFloat, b: CGFloat, saturation: CGFloat, threshold: CGFloat, isColor: CGFloat) {
+        sendMessage(type: "change-filter", data: [r,g,b,saturation,threshold,isColor])
+    }
+
     public func test(_ value: String) {
         self.testCallback(value)
     }
