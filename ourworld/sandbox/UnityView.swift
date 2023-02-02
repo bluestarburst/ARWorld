@@ -6,6 +6,34 @@
 //
 
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
+extension Color {
+    var components: (red: CGFloat, green: CGFloat, blue: CGFloat, opacity: CGFloat) {
+
+        #if canImport(UIKit)
+        typealias NativeColor = UIColor
+        #elseif canImport(AppKit)
+        typealias NativeColor = NSColor
+        #endif
+
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var o: CGFloat = 0
+
+        guard NativeColor(self).getRed(&r, green: &g, blue: &b, alpha: &o) else {
+            // You can handle the failure here as you want
+            return (0, 0, 0, 0)
+        }
+
+        return (r, g, b, o)
+    }
+}
 
 extension AnyTransition {
     static var bottomAndFade: AnyTransition {
@@ -40,11 +68,17 @@ struct UnityView: View {
     @State private var showMesh = false
     @State private var showChunks = false
     @State private var showLogs = false
+    @State private var showPreview = false
     
     @State private var isAdding = false
     
     @State private var topRadius = 0.5
     @State private var botRadius = 1.5
+    
+    @State private var inColor =
+            Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
+    
+    @State private var saturation = CGFloat.zero
     
     func changeSelection(changeType: String) {
         withAnimation {
@@ -136,6 +170,38 @@ struct UnityView: View {
                 }
             }
             .padding()
+            
+            if (mapStatus == "failed") {
+                VStack {
+                    Spacer()
+                    VStack{
+                        Text("Could not find any nearby maps")
+                        Button(action: {UnityBridge.getInstance().api.loadMap();withAnimation{mapStatus = ""}}, label: {
+                            Spacer()
+                            Text("Retry")
+                                .foregroundColor(.white)
+                                .padding()
+                            Spacer()
+                        })
+                        .background(Color(.gray).opacity(0.5))
+                        .cornerRadius(100)
+                        .padding(.leading,5)
+                        Text("or")
+                        Button(action: {UnityBridge.getInstance().api.saveMap();withAnimation{mapStatus = ""}}, label: {
+                            Spacer()
+                            Text("Create New Map")
+                                .foregroundColor(.black)
+                                .padding()
+                            Spacer()
+                        })
+                        .background(.white)
+                        .cornerRadius(100)
+                        .padding(.leading,5)
+                    }.padding(50)
+                    Spacer()
+                }.background(Color(.black).opacity(0.65))
+                    .transition(.opacity)
+            }
             
             
 //            if (showElementOptions) {
@@ -339,6 +405,28 @@ struct UnityView: View {
                 }.transition(.bottomAndFade)
             }
             
+            if (showPreview) {
+                VStack {
+                    Spacer()
+                    ColorPicker(selection: $inColor, supportsOpacity: false, label: {
+                        Text("hi")
+                    }).onChange(of: saturation) { _ in
+                        UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: CGFloat.zero, isColor: CGFloat.zero)
+                    }
+                    Slider(value: $saturation, in: 0...1) {
+                        Text("saturation")
+                    } minimumValueLabel: {
+                        Text("0")
+                    } maximumValueLabel: {
+                        Text("1")
+                    }.onChange(of: saturation) { _ in
+                        UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: CGFloat.zero, isColor: CGFloat.zero)
+                    }
+                    
+                    
+                }
+            }
+            
             if (showSettings) {
                 VStack{
                     Spacer()
@@ -387,13 +475,22 @@ struct UnityView: View {
                     if (addingObj == "adding") {
                         showSettings = false
                         showElementSelection = false
-
+                        
                         isAdding = true
                         showElementSelection = false
                         showButtons = false
+                        showPreview = false
+                    }
+                    else if (addingObj == "preview") {
+                        showSettings = false
+                        showElementSelection = false
+                        showButtons = false
+                        isAdding = false
+                        showPreview = true
                     } else {
                         isAdding = false
                         showButtons = true
+                        showPreview = false
                     }
                 }
             }
