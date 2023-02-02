@@ -387,9 +387,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 Log("No nearby maps found");
                 Log("Saving current map");
+                HostNativeAPI.mapStatus("failed");
 
                 // OnSaveButton();
-                WaitUntilMappedSave();
+                // WaitUntilMappedSave();
                 return;
             }
 
@@ -477,6 +478,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (shouldGetNextPotentialChunkId)
                 {
                     trys += 1;
+                    HostNativeAPI.mapStatus("failed");
                 }
 
                 if (trys > 3)
