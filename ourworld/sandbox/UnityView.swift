@@ -425,6 +425,7 @@ struct UnityView: View {
                     
                     
                 }
+                .padding(50)
             }
             
             if (showSettings) {
@@ -495,11 +496,12 @@ struct UnityView: View {
                 }
             }
             DataHandler.shared.setMapStatus = {
-                mapStatus = DataHandler.shared.mapStatus
+                
                 withAnimation {
+                    mapStatus = DataHandler.shared.mapStatus
                     if (mapStatus == "mapped") {
                         mapOffset = -100
-                        if (!isAdding) {
+                        if (!isAdding && !showPreview) {
                             showButtons = true
                         }
                     } else if(mapStatus == "saving") {
