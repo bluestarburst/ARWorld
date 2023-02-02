@@ -610,7 +610,7 @@ Transform:
   m_GameObject: {fileID: 1253242893}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 37.980495, y: 37.980495, z: 37.980495}
+  m_LocalScale: {x: 0.000001, y: 0.000001, z: 0.000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1393218328}
@@ -695,6 +695,7 @@ MonoBehaviour:
   saturation: 1
   threshold: 0
   isColor: 0
+  isNormal: 1
 --- !u!1 &1352058499
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +809,7 @@ MonoBehaviour:
   selectedLayers:
     serializedVersion: 2
     m_Bits: 2048
+  innerFilter: {fileID: 1253242898}
 --- !u!114 &1352058507
 MonoBehaviour:
   m_ObjectHideFlags: 0
