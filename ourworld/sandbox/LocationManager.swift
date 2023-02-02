@@ -49,11 +49,11 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
                 }
                 
                 if (accuracy < 35 && altAcc < 25) {
-                    print("Swifty up:" + String(latitude) + "   " + String(longitude))
+//                    print("Swifty up:" + String(latitude) + "   " + String(longitude))
                     sendDat()
                 }
                     
-                print("Swifty down:" + String(accuracy) + "   " + String(altAcc))
+//                print("Swifty down:" + String(accuracy) + "   " + String(altAcc))
                 
             }
         }
