@@ -303,6 +303,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 yield break;
             }
 
+            HostNativeAPI.mapStatus("loading");
+
             retrieveFirestoreMap(sessionSubsystem);
 
         }
