@@ -24,6 +24,8 @@ struct ObjSelection: View {
     
     @State private var type: String = "objects"
     
+    @State private var favorite = true
+    
     var changeSelection: (String) -> Void
     
     var body: some View {
@@ -80,26 +82,40 @@ struct ObjSelection: View {
                 
                 VStack {
                     GeometryReader { geometry in
-                        ScrollView(.horizontal, showsIndicators: true) {
+                        ZStack {
+                            ScrollView(.horizontal, showsIndicators: true) {
+                                HStack {
+                                    Button(action: {withAnimation{type="objects"}}, label: {
+                                        Image(systemName: "cube.fill")
+                                    })
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(type == "objects" ? .pink : .white)
+                                    .padding(.horizontal,10)
+                                    .disabled(type == "objects")
+                                    
+                                }
+                                .padding(.horizontal,25)
+                                .frame(minWidth: geometry.size.width)
+                            }
+                            .padding(.bottom, 10)
                             HStack {
-                                Button(action: {withAnimation{type="objects"}}, label: {
-                                    Image(systemName: "cube.fill")
+                                Spacer()
+                                Button(action: {withAnimation{favorite = !favorite}}, label: {
+                                    Image(systemName: favorite ? "star.fill" : "star")
                                 })
                                 .imageScale(.medium)
                                 .font(.title)
-                                .foregroundColor(type == "objects" ? .pink : .white)
+                                .foregroundColor(favorite ? .yellow : .gray)
                                 .padding(.horizontal,10)
-                                .disabled(type == "objects")
-                                
                             }
-                            .padding(.horizontal,25)
-                            .frame(minWidth: geometry.size.width)
+                            .padding(.bottom, 10)
+                            .padding(.trailing, 20)
                         }
-                        .padding(.bottom, 10)
                     }.frame(height: 40)
                     
                     ScrollView {
-                        ObjLoop(type: $type, disabled: $disabled)
+                        ObjLoop(type: $type, disabled: $disabled, fav: $favorite)
                     }
                 }.gesture(
                     DragGesture()
@@ -146,6 +162,8 @@ struct ObjLoop: View {
     
     @Binding var disabled: Bool
     
+    @Binding var fav: Bool
+    
     @State var arr: [[String: Any]] = []
     @State var refresh = false
     
@@ -166,7 +184,7 @@ struct ObjLoop: View {
                 WrappingHStack(0..<arr.count, id:\.self, alignment: .center) {
                     let index = $0
                     let dat = arr[index]
-                    Box(url: dat["url"] as? URL, user: dat["user"] as! String, id: dat["id"] as! String, type: type )
+                    Box(url: dat["url"] as? URL, user: dat["user"] as! String, id: dat["id"] as! String, type: type, fav: fav )
                         .onTapGesture {
                             withAnimation {
                                 disabled = false
@@ -201,14 +219,21 @@ struct ObjLoop: View {
         }
         .onAppear {
             DataHandler.shared.addNextUserObj = addItem
-            DataHandler.shared.getUserObjects(type: type)
+            DataHandler.shared.getUserObjects(type: type, fav: fav)
         }
         .onChange(of: $type.wrappedValue) { _ in
             arr = []
             withAnimation {
                 refresh = false
             }
-            DataHandler.shared.getUserObjects(type: type)
+            DataHandler.shared.getUserObjects(type: type, fav: fav)
+        }
+        .onChange(of: $fav.wrappedValue) { _ in
+            arr = []
+            withAnimation {
+                refresh = false
+            }
+            DataHandler.shared.getUserObjects(type: type, fav: fav)
         }
     }
 }
