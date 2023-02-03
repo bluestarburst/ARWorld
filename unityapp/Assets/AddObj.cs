@@ -513,10 +513,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         async void AddLight(String type)
         {
             isAdding = true;
-            isPrev = false;
-            innerFilter.setVisible(false);
-            HostNativeAPI.addingObj("adding");
-
 
             // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
             if (m_RaycastManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), s_Hits, TrackableType.PlaneWithinPolygon))
@@ -593,9 +589,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private float inputThreshold = 0.5f;
         private bool inputIsColor = false;
 
-        async void AddFilter(String type)
+        public async void AddFilter()
         {
             isAdding = true;
+            isPrev = false;
+            innerFilter.setVisible(false);
+            HostNativeAPI.addingObj("adding");
 
 
             // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
