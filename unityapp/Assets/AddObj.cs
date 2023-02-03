@@ -149,7 +149,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     isPrev = true;
                     innerFilter.setVisible(true);
                     HostNativeAPI.addingObj("preview");
-                    AddFilter(type);
+                    // AddFilter(type);
                 }
                 return;
             }
@@ -514,7 +514,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             isAdding = true;
 
-
             // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
             if (m_RaycastManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), s_Hits, TrackableType.PlaneWithinPolygon))
             {
@@ -585,9 +584,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
-        async void AddFilter(String type)
+        private Color inputColor = Color.black;
+        private float inputSaturation = 1.0f;
+        private float inputThreshold = 0.5f;
+        private bool inputIsColor = false;
+
+        public async void AddFilter()
         {
             isAdding = true;
+            isPrev = false;
+            innerFilter.setVisible(false);
+            HostNativeAPI.addingObj("adding");
 
 
             // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
@@ -598,6 +605,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
                 spawnedObject = Instantiate(arWorldMapController.filterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.5f, Quaternion.identity);
+                var mat = spawnedObject.GetComponent<MeshRenderer>().material;
+                mat.SetColor("_Color", inputColor);
+                mat.SetFloat("_Saturation", inputSaturation);
+                mat.SetFloat("_Threshold", inputThreshold);
+                mat.SetInt("_IsColor", inputIsColor ? 1 : 0);
 
                 // spawnedObject = Instantiate(arWorldMapController.spotlightPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.5f, Quaternion.identity);
 
@@ -675,7 +687,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private bool notMoveTool = false;
         private void Update()
         {
-            if (isPrev && !change.Equals("delete")) {
+            if (isPrev && !change.Equals("delete"))
+            {
                 innerFilter.color = api.inputColor;
                 innerFilter.saturation = api.inputSaturation;
                 innerFilter.threshold = api.inputThreshold;

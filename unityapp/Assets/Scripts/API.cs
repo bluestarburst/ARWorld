@@ -168,6 +168,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 case "change-filter":
                     _ChangeFilter(serializedMessage);
                     break;
+                case "next-step-filter":
+                    addObj.AddFilter();
+                    break;
                 default:
                     Debug.LogError("Unrecognized message '" + header.type + "'");
                     break;

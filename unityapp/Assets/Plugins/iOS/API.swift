@@ -83,6 +83,10 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-filter", data: [r,g,b,saturation,threshold,isColor])
     }
 
+    public func nextStepFilter() {
+        sendMessage(type: "next-step-filter", data: "")
+    }
+
     public func test(_ value: String) {
         self.testCallback(value)
     }
