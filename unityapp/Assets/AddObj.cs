@@ -596,6 +596,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             innerFilter.setVisible(false);
             HostNativeAPI.addingObj("adding");
 
+            inputColor = api.inputColor;
+            inputSaturation = api.inputSaturation;
+            inputThreshold = api.inputThreshold;
+            inputIsColor = api.inputIsColor;
+
 
             // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
             if (m_RaycastManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), s_Hits, TrackableType.PlaneWithinPolygon))
