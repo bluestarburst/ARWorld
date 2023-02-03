@@ -16,6 +16,8 @@ struct Box: View {
     
     @State var type: String = "posters"
     
+    @State var fav: Bool = false
+    
     var body: some View {
         Button(action: {if (url != nil) {DataHandler.shared.setPreview(type, user, id, url!)}
         }, label: {
@@ -34,7 +36,7 @@ struct Box: View {
         .frame(width: 70, height: 70)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .overlay(RoundedRectangle(cornerRadius: 10)
-            .stroke(.white, lineWidth: 1)
+            .stroke(fav ? .yellow : .white, lineWidth: 1)
         )
         .opacity(url == nil ? 0.5 : 1)
         .padding(5)
@@ -56,6 +58,8 @@ struct ImageSelection: View {
     @State private var scrollWidth = CGFloat.zero
     
     @State private var type: String = "stickers"
+    
+    @State private var favorite = true
     
     var changeSelection: (String) -> Void
     
@@ -84,7 +88,7 @@ struct ImageSelection: View {
                         .clipShape(Circle())
                         .padding(.vertical,5)
                 })
-                Button( action: {changeSelection("object")}, label: {
+                Button( action: {changeSelection("effect")}, label: {
                     Image(systemName: "sparkle")
                         .imageScale(.large)
                         .font(.title2)
@@ -107,43 +111,58 @@ struct ImageSelection: View {
                 
                 VStack {
                     GeometryReader { geometry in
-                        ScrollView(.horizontal, showsIndicators: true) {
-                            HStack {
-                                Button(action: {withAnimation{type="stickers"}}, label: {
-                                    Image(systemName: "moon.stars.fill")
-                                })
-                                .imageScale(.medium)
-                                .font(.title)
-                                .foregroundColor(type == "stickers" ? .pink : .white)
-                                .padding(.horizontal,10)
-                                .disabled(type == "stickers")
-                                
-                                Button(action: {withAnimation{type="posters"}}, label: {
-                                    Image(systemName: "doc.fill")
-                                })
-                                .imageScale(.medium)
-                                .font(.title)
-                                .foregroundColor(type == "posters" ? .pink : .white)
-                                .padding(.horizontal,10)
-                                .disabled(type == "posters")
-                                
-                                Button(action: {withAnimation{type="images"}}, label: {
-                                    Image(systemName: "photo.fill")
-                                })
-                                .imageScale(.medium)
-                                .font(.title)
-                                .foregroundColor(type == "images" ? .pink : .white)
-                                .padding(.horizontal,10)
-                                .disabled(type == "images")
+                        ZStack {
+                            ScrollView(.horizontal, showsIndicators: true) {
+                                HStack {
+                                    Button(action: {withAnimation{type="stickers"}}, label: {
+                                        Image(systemName: "moon.stars.fill")
+                                    })
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(type == "stickers" ? .pink : .white)
+                                    .padding(.horizontal,10)
+                                    .disabled(type == "stickers")
+                                    
+                                    Button(action: {withAnimation{type="posters"}}, label: {
+                                        Image(systemName: "doc.fill")
+                                    })
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(type == "posters" ? .pink : .white)
+                                    .padding(.horizontal,10)
+                                    .disabled(type == "posters")
+                                    
+                                    Button(action: {withAnimation{type="images"}}, label: {
+                                        Image(systemName: "photo.fill")
+                                    })
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(type == "images" ? .pink : .white)
+                                    .padding(.horizontal,10)
+                                    .disabled(type == "images")
+                                }
+                                .padding(.horizontal,25)
+                                .frame(minWidth: geometry.size.width)
                             }
-                            .padding(.horizontal,25)
-                            .frame(minWidth: geometry.size.width)
+                            .padding(.bottom, 10)
+                            
+                            HStack {
+                                Spacer()
+                                Button(action: {withAnimation{favorite = !favorite}}, label: {
+                                    Image(systemName: favorite ? "star.fill" : "star")
+                                })
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(favorite ? .yellow : .gray)
+                                .padding(.horizontal,10)
+                            }
+                            .padding(.bottom, 10)
+                            .padding(.trailing, 20)
                         }
-                        .padding(.bottom, 10)
                     }.frame(height: 40)
                     
                     ScrollView {
-                        Button(action: {showImagePicker = true}, label: {
+                        Button(action: {showImagePicker = true;withAnimation{favorite = true}}, label: {
                             HStack {
                                 Spacer()
                                 switch type {
@@ -169,7 +188,7 @@ struct ImageSelection: View {
                         .cornerRadius(16)
                         .padding(.vertical, 5)
                         .padding(.horizontal, 25)
-                        ImageLoop(type: $type, disabled: $disabled)
+                        ImageLoop(type: $type, disabled: $disabled, fav: $favorite)
                     }
                 }.gesture(
                     DragGesture()
@@ -216,6 +235,8 @@ struct ImageLoop: View {
     
     @Binding var disabled: Bool
     
+    @Binding var fav: Bool
+    
     @State var arr: [[String: Any]] = []
     @State var refresh = false
     
@@ -236,7 +257,7 @@ struct ImageLoop: View {
                 WrappingHStack(0..<arr.count, id:\.self, alignment: .center) {
                     let index = $0
                     let dat = arr[index]
-                    Box(url: dat["url"] as? URL, user: dat["user"] as! String, id: dat["id"] as! String, type: type )
+                    Box(url: dat["url"] as? URL, user: dat["user"] as! String, id: dat["id"] as! String, type: type, fav: fav )
                         .onTapGesture {
                             withAnimation {
                                 disabled = false
@@ -271,14 +292,21 @@ struct ImageLoop: View {
         }
         .onAppear {
             DataHandler.shared.addNextUserPoster = addItem
-            DataHandler.shared.getUserPosters(type: type)
+            DataHandler.shared.getUserPosters(type: type, fav: fav)
         }
         .onChange(of: $type.wrappedValue) { _ in
             arr = []
             withAnimation {
                 refresh = false
             }
-            DataHandler.shared.getUserPosters(type: type)
+            DataHandler.shared.getUserPosters(type: type, fav: fav)
+        }
+        .onChange(of: $fav.wrappedValue) { _ in
+            arr = []
+            withAnimation {
+                refresh = false
+            }
+            DataHandler.shared.getUserPosters(type: type, fav: fav)
         }
     }
 }

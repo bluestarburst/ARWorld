@@ -82,7 +82,9 @@ class DataHandler: NSObject, ObservableObject {
         doc.setData([
             "user": (self.uid ?? ""),
             "type": type,
-            "creations": 0
+            "creations": 0,
+            "id": id,
+            "timestamp": Timestamp()
         ])
         
         var userDoc = db.collection("users").document(self.uid ?? "").collection(type).document(id)
@@ -90,7 +92,9 @@ class DataHandler: NSObject, ObservableObject {
         userDoc.setData([
             "user": (self.uid ?? ""),
             "type": type,
-            "creations": 0
+            "creations": 0,
+            "id": id,
+            "timestamp": Timestamp()
         ])
         
         let storageRef = storage.reference().child("users/" + (self.uid ?? "") + "/" + type + "/" + id + ".jpg")
@@ -128,14 +132,14 @@ class DataHandler: NSObject, ObservableObject {
     
     var addNextUserPoster: (_ user: String, _ id: String, _ url: URL) -> Void = {_,_,_  in}
     
-    func getUserPosters(type: String) {
+    func getUserPosters(type: String, fav: Bool = false) {
         self.posterType = type
         if (type != self.lastType) {
             lastDoc = nil
         }
         self.lastType = type
         print("swifty " + type)
-        db.collection("users").document(self.uid ?? "").collection(type).limit(to: 25).getDocuments { (querySnapshot, err) in
+        db.collection("users").document(self.uid ?? "").collection(fav ? "f" + type : type).limit(to: 25).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("error getting documents: \(err)")
             } else {
@@ -152,13 +156,13 @@ class DataHandler: NSObject, ObservableObject {
     
     var addNextUserObj: (_ user: String, _ id: String, _ url: URL) -> Void = {_,_,_  in}
     
-    func getUserObjects(type: String) {
+    func getUserObjects(type: String, fav: Bool = false) {
         if (type != self.lastType) {
             lastDoc = nil
         }
         self.lastType = type
         print("swifty " + type)
-        db.collection("users").document(self.uid ?? "").collection(type).limit(to: 25).getDocuments { (querySnapshot, err) in
+        db.collection("users").document(self.uid ?? "").collection(fav ? "f" + type : type).limit(to: 25).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("error getting documents: \(err)")
             } else {
@@ -234,13 +238,39 @@ class DataHandler: NSObject, ObservableObject {
         })
     }
     
-    func getPrevData(type: String, user: String, id: String, _ completion: @escaping ((String,Int) -> Void)) {
-        db.collection(type).document(id).getDocument { (document, error) in
-            if let document = document, document.exists {
-                let dat = document.data()
-                completion(dat!["name"] as? String ?? "",dat!["creations"] as? Int ?? 0)
+    func getPrevData(type: String, user: String, id: String, _ completion: @escaping ((String,Int,Bool) -> Void)) {
+        db.collection("users").document(self.uid!).collection("f" + type).document(id).getDocument { (documento, erroro) in
+            var fav = false
+            if let documento = documento, documento.exists {
+                fav = true
             }
             
+            self.db.collection(type).document(id).getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let dat = document.data()
+                    completion(dat!["name"] as? String ?? "",dat!["creations"] as? Int ?? 0,fav)
+                }
+            }
+        }
+    }
+    
+    func favElem(type: String, id: String) {
+        db.collection(type).document(id).getDocument { (document, error) in
+            if let document = document, document.exists {
+                var dat = document.data()
+                if ((dat) != nil) {
+                    dat!["timestamp"] = Timestamp()
+                    self.db.collection("users").document(self.uid!).collection("f" + type).document(id).setData(dat!)
+                }
+            }
+        }
+    }
+    
+    func unfavElem(type: String, id: String) {
+        db.collection("users").document(self.uid!).collection("f" + type).document(id).getDocument { (document, error) in
+            if let document = document, document.exists {
+                self.db.collection("users").document(self.uid!).collection("f" + type).document(id).delete()
+            }
         }
     }
     

@@ -28,6 +28,8 @@ struct PreviewObj: View {
     
     @Binding var disabled: Bool
     
+    @State var fav: Bool = false
+    
     func updatePreview(type: String, user: String, id: String, url: URL) {
         self.url = nil
         self.saveUrl = url
@@ -35,9 +37,10 @@ struct PreviewObj: View {
         self.type = type
         self.id = id
         
-        DataHandler.shared.getPrevData(type: type, user: user, id: id, { title, creations in
+        DataHandler.shared.getPrevData(type: type, user: user, id: id, { title, creations, favorite in
             self.title = title
             self.creations = creations
+            self.fav = favorite
         })
         
         withAnimation {
@@ -96,11 +99,18 @@ struct PreviewObj: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }.padding(.horizontal).transition(.opacity)
                     HStack {
-                        Button(action: {}, label: {
-                            Image(systemName: "star.fill")
+                        Button(action: {withAnimation {
+                            if (!fav) {
+                                DataHandler.shared.favElem(type: type, id: id)
+                            } else {
+                                DataHandler.shared.unfavElem(type: type, id: id)
+                            }
+                            fav = !fav;
+                        }}, label: {
+                            Image(systemName: fav ? "star.fill" : "star")
                                 .imageScale(.medium)
                                 .font(.title)
-                                .foregroundColor(.gray)
+                                .foregroundColor(fav ? .yellow : .gray)
                                 .padding(10)
                                 .padding(.horizontal,5)
                         })
