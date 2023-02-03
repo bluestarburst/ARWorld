@@ -255,37 +255,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 yield break;
             }
 
-            var request = sessionSubsystem.GetARWorldMapAsync();
+            
 
-            while (!request.status.IsDone()) yield return null;
-
-            if (request.status.IsError())
-            {
-                Log(string
-                    .Format("Session serialization failed with status {0}",
-                    request.status));
-                yield break;
-            }
-
-            var worldMap = request.GetWorldMap();
-            request.Dispose();
-
-            Log(worldMap.valid ? "World map is valid." : "World map is invalid.");
-
-            Log("Serializing ARWorldMap to byte array...");
-
-            var worldMapData = worldMap.Serialize(Allocator.Temp);
-
-            var tempData = Compress(worldMapData.ToArray());
-
-            // check size of worldmap is greater than 55 mb
-            if (tempData.Length > 55000000)
-            {
-                Log("World map is too large to save.");
-                yield break;
-            }
-
-            SaveAndDisposeWorldMap(tempData);
+            SaveAndDisposeWorldMap(sessionSubsystem);
         }
 
         public bool firstLoadMap = false;
@@ -588,8 +560,46 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
 
-        async void SaveAndDisposeWorldMap(byte[] data)
+        async void SaveAndDisposeWorldMap(ARKitSessionSubsystem sessionSubsystem)
         {
+
+            var request = sessionSubsystem.GetARWorldMapAsync();
+
+            while (!request.status.IsDone()) {
+                await Task.Delay(100);
+            }
+
+            if (request.status.IsError())
+            {
+                Log(string
+                    .Format("Session serialization failed with status {0}",
+                    request.status));
+                // yield break;
+                return;
+            }
+
+            var worldMap = request.GetWorldMap();
+            request.Dispose();
+
+            Log(worldMap.valid ? "World map is valid." : "World map is invalid.");
+            if (!worldMap.valid)
+            {
+                // yield break;
+                return;
+            }
+
+            Log("Serializing ARWorldMap to byte array...");
+
+            var worldMapData = worldMap.Serialize(Allocator.Temp);
+
+            var data = Compress(worldMapData.ToArray());
+
+            // check size of worldmap is greater than 55 mb
+            if (data.Length > 55000000)
+            {
+                Log("World map is too large to save.");
+                return;
+            }
 
             var location = new GeoPoint(api.lat, api.lon);
 
@@ -678,8 +688,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             isWorldMapLoaded = true;
 
-            // data.Dispose();
-            // worldMap.Dispose();
+            // destory data
+            data = null;
+
+            worldMap.Dispose();
+            worldMapData.Dispose();
             // // Log(string.Format("ARWorldMap written to {0}", path));
 
 
