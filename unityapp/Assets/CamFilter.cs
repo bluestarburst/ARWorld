@@ -13,6 +13,8 @@ public class CamFilter : MonoBehaviour
 
     public bool isNormal = true;
 
+    public float opacity = 1.0f;
+
     
 
     private Material material;
@@ -32,6 +34,7 @@ public class CamFilter : MonoBehaviour
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
         material.SetInt("_IsColor", isColor ? 1 : 0);
+        material.SetFloat("_Opacity", opacity);
 
         GetComponent<Renderer>().enabled = isVisible;
     }
@@ -59,6 +62,7 @@ public class CamFilter : MonoBehaviour
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
         material.SetInt("_IsColor", isColor ? 1 : 0);
+        material.SetFloat("_Opacity", opacity);
         // }
 
     }
@@ -76,5 +80,6 @@ public class CamFilter : MonoBehaviour
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
         material.SetInt("_IsColor", isColor ? 1 : 0);
+        material.SetFloat("_Opacity", opacity);
     }
 }
