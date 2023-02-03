@@ -65,6 +65,7 @@ struct UnityView: View {
     @State private var mapOffset = CGFloat(-100)
     
     @State private var showSettings = false
+    @State private var showSettingsButton = true
     @State private var showMesh = false
     @State private var showChunks = false
     @State private var showLogs = false
@@ -92,18 +93,20 @@ struct UnityView: View {
             VStack {
                 Spacer()
                 HStack {
-                    VStack {
-                        Button( action: {withAnimation{showSettings=true}}, label: {
-                            Image(systemName: "gearshape")
-                                .imageScale(.medium)
-                                .font(.title2)
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color(.white).opacity(0.1))
-                                .clipShape(Circle())
-                                .padding(.vertical,15)
-                        })
-                        Spacer()
+                    if (showSettingsButton) {
+                        VStack {
+                            Button( action: {withAnimation{showSettings=true}}, label: {
+                                Image(systemName: "gearshape")
+                                    .imageScale(.medium)
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.vertical,15)
+                            })
+                            Spacer()
+                        }
                     }
                     Spacer()
                     if (showButtons) {
@@ -403,6 +406,24 @@ struct UnityView: View {
                     }
                     .padding(.bottom, 30)
                 }.transition(.bottomAndFade)
+            } else if (addingObj == "preview") {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button (action: {withAnimation{change="move"; UnityBridge.getInstance().api.nextStepFilter()}}, label: {
+                            Image(systemName: "plus")
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color.pink)
+                                .clipShape(Circle())
+                                .padding(.horizontal,25)
+                        })
+                    }
+                    .padding(.bottom, 30)
+                }.transition(.bottomAndFade)
             }
             
             if (showPreview) {
@@ -481,6 +502,7 @@ struct UnityView: View {
                         showElementSelection = false
                         showButtons = false
                         showPreview = false
+                        showSettingsButton = false
                     }
                     else if (addingObj == "preview") {
                         showSettings = false
@@ -488,10 +510,12 @@ struct UnityView: View {
                         showButtons = false
                         isAdding = false
                         showPreview = true
+                        showSettingsButton = false
                     } else {
                         isAdding = false
                         showButtons = true
                         showPreview = false
+                        showSettingsButton = true
                     }
                 }
             }
