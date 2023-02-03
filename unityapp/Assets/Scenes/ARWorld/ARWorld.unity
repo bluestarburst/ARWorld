@@ -373,6 +373,7 @@ Material:
     - _CastShadows: 0
     - _Cull: 1
     - _DstBlend: 10
+    - _Opacity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 0
@@ -1411,6 +1412,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1393218328}
     m_Modifications:
+    - target: {fileID: 2458440469214729865, guid: 328c7f1b97eb7e5408a3288d4d324521,
+        type: 3}
+      propertyPath: opacity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2458440469214729865, guid: 328c7f1b97eb7e5408a3288d4d324521,
         type: 3}
       propertyPath: isVisible
