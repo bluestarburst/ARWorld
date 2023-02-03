@@ -255,9 +255,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 yield break;
             }
 
-            
+            var request = sessionSubsystem.GetARWorldMapAsync();
 
-            SaveAndDisposeWorldMap(sessionSubsystem);
+            while (!request.status.IsDone())
+                yield return null;
+
+            if (request.status.IsError())
+            {
+                Log(string.Format("Session serialization failed with status {0}", request.status));
+                yield break;
+            }
+
+            var worldMap = request.GetWorldMap();
+            request.Dispose();
+
+            SaveAndDisposeWorldMap(worldMap);
         }
 
         public bool firstLoadMap = false;
@@ -560,26 +572,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
 
-        async void SaveAndDisposeWorldMap(ARKitSessionSubsystem sessionSubsystem)
+        async void SaveAndDisposeWorldMap(ARWorldMap worldMap)
         {
 
-            var request = sessionSubsystem.GetARWorldMapAsync();
-
-            while (!request.status.IsDone()) {
-                await Task.Delay(100);
-            }
-
-            if (request.status.IsError())
-            {
-                Log(string
-                    .Format("Session serialization failed with status {0}",
-                    request.status));
-                // yield break;
-                return;
-            }
-
-            var worldMap = request.GetWorldMap();
-            request.Dispose();
+            // var request = sessionSubsystem.GetARWorldMapAsync(); lags too much
+            
 
             Log(worldMap.valid ? "World map is valid." : "World map is invalid.");
             if (!worldMap.valid)
@@ -589,7 +586,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             Log("Serializing ARWorldMap to byte array...");
-
             var worldMapData = worldMap.Serialize(Allocator.Temp);
 
             var data = Compress(worldMapData.ToArray());
