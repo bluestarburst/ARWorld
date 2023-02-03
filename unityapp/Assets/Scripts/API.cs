@@ -116,6 +116,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Start()
         {
+            logs.SetActive(false);
             Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
             {
                 var dependencyStatus = task.Result;
