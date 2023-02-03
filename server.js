@@ -201,7 +201,25 @@ function deleteAllMaps() {
     });
 }
 
+function deleteUserObjOfType(user, type) {
+    db.collection('users').doc(user).collection(type).get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+            deletePlane(doc.id, type);
+        });
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+}
 
+function deleteAllOfType(type) {
+    db.collection(type).get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+            deletePlane(doc.id, type);
+        });
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+}
 
 
 
@@ -212,4 +230,7 @@ function deleteAllMaps() {
 // deleteObject('rAeEtemmVDrlQrDpyW43');
 // deleteObject('vwlguVspiK13pnNyMDhA');
 
-deleteAllMaps();
+// deleteAllMaps();
+deleteAllOfType('images');
+deleteAllOfType('stickers');
+deleteAllOfType('posters');
