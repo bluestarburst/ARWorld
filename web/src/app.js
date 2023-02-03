@@ -34,7 +34,7 @@ import * as firebase from 'firebase/app';
 // import 'firebase/auth';
 import { getAuth, browserSessionPersistence, browserLocalPersistence, browserPopupRedirectResolver, initializeAuth, RecaptchaVerifier } from "firebase/auth";
 import { getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
-import { getFirestore, collection, addDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, setDoc, updateDoc, Timestamp } from "firebase/firestore";
 
 
 import { Button, TextField } from '@mui/material';
@@ -292,7 +292,8 @@ function Canv(props) {
             name: fileName,
             user: auth.currentUser.uid,
             creations: 0,
-            tags: tags
+            tags: tags,
+            timestamp: Timestamp.now()
         }).then((docRef) => {
             console.log("Document written with ID: ", docRef.id);
             // add file to user document: users/{user}/objects/{object}
@@ -300,7 +301,8 @@ function Canv(props) {
                 name: fileName,
                 user: auth.currentUser.uid,
                 tags: tags,
-                id: docRef.id
+                id: docRef.id,
+                timestamp: Timestamp.now()
             })
 
             updateDoc(doc(db, "objects", docRef.id), {
