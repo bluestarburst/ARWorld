@@ -743,6 +743,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         tempType = "objects";
                     }
+                    else if (type.Equals("spotlights"))
+                    {
+                        tempType = "spotlights";
+                    }
+                    else if (type.Equals("filters"))
+                    {
+                        tempType = "filters";
+                    }
+
+                    
 
 
                     change = "move";
@@ -754,58 +764,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     // increment the number of creations by one
                     arWorldMapController.db.Collection(type).Document(id).UpdateAsync("creations", FieldValue.Increment(1));
-
+                    Chunk chunkScript = null;
                     if (arWorldMapController.chunksPos.ContainsKey(chunkPos[0] + "-" + chunkPos[1]))
                     {
                         Destroy(currentChunk);
 
 
                         currentChunk = arWorldMapController.chunks[arWorldMapController.chunksPos[chunkPos[0] + "-" + chunkPos[1]]];
-                        Chunk chunkScript = currentChunk.GetComponent<Chunk>();
+                        chunkScript = currentChunk.GetComponent<Chunk>();
                         // make spawned object a child of the chunk
 
                         spawnedObject.transform.parent = currentChunk.transform;
                         // save the local position of the spawned object relative to the chunk
                         spawnedObject.transform.localPosition = localPosition;
 
-                        if (type.Equals("spotlights"))
-                        {
-                            arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
-                            {
-                                user = user,
-                                type = type,
-                                id = id,
-                                x = spawnedObject.transform.localPosition.x,
-                                y = spawnedObject.transform.localPosition.y,
-                                z = spawnedObject.transform.localPosition.z,
-                                rx = spawnedObject.transform.localRotation.eulerAngles.x,
-                                ry = spawnedObject.transform.localRotation.eulerAngles.y,
-                                rz = spawnedObject.transform.localRotation.eulerAngles.z,
-                                sx = spawnedObject.transform.localScale.x,
-                                sy = spawnedObject.transform.localScale.y,
-                                sz = spawnedObject.transform.localScale.z,
-                                topR = api.topR,
-                                botR = api.botR,
-                            });
-                        }
-                        else
-                        {
-                            arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
-                            {
-                                user = user,
-                                type = type,
-                                id = id,
-                                x = spawnedObject.transform.localPosition.x,
-                                y = spawnedObject.transform.localPosition.y,
-                                z = spawnedObject.transform.localPosition.z,
-                                rx = spawnedObject.transform.localRotation.eulerAngles.x,
-                                ry = spawnedObject.transform.localRotation.eulerAngles.y,
-                                rz = spawnedObject.transform.localRotation.eulerAngles.z,
-                                sx = spawnedObject.transform.localScale.x,
-                                sy = spawnedObject.transform.localScale.y,
-                                sz = spawnedObject.transform.localScale.z,
-                            });
-                        }
+
+                        
+
                     }
                     else
                     {
@@ -813,7 +788,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         // save the local position of the spawned object relative to the chunk
                         spawnedObject.transform.localPosition = localPosition;
 
-                        Chunk chunkScript = currentChunk.GetComponent<Chunk>();
+                        chunkScript = currentChunk.GetComponent<Chunk>();
                         var anchor = currentChunk.AddComponent<ARAnchor>();
                         chunkScript.db = arWorldMapController.db;
                         chunkScript.ARCamera = arWorldMapController.ARCamera;
@@ -831,48 +806,47 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             { "worldMapId", arWorldMapController.worldMapId }
                         });
 
-                        if (type.Equals("spotlights"))
-                        {
-                            arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
-                            {
-                                user = user,
-                                type = type,
-                                id = id,
-                                x = spawnedObject.transform.localPosition.x,
-                                y = spawnedObject.transform.localPosition.y,
-                                z = spawnedObject.transform.localPosition.z,
-                                rx = spawnedObject.transform.localRotation.eulerAngles.x,
-                                ry = spawnedObject.transform.localRotation.eulerAngles.y,
-                                rz = spawnedObject.transform.localRotation.eulerAngles.z,
-                                sx = spawnedObject.transform.localScale.x,
-                                sy = spawnedObject.transform.localScale.y,
-                                sz = spawnedObject.transform.localScale.z,
-                                topR = api.topR,
-                                botR = api.botR,
-                            });
-                        }
-                        else
-                        {
-                            arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(new
-                            {
-                                user = user,
-                                type = type,
-                                id = id,
-                                x = spawnedObject.transform.localPosition.x,
-                                y = spawnedObject.transform.localPosition.y,
-                                z = spawnedObject.transform.localPosition.z,
-                                rx = spawnedObject.transform.localRotation.eulerAngles.x,
-                                ry = spawnedObject.transform.localRotation.eulerAngles.y,
-                                rz = spawnedObject.transform.localRotation.eulerAngles.z,
-                                sx = spawnedObject.transform.localScale.x,
-                                sy = spawnedObject.transform.localScale.y,
-                                sz = spawnedObject.transform.localScale.z,
-                            });
-                        }
+
+                        // arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(data);
+
 
                         arWorldMapController.chunks.Add(anchor.trackableId.ToString(), currentChunk);
                         arWorldMapController.anchors.Add(anchor.trackableId.ToString(), anchor);
                     }
+
+                    var data = new Dictionary<string, object>{
+                            {"user", user},
+                            {"type", type},
+                            {"id", id},
+                            {"x", spawnedObject.transform.localPosition.x},
+                            {"y", spawnedObject.transform.localPosition.y},
+                            {"z", spawnedObject.transform.localPosition.z},
+                            {"rx", spawnedObject.transform.localRotation.x},
+                            {"ry", spawnedObject.transform.localRotation.y},
+                            {"rz", spawnedObject.transform.localRotation.z},
+                            {"rw", spawnedObject.transform.localRotation.w},
+                            {"sx", spawnedObject.transform.localScale.x},
+                            {"sy", spawnedObject.transform.localScale.y},
+                            {"sz", spawnedObject.transform.localScale.z},
+                    };
+                    if (type.Equals("spotlights"))
+                    {
+                        data.Add("topR", api.topR);
+                        data.Add("botR", api.botR);
+                    }
+                    else if (type.Equals("filters"))
+                    {
+                        data.Add("r", inputColor.r);
+                        data.Add("g", inputColor.g);
+                        data.Add("b", inputColor.b);
+                        data.Add("a", inputColor.a);
+                        data.Add("saturation", inputSaturation);
+                        data.Add("threshold", inputThreshold);
+                        data.Add("isColor", inputIsColor);
+                    }
+
+                    arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(data);
+
                     currentChunk = null;
                     spawnedObject = null;
                 }

@@ -249,6 +249,87 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 }
 
+
+                // get posters from chunk
+                CollectionReference spotlightsRef = db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(id).Collection("spotlights");
+                QuerySnapshot spotlightsSnapshot = await spotlightsRef.GetSnapshotAsync();
+                // go through posters and add them to the chunk
+                foreach (DocumentSnapshot posterSnapshot in spotlightsSnapshot.Documents)
+                {
+                    Dictionary<string, object> posterData = posterSnapshot.ToDictionary();
+                    arWorldMapController.Log("Loading poster " + posterData["id"] + " from chunk " + id);
+                    // create poster
+                    GameObject spotlight = Instantiate(arWorldMapController.spotlightPrefab, transform);
+
+                    spotlight.GetComponent<Vertex>().topRadius = Convert.ToSingle(posterSnapshot.GetValue<double>("topR"));
+                    spotlight.GetComponent<Vertex>().bottomRadius = Convert.ToSingle(posterSnapshot.GetValue<double>("botR"));
+
+                    // NOT WORKING :(
+
+
+                    float x = Convert.ToSingle(posterSnapshot.GetValue<double>("x"));
+                    float y = Convert.ToSingle(posterSnapshot.GetValue<double>("y"));
+                    float z = Convert.ToSingle(posterSnapshot.GetValue<double>("z"));
+
+                    spotlight.transform.localPosition = new Vector3(x, y, z);
+
+                    float rx = Convert.ToSingle(posterSnapshot.GetValue<double>("rx"));
+                    float ry = Convert.ToSingle(posterSnapshot.GetValue<double>("ry"));
+                    float rz = Convert.ToSingle(posterSnapshot.GetValue<double>("rz"));
+
+                    spotlight.transform.localRotation = Quaternion.Euler(rx, ry, rz);
+
+                    float sx = Convert.ToSingle(posterSnapshot.GetValue<double>("sx"));
+                    float sy = Convert.ToSingle(posterSnapshot.GetValue<double>("sy"));
+                    float sz = Convert.ToSingle(posterSnapshot.GetValue<double>("sz"));
+
+                    spotlight.transform.localScale = new Vector3(sx, sy, sz);
+
+                    arWorldMapController.Log("Loading spotlight");
+                }
+
+                // get posters from chunk
+                CollectionReference filtersRef = db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(id).Collection("filters");
+                QuerySnapshot filtersSnapshot = await filtersRef.GetSnapshotAsync();
+                // go through posters and add them to the chunk
+                foreach (DocumentSnapshot posterSnapshot in filtersSnapshot.Documents)
+                {
+                    Dictionary<string, object> posterData = posterSnapshot.ToDictionary();
+                    arWorldMapController.Log("Loading poster " + posterData["id"] + " from chunk " + id);
+                    // create poster
+                    GameObject filterObj = Instantiate(arWorldMapController.filterPrefab, transform);
+
+                    // spotlight.GetComponent<Vertex>().topRadius = Convert.ToSingle(posterSnapshot.GetValue<double>("topR"));
+                    // spotlight.GetComponent<Vertex>().bottomRadius = Convert.ToSingle(posterSnapshot.GetValue<double>("botR"));
+
+                    filter fil = filterObj.GetComponent<filter>();
+                    fil.color = new Color(Convert.ToSingle(posterSnapshot.GetValue<double>("r")), Convert.ToSingle(posterSnapshot.GetValue<double>("g")), Convert.ToSingle(posterSnapshot.GetValue<double>("b")), Convert.ToSingle(posterSnapshot.GetValue<double>("a")));
+                    fil.saturation = Convert.ToSingle(posterSnapshot.GetValue<double>("saturation"));
+                    fil.threshold = Convert.ToSingle(posterSnapshot.GetValue<double>("threshold"));
+                    fil.isColor = posterSnapshot.GetValue<bool>("isColor");
+
+
+                    float x = Convert.ToSingle(posterSnapshot.GetValue<double>("x"));
+                    float y = Convert.ToSingle(posterSnapshot.GetValue<double>("y"));
+                    float z = Convert.ToSingle(posterSnapshot.GetValue<double>("z"));
+
+                    filterObj.transform.localPosition = new Vector3(x, y, z);
+
+                    float rx = Convert.ToSingle(posterSnapshot.GetValue<double>("rx"));
+                    float ry = Convert.ToSingle(posterSnapshot.GetValue<double>("ry"));
+                    float rz = Convert.ToSingle(posterSnapshot.GetValue<double>("rz"));
+
+                    filterObj.transform.localRotation = Quaternion.Euler(rx, ry, rz);
+
+                    float sx = Convert.ToSingle(posterSnapshot.GetValue<double>("sx"));
+                    float sy = Convert.ToSingle(posterSnapshot.GetValue<double>("sy"));
+                    float sz = Convert.ToSingle(posterSnapshot.GetValue<double>("sz"));
+
+                    filterObj.transform.localScale = new Vector3(sx, sy, sz);
+
+                    arWorldMapController.Log("Loading filter");
+                }
+
             }
         }
 
