@@ -589,6 +589,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private float inputThreshold = 0.5f;
         private bool inputIsColor = false;
 
+        private filter tempFilter = null;
+
         public async void AddFilter()
         {
             isAdding = true;
@@ -610,11 +612,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
                 spawnedObject = Instantiate(arWorldMapController.filterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.5f, Quaternion.identity);
-                var mat = spawnedObject.GetComponent<MeshRenderer>().material;
-                mat.SetColor("_Color", inputColor);
-                mat.SetFloat("_Saturation", inputSaturation);
-                mat.SetFloat("_Threshold", inputThreshold);
-                mat.SetInt("_IsColor", inputIsColor ? 1 : 0);
+                tempFilter = spawnedObject.GetComponent<filter>();
+                tempFilter.camera = arWorldMapController.ARCamera;
+                tempFilter.innerFilter = innerFilter;
+
+                tempFilter.color = inputColor;
+                tempFilter.saturation = inputSaturation;
+                tempFilter.threshold = inputThreshold;
+                tempFilter.isColor = inputIsColor;
+
+
 
                 // spawnedObject = Instantiate(arWorldMapController.spotlightPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.5f, Quaternion.identity);
 
