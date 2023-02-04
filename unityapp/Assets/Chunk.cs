@@ -130,7 +130,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         if (hit.transform.gameObject.tag == "element")
                         {
                             arWorldMapController.Log("Hit poster " + hit.transform.gameObject.name);
-
+                            elements[hit.transform.gameObject.name].ShowElementOptions();
                             // HostNativeAPI.ElementOptions(hit.transform.gameObject.name, );
                         }
                     }
