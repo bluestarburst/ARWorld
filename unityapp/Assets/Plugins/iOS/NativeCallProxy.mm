@@ -36,7 +36,7 @@ void addingObj(const char *status) {
   [api onAddingObj:str];
 }
 
-void elementOptions(const char *type, const char *id, const char *chunkId, const char *storageId, const char *user, const char *createdBy) {
+void ElementOptions(const char *type, const char *id, const char *chunkId, const char *storageId, const char *user, const char *createdBy) {
   const NSString *strType = @(type);
   const NSString *strId = @(id);
   const NSString *strChunkId = @(chunkId);
