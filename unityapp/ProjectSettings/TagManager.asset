@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Chunk
   - Mesh
+  - element
   layers:
   - Default
   - TransparentFX
