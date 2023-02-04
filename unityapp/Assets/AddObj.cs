@@ -831,6 +831,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             {"sx", spawnedObject.transform.localScale.x},
                             {"sy", spawnedObject.transform.localScale.y},
                             {"sz", spawnedObject.transform.localScale.z},
+                            {"createdBy", arWorldMapController.user}
                     };
                     if (type.Equals("spotlights"))
                     {

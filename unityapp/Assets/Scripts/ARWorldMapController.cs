@@ -159,6 +159,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public CamFilter innerFilter;
 
+        public string user = "";
+
         int trys = 0;
 
         /// <summary>
@@ -730,6 +732,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             anchorManager.anchorsChanged += AnchorManager_anchorsChanged;
 
             db = FirebaseFirestore.GetInstance(api.app);
+
+            user = FirebaseAuth.DefaultInstance.CurrentUser.ToString();
         }
 
         private bool firstLoad = true;
