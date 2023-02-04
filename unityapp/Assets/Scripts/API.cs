@@ -34,7 +34,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public static extern void addingObj(string status);
 
         [DllImport("__Internal")]
-        public static extern void ElementOptions(string chunkId, string type, string id);
+        public static extern void ElementOptions(string type, string id, string chunkId, string storageId, string user, string createdBy);
     }
 
     /// <summary>

@@ -36,6 +36,16 @@ void addingObj(const char *status) {
   [api onAddingObj:str];
 }
 
+void elementOptions(const char *type, const char *id, const char *chunkId, const char *storageId, const char *user, const char *createdBy) {
+  const NSString *strType = @(type);
+  const NSString *strId = @(id);
+  const NSString *strChunkId = @(chunkId);
+  const NSString *strStorageId = @(storageId);
+  const NSString *strUser = @(user);
+  const NSString *strCreatedBy = @(createdBy);
+  [api onElementOptions:strType :strId :strChunkId :strStorageId :strUser :strCreatedBy];
+}
+
 // this method will take a byte array in C# and convert it to a NSData object
 // void sendUnityDataUpdate(const char *data, int length) {
 //   const NSData *nsData = [NSData dataWithBytes:data length:length];

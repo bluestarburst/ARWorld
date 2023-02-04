@@ -38,8 +38,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public class Element
         {
             public string type;
+            // id of element in the chunk (for deletion)
             public string id;
+            // id of chunk
             public string chunkId;
+            // id of firestore and storage element
             public string storageId;
             public string user;
             public string createdBy;
@@ -54,6 +57,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 this.user = user;
                 this.createdBy = createdBy;
                 this.gameObject = gameObject;
+            }
+
+            public void ShowElementOptions() {
+                HostNativeAPI.ElementOptions(type, id, chunkId, storageId, user, createdBy);
             }
         }
 

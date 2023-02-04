@@ -14,6 +14,11 @@ typedef void (*TestDelegate)(const char *name);
 - (void)onSetTestDelegate:(TestDelegate)delegate;
 - (void)onMapStatus:(const NSString *)status;
 - (void)onAddingObj:(const NSString *)status;
+
+// multiple parameters
+- (void)onElementOptions:(const NSString *)type :(const NSString *)id :(const NSString *)chunkId :(const NSString *)storageId :(const NSString *)user :(const NSString *)createdBy;
+
+// - (void)onElementOptions:(const NSString *)type :(const NSString *)id, (const NSString *)chunkId, (const NSString *)storageId, (const NSString *)user, (const NSString *)createdBy;
 // - (void)onSaveARWorldMap:(const NSData *)data;
 // other methods
 @end
