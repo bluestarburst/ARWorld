@@ -87,6 +87,10 @@ struct UnityView: View {
         }
     }
     
+    func setElementOptions(_ type: String, _ id: String, _ chunkId: String, _ storageId: String, _ user: String, _ createdBy: String) {
+        print("swifty options")
+    }
+    
     var body: some View {
         ZStack {
             
@@ -535,6 +539,7 @@ struct UnityView: View {
                     }
                 }
             }
+            api.api.setElementOptions = self.setElementOptions
         }
         .onChange(of: isLoaded) {
             let api = UnityBridge.getInstance()

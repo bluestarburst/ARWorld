@@ -122,9 +122,12 @@ public class UnityAPI: NativeCallsProtocol {
         setAddingObj(status)
     }
 
+    public var setElementOptions: (String,String,String,String,String,String) -> Void = {_,_,_,_,_,_ in}
+
     public func onElementOptions(_ type: String, _ id: String, _ chunkId: String, _ storageId: String, _ user: String, _ createdBy: String) {
         // print("onElementOptions: \(type), \(user), \(id)")
         print("onElementOptions: \(type), \(user), \(id), \(chunkId), \(storageId), \(createdBy)")
+        setElementOptions(type,id,chunkId,storageId,user,createdBy)
     }
 
     /**
