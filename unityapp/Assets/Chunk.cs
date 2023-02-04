@@ -395,6 +395,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     arWorldMapController.Log("Loading filter");
 
                     filterObj.name = posterSnapshot.Id;
+                    arWorldMapController.Log("Loading filter " + filterObj.name);
                     filterObj.tag = "element";
 
                     elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(), posterSnapshot.Id, id, posterData["id"].ToString(), posterData["user"].ToString(), posterData["createdBy"].ToString(), filterObj));
