@@ -32,7 +32,28 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public bool showMat = false;
 
         //dictionary of all the elements in the chunk
-        public Dictionary<string, GameObject> elements = new Dictionary<string, GameObject>();
+        public Dictionary<string, Element> elements = new Dictionary<string, Element>();
+
+        // a class that contains the gameobject type and id
+        public class Element
+        {
+            public string type;
+            public string id;
+            public string chunkId;
+            public string user;
+            public string createdBy;
+            public GameObject gameObject;
+
+            public Element(string type, string id, string chunkId, string user, string createdBy, GameObject gameObject)
+            {
+                this.type = type;
+                this.id = id;
+                this.chunkId = chunkId;
+                this.user = user;
+                this.createdBy = createdBy;
+                this.gameObject = gameObject;
+            }
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -100,8 +121,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         if (hit.transform.gameObject.tag == "element")
                         {
                             arWorldMapController.Log("Hit poster " + hit.transform.gameObject.name);
-                            
-                            // HostNativeAPI.ElementOptions(hit.transform.gameObject.name);
+
+                            // HostNativeAPI.ElementOptions(hit.transform.gameObject.name, );
                         }
                     }
                 }
@@ -202,8 +223,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     poster.name = posterSnapshot.Id;
                     poster.tag = "element";
 
-                    elements.Add(posterSnapshot.Id, poster);
-
+                    elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(), posterData["id"].ToString(), posterSnapshot.Id, posterData["user"].ToString(), posterData["createdBy"].ToString(), poster));
 
                 }
 
@@ -249,7 +269,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (File.Exists(preFilePath + url))
                     {
                         // File.Delete(preFilePath + url);
-                        LoadModel(preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz, objectSnapshot.Id);
+                        LoadModel(preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz, posterData["type"].ToString(), posterData["id"].ToString(), objectSnapshot.Id, posterData["user"].ToString(), posterData["createdBy"].ToString());
                         continue;
                     }
 
@@ -263,7 +283,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         {
                             arWorldMapController.Log("WORKING GLB");
                             arWorldMapController.Log(task.Result.ToString());
-                            DownloadFile(task.Result.ToString(), preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz, objectSnapshot.Id);
+                            DownloadFile(task.Result.ToString(), preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz, posterData["type"].ToString(), posterData["id"].ToString(), objectSnapshot.Id, posterData["user"].ToString(), posterData["createdBy"].ToString());
+                            // elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(),posterData["id"].ToString(),posterSnapshot.Id,posterData["user"].ToString(),posterData["createdBy"].ToString(),null));
                         }
                         else
                         {
@@ -317,7 +338,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     spotlight.name = posterSnapshot.Id;
                     spotlight.tag = "element";
-                    elements.Add(posterSnapshot.Id, spotlight);
+                    elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(), posterData["id"].ToString(), posterSnapshot.Id, posterData["user"].ToString(), posterData["createdBy"].ToString(), spotlight));
                 }
 
                 // get posters from chunk
@@ -367,20 +388,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     filterObj.name = posterSnapshot.Id;
                     filterObj.tag = "element";
 
-                    elements.Add(posterSnapshot.Id, filterObj);
+                    elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(), posterData["id"].ToString(), posterSnapshot.Id, posterData["user"].ToString(), posterData["createdBy"].ToString(), filterObj));
                 }
 
             }
         }
 
-        async public void DownloadFile(string url, string filePath, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz, string id)
+        async public void DownloadFile(string url, string filePath, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz, string type, string id, string chunkId, string user, string createdBy)
         {
 
             if (File.Exists(filePath))
             {
                 arWorldMapController.Log("Found the same file locally, Loading!!!");
 
-                LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz, id);
+                LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz, type, id, chunkId, user, createdBy);
 
                 return;
             }
@@ -396,7 +417,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 else
                 {
                     //Save the model fetched from firebase into spaceShip 
-                    LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz, id);
+                    LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz, type, id, chunkId, user, createdBy);
 
                 }
             }
@@ -406,7 +427,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private string preFilePath = "";
 
-        void LoadModel(string path, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz, string id)
+        void LoadModel(string path, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz, string type, string id, string chunkId, string user, string createdBy)
         {
             GameObject obj = Importer.LoadFromFile(path);
             obj.transform.parent = transform;
@@ -415,10 +436,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             obj.transform.localRotation = Quaternion.Euler(rx, ry, rz);
             obj.transform.localScale = new Vector3(sx, sy, sz);
 
-            obj.name = id;
+            obj.name = chunkId;
             obj.tag = "element";
 
-            elements.Add(id, obj);
+            elements.Add(id, new Element(type, id, chunkId, user, createdBy, obj));
         }
 
         IEnumerator GetFileRequest(string url, string path, Action<UnityWebRequest> callback)

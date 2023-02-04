@@ -32,6 +32,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [DllImport("__Internal")]
         public static extern void addingObj(string status);
+
+        [DllImport("__Internal")]
+        public static extern void ElementOptions(string chunkId, string type, string id);
     }
 
     /// <summary>
