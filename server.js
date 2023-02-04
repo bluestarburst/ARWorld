@@ -230,7 +230,7 @@ function deleteAllOfType(type) {
 // deleteObject('rAeEtemmVDrlQrDpyW43');
 // deleteObject('vwlguVspiK13pnNyMDhA');
 
-// deleteAllMaps();
-deleteAllOfType('images');
-deleteAllOfType('stickers');
-deleteAllOfType('posters');
+deleteAllMaps();
+// deleteAllOfType('images');
+// deleteAllOfType('stickers');
+// deleteAllOfType('posters');
