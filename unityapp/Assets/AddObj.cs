@@ -752,7 +752,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         tempType = "filters";
                     }
 
-                    
+
 
 
                     change = "move";
@@ -763,7 +763,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     isAdding = false;
 
                     // increment the number of creations by one
-                    arWorldMapController.db.Collection(type).Document(id).UpdateAsync("creations", FieldValue.Increment(1));
+                    if (tempType.Equals("posters") || tempType.Equals("objects"))
+                    {
+                        arWorldMapController.db.Collection(type).Document(id).UpdateAsync("creations", FieldValue.Increment(1));
+                    }
                     Chunk chunkScript = null;
                     if (arWorldMapController.chunksPos.ContainsKey(chunkPos[0] + "-" + chunkPos[1]))
                     {
@@ -779,7 +782,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         spawnedObject.transform.localPosition = localPosition;
 
 
-                        
+
 
                     }
                     else
