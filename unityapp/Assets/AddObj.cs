@@ -820,6 +820,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         arWorldMapController.anchors.Add(anchor.trackableId.ToString(), anchor);
                     }
 
+                    var rotation = spawnedObject.transform.localRotation.eulerAngles;
                     var data = new Dictionary<string, object>{
                             {"user", user},
                             {"type", type},
@@ -827,10 +828,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             {"x", spawnedObject.transform.localPosition.x},
                             {"y", spawnedObject.transform.localPosition.y},
                             {"z", spawnedObject.transform.localPosition.z},
-                            {"rx", spawnedObject.transform.localRotation.x},
-                            {"ry", spawnedObject.transform.localRotation.y},
-                            {"rz", spawnedObject.transform.localRotation.z},
-                            {"rw", spawnedObject.transform.localRotation.w},
+                            {"rx", rotation.x},
+                            {"ry", rotation.y},
+                            {"rz", rotation.z},
                             {"sx", spawnedObject.transform.localScale.x},
                             {"sy", spawnedObject.transform.localScale.y},
                             {"sz", spawnedObject.transform.localScale.z},
