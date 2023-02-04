@@ -157,6 +157,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public int potentialChunkIdsCurrent = 0;
         bool shouldGetNextPotentialChunkId = false;
 
+        public CamFilter innerFilter;
+
         int trys = 0;
 
         /// <summary>

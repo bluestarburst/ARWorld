@@ -308,6 +308,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     fil.threshold = Convert.ToSingle(posterSnapshot.GetValue<double>("threshold"));
                     fil.isColor = posterSnapshot.GetValue<bool>("isColor");
 
+                    fil.innerFilter = arWorldMapController.innerFilter;
+                    fil.camera = arWorldMapController.ARCamera;
+
 
                     float x = Convert.ToSingle(posterSnapshot.GetValue<double>("x"));
                     float y = Convert.ToSingle(posterSnapshot.GetValue<double>("y"));
