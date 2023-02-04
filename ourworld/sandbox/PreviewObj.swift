@@ -30,7 +30,10 @@ struct PreviewObj: View {
     
     @State var fav: Bool = false
     
+    @State var showImg: Bool = true
+    
     func updatePreview(type: String, user: String, id: String, url: URL) {
+        self.showImg = true
         self.url = nil
         self.saveUrl = url
         self.user = user
@@ -47,6 +50,23 @@ struct PreviewObj: View {
             displayed = true
             offset = minOffset
         }
+    }
+    
+    func setElementOptions(_ type: String, _ id: String, _ chunkId: String, _ storageId: String, _ user: String, _ createdBy: String) {
+        disabled = false
+        updatePreview(type: type, user: user, id: id, url: "")
+        
+        if (type == "spotlights" || type == "filters") {
+            self.showImg = false
+        } else {
+            DataHandler.shared.getURL(user: user, type: type, id: id, { url in
+                self.url = nil
+                self.saveUrl = url
+                self.showImg = true
+            })
+        }
+        
+        print("swifty options")
     }
     
     var body: some View {
@@ -163,6 +183,7 @@ struct PreviewObj: View {
         .frame(width: UIScreen.screenWidth)
         .onAppear {
             DataHandler.shared.setPreview = updatePreview
+            UnityBridge.getInstance().api.setElementOptions = self.setElementOptions
         }.onTapGesture {
             withAnimation{
                 displayed = false
