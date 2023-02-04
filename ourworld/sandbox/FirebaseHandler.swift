@@ -238,6 +238,23 @@ class DataHandler: NSObject, ObservableObject {
         })
     }
     
+    func getURL(user: String, id:String, type: String, _ setURL: @escaping ((URL) -> Void)) {
+        let storageRef = self.storage.reference().child("users/" + user + "/" + type + "/" + id + ".jpg")
+        storageRef.downloadURL(completion: { url, error in
+            guard let url = url, error == nil else {
+                let storageRef2 = self.storage.reference().child("users/" + user + "/" + type + "/" + id + ".png")
+                storageRef2.downloadURL(completion: { url2, error2 in
+                    guard let url2 = url2, error2 == nil else {
+                        return
+                    }
+                    setURL(url2)
+                })
+                return
+            }
+            setURL(url)
+        })
+    }
+    
     func getPrevData(type: String, user: String, id: String, _ completion: @escaping ((String,Int,Bool) -> Void)) {
         db.collection("users").document(self.uid!).collection("f" + type).document(id).getDocument { (documento, erroro) in
             var fav = false
