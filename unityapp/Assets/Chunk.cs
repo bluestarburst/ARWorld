@@ -40,15 +40,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
             public string type;
             public string id;
             public string chunkId;
+            public string storageId;
             public string user;
             public string createdBy;
             public GameObject gameObject;
 
-            public Element(string type, string id, string chunkId, string user, string createdBy, GameObject gameObject)
+            public Element(string type, string id, string chunkId, string storageId, string user, string createdBy, GameObject gameObject)
             {
                 this.type = type;
                 this.id = id;
                 this.chunkId = chunkId;
+                this.storageId = storageId;
                 this.user = user;
                 this.createdBy = createdBy;
                 this.gameObject = gameObject;
@@ -223,7 +225,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     poster.name = posterSnapshot.Id;
                     poster.tag = "element";
 
-                    elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(), posterData["id"].ToString(), posterSnapshot.Id, posterData["user"].ToString(), posterData["createdBy"].ToString(), poster));
+                    elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(), posterSnapshot.Id, id, posterData["id"].ToString(), posterData["user"].ToString(), posterData["createdBy"].ToString(), poster));
 
                 }
 
@@ -338,7 +340,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     spotlight.name = posterSnapshot.Id;
                     spotlight.tag = "element";
-                    elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(), posterData["id"].ToString(), posterSnapshot.Id, posterData["user"].ToString(), posterData["createdBy"].ToString(), spotlight));
+                    elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(), posterSnapshot.Id, id, posterData["id"].ToString(), posterData["user"].ToString(), posterData["createdBy"].ToString(), spotlight));
                 }
 
                 // get posters from chunk
@@ -388,7 +390,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     filterObj.name = posterSnapshot.Id;
                     filterObj.tag = "element";
 
-                    elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(), posterData["id"].ToString(), posterSnapshot.Id, posterData["user"].ToString(), posterData["createdBy"].ToString(), filterObj));
+                    elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(), posterSnapshot.Id, id, posterData["id"].ToString(), posterData["user"].ToString(), posterData["createdBy"].ToString(), filterObj));
                 }
 
             }
@@ -427,7 +429,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private string preFilePath = "";
 
-        void LoadModel(string path, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz, string type, string id, string chunkId, string user, string createdBy)
+        void LoadModel(string path, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz, string type, string ids, string chunkId, string user, string createdBy)
         {
             GameObject obj = Importer.LoadFromFile(path);
             obj.transform.parent = transform;
@@ -439,7 +441,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             obj.name = chunkId;
             obj.tag = "element";
 
-            elements.Add(id, new Element(type, id, chunkId, user, createdBy, obj));
+            elements.Add(id, new Element(type, chunkId, id, ids, user, createdBy, obj));
         }
 
         IEnumerator GetFileRequest(string url, string path, Action<UnityWebRequest> callback)
