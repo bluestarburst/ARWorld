@@ -757,6 +757,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     change = "move";
                     Vector3 localPosition = currentChunk.transform.InverseTransformPoint(spawnedObject.transform.position);
+                    Vector3 localRotation = currentChunk.transform.InverseTransformDirection(spawnedObject.transform.eulerAngles);
                     // save object to world map
 
                     // check if the chunk already exists
@@ -780,6 +781,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         spawnedObject.transform.parent = currentChunk.transform;
                         // save the local position of the spawned object relative to the chunk
                         spawnedObject.transform.localPosition = localPosition;
+                        spawnedObject.transform.localEulerAngles = localRotation;
 
 
 
@@ -790,6 +792,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         spawnedObject.transform.parent = currentChunk.transform;
                         // save the local position of the spawned object relative to the chunk
                         spawnedObject.transform.localPosition = localPosition;
+                        spawnedObject.transform.localEulerAngles = localRotation;
 
                         chunkScript = currentChunk.GetComponent<Chunk>();
                         var anchor = currentChunk.AddComponent<ARAnchor>();
