@@ -175,6 +175,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 case "next-step-filter":
                     addObj.AddFilter();
                     break;
+                case "delete-obj":
+                    _DeleteObj(serializedMessage);
+                    break;
                 default:
                     Debug.LogError("Unrecognized message '" + header.type + "'");
                     break;
@@ -194,6 +197,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 alt = msg.data[2];
             }
             // print("updateVars");
+        }
+
+        public string dtype = "";
+        public string did = "";
+        public string dchunkId = "";
+        public bool shouldDelete = false;
+
+        public void _DeleteObj(string serialized)
+        {
+            var msg = JsonConvert.DeserializeObject<MessageWithData<string[]>>(serialized);
+            if (msg.data != null)
+            {
+                dtype = msg.data[0];
+                did = msg.data[1];
+                dchunkId = msg.data[2];
+                shouldDelete = true;
+            }
         }
 
         public void _ChangeFilter(string serialized)

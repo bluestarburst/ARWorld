@@ -83,7 +83,7 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-filter", data: [r,g,b,saturation,threshold,isColor])
     }
 
-    public func deleteObj(type: String, user: String, id: String, chunkId: String) {
+    public func deleteObj(type: String, id: String, chunkId: String) {
         sendMessage(type: "delete-obj", data: [type, user, id, chunkId])
     }
 

@@ -116,6 +116,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 isLoaded = true;
             }
 
+            if (arWorldMapController.api.shouldDelete) {
+                arWorldMapController.api.shouldDelete = false;
+                // delete the document in the chunk collection
+                DocumentReference docRef = db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(id).Collection(arWorldMapController.api.dtype).Document(arWorldMapController.api.did);
+                docRef.DeleteAsync().ContinueWithOnMainThread(task => {
+                    if (task.IsFaulted || task.IsCanceled)
+                    {
+                        arWorldMapController.Log("Error deleting element " + arWorldMapController.api.did + ": " + task.Exception);
+                    }
+                    else
+                    {
+                        arWorldMapController.Log("Deleted element " + arWorldMapController.api.did);
+                        // delete the gameobject
+                        Destroy(elements[arWorldMapController.api.did].gameObject);
+                        // delete the element from the dictionary
+                        elements.Remove(arWorldMapController.api.did);
+                    }
+                });
+            }
+
             // get raycast from touch
             if (Input.touchCount > 0)
             {
