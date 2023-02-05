@@ -62,6 +62,10 @@ struct PreviewObj: View {
             self.user = user
             self.type = type
             self.id = id
+            withAnimation {
+                displayed = true
+                offset = minOffset
+            }
         } else {
             DataHandler.shared.getURL(user: user, id: id, type: type, { url in
                 self.showImg = true
