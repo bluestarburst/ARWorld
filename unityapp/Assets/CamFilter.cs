@@ -19,6 +19,8 @@ public class CamFilter : MonoBehaviour
 
     private Material material;
 
+    public bool isOverride = false;
+
     public void setVisible(bool visible) {
         isVisible = visible;
         GetComponent<Renderer>().enabled = isVisible;

@@ -17,6 +17,8 @@ public class filter : MonoBehaviour
 
     private Material material;
 
+    private bool outside = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,8 +36,8 @@ public class filter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (innerFilter == null || camera == null)
-        { 
+        if (innerFilter == null || camera == null || innerFilter.isOverride)
+        {
             return;
         }
 
@@ -49,6 +51,7 @@ public class filter : MonoBehaviour
 
         if (Vector3.Distance(camera.transform.position, transform.position) < (transform.localScale.x / 2 + radius2) + radius)
         {
+            outside = false;
             innerFilter.setVisible(true);
             innerFilter.color = color;
             innerFilter.saturation = saturation;
@@ -64,9 +67,12 @@ public class filter : MonoBehaviour
         }
         else
         {
-            innerFilter.setVisible(false);
+            if (!outside)
+            {
+                innerFilter.setVisible(false);
+                outside = true;
+            }
         }
-
 
     }
 }
