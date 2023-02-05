@@ -29,8 +29,11 @@ public class Vertex : MonoBehaviour
     public float topRadius = 1f;
     public float bottomRadius = 1f;
 
+    private MeshCollider meshCollider;
+
     void Start()
     {
+        meshCollider = GetComponent<MeshCollider>();
         InitMesh();
         getTopVertices();
         getBottomVertices();
@@ -250,6 +253,8 @@ public class Vertex : MonoBehaviour
 
         light.spotAngle = angle + 5;
         light.innerSpotAngle = angle;
+
+        meshCollider.sharedMesh = clonedMesh;
 
     }
 }
