@@ -455,6 +455,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             obj.tag = "element";
 
             elements.Add(ids, new Element(type, ids, id, storageId, user, createdBy, obj));
+            arWorldMapController.Log("Loading " + obj.name + " done");
+            arWorldMapController.Log(elements[ids].type + " " + elements[ids].id + " " + elements[ids].chunkId + " " + elements[ids].storageId + " " + elements[ids].user + " " + elements[ids].createdBy + " " + elements[ids].gameObject.name);
         }
 
         IEnumerator GetFileRequest(string url, string path, Action<UnityWebRequest> callback)
