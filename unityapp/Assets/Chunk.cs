@@ -131,6 +131,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         {
                             arWorldMapController.Log("Hit poster " + hit.transform.gameObject.name);
                             elements[hit.transform.gameObject.name].ShowElementOptions();
+                            arWorldMapController.Log("Hit poster " + elements[hit.transform.gameObject.name].type);
                             // HostNativeAPI.ElementOptions(hit.transform.gameObject.name, );
                         }
                     }
