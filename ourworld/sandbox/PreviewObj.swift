@@ -54,16 +54,20 @@ struct PreviewObj: View {
     
     func setElementOptions(_ type: String, _ id: String, _ chunkId: String, _ storageId: String, _ user: String, _ createdBy: String) {
         disabled = false
-        updatePreview(type: type, user: user, id: id, url: "")
         
         if (type == "spotlights" || type == "filters") {
             self.showImg = false
+            self.url = nil
+            self.saveUrl = url
+            self.user = user
+            self.type = type
+            self.id = id
         } else {
-            DataHandler.shared.getURL(user: user, type: type, id: id, { url in
-                self.url = nil
-                self.saveUrl = url
+            DataHandler.shared.getURL(user: user, id: id, type: type, { url in
                 self.showImg = true
+                updatePreview(type: type, user: user, id: id, url: url)
             })
+            
         }
         
         print("swifty options")
