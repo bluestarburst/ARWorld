@@ -83,6 +83,10 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-filter", data: [r,g,b,saturation,threshold,isColor])
     }
 
+    public func deleteObj(type: String, user: String, id: String, chunkId: String) {
+        sendMessage(type: "delete-obj", data: [type, user, id, chunkId])
+    }
+
     public func nextStepFilter() {
         sendMessage(type: "next-step-filter", data: "")
     }
