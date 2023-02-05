@@ -733,7 +733,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             db = FirebaseFirestore.GetInstance(api.app);
 
-            user = FirebaseAuth.DefaultInstance.CurrentUser.ToString();
+            user = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
         }
 
         private bool firstLoad = true;
