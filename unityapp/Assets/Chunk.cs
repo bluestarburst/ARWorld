@@ -116,7 +116,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 isLoaded = true;
             }
 
-            if (arWorldMapController.api.shouldDelete) {
+            if (arWorldMapController.api.shouldDelete && arWorldMapController.api.dchunkId == id) {
                 arWorldMapController.api.shouldDelete = false;
                 // delete the document in the chunk collection
                 DocumentReference docRef = db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(id).Collection(arWorldMapController.api.dtype).Document(arWorldMapController.api.did);
