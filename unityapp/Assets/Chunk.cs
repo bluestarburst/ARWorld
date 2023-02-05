@@ -278,7 +278,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (File.Exists(preFilePath + url))
                     {
                         // File.Delete(preFilePath + url);
-                        LoadModel(preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz, posterData["type"].ToString(), posterData["id"].ToString(), objectSnapshot.Id, posterData["user"].ToString(), posterData["createdBy"].ToString());
+                        LoadModel(preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz, posterData["type"].ToString(), objectSnapshot.Id, posterData["id"].ToString(), posterData["user"].ToString(), posterData["createdBy"].ToString());
                         continue;
                     }
 
@@ -292,7 +292,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         {
                             arWorldMapController.Log("WORKING GLB");
                             arWorldMapController.Log(task.Result.ToString());
-                            DownloadFile(task.Result.ToString(), preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz, posterData["type"].ToString(), posterData["id"].ToString(), objectSnapshot.Id, posterData["user"].ToString(), posterData["createdBy"].ToString());
+                            DownloadFile(task.Result.ToString(), preFilePath + url, x, y, z, rx, ry, rz, sx, sy, sz, posterData["type"].ToString(), objectSnapshot.Id, posterData["id"].ToString(), posterData["user"].ToString(), posterData["createdBy"].ToString());
                             // elements.Add(posterSnapshot.Id, new Element(posterData["type"].ToString(),posterData["id"].ToString(),posterSnapshot.Id,posterData["user"].ToString(),posterData["createdBy"].ToString(),null));
                         }
                         else
@@ -404,14 +404,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        async public void DownloadFile(string url, string filePath, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz, string type, string id, string chunkId, string user, string createdBy)
+        async public void DownloadFile(string url, string filePath, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz, string type, string id, string storageId, string user, string createdBy)
         {
 
             if (File.Exists(filePath))
             {
                 arWorldMapController.Log("Found the same file locally, Loading!!!");
 
-                LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz, type, id, chunkId, user, createdBy);
+                LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz, type, id, storageId, user, createdBy);
 
                 return;
             }
@@ -427,7 +427,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 else
                 {
                     //Save the model fetched from firebase into spaceShip 
-                    LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz, type, id, chunkId, user, createdBy);
+                    LoadModel(filePath, x, y, z, rx, ry, rz, sx, sy, sz, type, id, storageId, user, createdBy);
 
                 }
             }
@@ -437,7 +437,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private string preFilePath = "";
 
-        void LoadModel(string path, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz, string type, string ids, string chunkId, string user, string createdBy)
+        void LoadModel(string path, float x, float y, float z, float rx, float ry, float rz, float sx, float sy, float sz, string type, string ids, string storageId, string user, string createdBy)
         {
             GameObject obj = Importer.LoadFromFile(path);
             obj.transform.parent = transform;
@@ -450,10 +450,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             obj.transform.localRotation = Quaternion.Euler(rx, ry, rz);
             obj.transform.localScale = new Vector3(sx, sy, sz);
 
-            obj.name = chunkId;
+            obj.name = ids;
+            arWorldMapController.Log("Loading " + obj.name);
             obj.tag = "element";
 
-            elements.Add(id, new Element(type, chunkId, id, ids, user, createdBy, obj));
+            elements.Add(id, new Element(type, ids, id, storageId, user, createdBy, obj));
         }
 
         IEnumerator GetFileRequest(string url, string path, Action<UnityWebRequest> callback)
