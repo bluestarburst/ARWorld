@@ -1156,6 +1156,7 @@ MonoBehaviour:
   last_alt: 0
   potentialChunkIdsCurrent: 0
   innerFilter: {fileID: 1253242898}
+  user: 
   firstLoadMap: 0
 --- !u!4 &1751548351
 Transform:

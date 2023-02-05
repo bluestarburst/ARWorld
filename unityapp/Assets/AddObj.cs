@@ -1408,9 +1408,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Console.WriteLine("Finished importing");
             // spawnedObject = result;
             
-            // create a mesh collider for the object
-            MeshCollider meshCollider = spawnedObject.AddComponent<MeshCollider>();
-            meshCollider.sharedMesh = spawnedObject.GetComponent<MeshFilter>().mesh;
+            // create a sphere collider for the object
+            spawnedObject.AddComponent<SphereCollider>();
+            spawnedObject.GetComponent<SphereCollider>().radius = 0.5f;
 
             spawnedObject.transform.position = tempPos;
             spawnedObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
