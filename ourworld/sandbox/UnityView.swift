@@ -518,6 +518,7 @@ struct UnityView: View {
                         showButtons = true
                         showPreview = false
                         showSettingsButton = true
+                        showSettings = true
                     }
                 }
             }
