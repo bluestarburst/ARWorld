@@ -132,16 +132,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
                 {
                     HostNativeAPI.addingObj("adding");
+                    api.status = "adding";
                     AddPoster(type, user, id);
                 }
                 else if (type.Equals("objects"))
                 {
                     HostNativeAPI.addingObj("adding");
+                    api.status = "adding";
                     AddObject(type, user, id);
                 }
                 else if (type.Equals("spotlights"))
                 {
                     HostNativeAPI.addingObj("adding");
+                    api.status = "adding";
                     AddLight(type);
                 }
                 else if (type.Equals("filters"))
@@ -149,6 +152,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     isPrev = true;
                     innerFilter.setVisible(true);
                     HostNativeAPI.addingObj("preview");
+                    api.status = "adding";
                     // AddFilter(type);
                 }
                 return;
@@ -597,6 +601,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             isPrev = false;
             innerFilter.setVisible(false);
             HostNativeAPI.addingObj("adding");
+            api.status = "adding";
 
             inputColor = api.inputColor;
             inputSaturation = api.inputSaturation;
@@ -710,6 +715,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (change.Equals("delete"))
             {
+                api.status = "";
                 innerFilter.setVisible(false);
                 if (moveChild != null)
                 {
@@ -730,6 +736,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else if (change.Equals("save"))
             {
+                api.status = "";
                 if (moveChild != null)
                 {
                     Destroy(moveChild);

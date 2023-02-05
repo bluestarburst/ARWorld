@@ -101,6 +101,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public float inputThreshold = 0.5f;
         public bool inputIsColor = false;
 
+        public string status = "";
+
         void Awake()
         {
             if (!finishedStart)

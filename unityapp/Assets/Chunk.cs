@@ -137,7 +137,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             // get raycast from touch
-            if (Input.touchCount > 0)
+            if (arWorldMapController.api.status != "adding" && Input.touchCount > 0)
             {
                 Touch touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
