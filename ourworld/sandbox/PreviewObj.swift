@@ -32,7 +32,13 @@ struct PreviewObj: View {
     
     @State var showImg: Bool = true
     
+    @State var isOwn: Bool = false
+    
+    @State var did: String = ""
+    @State var chunkId: String = ""
+    
     func updatePreview(type: String, user: String, id: String, url: URL) {
+        isOwn = false
         self.showImg = true
         self.url = nil
         self.saveUrl = url
@@ -54,6 +60,14 @@ struct PreviewObj: View {
     
     func setElementOptions(_ type: String, _ id: String, _ chunkId: String, _ storageId: String, _ user: String, _ createdBy: String) {
         disabled = false
+        self.did = id
+        self.chunkId = chunkId
+        
+        if (createdBy == DataHandler.shared.uid!) {
+            isOwn = true
+        } else {
+            isOwn = false
+        }
         
         if (type == "spotlights" || type == "filters") {
             self.showImg = false
@@ -61,15 +75,37 @@ struct PreviewObj: View {
             self.saveUrl = url
             self.user = user
             self.type = type
-            self.id = id
+            self.id = storageId
+            
+            DataHandler.shared.getPrevData(type: type, user: user, id: storageId, { title, creations, favorite in
+                self.title = title
+                self.creations = creations
+                self.fav = favorite
+            })
+            
             withAnimation {
                 displayed = true
                 offset = minOffset
             }
         } else {
-            DataHandler.shared.getURL(user: user, id: id, type: type, { url in
+            DataHandler.shared.getURL(user: user, id: storageId, type: type, { url in
                 self.showImg = true
-                updatePreview(type: type, user: user, id: id, url: url)
+                self.url = nil
+                self.saveUrl = url
+                self.user = user
+                self.type = type
+                self.id = storageId
+                
+                DataHandler.shared.getPrevData(type: type, user: user, id: storageId, { title, creations, favorite in
+                    self.title = title
+                    self.creations = creations
+                    self.fav = favorite
+                })
+                
+                withAnimation {
+                    displayed = true
+                    offset = minOffset
+                }
             })
             
         }
@@ -127,6 +163,26 @@ struct PreviewObj: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }.padding(.horizontal).transition(.opacity)
                     HStack {
+                        if (isOwn) {
+                            Button(action: {withAnimation {
+                                UnityBridge.getInstance().api.deleteObj(type: type, id: did, chunkId: chunkId)
+                                withAnimation {
+                                    displayed = false
+                                    offset = CGFloat(1000)
+                                }
+                            }}, label: {
+                                Image(systemName: "trash.fill")
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(Color(.red).opacity(0.5))
+                                    .padding(10)
+                                    .padding(.horizontal,5)
+                            })
+                            .background(Color(hex: "424242"))
+                            .frame(width: 50, height: 50)
+                            .cornerRadius(16)
+                        }
+                        
                         Button(action: {withAnimation {
                             if (!fav) {
                                 DataHandler.shared.favElem(type: type, id: id)
@@ -188,6 +244,7 @@ struct PreviewObj: View {
             }
         }
         .background(displayed ? Color(.black).opacity(0.5) : .clear)
+        .transition(.opacity)
         .frame(width: UIScreen.screenWidth)
         .onAppear {
             DataHandler.shared.setPreview = updatePreview
