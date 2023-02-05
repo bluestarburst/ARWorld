@@ -442,6 +442,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             GameObject obj = Importer.LoadFromFile(path);
             obj.transform.parent = transform;
 
+            // add a sphere collider to the object
+            SphereCollider sc = obj.AddComponent<SphereCollider>();
+            sc.radius = 0.5f;
+
             obj.transform.localPosition = new Vector3(x, y, z);
             obj.transform.localRotation = Quaternion.Euler(rx, ry, rz);
             obj.transform.localScale = new Vector3(sx, sy, sz);
