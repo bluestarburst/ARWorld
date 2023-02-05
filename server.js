@@ -162,6 +162,8 @@ function deleteMap(id) {
                 snapshot.forEach((doc) => {
                     deleteCollection(db, 'maps/' + id + '/chunks/' + doc.id + '/objects', 100);
                     deleteCollection(db, 'maps/' + id + '/chunks/' + doc.id + '/posters', 100);
+                    deleteCollection(db, 'maps/' + id + '/chunks/' + doc.id + '/filters', 100);
+                    deleteCollection(db, 'maps/' + id + '/chunks/' + doc.id + '/spotlights', 100);
                 });
                 deleteCollection(db, 'maps/' + id + '/chunks', 100);
             }).catch((error) => {
