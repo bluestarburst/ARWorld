@@ -48,7 +48,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
                     altAcc = $0.verticalAccuracy
                 }
                 
-                if (accuracy < 35 && altAcc < 25) {
+                if (accuracy < 40 && altAcc < 25) {
 //                    print("Swifty up:" + String(latitude) + "   " + String(longitude))
                     sendDat()
                 }

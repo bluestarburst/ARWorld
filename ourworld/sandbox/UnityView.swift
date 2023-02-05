@@ -330,20 +330,12 @@ struct UnityView: View {
                         VStack {
                             Slider(value: $topRadius, in: 0...1.5) {
                                 Text("top radius")
-                            } minimumValueLabel: {
-                                Text("0")
-                            } maximumValueLabel: {
-                                Text("1.5")
                             }.onChange(of: topRadius) { _ in
                                 UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
                             }
                             
                             Slider(value: $botRadius, in: 0.1...2) {
                                 Text("bottom radius")
-                            } minimumValueLabel: {
-                                Text("0.1")
-                            } maximumValueLabel: {
-                                Text("2")
                             }.onChange(of: botRadius) { _ in
                                 UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
                             }
@@ -410,6 +402,21 @@ struct UnityView: View {
                 }.transition(.bottomAndFade)
             } else if (addingObj == "preview") {
                 VStack {
+                    HStack {
+                        Button (action: {withAnimation{change="move";showButtons = true; addingObj = "";showPreview=false; UnityBridge.getInstance().api.changeTransform(change: "delete")}}, label: {
+                            Image(systemName: "xmark")
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color(.white).opacity(0.1))
+                                .clipShape(Circle())
+                                .padding(.horizontal,5)
+                        })
+                        Spacer()
+                    }
+                    .padding(30)
+                    .padding(.top,45)
                     Spacer()
                     HStack {
                         Spacer()
@@ -438,10 +445,6 @@ struct UnityView: View {
                     }
                     Slider(value: $saturation, in: 0...1) {
                         Text("saturation")
-                    } minimumValueLabel: {
-                        Text("0")
-                    } maximumValueLabel: {
-                        Text("1")
                     }.onChange(of: saturation) { _ in
                         UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: CGFloat.zero, isColor: CGFloat.zero)
                     }
@@ -537,6 +540,10 @@ struct UnityView: View {
                         showButtons = false
                     }
                 }
+            }
+            
+            DataHandler.shared.setAddingType = { type in
+                self.type = type
             }
             
         }

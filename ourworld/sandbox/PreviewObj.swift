@@ -29,6 +29,7 @@ struct PreviewObj: View {
     @Binding var disabled: Bool
     
     @State var fav: Bool = false
+    @State var canFav: Bool = true
     
     @State var showImg: Bool = true
     
@@ -50,6 +51,7 @@ struct PreviewObj: View {
             self.title = title
             self.creations = creations
             self.fav = favorite
+            self.canFav = true
         })
         
         withAnimation {
@@ -76,12 +78,10 @@ struct PreviewObj: View {
             self.user = user
             self.type = type
             self.id = storageId
+            self.canFav = false
             
-            DataHandler.shared.getPrevData(type: type, user: user, id: storageId, { title, creations, favorite in
-                self.title = title
-                self.creations = creations
-                self.fav = favorite
-            })
+            let index = type.index(type.endIndex, offsetBy: -1)
+            self.title = String(type[..<index])
             
             withAnimation {
                 displayed = true
@@ -183,26 +183,28 @@ struct PreviewObj: View {
                             .cornerRadius(16)
                         }
                         
-                        Button(action: {withAnimation {
-                            if (!fav) {
-                                DataHandler.shared.favElem(type: type, id: id)
-                            } else {
-                                DataHandler.shared.unfavElem(type: type, id: id)
-                            }
-                            fav = !fav;
-                        }}, label: {
-                            Image(systemName: fav ? "star.fill" : "star")
-                                .imageScale(.medium)
-                                .font(.title)
-                                .foregroundColor(fav ? .yellow : .gray)
-                                .padding(10)
-                                .padding(.horizontal,5)
-                        })
-                        .background(Color(hex: "424242"))
-                        .frame(width: 50, height: 50)
-                        .cornerRadius(16)
+                        if (canFav) {
+                            Button(action: {withAnimation {
+                                if (!fav) {
+                                    DataHandler.shared.favElem(type: type, id: id)
+                                } else {
+                                    DataHandler.shared.unfavElem(type: type, id: id)
+                                }
+                                fav = !fav;
+                            }}, label: {
+                                Image(systemName: fav ? "star.fill" : "star")
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(fav ? .yellow : .gray)
+                                    .padding(10)
+                                    .padding(.horizontal,5)
+                            })
+                            .background(Color(hex: "424242"))
+                            .frame(width: 50, height: 50)
+                            .cornerRadius(16)
+                        }
                         
-                        Button(action: {UnityBridge.getInstance().api.addObject(type: type, user: user, id: id); disabled = !disabled; withAnimation{displayed = false;offset = CGFloat(1000)}}, label: {
+                        Button(action: {UnityBridge.getInstance().api.addObject(type: type, user: user, id: id); DataHandler.shared.setAddingType(type); disabled = !disabled; withAnimation{displayed = false;offset = CGFloat(1000)}}, label: {
                             Spacer()
                             Text("Add \(type)")
                                 .foregroundColor(.white)

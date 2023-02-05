@@ -21,6 +21,7 @@ class DataHandler: NSObject, ObservableObject {
     var addingObj = ""
     var setAddingObj: () -> Void = {}
     var setMapStatus: () -> Void = {}
+    var setAddingType: (String) -> Void = {_ in}
     
     var setPreview: (_ type: String, _ user: String, _ id: String, _ url: URL) -> Void = {_,_,_,_ in }
     
