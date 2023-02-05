@@ -34,7 +34,7 @@ public class filter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (innerFilter == null || camera == null)
+        if (innerFilter == null || camera == null || innerFilter.isOverride)
         { 
             return;
         }
@@ -66,7 +66,6 @@ public class filter : MonoBehaviour
         {
             innerFilter.setVisible(false);
         }
-
 
     }
 }

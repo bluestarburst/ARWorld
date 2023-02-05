@@ -150,6 +150,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 else if (type.Equals("filters"))
                 {
                     isPrev = true;
+                    innerFilter.isOverride = true;
                     innerFilter.setVisible(true);
                     HostNativeAPI.addingObj("preview");
                     api.status = "adding";
@@ -599,6 +600,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             isAdding = true;
             isPrev = false;
+            innerFilter.isOverride = false;
             innerFilter.setVisible(false);
             HostNativeAPI.addingObj("adding");
             api.status = "adding";
