@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -65,6 +66,13 @@ public class CamFilter : MonoBehaviour
         material.SetFloat("_Threshold", threshold);
         material.SetInt("_IsColor", isColor ? 1 : 0);
         material.SetFloat("_Opacity", opacity);
+
+        Console.WriteLine("color: " + color.r + " " + color.g + " " + color.b);
+        Console.WriteLine("saturation: " + saturation);
+        Console.WriteLine("threshold: " + threshold);
+        Console.WriteLine("isColor: " + isColor);
+        Console.WriteLine("opacity: " + opacity);
+        Console.WriteLine("isNormal: " + isNormal);
         // }
 
     }
