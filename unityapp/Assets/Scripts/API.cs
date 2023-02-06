@@ -227,6 +227,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 inputSaturation = msg.data[3];
                 inputThreshold = msg.data[4];
                 inputIsColor = msg.data[5] >= 0.5f;
+                Console.WriteLine("inputIsColor: " + inputIsColor);
             }
         }
 
