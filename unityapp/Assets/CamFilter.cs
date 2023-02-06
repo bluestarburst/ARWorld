@@ -36,7 +36,7 @@ public class CamFilter : MonoBehaviour
         material.SetColor("_Color", color);
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
-        material.SetInt("_IsColor", isColor ? 1 : 0);
+        material.SetFloat("_IsColor", isColor ? 1f : 0f);
         material.SetFloat("_Opacity", opacity);
 
         GetComponent<Renderer>().enabled = isVisible;
@@ -64,15 +64,15 @@ public class CamFilter : MonoBehaviour
         material.SetColor("_Color", color);
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
-        material.SetInt("_IsColor", isColor ? 1 : 0);
+        material.SetFloat("_IsColor", isColor ? 1f : 0f);
         material.SetFloat("_Opacity", opacity);
 
-        Console.WriteLine("color: " + color.r + " " + color.g + " " + color.b);
-        Console.WriteLine("saturation: " + saturation);
-        Console.WriteLine("threshold: " + threshold);
-        Console.WriteLine("isColor: " + isColor);
-        Console.WriteLine("opacity: " + opacity);
-        Console.WriteLine("isNormal: " + isNormal);
+        // Console.WriteLine("color: " + color.r + " " + color.g + " " + color.b);
+        // Console.WriteLine("saturation: " + saturation);
+        // Console.WriteLine("threshold: " + threshold);
+        // Console.WriteLine("isColor: " + isColor);
+        // Console.WriteLine("opacity: " + opacity);
+        // Console.WriteLine("isNormal: " + isNormal);
         // }
 
     }
@@ -89,7 +89,7 @@ public class CamFilter : MonoBehaviour
         material.SetColor("_Color", color);
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
-        material.SetInt("_IsColor", isColor ? 1 : 0);
+        material.SetFloat("_IsColor", isColor ? 1f : 0f);
         material.SetFloat("_Opacity", opacity);
     }
 }

@@ -28,7 +28,7 @@ public class filter : MonoBehaviour
         material.SetColor("_Color", color);
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
-        material.SetInt("_IsColor", isColor ? 1 : 0);
+        material.SetFloat("_IsColor", isColor ? 1f : 0f);
 
         // GetComponent<Renderer>().enabled = isVisible;
     }
@@ -47,7 +47,7 @@ public class filter : MonoBehaviour
         material.SetColor("_Color", color);
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
-        material.SetInt("_IsColor", isColor ? 1 : 0);
+        material.SetFloat("_IsColor", isColor ? 1f : 0f);
 
         if (Vector3.Distance(camera.transform.position, transform.position) < (transform.localScale.x / 2 + radius2) + radius)
         {
