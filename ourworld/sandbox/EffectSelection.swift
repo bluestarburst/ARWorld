@@ -87,14 +87,14 @@ struct EffectSelection: View {
                                 .padding(.horizontal,10)
                                 .disabled(type == "spotlights")
                                 
-                                Button(action: {withAnimation{type="arealights"}}, label: {
-                                    Image(systemName: "lightbulb.fill")
-                                })
-                                .imageScale(.medium)
-                                .font(.title)
-                                .foregroundColor(type == "arealights" ? .pink : .white)
-                                .padding(.horizontal,10)
-                                .disabled(type == "arealights")
+//                                Button(action: {withAnimation{type="arealights"}}, label: {
+//                                    Image(systemName: "lightbulb.fill")
+//                                })
+//                                .imageScale(.medium)
+//                                .font(.title)
+//                                .foregroundColor(type == "arealights" ? .pink : .white)
+//                                .padding(.horizontal,10)
+//                                .disabled(type == "arealights")
                                 
                                 Button(action: {withAnimation{type="filters"}}, label: {
                                     Image(systemName: "sparkle")
@@ -120,9 +120,9 @@ struct EffectSelection: View {
                                 case "spotlights":
                                     Text("add new spotlight")
                                         .foregroundColor(.white)
-                                case "arealights":
-                                    Text("add new area light")
-                                        .foregroundColor(.white)
+//                                case "arealights":
+//                                    Text("add new area light")
+//                                        .foregroundColor(.white)
                                 case "filters":
                                     Text("add new filter")
                                         .foregroundColor(.white)
