@@ -456,6 +456,10 @@ struct UnityView: View {
                                 }
                                     .onAppear {
                                         UnityBridge.getInstance().api.changeRadius(top: 0.50, bottom: 1.50)
+                                        withAnimation {
+                                            addSetoffset = CGFloat(geo.height - 65)
+                                            prevOffsetHight = addSetoffset
+                                        }
                                     }
                             } else if (showPreview) {
                                 
@@ -474,7 +478,7 @@ struct UnityView: View {
                                 if (isColor) {
                                     ColorPicker(selection: $inColor, supportsOpacity: false, label: {
                                         Text("color")
-                                    }).onChange(of: saturation) { _ in
+                                    }).onChange(of: inColor) { _ in
                                         UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero))
                                     }
                                     
@@ -483,6 +487,7 @@ struct UnityView: View {
                                         Text("threshold")
                                     }.onChange(of: threshold) { _ in
                                         UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero))
+                                        print("isColor: \(isColor ? CGFloat(1) : CGFloat.zero)")
                                     }
                                     
                                 }
