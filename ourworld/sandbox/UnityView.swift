@@ -449,10 +449,13 @@ struct UnityView: View {
                         UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: CGFloat.zero, isColor: CGFloat.zero)
                     }
                     
-                    
                 }
                 .padding(50)
             }
+            
+            // this is the extra options section
+                        
+            
             
             if (showSettings) {
                 VStack{
