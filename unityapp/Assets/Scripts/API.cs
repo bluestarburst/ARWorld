@@ -226,7 +226,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 inputColor = new Color(msg.data[0], msg.data[1], msg.data[2]);
                 inputSaturation = msg.data[3];
                 inputThreshold = msg.data[4];
-                inputIsColor = msg.data[5] == 1.0f;
+                inputIsColor = msg.data[5] >= 0.5f;
             }
         }
 
