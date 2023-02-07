@@ -113,7 +113,7 @@ struct EffectSelection: View {
                     }.frame(height: 40)
                     
                     ScrollView {
-                        Button(action: {UnityBridge.getInstance().api.addObject(type: type, user: "", id: "")}, label: {
+                        Button(action: {UnityBridge.getInstance().api.addObject(type: type, user: "", id: "");DataHandler.shared.setAddingType(type)}, label: {
                             HStack {
                                 Spacer()
                                 switch type {

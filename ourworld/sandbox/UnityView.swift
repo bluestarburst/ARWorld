@@ -406,7 +406,7 @@ struct UnityView: View {
                         })
                         Spacer()
                         Button (action: {withAnimation{change="move"; UnityBridge.getInstance().api.nextStepFilter()}}, label: {
-                            Image(systemName: "plus")
+                            Image(systemName: "chevron.right")
                                 .imageScale(.medium)
                                 .font(.title)
                                 .foregroundColor(.white)
@@ -422,7 +422,7 @@ struct UnityView: View {
                 }.transition(.bottomAndFade)
             }
             
-            if (showPreview || addingObj == "adding") {
+            if (showPreview || (addingObj == "adding" && type == "spotlights")) {
                 // this is the extra options section
                 VStack {
                     Spacer()
@@ -456,10 +456,10 @@ struct UnityView: View {
                                 }
                                     .onAppear {
                                         UnityBridge.getInstance().api.changeRadius(top: 0.50, bottom: 1.50)
-                                        withAnimation {
-                                            addSetoffset = CGFloat(geo.height - 65)
-                                            prevOffsetHight = addSetoffset
-                                        }
+//                                        withAnimation {
+//                                            addSetoffset = CGFloat(geo.height - 65)
+//                                            prevOffsetHight = addSetoffset
+//                                        }
                                     }
                             } else if (showPreview) {
                                 
@@ -539,6 +539,11 @@ struct UnityView: View {
                         if (showPreview) {
                             withAnimation {
                                 addSetoffset = minOffset
+                                prevOffsetHight = addSetoffset
+                            }
+                        } else if (type == "spotlights") {
+                            withAnimation {
+                                addSetoffset = CGFloat(geo.height - 65)
                                 prevOffsetHight = addSetoffset
                             }
                         }
