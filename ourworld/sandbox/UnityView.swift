@@ -95,6 +95,7 @@ struct UnityView: View {
     @State private var geo = CGSize.zero
     
     @State private var isColor = false
+    @State private var isCam = false
     
     
     var body: some View {
@@ -156,7 +157,16 @@ struct UnityView: View {
                                     .clipShape(Circle())
                                     .padding(.vertical,5)
                             })
-                            Button( action: {}, label: {
+                            Button( action: {withAnimation {
+                                isCam = true
+                                showSettings = false
+                                showElementSelection = false
+                                isAdding = false
+                                showElementSelection = false
+                                showButtons = false
+                                showPreview = false
+                                showSettingsButton = false
+                            }}, label: {
                                 Image(systemName: "camera")
                                     .imageScale(.medium)
                                     .font(.title2)
@@ -420,6 +430,34 @@ struct UnityView: View {
                     .padding(.top,45)
                     Spacer()
                 }.transition(.bottomAndFade)
+            } else if (isCam) {
+                VStack {
+                    HStack {
+                        Button (action: {withAnimation{
+                            isCam = false
+                            showSettings = false
+                            showElementSelection = false
+                            isAdding = false
+                            showElementSelection = false
+                            showButtons = true
+                            showPreview = false
+                            showSettingsButton = true
+                        }}, label: {
+                            Image(systemName: "xmark")
+                                .imageScale(.medium)
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color(.white).opacity(0.1))
+                                .clipShape(Circle())
+                                .padding(.horizontal,5)
+                        })
+                        Spacer()
+                    }
+                    .padding(30)
+                    .padding(.top,45)
+                    Spacer()
+                }.transition(.bottomAndFade)
             }
             
             if (showPreview || (addingObj == "adding" && type == "spotlights")) {
@@ -574,6 +612,27 @@ struct UnityView: View {
                 .transition(.bottomAndFade)
             }
             
+            if (isCam) {
+                VStack {
+                    Spacer()
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Button(action: {
+//                                UnityBridge.getInstance().api.takePic()
+                            }) {
+                                Circle()
+                                    .strokeBorder(.white, lineWidth: 2)
+                                    .background(Circle().fill(.clear))
+                                    .frame(width: 75, height: 75)
+                            }
+                            Spacer()
+                        }.padding()
+                            .padding(.bottom, 18)
+                    }.background(Color(.black).opacity(0.5))
+                }
+            }
+            
         }
         
         //            ColorPicker("", selection: $color)
@@ -632,7 +691,7 @@ struct UnityView: View {
                     mapStatus = DataHandler.shared.mapStatus
                     if (mapStatus == "mapped") {
                         mapOffset = -100
-                        if (!isAdding && !showPreview) {
+                        if (!isAdding && !showPreview && !isCam) {
                             showButtons = true
                         }
                     } else if(mapStatus == "saving") {

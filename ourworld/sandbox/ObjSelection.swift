@@ -7,7 +7,7 @@
 
 import WrappingHStack
 import SwiftUI
-import Webkit
+import WebKit
 
 struct WebView: UIViewRepresentable {
     let request: URLRequest
@@ -40,6 +40,8 @@ struct ObjSelection: View {
     @State private var favorite = true
     
     var changeSelection: (String) -> Void
+    
+    @State private var showWeb = false
     
     var body: some View {
         ZStack {
@@ -129,6 +131,22 @@ struct ObjSelection: View {
                         }.frame(height: 40)
                         
                         ScrollView {
+                            Button(action: {withAnimation{showWeb = true}}, label: {
+                                HStack {
+                                    Spacer()
+                                    
+                                        Text("add new 3D object (.glb)")
+                                            .foregroundColor(.white)
+                                    
+                                    
+                                    Spacer()
+                                }
+                                .padding()
+                                .background(.gray.opacity(0.25))
+                            })
+                            .cornerRadius(16)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal, 25)
                             ObjLoop(type: $type, disabled: $disabled, fav: $favorite)
                         }
                     }.gesture(
@@ -167,7 +185,35 @@ struct ObjSelection: View {
                 ImagePicker(sourceType: .photoLibrary, selectedImage: $selectedImage, type: $type)
             }
         }
-        WebView(url: URL(string: "https://bluestarburst.github.io/ARWorld/")!)
+        if (showWeb) {
+            VStack {
+                VStack{}
+                    .frame(height: 100)
+                ZStack {
+                    
+                    WebView(request: URLRequest(url: URL(string: "https://bluestarburst.github.io/ARWorld/")!))
+                        .cornerRadius(24)
+                    VStack {
+                        HStack {
+                            Button (action: {withAnimation{showWeb = false}}, label: {
+                                Image(systemName: "xmark")
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .padding(.horizontal,5)
+                            })
+                            Spacer()
+                        }
+                        Spacer()
+                    }.padding(.top,5)
+                }
+                .background(Color.black)
+                .cornerRadius(24)
+            }
+            .transition(.bottomAndFade)
+        }
+        
     }
 }
 

@@ -81,6 +81,7 @@
 		58B77D76296891FC00FAD17F /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		58B77D78296891FC00FAD17F /* AsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		58B77D79296891FD00FAD17F /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		58BAE5BC2993031700F07696 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		58E14E452964A18900ACA091 /* ImageSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelection.swift; sourceTree = "<group>"; };
 		809F3DDC5E7359A455FC9324 /* Pods-sandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sandbox.release.xcconfig"; path = "Target Support Files/Pods-sandbox/Pods-sandbox.release.xcconfig"; sourceTree = "<group>"; };
 		A7EFBB579F0C93571A484335 /* Pods-ourworld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ourworld.release.xcconfig"; path = "Target Support Files/Pods-ourworld/Pods-ourworld.release.xcconfig"; sourceTree = "<group>"; };
@@ -140,6 +141,7 @@
 		E61361F525BA3AB40005B57A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58BAE5BC2993031700F07696 /* WebKit.framework */,
 				58ABF17B293C6463000E5463 /* FirebaseAuth.framework */,
 				58ABF178293C6458000E5463 /* FirebaseCore.framework */,
 				58ABF172293C6420000E5463 /* Pods_UnityFramework.framework */,
@@ -486,7 +488,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E94679FC3E3D114ED35C05C6 /* Pods-ourworld.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = sandbox/sandbox.entitlements;
@@ -527,7 +528,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A7EFBB579F0C93571A484335 /* Pods-ourworld.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = sandbox/sandbox.entitlements;
