@@ -168,7 +168,6 @@ struct ObjSelection: View {
             }
         }
         WebView(url: URL(string: "https://bluestarburst.github.io/ARWorld/")!)
-        
     }
 }
 
