@@ -7,6 +7,19 @@
 
 import WrappingHStack
 import SwiftUI
+import Webkit
+
+struct WebView: UIViewRepresentable {
+    let request: URLRequest
+
+    func makeUIView(context: Context) -> WKWebView {
+        return WKWebView()
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.load(request)
+    }
+}
 
 struct ObjSelection: View {
     
@@ -29,129 +42,132 @@ struct ObjSelection: View {
     var changeSelection: (String) -> Void
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            HStack {
-                Spacer()
-                Button( action: {changeSelection("image")}, label: {
-                    Image(systemName: "photo")
-                        .imageScale(.large)
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(Color(.white).opacity(0.1))
-                        .clipShape(Circle())
-                        .padding(.vertical,5)
-                })
-                Button( action: {changeSelection("object")}, label: {
-                    Image(systemName: "cube")
-                        .imageScale(.large)
-                        .font(.title2)
-                        .foregroundColor(.pink)
-                        .padding(10)
-                        .background(Color(.white).opacity(0.1))
-                        .clipShape(Circle())
-                        .padding(.vertical,5)
-                })
-                Button( action: {changeSelection("effect")}, label: {
-                    Image(systemName: "sparkle")
-                        .imageScale(.large)
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(Color(.white).opacity(0.1))
-                        .clipShape(Circle())
-                        .padding(.vertical,5)
-                })
-                Spacer()
-            }
-            .offset(y: offset)
-            
-            
+        ZStack {
             VStack {
-                
+                Spacer()
                 
                 HStack {
-                    RoundedRectangle(cornerRadius: 10)
-                        .frame(width: 30, height: 10)
-                        .foregroundColor(.white)
+                    Spacer()
+                    Button( action: {changeSelection("image")}, label: {
+                        Image(systemName: "photo")
+                            .imageScale(.large)
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color(.white).opacity(0.1))
+                            .clipShape(Circle())
+                            .padding(.vertical,5)
+                    })
+                    Button( action: {changeSelection("object")}, label: {
+                        Image(systemName: "cube")
+                            .imageScale(.large)
+                            .font(.title2)
+                            .foregroundColor(.pink)
+                            .padding(10)
+                            .background(Color(.white).opacity(0.1))
+                            .clipShape(Circle())
+                            .padding(.vertical,5)
+                    })
+                    Button( action: {changeSelection("effect")}, label: {
+                        Image(systemName: "sparkle")
+                            .imageScale(.large)
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color(.white).opacity(0.1))
+                            .clipShape(Circle())
+                            .padding(.vertical,5)
+                    })
+                    Spacer()
                 }
-                .padding()
+                .offset(y: offset)
                 
                 
                 VStack {
-                    GeometryReader { geometry in
-                        ZStack {
-                            ScrollView(.horizontal, showsIndicators: true) {
+                    
+                    
+                    HStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .frame(width: 30, height: 10)
+                            .foregroundColor(.white)
+                    }
+                    .padding()
+                    
+                    
+                    VStack {
+                        GeometryReader { geometry in
+                            ZStack {
+                                ScrollView(.horizontal, showsIndicators: true) {
+                                    HStack {
+                                        Button(action: {withAnimation{type="objects"}}, label: {
+                                            Image(systemName: "cube.fill")
+                                        })
+                                        .imageScale(.medium)
+                                        .font(.title)
+                                        .foregroundColor(type == "objects" ? .pink : .white)
+                                        .padding(.horizontal,10)
+                                        .disabled(type == "objects")
+                                        
+                                    }
+                                    .padding(.horizontal,25)
+                                    .frame(minWidth: geometry.size.width)
+                                }
+                                .padding(.bottom, 10)
                                 HStack {
-                                    Button(action: {withAnimation{type="objects"}}, label: {
-                                        Image(systemName: "cube.fill")
+                                    Spacer()
+                                    Button(action: {withAnimation{favorite = !favorite}}, label: {
+                                        Image(systemName: favorite ? "star.fill" : "star")
                                     })
                                     .imageScale(.medium)
                                     .font(.title)
-                                    .foregroundColor(type == "objects" ? .pink : .white)
+                                    .foregroundColor(favorite ? .yellow : .gray)
                                     .padding(.horizontal,10)
-                                    .disabled(type == "objects")
-                                    
                                 }
-                                .padding(.horizontal,25)
-                                .frame(minWidth: geometry.size.width)
+                                .padding(.bottom, 10)
+                                .padding(.trailing, 20)
                             }
-                            .padding(.bottom, 10)
-                            HStack {
-                                Spacer()
-                                Button(action: {withAnimation{favorite = !favorite}}, label: {
-                                    Image(systemName: favorite ? "star.fill" : "star")
-                                })
-                                .imageScale(.medium)
-                                .font(.title)
-                                .foregroundColor(favorite ? .yellow : .gray)
-                                .padding(.horizontal,10)
-                            }
-                            .padding(.bottom, 10)
-                            .padding(.trailing, 20)
+                        }.frame(height: 40)
+                        
+                        ScrollView {
+                            ObjLoop(type: $type, disabled: $disabled, fav: $favorite)
                         }
-                    }.frame(height: 40)
-                    
-                    ScrollView {
-                        ObjLoop(type: $type, disabled: $disabled, fav: $favorite)
-                    }
-                }.gesture(
+                    }.gesture(
+                        DragGesture()
+                            .onChanged {gesture in
+                                offset = prevOffset
+                            }
+                    )
+                }
+                .frame(height: 500)
+                .background(.black)
+                .cornerRadius(16)
+                .offset(x: 0, y: offset)
+                .gesture(
                     DragGesture()
-                        .onChanged {gesture in
-                            offset = prevOffset
+                        .onChanged { gesture in
+                            print(gesture)
+                            offset = max(gesture.translation.height + minOffset, 0)
+                        }
+                        .onEnded { gesture in
+                            if (offset > 400 || gesture.predictedEndTranslation.height > 400) {
+                                withAnimation {
+                                    disabled = false
+                                    offset = CGFloat(1000)
+                                }
+                            } else {
+                                withAnimation {
+                                    offset = minOffset
+                                }
+                            }
                         }
                 )
+                .transition(.move(edge: .bottom))
+                
+            }.sheet(isPresented: $showImagePicker) {
+                ImagePicker(sourceType: .photoLibrary, selectedImage: $selectedImage, type: $type)
             }
-            .frame(height: 500)
-            .background(.black)
-            .cornerRadius(16)
-            .offset(x: 0, y: offset)
-            .gesture(
-                DragGesture()
-                    .onChanged { gesture in
-                        print(gesture)
-                        offset = max(gesture.translation.height + minOffset, 0)
-                    }
-                    .onEnded { gesture in
-                        if (offset > 400 || gesture.predictedEndTranslation.height > 400) {
-                            withAnimation {
-                                disabled = false
-                                offset = CGFloat(1000)
-                            }
-                        } else {
-                            withAnimation {
-                                offset = minOffset
-                            }
-                        }
-                    }
-            )
-            .transition(.move(edge: .bottom))
-            
-        }.sheet(isPresented: $showImagePicker) {
-            ImagePicker(sourceType: .photoLibrary, selectedImage: $selectedImage, type: $type)
         }
+        WebView(url: URL(string: "https://bluestarburst.github.io/ARWorld/")!)
         
     }
 }
