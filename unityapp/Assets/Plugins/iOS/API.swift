@@ -91,6 +91,14 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "next-step-filter", data: "")
     }
 
+    public func takePic() {
+        sendMessage(type: "take-pic", data: "")
+    }
+
+    public func takeVideo(stop: Bool) {
+        sendMessage(type: "take-video", data: stop ? "stop" : "start")
+    }
+
     public func test(_ value: String) {
         self.testCallback(value)
     }
