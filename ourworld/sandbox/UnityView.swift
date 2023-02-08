@@ -619,7 +619,7 @@ struct UnityView: View {
                         HStack {
                             Spacer()
                             Button(action: {
-//                                UnityBridge.getInstance().api.takePic()
+                                UnityBridge.getInstance().api.takePic()
                             }) {
                                 Circle()
                                     .strokeBorder(.white, lineWidth: 2)
