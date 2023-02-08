@@ -662,7 +662,7 @@ struct UnityView: View {
                         .padding(.bottom, 18)
                     }.background(Color(.black).opacity(0.5))
                 }
-                .background(flash ? .white : .clear)
+                .background(flash ? Color(.white).opacity(0.5) : .clear)
             }
             
         }
@@ -686,7 +686,7 @@ struct UnityView: View {
                 api.api.updateVars(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
                 api.api.changeSettings(change: (showLogs ? "logs-on" : "logs-off"))
             }
-            api.api.onSetScreenshot = {
+            api.api.onSetScreenshot = { _ in
                 currentImage = DataHandler.shared.loadImage(fileName: "screenshot.png") ?? UIImage()
                 withAnimation {
                     flash = false
