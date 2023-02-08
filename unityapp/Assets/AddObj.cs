@@ -858,6 +858,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         data.Add("topR", api.topR);
                         data.Add("botR", api.botR);
+                        data.Add("r", api.spotColor.r);
+                        data.Add("g", api.spotColor.g);
+                        data.Add("b", api.spotColor.b);
                     }
                     else if (type.Equals("filters"))
                     {
