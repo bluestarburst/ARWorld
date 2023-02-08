@@ -97,6 +97,8 @@ struct UnityView: View {
     @State private var isColor = false
     @State private var isCam = false
     
+    @State private var currentImage = UIImage()
+    
     
     var body: some View {
         ZStack {
@@ -615,8 +617,12 @@ struct UnityView: View {
             if (isCam) {
                 VStack {
                     Spacer()
+                    Image(uiImage: currentImage)
+                        .frame(height: 500)
+
                     VStack {
                         HStack {
+                            
                             Spacer()
                             Button(action: {
                                 UnityBridge.getInstance().api.takePic()
@@ -625,6 +631,9 @@ struct UnityView: View {
                                     .strokeBorder(.white, lineWidth: 2)
                                     .background(Circle().fill(.clear))
                                     .frame(width: 75, height: 75)
+                            }
+                            .onAppear {
+                                currentImage = DataHandler.shared.loadImage(fileName: "screenshot.png") ?? UIImage()
                             }
                             Spacer()
                         }.padding()
@@ -718,6 +727,16 @@ struct UnityView: View {
         
         .ignoresSafeArea()
         
+    }
+}
+
+extension URL {
+    func loadImage(_ image: inout UIImage?) {
+        if let data = try? Data(contentsOf: self), let loaded = UIImage(data: data) {
+            image = loaded
+        } else {
+            image = nil
+        }
     }
 }
 

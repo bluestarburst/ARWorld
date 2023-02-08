@@ -19,6 +19,7 @@ class DataHandler: NSObject, ObservableObject {
     
     var mapStatus = ""
     var addingObj = ""
+    var persistentPath = ""
     var setAddingObj: () -> Void = {}
     var setMapStatus: () -> Void = {}
     var setAddingType: (String) -> Void = {_ in}
@@ -38,6 +39,9 @@ class DataHandler: NSObject, ObservableObject {
         api.setAddingObj = { status in
             self.addingObj = status
             self.setAddingObj()
+        }
+        api.setDataPath = { path in
+            self.persistentPath = path
         }
     }
     
@@ -290,6 +294,19 @@ class DataHandler: NSObject, ObservableObject {
                 self.db.collection("users").document(self.uid!).collection("f" + type).document(id).delete()
             }
         }
+    }
+    
+    func loadImage(fileName: String) -> UIImage? {
+//        let fileURL = persistentPath.appendingPathComponent(fileName)
+        let fileURL = persistentPath + "/" + fileName
+        print("swifty " + fileURL)
+//        do {
+//            let imageData = try Data(contentsOf: URL(fileURLWithPath: fileURL))
+//            return UIImage(data: imageData)
+//        } catch {
+//            print("Error loading image : \(error)")
+//        }
+        return UIImage(systemName: "xmark")
     }
     
     
