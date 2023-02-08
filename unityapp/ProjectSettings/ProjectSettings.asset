@@ -555,7 +555,7 @@ PlayerSettings:
   enableCrashReportAPI: 0
   cameraUsageDescription: Camera required for AR
   locationUsageDescription: Required for Geo Anchors
-  microphoneUsageDescription: 
+  microphoneUsageDescription: Required to Record audio in videos
   bluetoothUsageDescription: 
   switchNMETAOverride: 
   switchNetLibKey: 
