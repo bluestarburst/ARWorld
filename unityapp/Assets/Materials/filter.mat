@@ -53,12 +53,15 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _CastShadows: 0
+    - _Contrast: 1
     - _Cull: 2
     - _DstBlend: 10
+    - _Hue: 0
+    - _IsColor: 0
     - _QueueControl: 0
     - _QueueOffset: -49
     - _ReceiveShadows: 0
-    - _Saturation: 0
+    - _Saturation: 1
     - _SrcBlend: 5
     - _Surface: 1
     - _Threshold: 0.5
