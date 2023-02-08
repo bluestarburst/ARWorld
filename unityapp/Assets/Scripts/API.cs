@@ -106,7 +106,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public string status = "";
 
-        public Color spotColor = Color.black;
+        public Color spotColor = Color.white;
 
         void Awake()
         {

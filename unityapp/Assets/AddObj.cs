@@ -874,6 +874,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 spawnedObject.GetComponent<Vertex>().topRadius = api.topR;
                 spawnedObject.GetComponent<Vertex>().bottomRadius = api.botR;
+                spawnedObject.GetComponent<Renderer>().material.SetColor("_Color", api.spotColor);
             }
 
             if (moveChild != null)
