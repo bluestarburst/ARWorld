@@ -121,7 +121,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 finishedStart = true;
             }
 
-
+            HostNativeAPI.SetPersistentDataPath(Application.persistentDataPath);
         }
 
         void OnApplicationFocus(bool focusStatus)
