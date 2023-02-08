@@ -96,6 +96,7 @@ struct UnityView: View {
     
     @State private var isColor = false
     @State private var isCam = false
+    @State private var flash = false
     
     @State private var currentImage = UIImage()
     
@@ -485,17 +486,23 @@ struct UnityView: View {
                                     Slider(value: $topRadius, in: 0...1.5) {
                                         Text("top radius")
                                     }.onChange(of: topRadius) { _ in
-                                        UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
+                                        UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius, r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue)
                                     }
                                     Text("bottom radius")
-                                    Slider(value: $botRadius, in: 0.1...2) {
+                                    Slider(value: $botRadius, in: 0.1...3) {
                                         Text("bottom radius")
                                     }.onChange(of: botRadius) { _ in
-                                        UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius)
+                                        UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius, r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue)
                                     }
+                                    ColorPicker(selection: $inColor, supportsOpacity: false, label: {
+                                        Text("color")
+                                    }).onChange(of: inColor) { _ in
+                                        UnityBridge.getInstance().api.changeRadius(top: topRadius, bottom: botRadius, r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue)
+                                    }
+                                    
                                 }
                                     .onAppear {
-                                        UnityBridge.getInstance().api.changeRadius(top: 0.50, bottom: 1.50)
+                                        UnityBridge.getInstance().api.changeRadius(top: 0.50, bottom: 1.50, r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue)
 //                                        withAnimation {
 //                                            addSetoffset = CGFloat(geo.height - 65)
 //                                            prevOffsetHight = addSetoffset
@@ -617,18 +624,32 @@ struct UnityView: View {
             if (isCam) {
                 VStack {
                     Spacer()
-                    Image(uiImage: currentImage)
-                        .frame(height: 500)
-
-                    VStack {
+//                    Image(uiImage: currentImage)
+//                        .frame(height: 500)
+                    ZStack {
                         HStack {
-                            
+                            Image(uiImage: currentImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 60, height: 60)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .overlay(RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color(.white).opacity(0.5), lineWidth: 1)
+                                )
+                            Spacer()
+                        }
+                        .padding()
+                        .padding(.bottom, 18)
+                        HStack {
                             Spacer()
                             Button(action: {
+                                withAnimation {
+                                    flash = true
+                                }
                                 UnityBridge.getInstance().api.takePic()
                             }) {
                                 Circle()
-                                    .strokeBorder(.white, lineWidth: 2)
+                                    .strokeBorder(Color(.white).opacity(0.8), lineWidth: 2)
                                     .background(Circle().fill(.clear))
                                     .frame(width: 75, height: 75)
                             }
@@ -636,10 +657,12 @@ struct UnityView: View {
                                 currentImage = DataHandler.shared.loadImage(fileName: "screenshot.png") ?? UIImage()
                             }
                             Spacer()
-                        }.padding()
-                            .padding(.bottom, 18)
+                        }
+                        .padding()
+                        .padding(.bottom, 18)
                     }.background(Color(.black).opacity(0.5))
                 }
+                .background(flash ? .white : .clear)
             }
             
         }
@@ -662,6 +685,12 @@ struct UnityView: View {
             manager.sendDat = {
                 api.api.updateVars(lat: manager.latitude, lon: manager.longitude, alt: manager.altitude)
                 api.api.changeSettings(change: (showLogs ? "logs-on" : "logs-off"))
+            }
+            api.api.onSetScreenshot = {
+                currentImage = DataHandler.shared.loadImage(fileName: "screenshot.png") ?? UIImage()
+                withAnimation {
+                    flash = false
+                }
             }
             DataHandler.shared.setAddingObj = {
                 addingObj = DataHandler.shared.addingObj
