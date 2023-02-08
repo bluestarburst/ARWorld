@@ -210,6 +210,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void _TakePic(string serialized)
         {
             ScreenCapture.CaptureScreenshot("screenshot.png");
+            HostNativeAPI.Screenshot("Screenshot taken");
             Console.WriteLine("Screenshot taken");
         }
 
