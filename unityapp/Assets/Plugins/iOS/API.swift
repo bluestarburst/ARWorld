@@ -149,6 +149,20 @@ public class UnityAPI: NativeCallsProtocol {
         setDataPath(path)
     }
 
+    public var onSetLoadingMap: (String) -> Void = {_ in}
+
+    public func onLoadingMap(_ mapID: String) {
+        print("onLoadingMap: \(mapID)")
+        onLoadingMap(mapID)
+    }
+
+    public var onSetScreenshot: (String) -> Void = {_ in}
+
+    public func onScreenshot(_ status: String) {
+        print("onScreenshot: \(status)")
+        onSetScreenshot(status)
+    }
+
     /**
      * Private  API.
      */
