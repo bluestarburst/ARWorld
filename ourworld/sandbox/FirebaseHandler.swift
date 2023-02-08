@@ -300,13 +300,9 @@ class DataHandler: NSObject, ObservableObject {
 //        let fileURL = persistentPath.appendingPathComponent(fileName)
         let fileURL = persistentPath + "/" + fileName
         print("swifty " + fileURL)
-//        do {
-//            let imageData = try Data(contentsOf: URL(fileURLWithPath: fileURL))
-//            return UIImage(data: imageData)
-//        } catch {
-//            print("Error loading image : \(error)")
-//        }
-        return UIImage(systemName: "xmark")
+        let image = UIImage(contentsOfFile: fileURL)
+        return image
+        // return UIImage(systemName: "xmark")
     }
     
     
