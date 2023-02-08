@@ -142,8 +142,11 @@ public class UnityAPI: NativeCallsProtocol {
         setElementOptions(type,id,chunkId,storageId,user,createdBy)
     }
 
+    public var setDataPath: (String) -> Void = {_ in}
+
     public func onSetPersistentDataPath(_ path: String) {
         print("swfty path onSetPersistentDataPath: \(path)")
+        setDataPath(path)
     }
 
     /**
