@@ -9,6 +9,8 @@ public class CamFilter : MonoBehaviour
     public bool isVisible = false;
     public Color color = Color.black;
     public float saturation = 1.0f;
+    public float contrast = 1.0f;
+    public float hue = 0.0f;
     public float threshold = 0.5f;
     public bool isColor = false;
 
@@ -16,13 +18,14 @@ public class CamFilter : MonoBehaviour
 
     public float opacity = 1.0f;
 
-    
+
 
     private Material material;
 
     public bool isOverride = false;
 
-    public void setVisible(bool visible) {
+    public void setVisible(bool visible)
+    {
         isVisible = visible;
         GetComponent<Renderer>().enabled = isVisible;
     }
@@ -38,6 +41,8 @@ public class CamFilter : MonoBehaviour
         material.SetFloat("_Threshold", threshold);
         material.SetFloat("_IsColor", isColor ? 1f : 0f);
         material.SetFloat("_Opacity", opacity);
+        material.SetFloat("_Contrast", contrast);
+        material.SetFloat("_Hue", hue);
 
         GetComponent<Renderer>().enabled = isVisible;
     }
@@ -45,7 +50,8 @@ public class CamFilter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isVisible) {
+        if (!isVisible)
+        {
             return;
         }
 
@@ -66,6 +72,8 @@ public class CamFilter : MonoBehaviour
         material.SetFloat("_Threshold", threshold);
         material.SetFloat("_IsColor", isColor ? 1f : 0f);
         material.SetFloat("_Opacity", opacity);
+        material.SetFloat("_Contrast", contrast);
+        material.SetFloat("_Hue", hue);
 
         // Console.WriteLine("color: " + color.r + " " + color.g + " " + color.b);
         // Console.WriteLine("saturation: " + saturation);
@@ -80,7 +88,8 @@ public class CamFilter : MonoBehaviour
     // do during editing in the editor
     void OnValidate()
     {
-        if (!isVisible) {
+        if (!isVisible)
+        {
             return;
         }
         // get the material component of this object
@@ -91,5 +100,7 @@ public class CamFilter : MonoBehaviour
         material.SetFloat("_Threshold", threshold);
         material.SetFloat("_IsColor", isColor ? 1f : 0f);
         material.SetFloat("_Opacity", opacity);
+        material.SetFloat("_Contrast", contrast);
+        material.SetFloat("_Hue", hue);
     }
 }

@@ -12,6 +12,8 @@ public class filter : MonoBehaviour
     // public bool isVisible = false;
     public Color color = Color.black;
     public float saturation = 1.0f;
+    public float contrast = 1.0f;
+    public float hue = 0.0f;
     public float threshold = 0.5f;
     public bool isColor = false;
 
@@ -29,6 +31,8 @@ public class filter : MonoBehaviour
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
         material.SetFloat("_IsColor", isColor ? 1f : 0f);
+        material.SetFloat("_Contrast", contrast);
+        material.SetFloat("_Hue", hue);
 
         // GetComponent<Renderer>().enabled = isVisible;
     }
@@ -48,6 +52,8 @@ public class filter : MonoBehaviour
         material.SetFloat("_Saturation", saturation);
         material.SetFloat("_Threshold", threshold);
         material.SetFloat("_IsColor", isColor ? 1f : 0f);
+        material.SetFloat("_Contrast", contrast);
+        material.SetFloat("_Hue", hue);
 
         if (Vector3.Distance(camera.transform.position, transform.position) < (transform.localScale.x / 2 + radius2) + radius)
         {
@@ -57,6 +63,8 @@ public class filter : MonoBehaviour
             innerFilter.saturation = saturation;
             innerFilter.threshold = threshold;
             innerFilter.isColor = isColor;
+            innerFilter.contrast = contrast;
+            innerFilter.hue = hue;
 
             if (Vector3.Distance(camera.transform.position, transform.position) < (transform.localScale.x / 2 + radius2))
                 innerFilter.opacity = 1.0f;

@@ -75,8 +75,8 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-settings", data: change)
     }
 
-    public func changeRadius(top: CGFloat, bottom: CGFloat) {
-        sendMessage(type: "change-radius", data: [top, bottom])
+    public func changeRadius(top: CGFloat, bottom: CGFloat, r: CGFloat = CGFloat(255), g: CGFloat = CGFloat(255), b: CGFloat = CGFloat(255)) {
+        sendMessage(type: "change-radius", data: [top, bottom, r, g, b])
     }
 
     public func changeFilter(r: CGFloat, g: CGFloat, b: CGFloat, saturation: CGFloat, threshold: CGFloat, isColor: CGFloat) {

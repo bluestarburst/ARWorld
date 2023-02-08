@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 using Unity.Collections;
 using Firebase;
 using Firebase.Auth;
+#if PLATFORM_IOS
+using UnityEngine.iOS;
+using UnityEngine.Apple.ReplayKit;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -180,9 +183,34 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 case "delete-obj":
                     _DeleteObj(serializedMessage);
                     break;
+                case "take-pic":
+                    _TakePic(serializedMessage);
+                    break;
                 default:
                     Debug.LogError("Unrecognized message '" + header.type + "'");
                     break;
+            }
+        }
+
+        public void _TakePic(string serialized)
+        {
+            ScreenCapture.CaptureScreenshot("screenshot.png");
+            Console.WriteLine("Screenshot taken");
+        }
+
+        public void _TakeVideo(string serialized)
+        {
+            var msg = JsonConvert.DeserializeObject<MessageWithData<string>>(serialized);
+            if (msg.data != null) {
+                if (msg.data == "start") {
+                    // start recording
+                    ReplayKit.StartRecording(true, true);
+
+                } else if (msg.data == "stop") {
+                    // stop recording
+                    ReplayKit.StopRecording();
+                    ReplayKit.Preview();
+                }
             }
         }
 
@@ -341,5 +369,5 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
     }
-
 }
+#endif
