@@ -79,8 +79,8 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-radius", data: [top, bottom, r, g, b])
     }
 
-    public func changeFilter(r: CGFloat, g: CGFloat, b: CGFloat, saturation: CGFloat, threshold: CGFloat, isColor: CGFloat) {
-        sendMessage(type: "change-filter", data: [r,g,b,saturation,threshold,isColor])
+    public func changeFilter(r: CGFloat, g: CGFloat, b: CGFloat, saturation: CGFloat, threshold: CGFloat, isColor: CGFloat, contrast: CGFloat = CGFloat(1), hue: CGFloat = CGFloat(0)) {
+        sendMessage(type: "change-filter", data: [r,g,b,saturation,threshold,isColor,contrast,hue])
     }
 
     public func deleteObj(type: String, id: String, chunkId: String) {

@@ -106,6 +106,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public string status = "";
 
+        public Color spotColor = Color.black;
+
         void Awake()
         {
             if (!finishedStart)
@@ -266,6 +268,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 topR = msg.data[0];
                 botR = msg.data[1];
+                spotColor = new Color(msg.data[2], msg.data[3], msg.data[4]);
             }
         }
 
