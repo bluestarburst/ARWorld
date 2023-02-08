@@ -41,6 +41,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [DllImport("__Internal")]
         public static extern void SetPersistentDataPath(string path);
+
+        [DllImport("__Internal")]
+        public static extern void LoadingMap(string mapID);
+
+        [DllImport("__Internal")]
+        public static extern void Screenshot(string status);
     }
 
     /// <summary>

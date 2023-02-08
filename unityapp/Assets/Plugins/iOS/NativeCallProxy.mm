@@ -51,6 +51,16 @@ void SetPersistentDataPath(const char *path) {
   [api onSetPersistentDataPath:str];
 }
 
+void LoadingMap(const char *mapID) {
+  const NSString *str = @(mapID);
+  [api onLoadingMap:str];
+}
+
+void Screenshot(const char *status) {
+  const NSString *str = @(status);
+  [api onScreenshot:str];
+}
+
 // this method will take a byte array in C# and convert it to a NSData object
 // void sendUnityDataUpdate(const char *data, int length) {
 //   const NSData *nsData = [NSData dataWithBytes:data length:length];
