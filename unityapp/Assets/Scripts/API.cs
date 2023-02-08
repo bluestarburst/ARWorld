@@ -38,6 +38,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [DllImport("__Internal")]
         public static extern void ElementOptions(string type, string id, string chunkId, string storageId, string user, string createdBy);
+
+        [DllImport("__Internal")]
+        public static extern void SetPersistentDataPath(string path);
     }
 
     /// <summary>
@@ -117,6 +120,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Screen.SetResolution(Screen.width / 2, Screen.height / 2, true);
                 finishedStart = true;
             }
+
+
         }
 
         void OnApplicationFocus(bool focusStatus)

@@ -46,6 +46,11 @@ void ElementOptions(const char *type, const char *id, const char *chunkId, const
   [api onElementOptions:strType :strId :strChunkId :strStorageId :strUser :strCreatedBy];
 }
 
+void SetPersistentDataPath(const char *path) {
+  const NSString *str = @(path);
+  [api onSetPersistentDataPath:str];
+}
+
 // this method will take a byte array in C# and convert it to a NSData object
 // void sendUnityDataUpdate(const char *data, int length) {
 //   const NSData *nsData = [NSData dataWithBytes:data length:length];
