@@ -593,6 +593,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private float inputSaturation = 1.0f;
         private float inputThreshold = 0.5f;
         private bool inputIsColor = false;
+        private float inputContrast = 1.0f;
+        private float inputHue = 0.0f;
 
         private filter tempFilter = null;
 
@@ -609,6 +611,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             inputSaturation = api.inputSaturation;
             inputThreshold = api.inputThreshold;
             inputIsColor = api.inputIsColor;
+            inputContrast = api.inputContrast;
+            inputHue = api.inputHue;
+
 
 
             // raycast directly in front of camera to place object 0.5 units above plane hit relative to plane normal. If there is no plane hit, place object 0.5 units above camera
@@ -627,6 +632,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 tempFilter.saturation = inputSaturation;
                 tempFilter.threshold = inputThreshold;
                 tempFilter.isColor = inputIsColor;
+                tempFilter.contrast = inputContrast;
+                tempFilter.hue = inputHue;
 
 
 
@@ -712,6 +719,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 innerFilter.saturation = api.inputSaturation;
                 innerFilter.threshold = api.inputThreshold;
                 innerFilter.isColor = api.inputIsColor;
+                innerFilter.contrast = api.inputContrast;
+                innerFilter.hue = api.inputHue;
                 return;
             }
 
@@ -859,6 +868,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         data.Add("saturation", inputSaturation);
                         data.Add("threshold", inputThreshold);
                         data.Add("isColor", inputIsColor);
+                        data.Add("contrast", inputContrast);
+                        data.Add("hue", inputHue);
                     }
 
                     arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(data);

@@ -110,6 +110,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public Color inputColor = Color.black;
         public float inputSaturation = 1.0f;
+        public float inputContrast = 1.0f;
+        public float inputHue = 0.0f;
         public float inputThreshold = 0.5f;
         public bool inputIsColor = false;
 
@@ -268,6 +270,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 inputSaturation = msg.data[3];
                 inputThreshold = msg.data[4];
                 inputIsColor = msg.data[5] >= 0.5f;
+                inputContrast = msg.data[6];
+                inputHue = msg.data[7];
                 Console.WriteLine("inputIsColor: " + inputIsColor);
             }
         }

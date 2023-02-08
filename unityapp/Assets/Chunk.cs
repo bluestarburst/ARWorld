@@ -59,7 +59,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 this.gameObject = gameObject;
             }
 
-            public void ShowElementOptions() {
+            public void ShowElementOptions()
+            {
                 HostNativeAPI.ElementOptions(type, id, chunkId, storageId, user, createdBy);
             }
         }
@@ -116,11 +117,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 isLoaded = true;
             }
 
-            if (arWorldMapController.api.shouldDelete && arWorldMapController.api.dchunkId == id) {
+            if (arWorldMapController.api.shouldDelete && arWorldMapController.api.dchunkId == id)
+            {
                 arWorldMapController.api.shouldDelete = false;
                 // delete the document in the chunk collection
                 DocumentReference docRef = db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(id).Collection(arWorldMapController.api.dtype).Document(arWorldMapController.api.did);
-                docRef.DeleteAsync().ContinueWithOnMainThread(task => {
+                docRef.DeleteAsync().ContinueWithOnMainThread(task =>
+                {
                     if (task.IsFaulted || task.IsCanceled)
                     {
                         arWorldMapController.Log("Error deleting element " + arWorldMapController.api.did + ": " + task.Exception);
@@ -342,7 +345,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     spotlight.GetComponent<Vertex>().topRadius = Convert.ToSingle(posterSnapshot.GetValue<double>("topR"));
                     spotlight.GetComponent<Vertex>().bottomRadius = Convert.ToSingle(posterSnapshot.GetValue<double>("botR"));
-
+                    // if r g b exist in document then set color
+                    if (posterData.ContainsKey("r") && posterData.ContainsKey("g") && posterData.ContainsKey("b"))
+                    {
+                        spotlight.GetComponent<Renderer>().material.SetColor("_Color", new Color(Convert.ToSingle(posterSnapshot.GetValue<double>("r")), Convert.ToSingle(posterSnapshot.GetValue<double>("g")), Convert.ToSingle(posterSnapshot.GetValue<double>("b"))));
+                    }
                     // NOT WORKING :(
 
 
@@ -390,6 +397,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     fil.saturation = Convert.ToSingle(posterSnapshot.GetValue<double>("saturation"));
                     fil.threshold = Convert.ToSingle(posterSnapshot.GetValue<double>("threshold"));
                     fil.isColor = posterSnapshot.GetValue<bool>("isColor");
+                    fil.contrast = Convert.ToSingle(posterSnapshot.GetValue<double>("contrast"));
+                    fil.hue = Convert.ToSingle(posterSnapshot.GetValue<double>("hue"));
 
                     fil.innerFilter = arWorldMapController.innerFilter;
                     fil.camera = arWorldMapController.ARCamera;
