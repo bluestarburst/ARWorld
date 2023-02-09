@@ -106,8 +106,8 @@ struct UnityView: View {
     
     func setCurrentImage(_ img: UIImage?) {
         self.currentImage = img ?? UIImage()
-        if (img) {
-            self.shareImage = Image(uiImage: img)
+        if (img != nil) {
+            self.shareImage = Image(uiImage: img!)
         }
     }
     
@@ -736,9 +736,9 @@ struct UnityView: View {
                                     .padding(.vertical,5)
                             })
 //                            ShareLink(item: shareImage, preview: SharePreview("ourworlds", image: shareImage))
-                            if (shareImage) {
-                                ShareLink(item: shareImage)
-                            }
+//                            if (shareImage) {
+//                                ShareLink(item: shareImage)
+//                            }
 //                            Button(action: {ShareLink(item: shareImage)}, label: {
 //                                Image(systemName: "square.and.arrow.up")
 //                                    .imageScale(.medium)
