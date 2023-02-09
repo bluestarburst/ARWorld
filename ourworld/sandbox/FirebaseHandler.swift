@@ -296,13 +296,13 @@ class DataHandler: NSObject, ObservableObject {
         }
     }
     
-    func loadImage(fileName: String, _ completion: @escaping ((UIImage) -> Void)) {
+    func loadImage(fileName: String, _ completion: @escaping ((UIImage?) -> Void)) {
 //        let fileURL = persistentPath.appendingPathComponent(fileName)
         let fileURL = persistentPath + "/" + fileName
         print("swifty " + fileURL)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let image = UIImage(contentsOfFile: fileURL)
-            completion(image ?? UIImage())
+            completion(image)
         }
         
 //        return image
