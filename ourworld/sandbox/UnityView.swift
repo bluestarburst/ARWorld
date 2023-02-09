@@ -72,6 +72,7 @@ struct UnityView: View {
     @State private var showPreview = false
     
     @State private var isAdding = false
+    @State private var isCamPrev = false
     
     @State private var topRadius = 0.5
     @State private var botRadius = 1.5
@@ -101,9 +102,13 @@ struct UnityView: View {
     @State private var flash = false
     
     @State private var currentImage = UIImage()
+    @State private var shareImage: Image? = nil
     
-    func setCurrentImage(_ img: UIImage) {
-        self.currentImage = img
+    func setCurrentImage(_ img: UIImage?) {
+        self.currentImage = img ?? UIImage()
+        if (img) {
+            self.shareImage = Image(uiImage: img)
+        }
     }
     
     
@@ -485,7 +490,7 @@ struct UnityView: View {
                         }
                         .padding()
                         
-                        VStack {
+                        VStack(alignment: .leading) {
                             if (type == "spotlights") {
                                 VStack {
                                     Text("top radius")
@@ -517,6 +522,8 @@ struct UnityView: View {
                             } else if (showPreview) {
                                 
                                 Text("saturation")
+                                    .multilineTextAlignment(.leading)
+                                    .frame(alignment: .leading)
                                 Slider(value: $saturation, in: 0...2) {
                                     Text("saturation")
                                 }.onChange(of: saturation) { _ in
@@ -524,13 +531,15 @@ struct UnityView: View {
                                 }.onAppear {
                                     UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero), contrast: contrast, hue: hue)
                                 }
+                                Text("contrast")
                                 Slider(value: $contrast, in: -1...3) {
-                                    Text("saturation")
+                                    Text("contrast")
                                 }.onChange(of: contrast) { _ in
                                     UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero), contrast: contrast, hue: hue)
                                 }
+                                Text("hue")
                                 Slider(value: $hue, in: -126...126) {
-                                    Text("saturation")
+                                    Text("hue")
                                 }.onChange(of: hue) { _ in
                                     UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero), contrast: contrast, hue: hue)
                                 }
@@ -644,14 +653,16 @@ struct UnityView: View {
 //                        .frame(height: 500)
                     ZStack {
                         HStack {
-                            Image(uiImage: currentImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 60, height: 60)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .overlay(RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color(.white).opacity(0.5), lineWidth: 1)
-                                )
+                            Button (action: {withAnimation{isCamPrev = true}}) {
+                                Image(uiImage: currentImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 60, height: 60)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .overlay(RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color(.white).opacity(0.5), lineWidth: 1)
+                                    )
+                            }
                             Spacer()
                         }
                         .padding()
@@ -678,7 +689,99 @@ struct UnityView: View {
                         .padding(.bottom, 18)
                     }.background(Color(.black).opacity(0.5))
                 }
-                .background(flash ? Color(.white).opacity(0.5) : .clear)
+                .background(flash ? Color(.white) : .clear)
+                
+                if (isCamPrev) {
+                    VStack {
+                        Spacer()
+                        Image(uiImage: currentImage)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: UIScreen.screenWidth - UIScreen.screenWidth * 0.25, height: UIScreen.screenHeight - UIScreen.screenHeight * 0.25)
+                        
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .overlay(RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color(.white).opacity(0.5), lineWidth: 1)
+                            )
+                        HStack {
+                            Spacer()
+                            Button(action: {withAnimation{
+                                isCamPrev = false
+                                isCam = false
+                                showSettings = false
+                                showElementSelection = false
+                                isAdding = false
+                                showElementSelection = false
+                                showButtons = true
+                                showPreview = false
+                                showSettingsButton = true
+                            }}, label: {
+                                Image(systemName: "xmark")
+                                    .imageScale(.medium)
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.vertical,5)
+                            })
+                            Button(action: {withAnimation{isCamPrev = false}}, label: {
+                                Image(systemName: "repeat")
+                                    .imageScale(.medium)
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.vertical,5)
+                            })
+//                            ShareLink(item: shareImage, preview: SharePreview("ourworlds", image: shareImage))
+                            if (shareImage) {
+                                ShareLink(item: shareImage)
+                            }
+//                            Button(action: {ShareLink(item: shareImage)}, label: {
+//                                Image(systemName: "square.and.arrow.up")
+//                                    .imageScale(.medium)
+//                                    .font(.title2)
+//                                    .foregroundColor(.white)
+//                                    .padding(10)
+//                                    .background(Color(.white).opacity(0.1))
+//                                    .clipShape(Circle())
+//                                    .padding(.vertical,5)
+//                            })
+                            Button(action: {UIImageWriteToSavedPhotosAlbum(currentImage, nil, nil, nil);withAnimation{
+                                isCamPrev = false
+                                isCam = false
+                                showSettings = false
+                                showElementSelection = false
+                                isAdding = false
+                                showElementSelection = false
+                                showButtons = true
+                                showPreview = false
+                                showSettingsButton = true
+                            }}, label: {
+                                Image(systemName: "tray.and.arrow.down")
+                                    .imageScale(.medium)
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.white).opacity(0.1))
+                                    .clipShape(Circle())
+                                    .padding(.vertical,5)
+                            })
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                    .background(Color(.black).opacity(0.5))
+                    .onTapGesture {
+                        withAnimation {
+                            isCamPrev = false
+                        }
+                    }
+                    
+
+                }
             }
             
         }
