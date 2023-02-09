@@ -881,7 +881,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     
                 }
 
-                Destroy(spawnedObject);
+                // Destroy(spawnedObject);
                 spawnedObject = null;
                 arWorldMapController.OnSaveButtonDelay(3);
                 return;
