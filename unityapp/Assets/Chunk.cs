@@ -236,7 +236,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // load texture
                             texture.LoadImage(data);
                             // set diffuse texture
-                            poster.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                            // poster.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                            poster.GetComponent<MeshRenderer>().material.SetTexture("_img", texture);
                             // get width and height of image and set scale of poster
                         }
                         else

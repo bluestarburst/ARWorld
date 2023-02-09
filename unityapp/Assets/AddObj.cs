@@ -205,7 +205,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             // load texture
                             texture.LoadImage(data);
                             // set diffuse texture
-                            spawnedObject.GetComponent<MeshRenderer>().material.mainTexture = texture;
+                            spawnedObject.GetComponent<MeshRenderer>().material.SetTexture("_img", texture);
                             // get width and height of image and set scale of poster
 
                             float maxWidth = 0.1f;
