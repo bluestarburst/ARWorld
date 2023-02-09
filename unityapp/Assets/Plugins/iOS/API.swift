@@ -47,11 +47,11 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "change-color", data: data)
     }
 
-    public func saveMap() {
-        sendMessage(type: "save-map", data: "")
+    public func saveMap(id: String = "") {
+        sendMessage(type: "save-map", data: id)
     }
 
-    public func loadMap(id: String) {
+    public func loadMap(id: String = "") {
         sendMessage(type: "load-map", data: id)
     }
 
