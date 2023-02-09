@@ -162,6 +162,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public string user = "";
 
         int trys = 0;
+        public string chosenMapId = "";
 
         /// <summary>
         /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -433,11 +434,52 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
             await WaitUntilMapped();
+            if (chosenMapId != "") {
+                return;
+            }
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
             // Invoke("getNextPotentialChunkId", 10f);
             Invoke("getNextPotentialChunkId", 5f);
             // OnSaveButton();
+        }
+
+        public async void LoadChosenMap(string chosenId)
+        {
+            var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+            chosenMapId = chosenId;
+            FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
+            StorageReference storageRef = storage.RootReference;
+            StorageReference mapsdbRef = storageRef.Child("maps");
+            StorageReference mapRef = mapsdbRef.Child(chosenMapId + ".worldmap");
+            var data = await mapRef.GetBytesAsync(1024 * 1024 * 55);
+
+            data = Decompress(data);
+
+            // byte[] to native array
+            var nativeData = new NativeArray<byte>(data.Length, Allocator.Temp);
+            nativeData.CopyFrom(data);
+
+            ARWorldMap worldMap;
+            if (ARWorldMap.TryDeserialize(nativeData, out worldMap)) nativeData.Dispose();
+
+            if (worldMap.valid)
+            {
+                Log("Deserialized successfully.");
+                tempWorldMapId = chosenMapId;
+            }
+            else
+            {
+                Debug.LogError("Data is not a valid ARWorldMap.");
+                Log("not valid world map");
+                return;
+                // yield break;
+            }
+
+
+            await WaitUntilMapped();
+            Log("Apply ARWorldMap to current session.");
+            sessionSubsystem.ApplyWorldMap(worldMap);
         }
 
 
@@ -543,6 +585,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
             await WaitUntilMapped();
+            if (chosenMapId != "") {
+                return;
+            }
             Log("Apply ARWorldMap to current session.");
             sessionSubsystem.ApplyWorldMap(worldMap);
             // Invoke("getNextPotentialChunkId", 10f);

@@ -51,8 +51,8 @@ public class UnityAPI: NativeCallsProtocol {
         sendMessage(type: "save-map", data: "")
     }
 
-    public func loadMap() {
-        sendMessage(type: "load-map", data: "")
+    public func loadMap(id: String) {
+        sendMessage(type: "load-map", data: id)
     }
 
     public func updateVars(lat: CGFloat, lon: CGFloat, alt: CGFloat) {
@@ -153,7 +153,7 @@ public class UnityAPI: NativeCallsProtocol {
 
     public func onLoadingMap(_ mapID: String) {
         print("onLoadingMap: \(mapID)")
-        onLoadingMap(mapID)
+        onSetLoadingMap(mapID)
     }
 
     public var onSetScreenshot: (String) -> Void = {_ in}
