@@ -80,6 +80,8 @@ struct UnityView: View {
     Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
     
     @State private var saturation = CGFloat(1)
+    @State private var contrast = CGFloat(1)
+    @State private var hue = CGFloat(0)
     @State private var threshold = CGFloat(0.25)
     
     func changeSelection(changeType: String) {
@@ -99,6 +101,10 @@ struct UnityView: View {
     @State private var flash = false
     
     @State private var currentImage = UIImage()
+    
+    func setCurrentImage(_ img: UIImage) {
+        self.currentImage = img
+    }
     
     
     var body: some View {
@@ -511,12 +517,22 @@ struct UnityView: View {
                             } else if (showPreview) {
                                 
                                 Text("saturation")
-                                Slider(value: $saturation, in: 0...1) {
+                                Slider(value: $saturation, in: 0...2) {
                                     Text("saturation")
                                 }.onChange(of: saturation) { _ in
-                                    UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero))
+                                    UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero), contrast: contrast, hue: hue)
                                 }.onAppear {
-                                    UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero))
+                                    UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero), contrast: contrast, hue: hue)
+                                }
+                                Slider(value: $contrast, in: -1...3) {
+                                    Text("saturation")
+                                }.onChange(of: contrast) { _ in
+                                    UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero), contrast: contrast, hue: hue)
+                                }
+                                Slider(value: $hue, in: -126...126) {
+                                    Text("saturation")
+                                }.onChange(of: hue) { _ in
+                                    UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero), contrast: contrast, hue: hue)
                                 }
                                 
 //                                Text("show color mask")
@@ -526,14 +542,14 @@ struct UnityView: View {
                                     ColorPicker(selection: $inColor, supportsOpacity: false, label: {
                                         Text("color")
                                     }).onChange(of: inColor) { _ in
-                                        UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero))
+                                        UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero), contrast: contrast, hue: hue)
                                     }
                                     
                                     Text("threshold")
                                     Slider(value: $threshold, in: 0...1) {
                                         Text("threshold")
                                     }.onChange(of: threshold) { _ in
-                                        UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero))
+                                        UnityBridge.getInstance().api.changeFilter(r: inColor.components.red, g: inColor.components.green, b: inColor.components.blue, saturation: saturation, threshold: threshold, isColor: (isColor ? CGFloat(1) : CGFloat.zero), contrast: contrast, hue: hue)
                                         print("isColor: \(isColor ? CGFloat(1) : CGFloat.zero)")
                                     }
                                     
@@ -649,12 +665,12 @@ struct UnityView: View {
                                 UnityBridge.getInstance().api.takePic()
                             }) {
                                 Circle()
-                                    .strokeBorder(Color(.white).opacity(0.8), lineWidth: 2)
+                                    .strokeBorder(.white, lineWidth: 2)
                                     .background(Circle().fill(.clear))
                                     .frame(width: 75, height: 75)
                             }
                             .onAppear {
-                                currentImage = DataHandler.shared.loadImage(fileName: "screenshot.png") ?? UIImage()
+                                DataHandler.shared.loadImage(fileName: "screenshot.png", setCurrentImage)
                             }
                             Spacer()
                         }
@@ -687,7 +703,7 @@ struct UnityView: View {
                 api.api.changeSettings(change: (showLogs ? "logs-on" : "logs-off"))
             }
             api.api.onSetScreenshot = { _ in
-                currentImage = DataHandler.shared.loadImage(fileName: "screenshot.png") ?? UIImage()
+                DataHandler.shared.loadImage(fileName: "screenshot.png", setCurrentImage)
                 withAnimation {
                     flash = false
                 }
