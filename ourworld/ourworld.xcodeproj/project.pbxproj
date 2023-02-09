@@ -24,6 +24,7 @@
 		58B77D7B296891FD00FAD17F /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B77D76296891FC00FAD17F /* ImageLoader.swift */; };
 		58B77D7D296891FD00FAD17F /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B77D78296891FC00FAD17F /* AsyncImage.swift */; };
 		58B77D7E296891FD00FAD17F /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B77D79296891FD00FAD17F /* ImageCache.swift */; };
+		58BAE5C12994E35B00F07696 /* Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BAE5C02994E35B00F07696 /* Share.swift */; };
 		58E14E462964A18B00ACA091 /* ImageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E14E452964A18900ACA091 /* ImageSelection.swift */; };
 		659160E6F2C3BE7D9DE4DE2D /* Pods_ourworld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCF4CD535BCA17B5632A08A /* Pods_ourworld.framework */; };
 		E61361FC25BA3CFA0005B57A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E61361FB25BA3CFA0005B57A /* LaunchScreen.storyboard */; };
@@ -82,6 +83,7 @@
 		58B77D78296891FC00FAD17F /* AsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		58B77D79296891FD00FAD17F /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		58BAE5BC2993031700F07696 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		58BAE5C02994E35B00F07696 /* Share.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Share.swift; sourceTree = "<group>"; };
 		58E14E452964A18900ACA091 /* ImageSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelection.swift; sourceTree = "<group>"; };
 		809F3DDC5E7359A455FC9324 /* Pods-sandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sandbox.release.xcconfig"; path = "Target Support Files/Pods-sandbox/Pods-sandbox.release.xcconfig"; sourceTree = "<group>"; };
 		A7EFBB579F0C93571A484335 /* Pods-ourworld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ourworld.release.xcconfig"; path = "Target Support Files/Pods-ourworld/Pods-ourworld.release.xcconfig"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				5818DC8C293AED9E00C8B794 /* LocationManager.swift */,
 				5818DC6D2937FCC000C8B794 /* AuthView.swift */,
 				5817EAC829372795004E90B5 /* UnityView.swift */,
+				58BAE5C02994E35B00F07696 /* Share.swift */,
 				5818DC8E293BEFF200C8B794 /* FirebaseHandler.swift */,
 				E61361FD25BA3D150005B57A /* UnityBridge.swift */,
 				E6DE818825BA36240019BED1 /* Assets.xcassets */,
@@ -346,6 +349,7 @@
 				58B75470297492B400E5A654 /* PreviewObj.swift in Sources */,
 				58B77D7D296891FD00FAD17F /* AsyncImage.swift in Sources */,
 				5818DC6E2937FCC000C8B794 /* AuthView.swift in Sources */,
+				58BAE5C12994E35B00F07696 /* Share.swift in Sources */,
 				E62A7AD02773E4DA007CE3D6 /* SceneDelegate.swift in Sources */,
 				58B77D7B296891FD00FAD17F /* ImageLoader.swift in Sources */,
 				E62A7AD42773F6AC007CE3D6 /* UIWindowCustom.swift in Sources */,
@@ -504,7 +508,7 @@
 				INFOPLIST_FILE = sandbox/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "ourworlds!";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -544,7 +548,7 @@
 				INFOPLIST_FILE = sandbox/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "ourworlds!";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -102,12 +102,12 @@ struct UnityView: View {
     @State private var flash = false
     
     @State private var currentImage = UIImage()
-    @State private var shareImage: Image? = nil
+    @State private var shareImage = Photo(image: Image(systemName: "xmark"), caption: "ourworlds!")
     
     func setCurrentImage(_ img: UIImage?) {
         self.currentImage = img ?? UIImage()
         if (img != nil) {
-            self.shareImage = Image(uiImage: img!)
+            self.shareImage = Photo(image: Image(uiImage: img!), caption: "ourworlds!")
         }
     }
     
@@ -735,10 +735,19 @@ struct UnityView: View {
                                     .clipShape(Circle())
                                     .padding(.vertical,5)
                             })
-//                            ShareLink(item: shareImage, preview: SharePreview("ourworlds", image: shareImage))
-//                            if (shareImage) {
-//                                ShareLink(item: shareImage)
-//                            }
+//                            ShareLink(item: shareImage ?? Image(), preview: SharePreview("ourworlds", image: shareImage ?? Image()))
+                            Share(img: $shareImage)
+//                            ShareLinkCompat(item: shareImage ?? Image(), label: {
+//                                Image(systemName: "square.and.arrow.up")
+//                                    .imageScale(.medium)
+//                                    .font(.title2)
+//                                    .foregroundColor(.white)
+//                                    .padding(10)
+//                                    .background(Color(.white).opacity(0.1))
+//                                    .clipShape(Circle())
+//                                    .padding(.vertical,5)
+//                            })
+                            
 //                            Button(action: {ShareLink(item: shareImage)}, label: {
 //                                Image(systemName: "square.and.arrow.up")
 //                                    .imageScale(.medium)
