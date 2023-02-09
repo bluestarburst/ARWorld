@@ -377,7 +377,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Debug.LogError("WorldMapController is null");
                 return;
             }
-            var msg = JsonConvert.DeserializeObject<MessageWithData<float[]>>(serialized);
+            var msg = JsonConvert.DeserializeObject<MessageWithData<string>>(serialized);
             if (msg.data != null)
             {
                 worldMapController.OnLoadButton();
