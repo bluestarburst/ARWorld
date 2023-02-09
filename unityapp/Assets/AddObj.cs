@@ -878,10 +878,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(data);
 
                     currentChunk = null;
-                    spawnedObject = null;
+                    
                 }
 
+                Destroy(spawnedObject);
+                spawnedObject = null;
                 arWorldMapController.OnSaveButtonDelay(3);
+                return;
             }
 
             if (type.Equals("spotlights"))
