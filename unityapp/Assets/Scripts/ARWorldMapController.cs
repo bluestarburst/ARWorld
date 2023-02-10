@@ -369,6 +369,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
 
+            string mapListString = "";
+            foreach (var item in potentialChunkIdsPos)
+            {
+                mapListString += item.Key + " ";
+            }
+            HostNativeAPI.MapList(mapListString);
+
             potentialChunkIdsCurrent = 1;
 
             potentialChunkIds.Sort((x, y) => x.Item1.CompareTo(y.Item1));

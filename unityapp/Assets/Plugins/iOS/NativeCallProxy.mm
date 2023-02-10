@@ -46,6 +46,12 @@ void ElementOptions(const char *type, const char *id, const char *chunkId, const
   [api onElementOptions:strType :strId :strChunkId :strStorageId :strUser :strCreatedBy];
 }
 
+// with array of strings
+void MapList(const char *mapList) {
+  const NSString *str = @(mapList);
+  [api onMapList:str];
+}
+
 void SetPersistentDataPath(const char *path) {
   const NSString *str = @(path);
   [api onSetPersistentDataPath:str];
