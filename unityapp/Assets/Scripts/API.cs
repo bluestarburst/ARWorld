@@ -173,8 +173,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     _UpdateCubeColor(serializedMessage);
                     break;
                 case "save-map":
-                    worldMapController.ResetAndWaitUntilMappedSave();
-                    // _SaveMap(serializedMessage);
+                    
+                    _SaveMap(serializedMessage);
                     // HostNativeAPI.saveMap("hehehe");
                     break;
                 case "load-map":
@@ -370,7 +370,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (msg.data != null)
             {
                 worldMapController.mapName = msg.data;
-                worldMapController.LoadChosenMap(msg.data);
+                // worldMapController.LoadChosenMap(msg.data);
+                worldMapController.ResetAndWaitUntilMappedSave();
             }
         }
 
