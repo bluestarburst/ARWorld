@@ -142,11 +142,11 @@ public class UnityAPI: NativeCallsProtocol {
         setElementOptions(type,id,chunkId,storageId,user,createdBy)
     }
 
-    public var setMapList: (String) -> Void = {_ in}
+    public var setMapList: (String, String) -> Void = {_,_ in}
 
-    public func onMapList(_ list: String) {
+    public func onMapList(_ list: String, _ names: String) {
         print("onMapList: \(list)")
-        setMapList(list)
+        setMapList(list, names)
     }
 
     public var setDataPath: (String) -> Void = {_ in}

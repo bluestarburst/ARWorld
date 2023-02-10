@@ -345,6 +345,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             potentialChunkIds.Clear();
             potentialChunkIdsPos.Clear();
 
+            Dictionary<string, string> potentialMapNames = new Dictionary<string, string>();
+
             foreach (DocumentSnapshot documentSnapshot in querySnapshot.Documents)
             {
                 Console.WriteLine("Document {0} returned by query maps", documentSnapshot.Id);
@@ -360,6 +362,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // put potential chunk ids into arraylist and sort by error in altitude and location error
                 potentialChunkIds.Add((locErrorInMeters, documentSnapshot.Id));
                 potentialChunkIdsPos.Add(documentSnapshot.Id, documentSnapshot.GetValue<GeoPoint>("location"));
+                potentialMapNames.Add(documentSnapshot.Id, documentSnapshot.GetValue<string>("name"));
 
                 Log("Location error is " + locErrorInMeters);
                 if (tempErr < error)
@@ -372,11 +375,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             string mapListString = "";
+            string mapListNameString = "";
             foreach (var item in potentialChunkIdsPos)
             {
                 mapListString += item.Key + " ";
+                mapListString += potentialMapNames[item.Key] + " ";
             }
-            HostNativeAPI.MapList(mapListString);
+            HostNativeAPI.MapList(mapListString, mapListNameString);
 
             potentialChunkIdsCurrent = 1;
 

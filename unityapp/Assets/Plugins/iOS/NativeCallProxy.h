@@ -21,7 +21,7 @@ typedef void (*TestDelegate)(const char *name);
 // multiple parameters
 - (void)onElementOptions:(const NSString *)type :(const NSString *)id :(const NSString *)chunkId :(const NSString *)storageId :(const NSString *)user :(const NSString *)createdBy;
 // with array of strings as parameter
-- (void)onMapList:(const NSString *)mapList;
+- (void)onMapList:(const NSString *)mapList :(const NSString *)mapNames;
 
 
 // - (void)onElementOptions:(const NSString *)type :(const NSString *)id, (const NSString *)chunkId, (const NSString *)storageId, (const NSString *)user, (const NSString *)createdBy;
