@@ -938,7 +938,7 @@ struct UnityView: View {
                 self.currentMap = map
             }
             api.api.setMapList = {ls,na in
-                if (ls == "") {
+                if (ls == "" || na == "") {
                     return
                 }
                 let start = ls.index(ls.startIndex, offsetBy: 0)
