@@ -213,7 +213,7 @@ struct UnityView: View {
                     Spacer()
                     VStack{
                         Text("Could not find any nearby maps")
-                        Button(action: {UnityBridge.getInstance().api.loadMap();withAnimation{mapStatus = ""}}, label: {
+                        Button(action: {UnityBridge.getInstance().api.loadMap(id: "");withAnimation{mapStatus = ""}}, label: {
                             Spacer()
                             Text("Retry")
                                 .foregroundColor(.white)
@@ -238,6 +238,38 @@ struct UnityView: View {
                     Spacer()
                 }.background(Color(.black).opacity(0.65))
                     .transition(.opacity)
+            }
+            
+            if (mapStatus != "mapped" && mapStatus != "saving") {
+                VStack {
+                    HStack {
+                        Spacer()
+                        
+                        Menu {
+                            Button {
+                                
+                            } label: {
+                                Text("mapId2")
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(.gray)
+                                    .cornerRadius(100)
+                            }
+                        } label: {
+                            Button {
+                                
+                            } label: {
+                                Text("mapId")
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(.gray)
+                                    .cornerRadius(100)
+                            }
+                        }
+                    }
+                    Spacer()
+                }.padding()
+            
             }
             
             
