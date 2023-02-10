@@ -935,7 +935,14 @@ struct UnityView: View {
                 }
             }
             api.api.onSetLoadingMap = { map in
-                self.currentMap = map
+                var counter = 0
+                for mapId in mapList {
+                    if (mapId == map) {
+                        self.currentMap = self.mapNames[counter]
+                        return
+                    }
+                    counter+=1
+                }
             }
             api.api.setMapList = {ls,na in
                 if (ls == "" || na == "") {
@@ -953,6 +960,7 @@ struct UnityView: View {
                 
                 self.mapList = String(mySubstring).components(separatedBy: " ")
                 self.mapNames = String(mySubstring2).components(separatedBy: " ")
+                self.currentMap = self.mapNames[0]
 //                print("swifty " + self.mapList[0])
             }
             DataHandler.shared.setAddingObj = {
