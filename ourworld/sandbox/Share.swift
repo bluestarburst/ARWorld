@@ -33,8 +33,11 @@ struct Share: View {
                 .clipShape(Circle())
                 .padding(.vertical,5)
         }
+        
     }
 }
+
+
 
 //struct Share_Previews: PreviewProvider {
 //    static var previews: some View {
