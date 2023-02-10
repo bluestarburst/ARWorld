@@ -369,6 +369,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var msg = JsonConvert.DeserializeObject<MessageWithData<string>>(serialized);
             if (msg.data != null)
             {
+                worldMapController.mapName = msg.data;
                 worldMapController.LoadChosenMap(msg.data);
             }
         }

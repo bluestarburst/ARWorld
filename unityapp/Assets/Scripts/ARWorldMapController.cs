@@ -164,6 +164,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         int trys = 0;
         public string chosenMapId = "";
 
+        public string mapName = "untitled";
+
         /// <summary>
         /// Create an <c>ARWorldMap</c> and save it to disk.
         /// </summary>
@@ -667,10 +669,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     { "location", location },
                     { "altitude", api.alt },
-                    { "creator", "bryant" },
+                    { "creator", user },
                     { "updated", DateTime.Now },
                     { "created", DateTime.Now },
-                    { "name", "test" },
+                    { "name", mapName },
                     { "public", true },
                     { "chunks", 1 },
                     { "id", docRef.Id },
