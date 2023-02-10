@@ -35,119 +35,131 @@ struct ContentView: View {
             }
         }
     }
-
+    
+    @State var refresh = false
+    
     var body: some View {
         ZStack {
-            if (page == 0) {
-                AuthView(page: $page)
-            } else {
-                
-                UnityView(isLoaded: $isLoaded, changePage: self.changePage)
-                    .gesture(DragGesture())
-                    .onAppear {
-                        DataHandler.shared.getUID()
-                    }
-                    .id(1)
-                
-                GeometryReader { geometry in
-                    VStack {
-                        
-                        HStack {
+            if (refresh == false) {
+                if (page == 0) {
+                    AuthView(page: $page)
+                } else {
+                    
+                    HStack {
+                        VStack {
                             Spacer()
                         }
-                        
-                        FindView()
-                            .padding(.top,30)
-                            
-                        Spacer()
-                    }
-                    
-                    
-                    .background(.black)
-                    .cornerRadius(24)
-                    
-                    .ignoresSafeArea()
-                    
-                    
-                    .offset(x: offset)
-                    .onAppear {
-                        normal = -geometry.size.width
-                        offset = -geometry.size.width
-                    }
-                }
-                
-                HStack {
-                    VStack {
-                        Spacer()
-                    }
-                    .frame(width: 10)
-                    .background(.black.opacity(0.02))
-                    .gesture(
-                        DragGesture()
-                            .onChanged{ gesture in
-                                withAnimation {
-                                    offset = normal + gesture.translation.width
-                                }
-                            }
-                            .onEnded { _ in
-                                if (offset > -230) {
-//                                    UnityBridge.getInstance().unload()
-                                    withAnimation{
-                                        offset = 0
-                                        pages = 1
-                                    }
-                                } else {
+                        .frame(width: 10)
+                        .background(.black.opacity(0.02))
+                        .gesture(
+                            DragGesture()
+                                .onChanged{ gesture in
                                     withAnimation {
-                                        offset = normal
+                                        offset = normal + gesture.translation.width
                                     }
                                 }
-                            }
-                    )
-                    Spacer()
-                    VStack {
-                        Spacer()
-                    }
-                    .frame(width: 10)
-                    .background(.black.opacity(0.02))
-                    .gesture(
-                        DragGesture()
-                            .onChanged{ gesture in
-                                if (pages == 1) {
-                                    withAnimation {
-                                        offset = gesture.translation.width
+                                .onEnded { _ in
+                                    if (offset > -230) {
+                                        //                                    UnityBridge.getInstance().unload()
+                                        withAnimation{
+                                            offset = 0
+                                            pages = 1
+                                        }
+                                    } else {
+                                        withAnimation {
+                                            offset = normal - 200
+                                        }
                                     }
                                 }
-                            }
-                            .onEnded { _ in
-                                if (offset < -100) {
-//                                    UnityBridge.getInstance().show()
-                                    withAnimation{
-                                        offset = normal
-                                        pages = 0
+                        )
+                        Spacer()
+                        VStack {
+                            Spacer()
+                        }
+                        .frame(width: 10)
+                        .background(.black.opacity(0.02))
+                        .gesture(
+                            DragGesture()
+                                .onChanged{ gesture in
+                                    if (pages == 1) {
+                                        withAnimation {
+                                            offset = gesture.translation.width
+                                        }
                                     }
-                                } else {
-                                    withAnimation {
-                                        offset = 0
+                                }
+                                .onEnded { _ in
+                                    if (offset < -100) {
+                                        //                                    UnityBridge.getInstance().show()
+                                        withAnimation{
+                                            offset = normal - 200
+                                            pages = 0
+                                        }
+                                    } else {
+                                        withAnimation {
+                                            offset = 0
+                                        }
+                                        
                                     }
                                     
                                 }
-                                
-                            }
-                    )
+                        )
+                        
+                    }
+                    
+                    UnityView(isLoaded: $isLoaded, changePage: self.changePage)
+                        .gesture(DragGesture())
+                        .onAppear {
+                            DataHandler.shared.getUID()
+                        }
+                        .id(1)
+                    
+                    GeometryReader { geometry in
+                        VStack {
+                            
+                            HStack {
+                                Spacer()
+                            }.ignoresSafeArea()
+                            
+                            FindView()
+                                .padding(.top,30)
+                            
+                            Spacer()
+                        }
+                        
+                        
+                        .background(.black)
+                        .cornerRadius(24)
+                        
+                        .ignoresSafeArea()
+                        
+                        
+                        .offset(x: offset)
+                        .onAppear {
+                            normal = -geometry.size.width
+                            offset = -geometry.size.width - 200
+                        } .onChange(of: geometry.size) {_ in
+                            normal = -geometry.size.width
+                            offset = -geometry.size.width - 200
+                            
+                            UIScreen.screenHeight = geometry.size.height
+                            UIScreen.screenWidth = geometry.size.width
+                        }
+                        
+                    }
+                    
+                    
+                    
+                    PreviewObj(disabled: $disabled).onChange(of: disabled) { dis in
+                        withAnimation{
+                            offset = normal
+                            pages = 0
+                        }
+                    }
+                    
+                    
                     
                 }
-                
-                PreviewObj(disabled: $disabled).onChange(of: disabled) { dis in
-                    withAnimation{
-                        offset = normal
-                        pages = 0
-                    }
-                }
-                
-                
-                
             }
-            
         }.onAppear {
             setupColorScheme()
         }
@@ -159,3 +171,26 @@ struct ContentView: View {
         window?.overrideUserInterfaceStyle = .dark
         window?.tintColor = UIColor(Color.pink)
     }}
+
+
+
+// Our custom view modifier to track rotation and
+// call our action
+struct DeviceRotationViewModifier: ViewModifier {
+    let action: (UIDeviceOrientation) -> Void
+    
+    func body(content: Content) -> some View {
+        content
+            .onAppear()
+            .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                action(UIDevice.current.orientation)
+            }
+    }
+}
+
+// A View wrapper to make the modifier easier to use
+extension View {
+    func onRotate(perform action: @escaping (UIDeviceOrientation) -> Void) -> some View {
+        self.modifier(DeviceRotationViewModifier(action: action))
+    }
+}

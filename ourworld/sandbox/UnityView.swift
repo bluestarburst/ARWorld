@@ -12,6 +12,13 @@ import UIKit
 import AppKit
 #endif
 
+extension String: Identifiable {
+    public typealias ID = Int
+    public var id: Int {
+        return hash
+    }
+}
+
 extension Color {
     var components: (red: CGFloat, green: CGFloat, blue: CGFloat, opacity: CGFloat) {
         
@@ -104,12 +111,25 @@ struct UnityView: View {
     @State private var currentImage = UIImage()
     @State private var shareImage = Photo(image: Image(systemName: "xmark"), caption: "ourworlds!")
     
+    @State private var currentMap = ""
+    @State private var mapList: [String] = []
+    @State private var mapNames: [String] = []
+    @State private var newMapNaming = false
+    
     func setCurrentImage(_ img: UIImage?) {
         self.currentImage = img ?? UIImage()
         if (img != nil) {
             self.shareImage = Photo(image: Image(uiImage: img!), caption: "ourworlds!")
         }
     }
+    
+    @State private var mapName = ""
+    
+    enum Field: Hashable {
+        case myMapName
+    }
+    
+    @FocusState private var focusedField: Field?
     
     
     var body: some View {
@@ -209,64 +229,126 @@ struct UnityView: View {
             .padding()
             
             if (mapStatus == "failed") {
-                VStack {
-                    Spacer()
-                    VStack{
-                        Text("Could not find any nearby maps")
-                        Button(action: {UnityBridge.getInstance().api.loadMap(id: "");withAnimation{mapStatus = ""}}, label: {
+                if (newMapNaming == true) {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Button (action: {withAnimation{newMapNaming = false}}, label: {
+                                Image(systemName: "chevron.left")
+                                    .imageScale(.medium)
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .clipShape(Circle())
+                                    .padding(.horizontal,5)
+                            })
+                            Text("enter a map name to begin")
                             Spacer()
-                            Text("Retry")
+                        }
+                        
+                        
+                        TextField("map name", text: $mapName)
+                            .focused($focusedField, equals: .myMapName)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color(hex: "424242"))
+                            .cornerRadius(100)
+                            .padding(.top, 10)
+                            .onTapGesture {
+                                focusedField = .myMapName
+                            }
+                        
+                        
+                        Button(action: {newMapNaming = false;UnityBridge.getInstance().api.saveMap(id: mapName);withAnimation{mapStatus = ""}}, label: {
+                            Spacer()
+                            Text("Done")
                                 .foregroundColor(.white)
                                 .padding()
                             Spacer()
                         })
-                        .background(Color(.gray).opacity(0.5))
+                        .background(.pink)
+                        .opacity(mapName.count < 5 ? 0.5 : 1)
                         .cornerRadius(100)
-                        .padding(.leading,5)
-                        Text("or")
-                        Button(action: {UnityBridge.getInstance().api.saveMap();withAnimation{mapStatus = ""}}, label: {
+                        .padding(.top,5)
+                        .disabled(mapName.count < 5)
+                        HStack {
                             Spacer()
-                            Text("Create New Map")
-                                .foregroundColor(.black)
-                                .padding()
-                            Spacer()
-                        })
-                        .background(.white)
-                        .cornerRadius(100)
-                        .padding(.leading,5)
-                    }.padding(50)
-                    Spacer()
-                }.background(Color(.black).opacity(0.65))
-                    .transition(.opacity)
+                        }
+                        Spacer()
+                    }
+                    .padding(50)
+                    .background(Color(.black).opacity(0.65).onTapGesture {
+                        focusedField = nil
+                    })
+                        .transition(.opacity)
+                } else {
+                    VStack {
+                        Spacer()
+                        VStack{
+                            Text("Could not find any nearby maps")
+                            Button(action: {UnityBridge.getInstance().api.loadMap();withAnimation{mapStatus = ""}}, label: {
+                                Spacer()
+                                Text("Retry")
+                                    .foregroundColor(.white)
+                                    .padding()
+                                Spacer()
+                            })
+                            .background(Color(.gray).opacity(0.5))
+                            .cornerRadius(100)
+                            .padding(.top,5)
+                            Text("or")
+                            Button(action: {withAnimation{newMapNaming = true}}, label: {
+                                Spacer()
+                                Text("Create New Map")
+                                    .foregroundColor(.black)
+                                    .padding()
+                                Spacer()
+                            })
+                            .background(.white)
+                            .cornerRadius(100)
+                            .padding(.top,5)
+                        }.padding(50)
+                        Spacer()
+                    }.background(Color(.black).opacity(0.65))
+                        .transition(.opacity)
+                }
             }
             
-            if (mapStatus != "mapped" && mapStatus != "saving") {
+            if (mapStatus != "mapped" && mapStatus != "saving" && currentMap != "") {
                 VStack {
                     HStack {
                         Spacer()
                         
                         Menu {
-                            Button {
-                                
-                            } label: {
-                                Text("mapId2")
-                                    .foregroundColor(.white)
-                                    .padding()
-                                    .background(.gray)
-                                    .cornerRadius(100)
+                            ForEach(0..<mapList.count) { i in
+                                Button {
+                                    UnityBridge.getInstance().api.saveMap(id: mapList[i])
+                                } label: {
+                                    Text(mapNames[i])
+                                        .foregroundColor(.white)
+                                        .padding()
+                                        .background(.gray)
+                                        .cornerRadius(100)
+                                }
                             }
+                            
                         } label: {
                             Button {
                                 
                             } label: {
-                                Text("mapId")
-                                    .foregroundColor(.white)
-                                    .padding()
-                                    .background(.gray)
-                                    .cornerRadius(100)
+                                HStack {
+                                    Text(currentMap)
+                                        .foregroundColor(.white)
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(.white)
+                                }
+                                .padding(11)
+                                .background(Color(hex: "424242"))
+                                .cornerRadius(100)
+                                
                             }
                         }
-                    }
+                    }.padding(.top, 15)
                     Spacer()
                 }.padding()
             
@@ -851,6 +933,27 @@ struct UnityView: View {
                 withAnimation {
                     flash = false
                 }
+            }
+            api.api.onSetLoadingMap = { map in
+                self.currentMap = map
+            }
+            api.api.setMapList = {ls,na in
+                if (ls == "") {
+                    return
+                }
+                let start = ls.index(ls.startIndex, offsetBy: 0)
+                let end = ls.index(ls.endIndex, offsetBy: -1)
+                let range = start..<end
+                let mySubstring = ls[range]
+                
+                let start2 = na.index(na.startIndex, offsetBy: 0)
+                let end2 = na.index(na.endIndex, offsetBy: -1)
+                let range2 = start2..<end2
+                let mySubstring2 = na[range2]
+                
+                self.mapList = String(mySubstring).components(separatedBy: " ")
+                self.mapNames = String(mySubstring2).components(separatedBy: " ")
+//                print("swifty " + self.mapList[0])
             }
             DataHandler.shared.setAddingObj = {
                 addingObj = DataHandler.shared.addingObj
