@@ -410,7 +410,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Log("Loading map " + newId);
 
 
-
+            HostNativeAPI.LoadingMap(newId);
             FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
             StorageReference storageRef = storage.RootReference;
             StorageReference mapsdbRef = storageRef.Child("maps");
@@ -559,6 +559,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Console.WriteLine("Closest map is " + newId + " with error " + error);
             Log("Loading new map " + newId);
 
+            HostNativeAPI.LoadingMap(newId);
             FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
             StorageReference storageRef = storage.RootReference;
             StorageReference mapsdbRef = storageRef.Child("maps");
