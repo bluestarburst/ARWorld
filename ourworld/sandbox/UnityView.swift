@@ -322,7 +322,7 @@ struct UnityView: View {
                         Menu {
                             ForEach(0..<mapList.count) { i in
                                 Button {
-                                    UnityBridge.getInstance().api.saveMap(id: mapList[i])
+                                    UnityBridge.getInstance().api.loadMap(id: mapList[i])
                                 } label: {
                                     Text(mapNames[i])
                                         .foregroundColor(.white)
@@ -948,6 +948,7 @@ struct UnityView: View {
                 if (ls == "" || na == "") {
                     return
                 }
+                print("swifty " + ls + "/ "  + na)
                 let start = ls.index(ls.startIndex, offsetBy: 0)
                 let end = ls.index(ls.endIndex, offsetBy: -1)
                 let range = start..<end
@@ -960,7 +961,7 @@ struct UnityView: View {
                 
                 self.mapList = String(mySubstring).components(separatedBy: " ")
                 self.mapNames = String(mySubstring2).components(separatedBy: " ")
-//                self.currentMap = self.mapNames[0]
+                self.currentMap = self.mapNames[0]
 //                print("swifty " + self.mapList[0])
             }
             DataHandler.shared.setAddingObj = {
