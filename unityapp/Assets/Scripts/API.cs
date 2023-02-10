@@ -173,7 +173,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     _UpdateCubeColor(serializedMessage);
                     break;
                 case "save-map":
-                    
+
                     _SaveMap(serializedMessage);
                     // HostNativeAPI.saveMap("hehehe");
                     break;
@@ -220,12 +220,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void _TakeVideo(string serialized)
         {
             var msg = JsonConvert.DeserializeObject<MessageWithData<string>>(serialized);
-            if (msg.data != null) {
-                if (msg.data == "start") {
+            if (msg.data != null)
+            {
+                if (msg.data == "start")
+                {
                     // start recording
                     ReplayKit.StartRecording(true, true);
 
-                } else if (msg.data == "stop") {
+                }
+                else if (msg.data == "stop")
+                {
                     // stop recording
                     ReplayKit.StopRecording();
                     ReplayKit.Preview();
@@ -385,7 +389,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var msg = JsonConvert.DeserializeObject<MessageWithData<string>>(serialized);
             if (msg.data != null)
             {
-                worldMapController.OnLoadButton();
+                if (msg.data == "")
+                {
+                    worldMapController.OnLoadButton();
+                } else {
+                    worldMapController.LoadChosenMap(msg.data);
+                }
             }
         }
     }
