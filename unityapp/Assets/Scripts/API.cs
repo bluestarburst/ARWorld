@@ -47,6 +47,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [DllImport("__Internal")]
         public static extern void Screenshot(string status);
+
+        [DllImport("__Internal")]
+        public static extern void MapList(string mapList);
     }
 
     /// <summary>
