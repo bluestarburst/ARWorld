@@ -960,7 +960,7 @@ struct UnityView: View {
                 
                 self.mapList = String(mySubstring).components(separatedBy: " ")
                 self.mapNames = String(mySubstring2).components(separatedBy: " ")
-                self.currentMap = self.mapNames[0]
+//                self.currentMap = self.mapNames[0]
 //                print("swifty " + self.mapList[0])
             }
             DataHandler.shared.setAddingObj = {
