@@ -948,7 +948,7 @@ struct UnityView: View {
                 if (ls == "" || na == "") {
                     return
                 }
-                print("swifty " + ls + "/"  + na)
+                print("swifty " + ls + "/ "  + na)
                 let start = ls.index(ls.startIndex, offsetBy: 0)
                 let end = ls.index(ls.endIndex, offsetBy: -1)
                 let range = start..<end
