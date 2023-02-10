@@ -379,7 +379,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             foreach (var item in potentialChunkIdsPos)
             {
                 mapListString += item.Key + " ";
-                mapListString += potentialMapNames[item.Key] + " ";
+                mapListNameString += potentialMapNames[item.Key] + " ";
             }
             HostNativeAPI.MapList(mapListString, mapListNameString);
 
