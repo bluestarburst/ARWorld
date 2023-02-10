@@ -460,6 +460,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public async void LoadChosenMap(string chosenId)
         {
+            HostNativeAPI.LoadingMap(chosenId);
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
             chosenMapId = chosenId;
             FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
