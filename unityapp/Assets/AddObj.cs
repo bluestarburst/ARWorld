@@ -422,7 +422,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             arWorldMapController.Log("currentChunk");
 
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
-            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform);
+            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
             scaleChild = Instantiate(ScaleComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
