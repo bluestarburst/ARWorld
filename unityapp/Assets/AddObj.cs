@@ -74,6 +74,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private float ratioX = 1.0f;
 
         public GameObject MoveComponentPrefab;
+        public GameObject RotateComponentPrefab;
+        public GameObject ScaleComponentPrefab;
         public LayerMask selectedLayers;
 
         public CamFilter innerFilter;
@@ -161,6 +163,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         private GameObject moveChild = null;
+        private GameObject rotateChild = null;
+        private GameObject scaleChild = null;
         async void AddPoster(string type, string user, string id)
         {
             isAdding = true;
@@ -418,6 +422,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             arWorldMapController.Log("currentChunk");
 
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            rotateChild.transform.parent = spawnedObject.transform;
+            scaleChild = Instantiate(ScaleComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
         Vector3 tempPos = new Vector3(0, 0, 0);
