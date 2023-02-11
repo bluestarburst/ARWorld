@@ -593,7 +593,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             change = "move";
 
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
-            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform);
+            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
             scaleChild = Instantiate(ScaleComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
@@ -695,7 +695,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             change = "move";
 
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
-            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform);
+            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
             scaleChild = Instantiate(ScaleComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
         private Quaternion trueRot = Quaternion.identity;
@@ -922,6 +922,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else if (change.Equals("rotate"))
                 {
+                    rotateChild.transform.position = spawnedObject.transform.position;
                     moveChild.SetActive(false);
                     rotateChild.SetActive(true);
                     scaleChild.SetActive(false);
@@ -1369,6 +1370,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         previousRotation = roundedRot;
                         // rotate object
                         spawnedObject.transform.rotation = Quaternion.Euler(roundedRot);
+                        rotateChild.transform.rotation = Quaternion.Euler(roundedRot);
                         trueRot = Quaternion.Euler(roundedRot);
                     }
                 }
@@ -1480,7 +1482,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             spawnedObject.transform.position = tempPos;
             spawnedObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
-            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform);
+            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
             scaleChild = Instantiate(ScaleComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
 
 
@@ -1493,7 +1495,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             spawnedObject.transform.position = tempPos;
             spawnedObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
-            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform);
+            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
             scaleChild = Instantiate(ScaleComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
