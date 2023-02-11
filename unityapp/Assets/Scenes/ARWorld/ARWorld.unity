@@ -767,6 +767,10 @@ MonoBehaviour:
   api: {fileID: 168510958}
   MoveComponentPrefab: {fileID: 9191169306543018968, guid: 519b4a65dd5efb84b8a582cb5b1a785a,
     type: 3}
+  RotateComponentPrefab: {fileID: 6967789874311738035, guid: b644cdaa44670cc479d82bc989c1a77a,
+    type: 3}
+  ScaleComponentPrefab: {fileID: 6967789874311738035, guid: 40c6be1ca6baac44996f7c3a15108f3e,
+    type: 3}
   selectedLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -1157,6 +1161,8 @@ MonoBehaviour:
   potentialChunkIdsCurrent: 0
   innerFilter: {fileID: 1253242898}
   user: 
+  chosenMapId: 
+  mapName: 
   firstLoadMap: 0
 --- !u!4 &1751548351
 Transform:

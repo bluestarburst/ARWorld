@@ -594,6 +594,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             change = "move";
 
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            rotateChild.transform.parent = spawnedObject.transform;
+            scaleChild = Instantiate(ScaleComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
         private Color inputColor = Color.black;
@@ -694,6 +697,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             change = "move";
 
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            rotateChild.transform.parent = spawnedObject.transform;
+            scaleChild = Instantiate(ScaleComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
         private Quaternion trueRot = Quaternion.identity;
         private bool rotating = false;
@@ -738,7 +744,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (moveChild != null)
                 {
                     Destroy(moveChild);
+                    Destroy(scaleChild);
+                    Destroy(rotateChild);
                     moveChild = null;
+                    scaleChild = null;
+                    rotateChild = null;
                 }
                 if (spawnedObject != null)
                 {
@@ -758,7 +768,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (moveChild != null)
                 {
                     Destroy(moveChild);
+                    Destroy(scaleChild);
+                    Destroy(rotateChild);
                     moveChild = null;
+                    scaleChild = null;
+                    rotateChild = null;
                 }
                 if (spawnedObject != null)
                 {
@@ -885,7 +899,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     arWorldMapController.db.Collection("maps").Document(arWorldMapController.worldMapId).Collection("chunks").Document(chunkScript.id).Collection(tempType).Document().SetAsync(data);
 
                     currentChunk = null;
-                    
+
                 }
 
                 // Destroy(spawnedObject);
@@ -906,12 +920,31 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (change.Equals("move"))
                 {
                     moveChild.SetActive(true);
+                    rotateChild.SetActive(false);
+                    scaleChild.SetActive(false);
+                }
+                else if (change.Equals("rotate"))
+                {
+                    moveChild.SetActive(false);
+                    rotateChild.SetActive(true);
+                    scaleChild.SetActive(false);
+                }
+                else if (change.Equals("scale"))
+                {
+                    moveChild.SetActive(false);
+                    rotateChild.SetActive(false);
+                    scaleChild.SetActive(true);
                 }
                 else
                 {
                     moveChild.SetActive(false);
+                    rotateChild.SetActive(false);
+                    scaleChild.SetActive(false);
                 }
+
+
             }
+
 
             if (Input.touchCount < 1 && !Input.GetMouseButton(0))
             {
@@ -1441,7 +1474,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             Console.WriteLine("Finished importing");
             // spawnedObject = result;
-            
+
             // create a sphere collider for the object
             spawnedObject.AddComponent<SphereCollider>();
             spawnedObject.GetComponent<SphereCollider>().radius = 0.5f;
@@ -1449,6 +1482,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             spawnedObject.transform.position = tempPos;
             spawnedObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            rotateChild.transform.parent = spawnedObject.transform;
+            scaleChild = Instantiate(ScaleComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
 
 
         }
@@ -1460,6 +1496,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             spawnedObject.transform.position = tempPos;
             spawnedObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             moveChild = Instantiate(MoveComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            rotateChild = Instantiate(RotateComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
+            rotateChild.transform.parent = spawnedObject.transform;
+            scaleChild = Instantiate(ScaleComponentPrefab, spawnedObject.transform.position, Quaternion.identity);
         }
 
         IEnumerator GetFileRequest(string url, string path, Action<UnityWebRequest> callback)
