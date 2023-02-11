@@ -289,7 +289,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Console.WriteLine("NOT HIT");
                 if (type.Equals("posters") || type.Equals("stickers") || type.Equals("images"))
                 {
-                    spawnedObject = Instantiate(m_PosterPrefab, Camera.main.transform.position + Camera.main.transform.forward * 2f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + 180, 0));
+                    spawnedObject = Instantiate(m_PosterPrefab, Camera.main.transform.position + Camera.main.transform.forward * 2f, transform.rotation * Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0));
                     // get poster image
                     StorageReference storageRef = FirebaseStorage.GetInstance(FirebaseApp.DefaultInstance).GetReferenceFromUrl("gs://ourworld-737cd.appspot.com");
 
