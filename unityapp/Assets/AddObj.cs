@@ -186,7 +186,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     Console.WriteLine("POSTER");
 
                     // flip rotation because texture is upside down
-                    Quaternion newRotation = Quaternion.Euler(hitPose.rotation.eulerAngles.x + 180, hitPose.rotation.eulerAngles.y, hitPose.rotation.eulerAngles.z);
+                    Quaternion newRotation = Quaternion.Euler(hitPose.rotation.eulerAngles.x, hitPose.rotation.eulerAngles.y, hitPose.rotation.eulerAngles.z);
 
                     // create poster prefab parallel to plane hit normal and 0.5 units above plane hit
                     spawnedObject = Instantiate(m_PosterPrefab, hitPose.position + hitPose.rotation * Vector3.up * 0.1f, newRotation);
