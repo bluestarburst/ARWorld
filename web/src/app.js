@@ -304,6 +304,7 @@ function Canv(props) {
                 id: docRef.id,
                 timestamp: Timestamp.now()
             })
+            
 
             updateDoc(doc(db, "objects", docRef.id), {
                 id: docRef.id

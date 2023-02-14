@@ -1,3 +1,5 @@
+
+
 .FilesDragAndDroparea {
     width: 400px;
     height: 200px;
@@ -7,10 +9,79 @@
     justify-content: center;
     flex-flow: column nowrap;
     font-size: 24px;
-    color: #555555;
-    border: 2px #595959 dashed;
+    color: white;
+    border: 2px white dashed;
+    background-color: rgba(255, 255, 255, 0.304);
     border-radius: 12px;
     text-align: center;
+}
+
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+    background-color: white !important;
+    color: black !important;
+}
+
+p {
+    color: white !important;
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    background-color: gray !important;
+    color: white !important;
+    border-radius: 3rem;
+}
+
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root, .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+    color: rgba(255, 255, 255, 0.614) !important;
+}
+
+.css-wgai2y-MuiFormLabel-asterisk {
+    color: rgba(255, 0, 0, 0.614) !important;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    html {
+        /* font-size: 4rem !important; */
+    }
+
+    .FilesDragAndDroparea {
+        width: 75vw !important;
+        height: 50vh !important;
+        padding: 2rem;
+        border: 5px white dashed;
+        background-color: rgba(255, 255, 255, 0.304);
+        font-size: 3rem;
+    }
+
+    .css-sghohy-MuiButtonBase-root-MuiButton-root {
+        /* font-size: 7rem !important; */
+        padding: 2rem 3.5rem !important;
+        border-radius: 1.5rem !important;
+        font-size: 2rem !important;
+        background-color: white !important;
+        color: black !important;
+    }
+
+    p {
+        font-size: 2rem !important;
+        color: white !important;
+    }
+
+    .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+        font-size: 2rem !important;
+        background-color: gray !important;
+        border-radius: 1rem !important;
+    }
+
+    .upload {
+        gap: 2rem !important;
+        
+    }
+
+    .areaicon {
+        font-size: 4rem !important;
+        margin-top: 10px;
+    }
 }
 
 .areaicon {
@@ -68,3 +139,4 @@
         line-height: 1.4;
     }
 }
+

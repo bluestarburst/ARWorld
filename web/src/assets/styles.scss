@@ -12,14 +12,13 @@ html {
   /* scroll-behavior: smooth !important; */
   overflow-x: hidden;
   height: 100%;
-  background-color: gray !important;
+
 }
 
 body {
   height: 100%;
   width: 100%;
 
-  background-color: gray !important;
 }
 
 h1 {
@@ -338,10 +337,11 @@ a {
 .upload {
   position: absolute;
   bottom: 0;
+  left: 0;
   width: 300px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   gap: 1rem;
   z-index: 2;
@@ -352,8 +352,14 @@ a {
 .signout {
   position: absolute;
   bottom: 0;
-  left: 0;
+  right: 0;
   z-index: 2;
   margin: 2rem;
   color: white;
+}
+
+body {
+  background: radial-gradient(circle at center, rgb(93, 93, 93), black 50%) !important;
+  background-color: black;
+  
 }
