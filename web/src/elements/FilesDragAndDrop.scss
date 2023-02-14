@@ -1,5 +1,3 @@
-
-
 .FilesDragAndDroparea {
     width: 400px;
     height: 200px;
@@ -30,7 +28,12 @@ p {
     border-radius: 3rem;
 }
 
-.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root, .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    background-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root,
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
     color: rgba(255, 255, 255, 0.614) !important;
 }
 
@@ -74,7 +77,7 @@ p {
 
     .upload {
         gap: 2rem !important;
-        
+
     }
 
     .areaicon {
@@ -82,13 +85,13 @@ p {
         margin-top: 10px;
     }
 
-    .upload  .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    .upload .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
         min-width: 50vw !important;
         background-color: rgba(255, 255, 255, 0.16) !important;
         border-radius: 3rem;
     }
 
-    
+
 }
 
 .areaicon {
@@ -146,4 +149,3 @@ p {
         line-height: 1.4;
     }
 }
-
