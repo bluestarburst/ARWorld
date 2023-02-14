@@ -122,7 +122,7 @@ export default function FilesDragAndDrop({ onUpload, children, count, formats })
                 {children}
 
             </div>
-            <input type="file" id='file' style={{ "opacity": "0" }} onChange={handleClickSubmit} />
+            <input type="file" id='file' style={{ "opacity": "0" }} onChange={handleClickSubmit} accept=".glb,.gltf"  />
         </label>
     );
 }
