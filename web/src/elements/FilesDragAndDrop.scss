@@ -1,3 +1,5 @@
+
+
 .FilesDragAndDroparea {
     width: 400px;
     height: 200px;
@@ -28,13 +30,7 @@ p {
     border-radius: 3rem;
 }
 
-.upload .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
-    background-color: rgba(255, 255, 255, 0.16) !important;
-    border-radius: 3rem !important;
-}
-
-.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root,
-.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root, .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
     color: rgba(255, 255, 255, 0.614) !important;
 }
 
@@ -78,7 +74,7 @@ p {
 
     .upload {
         gap: 2rem !important;
-
+        
     }
 
     .areaicon {
@@ -86,13 +82,13 @@ p {
         margin-top: 10px;
     }
 
-    .upload .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    .upload  .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
         min-width: 50vw !important;
-        background-color: rgba(255, 255, 255, 0.16) !important;
+        background-color: white !important;
         border-radius: 3rem;
     }
 
-
+    
 }
 
 .areaicon {
@@ -127,26 +123,29 @@ p {
     position: relative;
     cursor: pointer;
 
-    .FilesDragAndDropplaceholder {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-flow: column nowrap;
-        background-color: #e7e7e7;
-        border-radius: 12px;
-        border: 2px #218a3d dashed;
-        color: #555555;
-        font-size: 24px;
-        opacity: .9;
-        text-align: center;
-        line-height: 1.4;
-    }
+    
 }
+
+.FilesDragAndDropplaceholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+    background-color: #e7e7e7;
+    border-radius: 12px;
+    border: 2px #218a3d dashed;
+    color: #555555;
+    font-size: 24px;
+    opacity: .9;
+    text-align: center;
+    line-height: 1.4;
+}
+
