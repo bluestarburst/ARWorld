@@ -12,7 +12,7 @@ html {
   /* scroll-behavior: smooth !important; */
   overflow-x: hidden;
   height: 100%;
-
+  background-color: black;
 }
 
 body {
@@ -36,6 +36,8 @@ p {
   height: 100vh;
   z-index: -0.5;
   object-fit: cover;
+  opacity: 1;
+  background-color: black;
 }
 
 .back2 {
@@ -51,7 +53,7 @@ p {
 }
 
 .third-party {
-  color: black;
+  color: black !important;
   /* width: 100%; */
   /* padding: 0 2rem; */
   min-width: 275px;
@@ -75,6 +77,7 @@ p {
 
 .third-party p {
   /* width: 100%; */
+  color: black !important;
   margin: 0;
 }
 
@@ -127,6 +130,7 @@ p {
 
 .login {
   /* max-width: 550px; */
+
   width: 100%;
   height: 100%;
   display: flex;
@@ -137,6 +141,7 @@ p {
 }
 
 .login-header {
+  color: white !important;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -152,6 +157,11 @@ p {
 
 .login p {
   margin: 0;
+  color: black !important;
+}
+
+.login h5 {
+  color: white !important;
 }
 
 .login-modal {
@@ -233,7 +243,7 @@ p {
 .login-modal-body img {
   width: 100%;
   margin-left: 1rem;
-  height: 80%;
+  height: auto;
   object-fit: cover;
   top: 0;
   left: 0;
@@ -251,6 +261,10 @@ p {
   gap: 0.25rem;
   /* margin-bottom: 5rem; */
   /* padding-bottom: 200px; */
+}
+
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border-radius: 3rem !important;
 }
 
 .pg1,
@@ -312,7 +326,7 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
 }
 
 .preview img {
@@ -361,5 +375,149 @@ a {
 body {
   background: radial-gradient(circle at center, rgb(93, 93, 93), black 50%) !important;
   background-color: black;
+
+}
+
+@media (min-aspect-ratio: 1/1) and (max-height: 900px) {
+  .login-modal-content img {
+    width: 50% !important;
+  }
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .login {}
+
+  .login-header h1 {
+    font-size: 4rem !important;
+  }
+
+  .login h5 {
+    font-size: 2rem !important;
+  }
+
+  .third-party p {
+    color: black !important;
+  }
+
+  .third-party {
+    margin-top: 2rem;
+    padding: 2rem 3rem;
+  }
+
+  .login-modal p {
+    color: black !important;
+  }
+
+  .login-modal-content {
+    max-width: 90vw !important;
+    height: auto !important;
+    max-height: min-content !important;
+    border-radius: 3rem;
+  }
+
+  .login-modal-content h1 {
+    font-size: 3rem !important;
+  }
+
+  .login-modal-content img {
+    width: 80% !important;
+  }
+
+  .login-modal-body {
+    justify-content: start;
+    height: min-content !important;
+  }
+
+  .login-modal-content p {
+    font-size: 2rem !important;
+  }
+
+  .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    font-size: 3rem !important;
+  }
+
+  .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 2rem !important;
+    padding: 1rem !important;
+  }
+
+  .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+    padding: 1rem !important;
+  }
+
+  .btn {
+    font-size: 2rem !important;
+    padding: 1.5rem 3.5rem !important;
+    border-radius: 3rem !important;
+  }
+
+  .css-14lo706 {
+    font-size: 2.3rem !important;
+  }
+
+  .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 2.25rem !important;
+  }
+
+  .MuiInputLabel-shrink {
+    transform: translate(2.25rem, -1.25rem) scale(0.9) !important;
+  }
+
+  /*
+  .css-sghohy-MuiButtonBase-root-MuiButton-root {
+
+    padding: 2rem 3.5rem !important;
+    border-radius: 1.5rem !important;
+    font-size: 2rem !important;
+    background-color: white !important;
+    color: black !important;
+  }
+
+  p {
+    font-size: 2rem !important;
+    color: white !important;
+  }
+
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    font-size: 3rem !important;
+    background-color: gray !important;
+    border-radius: 1rem !important;
+  }
+
   
+
+  .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root,
+  .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 3rem !important;
+
+  }
+
+  .MuiInputLabel-shrink {
+    transform: translate(0, -2rem) scale(0.75) !important;
+  }
+
+  .css-14lo706 {
+    font-size: 1.5rem !important;
+  }
+
+  */
+}
+
+.login .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill {
+  border-radius: 5rem !important;
+}
+
+.login .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  background-color: white !important;
+  color: rgb(0, 0, 0) !important;
+  border-radius: 3rem;
+}
+
+.login .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root,
+.login .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+  color: rgba(0, 0, 0, 0.614) !important;
+}
+
+.login .css-wgai2y-MuiFormLabel-asterisk {
+  color: rgba(255, 0, 0, 0.614) !important;
 }
