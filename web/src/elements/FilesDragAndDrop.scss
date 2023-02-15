@@ -17,7 +17,7 @@
 }
 
 .css-sghohy-MuiButtonBase-root-MuiButton-root {
-    background-color: rgba(255, 255, 255, 0.205) !important;
+    background-color: rgb(255, 255, 255) !important;
     color: black !important;
 }
 
@@ -36,6 +36,12 @@ p {
 
 .css-wgai2y-MuiFormLabel-asterisk {
     color: rgba(255, 0, 0, 0.614) !important;
+}
+
+.upload .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    background-color: rgba(255, 255, 255, 0.151) !important;
+    border-radius: 3rem !important;
+    width: 15rem !important;
 }
 
 @media (max-aspect-ratio: 1/1) {
@@ -78,7 +84,7 @@ p {
     }
 
     .upload .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
-        width: 50vw !important;
+        width:82.5vw !important;
         background-color: rgba(255, 255, 255, 0.151) !important;
         border-radius: 3rem !important;
     }

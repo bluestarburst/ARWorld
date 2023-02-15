@@ -459,8 +459,8 @@ function Canv(props) {
                     <Button variant="contained" color="primary" onClick={_ => { setThumbnail(null); setScreenshot(true) }}>Take Screenshot</Button>
                 </div>
                 <div className='upload'>
-                    <TextField required id="outlined-basic" label="Title" variant="outlined" className='w-100' defaultValue={fileName} />
-                    <TextField id="outlined-basic" label="Tags" variant="outlined" className='w-100' onChange={changeTags} onKeyDown={onKeyPressed} />
+                    <TextField required id="outlined-basic" label="Title" variant="outlined" className='w-100' autoCorrect={false} autoComplete={false} defaultValue={fileName} />
+                    <TextField id="outlined-basic" label="Tags (separated by commas)" variant="outlined" autoCorrect={false} autoComplete={false} className='w-100' onChange={changeTags} onKeyDown={onKeyPressed} />
                     <Button variant="contained" color="primary" onClick={handleExport} >Upload</Button>
                 </div>
 
