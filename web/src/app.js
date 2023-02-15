@@ -304,7 +304,7 @@ function Canv(props) {
                 id: docRef.id,
                 timestamp: Timestamp.now()
             })
-            
+
 
             updateDoc(doc(db, "objects", docRef.id), {
                 id: docRef.id
@@ -425,7 +425,7 @@ function Canv(props) {
                     <Scene setScreenshot={setScreenshot} screenshot={screenshot} setThumbnail={setThumbnail} thumbnail={thumbnail} setScene={setScene} setThumbnailData={setThumbnailData}>
                         <ambientLight />
                         <pointLight position={[10, 10, 10]} />
-                        <OrbitControls target={[0,0.5,0]} />
+                        <OrbitControls target={[0, 0.5, 0]} />
                         {!screenshot ? <>
                             <gridHelper />
                             <axesHelper scale={[3, 3, 3]} />
@@ -464,7 +464,7 @@ function Canv(props) {
                     <Button variant="contained" color="primary" onClick={handleExport} >Upload</Button>
                 </div>
 
-            </div> :
+            </div> : <>
                 <FilesDragAndDrop
                     onUpload={onUpload}
                     count={1}
@@ -482,13 +482,16 @@ function Canv(props) {
                             &#128526;
                         </span>
                     </div>
+
                 </FilesDragAndDrop>
+                <div className='signout'>
+                    <Button variant="contained" color="primary" onClick={_ => {
+                        auth.signOut()
+                    }}>Sign Out</Button>
+                </div>
+            </>
             }
-            <div className='signout'>
-                <Button variant="contained" color="primary" onClick={_ => {
-                    auth.signOut()
-                }}>Sign Out</Button>
-            </div>
+
         </div>
     );
 

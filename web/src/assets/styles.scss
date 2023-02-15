@@ -315,11 +315,12 @@ p {
   top: 0;
   left: 0;
   margin: 2rem;
+  max-width: 40vw;
 }
 
 .preview {
   position: absolute;
-  bottom: 0;
+  top: 0;
   right: 0;
   margin: 2rem;
   display: flex;
@@ -332,6 +333,8 @@ p {
 .preview img {
   width: 200px;
   height: 200px;
+  max-width: 40vw;
+  max-height: 40vw;
   border-radius: 24px;
   border: 2px rgb(85, 85, 85) solid;
   margin-bottom: 1rem;
@@ -365,8 +368,8 @@ a {
 
 .signout {
   position: absolute;
-  top: 0;
-  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 2;
   margin: 2rem;
   color: white;
@@ -432,11 +435,6 @@ body {
     font-size: 2rem !important;
   }
 
-  .preview {
-    width: 50vw;
-    height: 50vw;
-  }
-
 /*
   .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
     font-size: 3rem !important;
@@ -456,57 +454,12 @@ body {
     padding: 1.5rem 3.5rem !important;
     border-radius: 3rem !important;
   }
-/*
-  .css-14lo706 {
-    font-size: 2.3rem !important;
+
+  .upload {
+    justify-content: center !important;
+    align-self: center !important;
   }
 
-  .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
-    font-size: 2.25rem !important;
-  }
-
-  .MuiInputLabel-shrink {
-    transform: translate(2.25rem, -1.25rem) scale(0.9) !important;
-  }*/
-
-  /*
-  .css-sghohy-MuiButtonBase-root-MuiButton-root {
-
-    padding: 2rem 3.5rem !important;
-    border-radius: 1.5rem !important;
-    font-size: 2rem !important;
-    background-color: white !important;
-    color: black !important;
-  }
-
-  p {
-    font-size: 2rem !important;
-    color: white !important;
-  }
-
-  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-    font-size: 3rem !important;
-    background-color: gray !important;
-    border-radius: 1rem !important;
-  }
-
-  
-
-  .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root,
-  .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
-    font-size: 3rem !important;
-
-  }
-
-  .MuiInputLabel-shrink {
-    transform: translate(0, -2rem) scale(0.75) !important;
-  }
-
-  .css-14lo706 {
-    font-size: 1.5rem !important;
-  }
-
-  */
 }
 
 .login .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill {
