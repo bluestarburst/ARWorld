@@ -300,7 +300,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         }
 
-        public async void ResetAndWaitUntilMappedSave() {
+        public async void ResetAndWaitUntilMappedSave()
+        {
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
             sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             await Task.Delay(1000);
@@ -446,13 +447,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // yield break;
             }
 
-
+            sessionSubsystem.ApplyWorldMap(worldMap);
             await WaitUntilMapped();
-            if (chosenMapId != "") {
+            if (chosenMapId != "")
+            {
                 return;
             }
             Log("Apply ARWorldMap to current session.");
-            sessionSubsystem.ApplyWorldMap(worldMap);
+
             // Invoke("getNextPotentialChunkId", 10f);
             Invoke("getNextPotentialChunkId", 5f);
             // OnSaveButton();
@@ -599,13 +601,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 
 
-
+            sessionSubsystem.ApplyWorldMap(worldMap);
             await WaitUntilMapped();
-            if (chosenMapId != "") {
+            if (chosenMapId != "")
+            {
                 return;
             }
             Log("Apply ARWorldMap to current session.");
-            sessionSubsystem.ApplyWorldMap(worldMap);
+
             // Invoke("getNextPotentialChunkId", 10f);
             // wait 5 seconds before getting next potential chunk id
             Invoke("getNextPotentialChunkId", 5f);
@@ -631,6 +634,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             while (sessionSubsystem.worldMappingStatus != ARWorldMappingStatus.Mapped)
             {
                 await Task.Delay(100);
+                if (chosenMapId != "")
+                {
+                    return true;
+                }
             }
             return true;
         }
@@ -641,7 +648,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
 
             // var request = sessionSubsystem.GetARWorldMapAsync(); lags too much
-            
+
 
             Log(worldMap.valid ? "World map is valid." : "World map is invalid.");
             if (!worldMap.valid)
