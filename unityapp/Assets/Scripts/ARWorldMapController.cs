@@ -465,6 +465,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             HostNativeAPI.LoadingMap(chosenId);
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+            await Task.Delay(1000);
+            sessionSubsystem.Reset();
+            await WaitUntilWorldMapReady();
+            sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
+
+            // delete all chunks
+            centerChunk = null;
+            centerChunkId = "";
+            repeating = false;
+            foreach (var key in chunks.Keys)
+            {
+                Destroy(chunks[key]);
+            }
+            chunks.Clear();
+            anchors.Clear();
+
+             // load chosen map
+
+
             chosenMapId = chosenId;
             FirebaseStorage storage = FirebaseStorage.GetInstance(api.app);
             StorageReference storageRef = storage.RootReference;
