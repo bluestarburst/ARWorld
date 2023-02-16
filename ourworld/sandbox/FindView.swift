@@ -220,7 +220,7 @@ struct FindLoop: View {
 struct FindView_Previews: PreviewProvider {
     
     static var previews: some View {
-        FindView()
+        FindView(bool: .constant(true))
     }
 }
 
