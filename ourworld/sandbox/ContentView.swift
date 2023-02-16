@@ -20,6 +20,7 @@ struct ContentView: View {
     @State var pages = 0
     
     @State var disabled = false
+    @State var findDisabled = true
     
     func changePage(num: Int) {
         if (num == 1) {
@@ -49,7 +50,7 @@ struct ContentView: View {
                         VStack {
                             Spacer()
                         }
-                        .frame(width: 10)
+                        .frame(width: UIScreen.screenWidth * 0.01)
                         .background(.black.opacity(0.02))
                         .gesture(
                             DragGesture()
@@ -120,8 +121,16 @@ struct ContentView: View {
                                 Spacer()
                             }.ignoresSafeArea()
                             
-                            FindView()
+                            FindView(bool: $findDisabled)
                                 .padding(.top,30)
+                                .onChange(of: findDisabled) {_ in
+                                    if (findDisabled) {
+                                        withAnimation{
+                                            offset = normal - 200
+                                            pages = 0
+                                        }
+                                    }
+                                }
                             
                             Spacer()
                         }
@@ -145,6 +154,43 @@ struct ContentView: View {
                             UIScreen.screenWidth = geometry.size.width
                         }
                         
+                    }
+                    if (offset > normal) {
+                        HStack {
+                            
+                            Spacer()
+                            VStack {
+                                Spacer()
+                            }
+                            .frame(width: UIScreen.screenWidth * 0.01)
+                            .background(.black.opacity(0.02))
+                            .gesture(
+                                DragGesture()
+                                    .onChanged{ gesture in
+                                        if (pages == 1) {
+                                            withAnimation {
+                                                offset = gesture.translation.width
+                                            }
+                                        }
+                                    }
+                                    .onEnded { _ in
+                                        if (offset < -100) {
+                                            //                                    UnityBridge.getInstance().show()
+                                            withAnimation{
+                                                offset = normal - 200
+                                                pages = 0
+                                            }
+                                        } else {
+                                            withAnimation {
+                                                offset = 0
+                                            }
+                                            
+                                        }
+                                        
+                                    }
+                            )
+                            
+                        }
                     }
                     
                     

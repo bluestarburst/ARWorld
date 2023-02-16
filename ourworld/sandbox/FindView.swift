@@ -22,6 +22,8 @@ struct FindView: View {
     
     @FocusState private var focusField: Field?
     
+    @Binding var bool: Bool
+    
     var body: some View {
         VStack {
             Spacer()
@@ -89,19 +91,28 @@ struct FindView: View {
                         }
                     }.frame(height: 40)
                     
-                    TextField("Search Tags", text: $search)
-                        .padding(10)
-                        .background(
-                            Color(.gray)
-                                .opacity(0.2)
-                                .cornerRadius(16)
-                        )
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 7)
-                        .focused($focusField, equals: .myField)
-                        .onTapGesture {
-                            focusField = .myField
-                        }
+                    HStack {
+                        TextField("Search Tags", text: $search)
+                            .padding(10)
+                            .background(
+                                Color(.gray)
+                                    .opacity(0.2)
+                                    .cornerRadius(16)
+                            )
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 7)
+                            .focused($focusField, equals: .myField)
+                            .onTapGesture {
+                                focusField = .myField
+                            }
+                        Button(action: {withAnimation{bool=false}}, label: {
+                            Image(systemName: "xmark")
+                        })
+                        .imageScale(.medium)
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .padding(.horizontal,10)
+                    }
                     
                     ScrollView {
                         FindLoop(type: $type)

@@ -164,7 +164,11 @@ struct AuthView: View {
                         .padding(.bottom,10)
                         .transition(.opacity)
                     }
-                    Text("Enter your phone number to get started!")
+                    Text("Welcome to ourworlds!")
+                        .onAppear {
+                            model.changePage = {page = 1}
+                        }
+                    Text("Enter your phone number to save your images and objects across devices!")
                         .onAppear {
                             model.changePage = {page = 1}
                         }
