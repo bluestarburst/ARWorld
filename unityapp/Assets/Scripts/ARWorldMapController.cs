@@ -303,12 +303,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public async void ResetAndWaitUntilMappedSave()
         {
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
-            // sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
+            sessionSubsystem.SetCoachingActive(false, ARCoachingOverlayTransition.Animated);
             await Task.Delay(1000);
             sessionSubsystem.Reset();
             // sessionSubsystem.
             await WaitUntilWorldMapReady();
-            // sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
+            sessionSubsystem.SetCoachingActive(true, ARCoachingOverlayTransition.Animated);
             WaitUntilMappedSave();
         }
 
