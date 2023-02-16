@@ -494,10 +494,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // yield break;
             }
 
-
+            sessionSubsystem.ApplyWorldMap(worldMap);
             await WaitUntilMapped();
             Log("Apply ARWorldMap to current session.");
-            sessionSubsystem.ApplyWorldMap(worldMap);
+
         }
 
 
