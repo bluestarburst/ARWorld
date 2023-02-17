@@ -20,7 +20,8 @@ struct ContentView: View {
     @State var pages = 0
     
     @State var disabled = false
-    @State var findDisabled = true
+    
+    @State var findDisabled = false
     
     func changePage(num: Int) {
         if (num == 1) {
@@ -50,7 +51,7 @@ struct ContentView: View {
                         VStack {
                             Spacer()
                         }
-                        .frame(width: UIScreen.screenWidth * 0.01)
+                        .frame(width: UIScreen.screenWidth * 0.05)
                         .background(.black.opacity(0.02))
                         .gesture(
                             DragGesture()
@@ -65,10 +66,12 @@ struct ContentView: View {
                                         withAnimation{
                                             offset = 0
                                             pages = 1
+                                            
                                         }
                                     } else {
                                         withAnimation {
                                             offset = normal - 200
+                                            
                                         }
                                     }
                                 }
@@ -94,10 +97,12 @@ struct ContentView: View {
                                         withAnimation{
                                             offset = normal - 200
                                             pages = 0
+                                            
                                         }
                                     } else {
                                         withAnimation {
                                             offset = 0
+                                            
                                         }
                                         
                                     }
@@ -123,14 +128,14 @@ struct ContentView: View {
                             
                             FindView(bool: $findDisabled)
                                 .padding(.top,30)
-                                .onChange(of: findDisabled) {_ in
-                                    if (findDisabled) {
-                                        withAnimation{
-                                            offset = normal - 200
-                                            pages = 0
-                                        }
+                                .onChange(of: findDisabled) { _ in
+                                    withAnimation {
+                                        offset = normal - 200
+                                        pages = 0
                                     }
+                                    findDisabled = false
                                 }
+                                
                             
                             Spacer()
                         }
@@ -147,8 +152,13 @@ struct ContentView: View {
                             normal = -geometry.size.width
                             offset = -geometry.size.width - 200
                         } .onChange(of: geometry.size) {_ in
-                            normal = -geometry.size.width
-                            offset = -geometry.size.width - 200
+                            withAnimation {
+                                if (pages == 1) {
+                                    normal = -geometry.size.width
+                                } else {
+                                    offset = -geometry.size.width - 200
+                                }
+                            }
                             
                             UIScreen.screenHeight = geometry.size.height
                             UIScreen.screenWidth = geometry.size.width
@@ -162,7 +172,7 @@ struct ContentView: View {
                             VStack {
                                 Spacer()
                             }
-                            .frame(width: UIScreen.screenWidth * 0.01)
+                            .frame(width: UIScreen.screenWidth * 0.05)
                             .background(.black.opacity(0.02))
                             .gesture(
                                 DragGesture()
@@ -179,10 +189,12 @@ struct ContentView: View {
                                             withAnimation{
                                                 offset = normal - 200
                                                 pages = 0
+                                                
                                             }
                                         } else {
                                             withAnimation {
                                                 offset = 0
+                                                
                                             }
                                             
                                         }

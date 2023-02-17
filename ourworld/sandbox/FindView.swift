@@ -99,13 +99,13 @@ struct FindView: View {
                                     .opacity(0.2)
                                     .cornerRadius(16)
                             )
-                            .padding(.horizontal, 20)
+                            .padding(.leading, 20)
                             .padding(.vertical, 7)
                             .focused($focusField, equals: .myField)
                             .onTapGesture {
                                 focusField = .myField
                             }
-                        Button(action: {withAnimation{bool=false}}, label: {
+                        Button(action: {withAnimation{bool=true}}, label: {
                             Image(systemName: "xmark")
                         })
                         .imageScale(.medium)
@@ -220,7 +220,7 @@ struct FindLoop: View {
 struct FindView_Previews: PreviewProvider {
     
     static var previews: some View {
-        FindView(bool: .constant(true))
+        FindView(bool: .constant(false))
     }
 }
 
