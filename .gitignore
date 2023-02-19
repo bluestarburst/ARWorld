@@ -46,3 +46,4 @@ xcuserdata/
 Carthage/Build/
 secure/
 node_modules/
+node_modules
