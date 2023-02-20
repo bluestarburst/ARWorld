@@ -309,7 +309,7 @@ class DataHandler: NSObject, ObservableObject {
         // return UIImage(systemName: "xmark")
     }
     
-    private var delList = ["objects","images","posters","stickers"]]; 
+    private var delList = ["objects","images","posters","stickers"]; 
     func deleteAccount() {
         // go through all the user's creations and delete them
         // delete the user's account

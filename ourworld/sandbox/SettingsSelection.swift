@@ -24,7 +24,7 @@ struct SettingsSelection: View {
     
     var changePage: (Int) -> Void
     
-    
+    @State var deletePrompt = false
     
     var body: some View {
         VStack {
@@ -113,7 +113,7 @@ struct SettingsSelection: View {
                                 .padding (.horizontal,30)
                                 .padding (.vertical,15)
                         } else if (type == "user") {
-                            Button(action: {DataHandler.shared.deleteAccount();changePage(0)}, label: {
+                            Button(action: {withAnimation{deletePrompt = true}}, label: {
                                 Spacer()
                                 Text("Delete Account")
                                     .foregroundColor(.white)
@@ -124,6 +124,25 @@ struct SettingsSelection: View {
                             .cornerRadius(16)
                             .padding(.horizontal,30)
                             .padding(.vertical,10)
+                            .alert(
+                                "Are you sure you want to delete your account? This action cannot be undone. Doing this will delete all maps and objects that you've created.",
+                                isPresented: $deletePrompt,
+                                presenting: true
+                            ) { _ in
+                                Button(role: .destructive) {
+                                    withAnimation{DataHandler.shared.deleteAccount();changePage(0)}
+                                } label: {
+                                    Text("Delete")
+                                }
+                                Button(role: .cancel) {
+                                    
+                                } label: {
+                                    Text("Cancel")
+                                    
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                            
                             Button(action: {DataHandler.shared.signOut();changePage(0)}, label: {
                                 Spacer()
                                 Text("Sign out")
@@ -134,7 +153,8 @@ struct SettingsSelection: View {
                             .background(.white)
                             .cornerRadius(16)
                             .padding(.horizontal,30)
-                            .padding(.vertical,10)
+                            .padding(.vertical,0)
+                            
                         }
                     }
                 }.gesture(
