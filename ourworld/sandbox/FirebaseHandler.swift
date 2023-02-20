@@ -337,6 +337,17 @@ class DataHandler: NSObject, ObservableObject {
                 }
             }
         }
+
+        self.db.collection("users").document(self.uid!).collection("maps").getDocuments { (querySnapshot, err) in
+                if let err = err {
+                    print("error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        self.db.collection("maps").document(document.documentID).delete()
+                        document.reference.delete()
+                    }
+                }
+            }
         
 
         self.signOut()
