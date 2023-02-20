@@ -310,6 +310,7 @@ class DataHandler: NSObject, ObservableObject {
     }
     
     private var delList = ["objects","images","posters","stickers"]]; 
+    private var types = ["objects": ".glb", "images": ".jpg", "posters": ".jpg", "stickers": ".jpg", "maps": ".worldmap"]
     func deleteAccount() {
         // go through all the user's creations and delete them
         // delete the user's account
@@ -323,6 +324,27 @@ class DataHandler: NSObject, ObservableObject {
                     for document in querySnapshot!.documents {
                         self.db.collection(type).document(document.documentID).delete()
                         document.reference.delete()
+                        // delete from storage
+                        var typeExt = types[type]
+                        let storageRef = self.storage.reference().child("users/" + self.uid! + "/" + type + "/" + document.documentID + typeExt);
+                        storageRef.delete { error in
+                            if let error = error {
+                                if (typeExt == "jpg") {
+                                    typeExt = "png"
+                                    let storageRef2 = self.storage.reference().child("users/" + self.uid! + "/" + type + "/" + document.documentID + "png");
+                                    storageRef2.delete { error in
+                                        if let error = error {
+                                            print("error deleting file: \(error)")
+                                        } else {
+                                            print("file deleted")
+                                        }
+                                    }
+                                }
+                                print("error deleting file: \(error)")
+                            } else {
+                                print("file deleted")
+                            }
+                        }
                     }
                 }
             }
@@ -345,6 +367,15 @@ class DataHandler: NSObject, ObservableObject {
                     for document in querySnapshot!.documents {
                         self.db.collection("maps").document(document.documentID).delete()
                         document.reference.delete()
+                        // delete from storage
+                        let storageRef = self.storage.reference().child("maps/" + document.documentID + ".worldmap");
+                        storageRef.delete { error in
+                            if let error = error {
+                                print("error deleting file: \(error)")
+                            } else {
+                                print("file deleted")
+                            }
+                        }
                     }
                 }
             }
