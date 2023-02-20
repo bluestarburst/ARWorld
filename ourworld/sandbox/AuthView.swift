@@ -168,7 +168,11 @@ struct AuthView: View {
                         .onAppear {
                             model.changePage = {page = 1}
                         }
+                        .font(.title2)
                     Text("Enter your phone number to save your images and objects across devices!")
+                        .padding(.horizontal, 50)
+                        .padding(.top,5)
+                        .multilineTextAlignment(.center)
                         .onAppear {
                             model.changePage = {page = 1}
                         }
