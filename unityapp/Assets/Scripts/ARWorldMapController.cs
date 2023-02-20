@@ -712,6 +712,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     { "id", docRef.Id },
                     { "centerChunkId", centerChunkId },
                 });
+
+                var docref2 = db.Collection("users").Document(user).Collection("maps").Document(docRef.Id);
+                await docref2.SetAsync(new Dictionary<string, object>
+                {
+                    { "location", location },
+                    { "altitude", api.alt },
+                    { "creator", user },
+                    { "created", DateTime.Now },
+                    { "name", mapName },
+                    { "id", docRef.Id },
+                });
+
                 worldMapId = docRef.Id;
                 collab.serviceType = docRef.Id;
                 collab.enabled = true;
