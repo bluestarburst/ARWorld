@@ -309,6 +309,10 @@ class DataHandler: NSObject, ObservableObject {
         // return UIImage(systemName: "xmark")
     }
     
+    func deleteAccount() {
+        self.signOut()
+    }
+    
     
 }
 

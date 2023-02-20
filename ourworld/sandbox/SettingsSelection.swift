@@ -113,14 +113,25 @@ struct SettingsSelection: View {
                                 .padding (.horizontal,30)
                                 .padding (.vertical,15)
                         } else if (type == "user") {
-                            Button(action: {DataHandler.shared.signOut();changePage(0)}, label: {
+                            Button(action: {DataHandler.shared.deleteAccount();changePage(0)}, label: {
                                 Spacer()
-                                Text("Sign out")
+                                Text("Delete Account")
                                     .foregroundColor(.white)
                                     .padding()
                                 Spacer()
                             })
-                            .background(.pink)
+                            .background(.red)
+                            .cornerRadius(16)
+                            .padding(.horizontal,30)
+                            .padding(.vertical,10)
+                            Button(action: {DataHandler.shared.signOut();changePage(0)}, label: {
+                                Spacer()
+                                Text("Sign out")
+                                    .foregroundColor(.black)
+                                    .padding()
+                                Spacer()
+                            })
+                            .background(.white)
                             .cornerRadius(16)
                             .padding(.horizontal,30)
                             .padding(.vertical,10)
