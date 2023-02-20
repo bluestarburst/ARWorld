@@ -309,7 +309,36 @@ class DataHandler: NSObject, ObservableObject {
         // return UIImage(systemName: "xmark")
     }
     
+    private var delList = ["objects","images","posters","stickers"]]; 
     func deleteAccount() {
+        // go through all the user's creations and delete them
+        // delete the user's account
+        // sign out
+        self.db.collection("users").document(self.uid!).delete()
+        for type in delList {
+            self.db.collection("users").document(self.uid!).collection(type).getDocuments { (querySnapshot, err) in
+                if let err = err {
+                    print("error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        self.db.collection(type).document(document.documentID).delete()
+                        document.reference.delete()
+                    }
+                }
+            }
+
+            self.db.collection("users").document(self.uid!).collection("f" + type).getDocuments { (querySnapshot, err) in
+                if let err = err {
+                    print("error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        document.reference.delete()
+                    }
+                }
+            }
+        }
+        
+
         self.signOut()
     }
     
