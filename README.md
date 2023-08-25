@@ -3,6 +3,8 @@ that is all
 
 also, the website is [here](https://bluestarburst.github.io/ARWorld/)
 
+the link to the app store is [here](https://apps.apple.com/us/app/ourworlds/id1663719945)
+
 # Todo
 1.) finish previews (add report feature)
 
