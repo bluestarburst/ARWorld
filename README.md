@@ -1,9 +1,11 @@
-# AR is epic
-that is all
+# Ourworlds!
+This project is an IOS Application that creates virtual AR spaces that you can share and see at the same time with others. It uses Apple's ARWorldMapping and Anchor system however the data is stored in Firebase so I hope to make it Android compatible.
 
-also, the website is [here](https://bluestarburst.github.io/ARWorld/)
+The link to the github website that allows users to upload *.glb 3D objects to storage and view on their phone is [here](https://bluestarburst.github.io/ARWorld/)
 
-the link to the app store is [here](https://apps.apple.com/us/app/ourworlds/id1663719945)
+The link to the app on the Apple Appstore is [here](https://apps.apple.com/us/app/ourworlds/id1663719945)
+
+JPMorgan plz plz plz let me go to the Code For Good Hackathon! I worked really hard on all this stuff and I'm sure I can be a great asset to any team I am a part of. I will work hard to make sure I am useful to my teammates!
 
 # Todo
 1.) finish previews (add report feature)
