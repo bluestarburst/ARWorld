@@ -5,7 +5,7 @@ The link to the github website that allows users to upload *.glb 3D objects to s
 
 The link to the app on the Apple Appstore is [here](https://apps.apple.com/us/app/ourworlds/id1663719945)
 
-JPMorgan plz plz plz let me go to the Code For Good Hackathon! I worked really hard on all this stuff and I'm sure I can be a great asset to any team I am a part of. I will work hard to make sure I am useful to my teammates!
+JPMorgan plz plz plz let me go to the Code For Good Hackathon! I worked really hard on all this stuff and I'm sure I will be a great teammate to everyone I work with. I will work hard to make sure I am useful to my teammates!
 
 # Todo
 1.) finish previews (add report feature)
