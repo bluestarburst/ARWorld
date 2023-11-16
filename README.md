@@ -21,3 +21,7 @@ JPMorgan plz plz plz let me go to the Code For Good Hackathon! I worked really h
 6.) security
 
 7.) add private option for photos
+
+# Acknowledgments
+
+* [unity-swiftui-example](https://davidpeicho.github.io/blog/unity-swiftui-integration-revisited/)
