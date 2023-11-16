@@ -25,3 +25,5 @@ JPMorgan plz plz plz let me go to the Code For Good Hackathon! I worked really h
 # Acknowledgments
 
 * [unity-swiftui-example](https://davidpeicho.github.io/blog/unity-swiftui-integration-revisited/)
+* [three.js](https://threejs.org/)
+* [react-three-fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) One of the best things ever! 
